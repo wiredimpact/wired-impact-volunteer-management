@@ -1,0 +1,47 @@
+###	WordPress Core, Config, Logs, and Caching	###
+#	Keep the WordPress core and other core-related files out of the repo.
+
+*.log
+.htaccess
+error_log
+**/error_log
+
+###	Compiler, Build, and OS Files	###
+#	Ignore CSS precompilers, Node.js, and "garbage"Â files that Windows and OS X might otherwise include.
+
+.sass-cache/
+.sass-cache/**
+*.map
+
+node_modules/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+*.codekit
+sftp-config.json
+
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
