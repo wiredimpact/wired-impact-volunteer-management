@@ -148,19 +148,14 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Register our settings with the WordPress Settings API
+	 *
+	 * Our setting is registered here so it will be saved in the database within options.php. We then use
+	 * settings.php to load our settings page and the form fields that we need. 
+	 * 
 	 * @see  https://kovshenin.com/2012/the-wordpress-settings-api/ Article on how to use the Settings API
 	 */
 	function register_settings(){
 		register_setting( 'wivm-settings-group', 'wivm-settings' );
-		//add_settings_field( 'general-setting-1', 'General Setting 1 Title', array( $this, 'setting_1_callback_function' ), 'wi-volunteer-management' );
-	}
-
-	/**
-	 * Output our general setting 1 field.
-	 */
-	function setting_1_callback_function(){
-		$setting = esc_attr( get_option( 'wivm-settings' ) );
-    	echo "<input type='text' name='wivm-settings' value='$setting' />";
 	}
 
 	/**
