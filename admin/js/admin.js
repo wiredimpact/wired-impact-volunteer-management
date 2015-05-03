@@ -31,6 +31,26 @@
 
     $('.nav-tab-active').click();
 
+
+    function wivm_set_tab_hash() {
+        var settings = jQuery('#wivm-settings-form');
+        if (settings.length) {
+            var currentUrl = settings.attr('action').split('#')[0];
+            settings.attr('action', currentUrl + window.location.hash);
+        }
+    }
+
+    /**
+     * When the hash changes, get the base url from the action and then add the current hash
+     */
+    jQuery(window).on('hashchange', wivm_set_tab_hash);
+
+    /**
+     * When the hash changes, get the base url from the action and then add the current hash
+     */
+    jQuery(document).on('ready', wivm_set_tab_hash);
+
+
 	}); //document.ready()
 
 })( jQuery );
