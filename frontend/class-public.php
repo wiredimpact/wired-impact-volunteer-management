@@ -100,4 +100,42 @@ class WI_Volunteer_Management_Public {
 
 	}
 
+	/**
+	 * Register our Volunteer Opportunities post type.
+	 *
+	 * Register our Volunteer Opportunities post type and set the method to static so that 
+	 * it can be called during activation when we need to refresh the rewrite rules.
+	 */
+	public static function register_post_types(){
+
+		$labels = array(
+	      'name' =>               'Volunteer Opportunities',
+	      'singular_name' =>      'Volunteer Opportunity',
+	      'add_new' =>            'Add Volunteer Opportunity',
+	      'add_new_item' =>       'Add Volunteer Opportunity',
+	      'edit_item' =>          'Edit Volunteer Opportunity',
+	      'new_item' =>           'New Volunteer Opportunity',
+	      'all_items' =>          'All Volunteer Opportunities',
+	      'view_item' =>          'View Volunteer Opportunity',
+	      'search_items' =>       'Search Volunteer Opportunities',
+	      'not_found' =>          'No volunteer opportunities found',
+	      'not_found_in_trash' => 'No volunteer opportunities found in trash', 
+	      'parent_item_colon' =>  '',
+	      'menu_name' =>          'Volunteer Mgmt',
+	    );
+
+	    $args = array(
+	      'labels'            => $labels,
+	      'public'            => true,
+	      'show_ui'           => true,
+	      'show_in_menu'      => 'wi-volunteer-management',
+	      'menu_icon'         => 'dashicons-groups',
+	      'capability_type'   => 'post',
+	      'supports'          => array( 'title', 'editor', 'thumbnail', 'revisions'  ),
+	      'rewrite'           => array( 'slug' => 'volunteer-opportunity', 'with_front' => false )
+	    ); 
+	    
+	    register_post_type( 'volunteer_opp', $args );
+	}
+
 }

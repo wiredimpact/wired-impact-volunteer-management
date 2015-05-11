@@ -84,6 +84,19 @@ class WI_Volunteer_Management_Form {
 	}
 
 	/**
+	 * Output a heading to break up the options within a tab.
+	 * 
+	 * @param  string $text The text to be used for the heading.
+	 * @param  string $description Paragraph text to describe the group of settings.
+	 */
+	public function section_heading( $heading, $description ){
+		echo '<tr><th colspan="2">';
+			echo '<h3>' . $heading . '</h3>';
+			echo '<p>' . $description . '</p>';
+		echo '</th></tr>';
+	}
+
+	/**
 	 * Output a label element. Usually this is an HTML label element, but sometimes it's just basic text.
 	 *
 	 * @param string $text The text to show on the left side of settings page.
@@ -210,7 +223,7 @@ class WI_Volunteer_Management_Form {
 			$this->label( $main_label, array( 'text_only' => true ) );
 			echo '<td>';
 
-				echo '<input class="checkbox ' . esc_attr( $class ) . '" type="checkbox" id="' . esc_attr( $var ) . '" name="' . esc_attr( $this->option_name ) . '[' . esc_attr( $var ) . ']" value="on"' . checked( $this->options[ $var ], 'on', false ), '/>';
+				echo '<input class="checkbox" type="checkbox" id="' . esc_attr( $var ) . '" name="' . esc_attr( $this->option_name ) . '[' . esc_attr( $var ) . ']" value="on"' . checked( $this->options[ $var ], 'on', false ), '/>';
 				echo '<label for="' . $var . '">' . $checkbox_label . '</label>';
 
 			echo '</td>';

@@ -10,7 +10,7 @@
  *
  * @link              http://example.com
  * @since             1.0.0
- * @package           Plugin_Name
+ * @package           WI_Volunteer_Management
  *
  * @wordpress-plugin
  * Plugin Name:       Wired Impact Volunteer Management
@@ -34,7 +34,7 @@ if ( ! defined( 'WPINC' ) ) {
  * The code that runs during plugin activation.
  * This action is documented in includes/class-wi-volunteer-management-activator.php
  */
-function activate_plugin_name() {
+function activate_wi_volunteer_management() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-activator.php';
 	WI_Volunteer_Management_Activator::activate();
 }
@@ -43,13 +43,13 @@ function activate_plugin_name() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-wi-volunteer-management-deactivator.php
  */
-function deactivate_plugin_name() {
+function deactivate_wi_volunteer_management() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-deactivator.php';
 	WI_Volunteer_Management_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_plugin_name' );
-register_deactivation_hook( __FILE__, 'deactivate_plugin_name' );
+register_activation_hook( __FILE__, 'activate_wi_volunteer_management' );
+register_deactivation_hook( __FILE__, 'deactivate_wi_volunteer_management' );
 
 /**
  * The core plugin class that is used to define internationalization,

@@ -35,7 +35,7 @@ class WI_Volunteer_Management {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Plugin_Name_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      WI_Volunteer_Management_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -109,9 +109,14 @@ class WI_Volunteer_Management {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-i18n.php';
 
 		/**
-		 * The class responsible for retrieving the options for out plugin.
+		 * The class responsible for retrieving the options for our plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-options.php';
+
+		/**
+		 * The class responsible for dealing with individual opportunities.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-opportunity.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
@@ -157,15 +162,18 @@ class WI_Volunteer_Management {
 
 		$plugin_admin = new WI_Volunteer_Management_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_menu', 			$plugin_admin, 'register_settings_page' );
-		$this->loader->add_action( 'admin_init', 			$plugin_admin, 'register_settings' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_menu', 			$plugin_admin, 'register_settings_page' );
+		$this->loader->add_action( 'admin_init', 			$plugin_admin, 'register_settings' );
+		$this->loader->add_action( 'add_meta_boxes', 		$plugin_admin, 'add_meta_boxes' );
+		$this->loader->add_action( 'save_post', 			$plugin_admin, 'save_volunteer_opp_meta', 10, 2 );
+		
 
 	}
 
 	/**
-	 * Register all of the hooks related to the public-facing functionality
+	 * Register all of the hooks related to the public-facing functionality and that are used in both public-facing and the admin
 	 * of the plugin.
 	 *
 	 * @since    1.0.0
@@ -175,9 +183,9 @@ class WI_Volunteer_Management {
 
 		$plugin_public = new WI_Volunteer_Management_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
+		$this->loader->add_action( 'wp_enqueue_scripts', 	$plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', 	$plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'init', 					$plugin_public, 'register_post_types' );
 	}
 
 	/**
@@ -219,5 +227,5 @@ class WI_Volunteer_Management {
 	public function get_version() {
 		return $this->version;
 	}
-
-}
+	
+} //class WI_Volunteer_Management

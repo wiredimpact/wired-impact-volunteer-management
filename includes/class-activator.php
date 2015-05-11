@@ -6,8 +6,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/includes
  */
 
 /**
@@ -16,21 +16,23 @@
  * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/includes
  * @author     Your Name <email@example.com>
  */
 class WI_Volunteer_Management_Activator {
 
 	/**
-	 * Short Description. (use period)
+	 * On activation flush rewrite rules.
 	 *
-	 * Long Description.
+	 * On activation we first declare our custom post type and then
+	 * flush rewrite rules so our custom url structure works how we'd want it to.
 	 *
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
+		WI_Volunteer_Management_Public::register_post_types();
+		flush_rewrite_rules();
 	}
 
 }
