@@ -1,0 +1,48 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+/* General Volunteer Opp Styles */
+.volunteer_opp .volunteer-opp-info {
+	padding: 0 0 1em;
+}
+.volunteer_opp .volunteer-opp-info span {
+	display: block;
+	padding: 2px 0;
+}
+
+
+/* Volunteer Opp List Styles */
+.volunteer-opps .volunteer_opp {
+	border-bottom: 1px solid #bebebe;
+	margin: 0;
+	padding: 0;
+	box-shadow: none;
+}
+
+.volunteer-opps .volunteer_opp + .volunteer_opp {
+	margin-top: 0;
+}
+
+.volunteer-opps .volunteer_opp header,
+.volunteer-opps .volunteer_opp .entry-title {
+	padding: 0;
+}
+
+.volunteer-opps .volunteer_opp .entry-title {
+	margin-top: 1.1em;
+}
+
+.volunteer-opps .entry-content {
+	padding: 0 0 2em;
+}
+
+.volunteer-opps .navigation div {
+	padding-top: 1em;
+}
+
+/* Single Volunteer Opp Styles */
+.single .volunteer_opp .entry-header {
+	padding-top: 8.3333%;
+}

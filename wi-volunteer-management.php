@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * This action is documented in includes/class-wi-volunteer-management-activator.php
  */
 function activate_wi_volunteer_management() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-activator.php';
+	require_once WIVM_DIR . 'includes/class-activator.php';
 	WI_Volunteer_Management_Activator::activate();
 }
 
@@ -44,7 +44,7 @@ function activate_wi_volunteer_management() {
  * This action is documented in includes/class-wi-volunteer-management-deactivator.php
  */
 function deactivate_wi_volunteer_management() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-deactivator.php';
+	require_once WIVM_DIR . 'includes/class-deactivator.php';
 	WI_Volunteer_Management_Deactivator::deactivate();
 }
 
@@ -52,10 +52,15 @@ register_activation_hook( __FILE__, 'activate_wi_volunteer_management' );
 register_deactivation_hook( __FILE__, 'deactivate_wi_volunteer_management' );
 
 /**
+ *  Add constant to allow us to easily load files.
+ */
+define( 'WIVM_DIR', plugin_dir_path( __FILE__ ) );
+
+/**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-wi-volunteer-management.php';
+require WIVM_DIR . 'includes/class-wi-volunteer-management.php';
 
 /**
  * Begins execution of the plugin.

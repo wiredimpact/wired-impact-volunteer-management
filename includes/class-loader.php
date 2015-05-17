@@ -6,8 +6,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/includes
  */
 
 /**
@@ -17,11 +17,20 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/includes
  * @author     Your Name <email@example.com>
  */
 class WI_Volunteer_Management_Loader {
+
+	/**
+	 * The array of shortcodes to add to WordPress.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      array    $shortcodes    The shortcodes to allow within WordPress.
+	 */
+	protected $shortcodes;
 
 	/**
 	 * The array of actions registered with WordPress.
@@ -48,10 +57,23 @@ class WI_Volunteer_Management_Loader {
 	 */
 	public function __construct() {
 
-		$this->actions = array();
-		$this->filters = array();
+		$this->shortcodes 	= array();
+		$this->actions 		= array();
+		$this->filters 		= array();
 
 	}
+
+	/**
+     * Add a new shortcode to the collection to be registered with WordPress
+     *
+     * @since     1.0.0
+     * @param     string        $tag           The name of the new shortcode.
+     * @param     object        $component     A reference to the instance of the object on which the shortcode is defined.
+     * @param     string        $callback      The name of the function that defines the shortcode.
+     */
+    public function add_shortcode( $tag, $component, $callback, $priority = 10, $accepted_args = 2 ) {
+        $this->shortcodes = $this->add( $this->shortcodes, $tag, $component, $callback, $priority, $accepted_args );
+    }
 
 	/**
 	 * Add a new action to the collection to be registered with WordPress.
@@ -115,6 +137,10 @@ class WI_Volunteer_Management_Loader {
 	 * @since    1.0.0
 	 */
 	public function run() {
+
+		foreach ( $this->shortcodes as $hook ) {
+            add_shortcode( $hook['hook'], array( $hook['component'], $hook['callback'] ) );
+        }
 
 		foreach ( $this->filters as $hook ) {
 			add_filter( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );

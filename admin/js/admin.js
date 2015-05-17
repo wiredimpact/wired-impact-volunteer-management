@@ -57,11 +57,11 @@
     $('#one-time-opportunity').change(function() {
         if( this.checked ) {
             $( '.one-time-field' ).show();
-            $( '.non-one-time-field' ).hide();
+            $( '.flexible-field' ).hide();
         }
         else {
             $( '.one-time-field' ).hide();
-            $( '.non-one-time-field' ).show();
+            $( '.flexible-field' ).show();
         } 
     });
 

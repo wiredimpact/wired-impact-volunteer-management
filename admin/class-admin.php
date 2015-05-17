@@ -202,17 +202,17 @@ class WI_Volunteer_Management_Admin {
 
 		  <tr>
 		    <td><label for="contact_name"><?php _e( 'Name', 'wivm' ); ?></label></td>
-		    <td><input type="text" id="contact_name" name="contact_name" tabindex="10" class="regular-text" value="<?php echo sanitize_text_field( $volunteer_opp->opp_meta['contact_name'] ); ?>" /></td>
+		    <td><input type="text" id="contact_name" name="contact_name" tabindex="10" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_name']; ?>" /></td>
 		  </tr>
 		  
 		  <tr>
 		    <td><label for="contact_phone"><?php _e( 'Phone Number', 'wivm' ); ?></label></td>
-		    <td><input type="text" id="contact_phone" name="contact_phone" tabindex="20" class="regular-text" value="<?php echo sanitize_text_field( $volunteer_opp->format_phone_number( $volunteer_opp->opp_meta['contact_phone'] ) ); ?>" /></td>
+		    <td><input type="text" id="contact_phone" name="contact_phone" tabindex="20" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_formatted_phone']; ?>" /></td>
 		  </tr>
 		  
 		  <tr>
 		    <td><label for="contact_email"><?php _e( 'Email', 'wivm' ); ?></label></td>
-		    <td><input type="text" id="contact_email" name="contact_email" tabindex="30" class="regular-text" value="<?php echo sanitize_email( $volunteer_opp->opp_meta['contact_email'] ); ?>" /></td>
+		    <td><input type="text" id="contact_email" name="contact_email" tabindex="30" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_email']; ?>" /></td>
 		  </tr>
 
 		  
@@ -222,27 +222,27 @@ class WI_Volunteer_Management_Admin {
 
 		  <tr>
 		    <td><label for="location"><?php _e( 'Location Name', 'wivm' ); ?></label></td>
-		    <td><input type="text" id="location" name="location" tabindex="40" class="regular-text" value="<?php echo sanitize_text_field( $volunteer_opp->opp_meta['location'] ); ?>" /></td>
+		    <td><input type="text" id="location" name="location" tabindex="40" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['location']; ?>" /></td>
 		  </tr>
 		  
 		  <tr>
 		    <td><label for="street"><?php _e( 'Street Address', 'wivm' ); ?></label></td>
-		    <td><input type="text" id="street" name="street" tabindex="50" class="regular-text" value="<?php echo sanitize_text_field( $volunteer_opp->opp_meta['street'] ); ?>" /></td>
+		    <td><input type="text" id="street" name="street" tabindex="50" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['street']; ?>" /></td>
 		  </tr>
 		  
 		  <tr>
 		    <td><label for="city"><?php _e( 'City', 'wivm' ); ?></label></td>
-		    <td><input type="text" id="city" name="city" tabindex="60" class="regular-text" value="<?php echo sanitize_text_field( $volunteer_opp->opp_meta['city'] ); ?>" /></td>
+		    <td><input type="text" id="city" name="city" tabindex="60" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['city']; ?>" /></td>
 		  </tr>
 
 		  <tr>
 		    <td><label for="state"><?php _e( 'State', 'wivm' ); ?></label></td>
-		    <td><input type="text" id="state" name="state" tabindex="70" class="regular-text" value="<?php echo sanitize_text_field( $volunteer_opp->opp_meta['state'] ); ?>" /></td>
+		    <td><input type="text" id="state" name="state" tabindex="70" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['state']; ?>" /></td>
 		  </tr>
 
 		  <tr>
 		    <td><label for="zip"><?php _e( 'Zip', 'wivm' ); ?></label></td>
-		    <td><input type="text" id="zip" name="zip" tabindex="80" class="regular-text" value="<?php echo sanitize_text_field( $volunteer_opp->opp_meta['zip'] ); ?>" /></td>
+		    <td><input type="text" id="zip" name="zip" tabindex="80" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['zip']; ?>" /></td>
 		  </tr>
 
 		  
@@ -258,23 +258,23 @@ class WI_Volunteer_Management_Admin {
 		    </td>
 		  </tr>
 
-		  <?php $one_time_class = ( $volunteer_opp->opp_meta['one_time_opp'] == 1 ) ? 'one-time' : 'non-one-time'; ?>
+		  <?php $one_time_class = ( $volunteer_opp->opp_meta['one_time_opp'] == 1 ) ? 'one-time' : 'flexible'; ?>
 		  <tr class="one-time-field <?php echo $one_time_class; ?>">
 		    <td><label for="start-date-time"><?php _e( 'Start Date & Time', 'wivm' ); ?></label></td>
-		    <td><input type="text" id="start-date-time" name="start-date-time" tabindex="100" class="regular-text" value="<?php if ( $volunteer_opp->opp_meta['start_date_time'] != '' ) echo sanitize_text_field( $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['start_date_time'], '', true ) ); ?>" /></td>
+		    <td><input type="text" id="start-date-time" name="start-date-time" tabindex="100" class="regular-text" value="<?php if ( $volunteer_opp->opp_meta['start_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['start_date_time'], '', true ); ?>" /></td>
 		  </tr>
 		  
 		  <tr class="one-time-field <?php echo $one_time_class; ?>">
 		    <td><label for="end-date-time"><?php _e( 'End Date & Time', 'wivm' ); ?></label></td>
 		    <td>
-		      <input type="text" id="end-date-time" name="end-date-time" tabindex="110" class="regular-text" value="<?php if( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo sanitize_text_field( $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['end_date_time'], '', true ) ); ?>" />
+		      <input type="text" id="end-date-time" name="end-date-time" tabindex="110" class="regular-text" value="<?php if( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['end_date_time'], '', true ); ?>" />
 		      <span class="error" style="display: none;"><?php _e( 'Woops, it looks like you set your event to end before it started.', 'wivm' ); ?></span>
 		    </td>
 		  </tr>
 
-		  <tr class="non-one-time-field <?php echo $one_time_class; ?>">
-		    <td><label for="frequency"><?php _e( 'When Will This Event Happen?', 'wivm' ); ?></label></td>
-		    <td><input type="text" id="frequency" name="frequency" tabindex="120" class="regular-text" placeholder="<?php _e( 'On your own time, All summer, etc.', 'wivm' ); ?>" value="<?php echo sanitize_text_field( $volunteer_opp->opp_meta['frequency'] ); ?>" /></td>
+		  <tr class="flexible-field <?php echo $one_time_class; ?>">
+		    <td><label for="flexible_frequency"><?php _e( 'When Will This Event Happen?', 'wivm' ); ?></label></td>
+		    <td><input type="text" id="flexible_frequency" name="flexible_frequency" tabindex="120" class="regular-text" placeholder="<?php _e( 'On your own time, All summer, etc.', 'wivm' ); ?>" value="<?php echo $volunteer_opp->opp_meta['flexible_frequency']; ?>" /></td>
 		  </tr>
 
 		  <tr>
@@ -292,7 +292,7 @@ class WI_Volunteer_Management_Admin {
 		  <?php $volunteer_limit_class = ( $volunteer_opp->opp_meta['has_volunteer_limit'] == 1 ) ? 'has-volunteer-limit' : 'no-volunteer-limit'; ?>
 		  <tr class="volunteer-limit-field <?php echo $volunteer_limit_class; ?>">
 		    <td><label for="volunteer-limit"><?php _e( 'Max Number of Volunteers', 'wivm' ); ?></label></td>
-		    <td><input type="text" id="volunteer-limit" name="volunteer-limit" tabindex="140" class="regular-text" value="<?php echo absint( $volunteer_opp->opp_meta['volunteer_limit'] ); ?>" /></td>
+		    <td><input type="text" id="volunteer-limit" name="volunteer-limit" tabindex="140" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['volunteer_limit']; ?>" /></td>
 		  </tr>
 
 		  <?php do_action( 'wivm_after_opportunity_detail_meta_fields', $volunteer_opp ); ?>
@@ -386,9 +386,9 @@ class WI_Volunteer_Management_Admin {
 			update_post_meta( $volunteer_opp_id, '_end_date_time', $end_date_time );
 		}
 
-		//Frequency (When will this event happen?)
-		if( isset($_REQUEST['frequency'] ) ) {
-			update_post_meta( $volunteer_opp_id, '_frequency', sanitize_text_field( $_REQUEST['frequency'] ) );
+		//Flexible Event Frequency (When will this event happen?)
+		if( isset($_REQUEST['flexible_frequency'] ) ) {
+			update_post_meta( $volunteer_opp_id, '_flexible_frequency', sanitize_text_field( $_REQUEST['flexible_frequency'] ) );
 		}
 
 		//Volunteer Limit

@@ -68,7 +68,7 @@ class WI_Volunteer_Management {
 	 */
 	public function __construct() {
 
-		$this->plugin_name = 'wi-volunteer-management';
+		$this->plugin_name = 'wivm';
 		$this->version = '1.0.0';
 
 		$this->load_dependencies();
@@ -100,34 +100,40 @@ class WI_Volunteer_Management {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-loader.php';
+		require_once WIVM_DIR . 'includes/class-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-i18n.php';
+		require_once WIVM_DIR . 'includes/class-i18n.php';
+
+		/**
+		 * The class responsible for defining internationalization functionality
+		 * of the plugin.
+		 */
+		require_once WIVM_DIR . 'includes/class-template-loader.php';
 
 		/**
 		 * The class responsible for retrieving the options for our plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-options.php';
+		require_once WIVM_DIR . 'includes/class-options.php';
 
 		/**
 		 * The class responsible for dealing with individual opportunities.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-opportunity.php';
+		require_once WIVM_DIR . 'includes/class-opportunity.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin.php';
+		require_once WIVM_DIR . 'admin/class-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'frontend/class-public.php';
+		require_once WIVM_DIR . 'frontend/class-public.php';
 
 		$this->loader = new WI_Volunteer_Management_Loader();
 
@@ -147,7 +153,7 @@ class WI_Volunteer_Management {
 		$plugin_i18n = new Plugin_Name_i18n();
 		$plugin_i18n->set_domain( $this->get_plugin_name() );
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		$this->loader->add_action( 		'plugins_loaded', 			$plugin_i18n, 'load_plugin_textdomain' );
 
 	}
 
@@ -162,12 +168,12 @@ class WI_Volunteer_Management {
 
 		$plugin_admin = new WI_Volunteer_Management_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'admin_menu', 			$plugin_admin, 'register_settings_page' );
-		$this->loader->add_action( 'admin_init', 			$plugin_admin, 'register_settings' );
-		$this->loader->add_action( 'add_meta_boxes', 		$plugin_admin, 'add_meta_boxes' );
-		$this->loader->add_action( 'save_post', 			$plugin_admin, 'save_volunteer_opp_meta', 10, 2 );
+		$this->loader->add_action( 		'admin_enqueue_scripts', 	$plugin_admin, 'enqueue_styles' );
+		$this->loader->add_action( 		'admin_enqueue_scripts', 	$plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 		'admin_menu', 				$plugin_admin, 'register_settings_page' );
+		$this->loader->add_action( 		'admin_init', 				$plugin_admin, 'register_settings' );
+		$this->loader->add_action( 		'add_meta_boxes', 			$plugin_admin, 'add_meta_boxes' );
+		$this->loader->add_action( 		'save_post', 				$plugin_admin, 'save_volunteer_opp_meta', 10, 2 );
 		
 
 	}
@@ -183,9 +189,12 @@ class WI_Volunteer_Management {
 
 		$plugin_public = new WI_Volunteer_Management_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', 	$plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', 	$plugin_public, 'enqueue_scripts' );
-		$this->loader->add_action( 'init', 					$plugin_public, 'register_post_types' );
+		$this->loader->add_action( 		'wp_enqueue_scripts', 		$plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 		'wp_enqueue_scripts', 		$plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 		'init', 					$plugin_public, 'register_post_types' );
+		$this->loader->add_shortcode( 	'one_time_volunteer_opps', 	$plugin_public, 'display_one_time_volunteer_opps' );
+		$this->loader->add_shortcode( 	'flexible_volunteer_opps', 	$plugin_public, 'display_flexible_volunteer_opps' );
+		$this->loader->add_filter( 		'single_template', 			$plugin_public, 'get_single_opp_template' );
 	}
 
 	/**

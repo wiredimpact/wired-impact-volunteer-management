@@ -19,14 +19,14 @@
 	padding: 20px 0 5px;
 }
 
-#volunteer-opportunity-details .non-one-time-field td:first-child,
+#volunteer-opportunity-details .flexible-field td:first-child,
 #volunteer-opportunity-details .one-time-field td:first-child  {
 	width: 195px;
 }
 
 /* Hide admin fields if not needed */
-.non-one-time-field.one-time,
-.one-time-field.non-one-time,
+.one-time-field.flexible,
+.flexible-field.one-time,
 .volunteer-limit-field.no-volunteer-limit {
 	display: none;
 }

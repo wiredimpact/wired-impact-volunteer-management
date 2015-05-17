@@ -138,4 +138,126 @@ class WI_Volunteer_Management_Public {
 	    register_post_type( 'volunteer_opp', $args );
 	}
 
-}
+	/**
+	 * Shortcode for viewing all one-time volunteer opportunities.
+	 */
+	public function display_one_time_volunteer_opps(){
+		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+		$args  = array(
+			'post_type' => 'volunteer_opp',
+			'meta_key' => '_start_date_time',
+          	'orderby' => 'meta_value_num',
+          	'order'   => 'ASC',
+          	'meta_query' => array(
+				array( //Only if one-time opp is true
+					'key'     => '_one_time_opp',
+					'value'   => 1, 
+					'compare' => '==',
+				),
+				array( //Only if event is in the future
+					'key'     => '_start_date_time',
+					'value'   => current_time( 'timestamp' ), 
+					'compare' => '>=',
+				),
+				'relation' => 'AND'
+			),
+			'paged' => $paged
+		);
+
+		return $this->display_volunteer_opp_list( 'one-time', apply_filters( $this->plugin_name . '_one_time_opp_shortcode_query', $args ) );		
+	}
+
+	/**
+	 * Shortcode for viewing all flexible volunteer opportunities.
+	 */
+	public function display_flexible_volunteer_opps(){
+		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+		$args = array(
+			'post_type' => 'volunteer_opp',
+          	'meta_query' => array(
+				array( //Only if one-time opp is not true
+					'key'     => '_one_time_opp',
+					'value'   => 1, 
+					'compare' => '!=',
+				),
+			),
+			'paged' => $paged
+		);
+
+		return $this->display_volunteer_opp_list( 'flexible', apply_filters( $this->plugin_name . '_flexible_opp_shortcode_query', $args ) );
+	}
+
+	/**
+	 * Displays the volunteer opportunities lists.
+	 *
+	 * Displays the volunteer opportunities lists for both the one-time and flexible
+	 * opportunities. It also calls template files to output the majority of the HTML.
+	 * 
+	 * @param  string $list_type One-time or flexible volunteer opportunities
+	 * @param  array $query_args The query arguments to be used in WP_Query 
+	 * @return string            HTML code to be output via a shortcode.
+	 */
+	public function display_volunteer_opp_list( $list_type, $query_args ){
+		//We must edit the main query in order to handle pagination.
+		global $wp_query;
+		$temp = $wp_query;
+		$wp_query = new WP_Query( $query_args );
+
+		ob_start(); ?>
+		
+		<div class="volunteer-opps <?php echo $list_type; ?>">
+
+			<?php 
+			$template_loader = new WI_Volunteer_Management_Template_Loader();
+			if( $wp_query->have_posts() ){
+
+				while( $wp_query->have_posts() ){
+					$wp_query->the_post();
+					$template_loader->get_template_part( 'opps-list', $list_type );
+				}
+
+				wp_reset_postdata();
+			} 
+			else { ?>
+
+				<p class="no-opps"><?php _e( 'Sorry, there are no volunteer opportunities available right now.', 'wivm' ); ?></p>
+
+			<?php } ?>
+
+			<div class="navigation volunteer-opps-navigation">
+        		<div class="alignleft"><?php previous_posts_link('&laquo; Previous Opportunities') ?></div>
+        		<div class="alignright"><?php next_posts_link('More Opportunities &raquo;') ?></div>
+        	</div>
+
+		</div><!-- .volunteer-opps -->
+
+		<?php
+		//Reset to default query 
+		$wp_query = null; 
+  		$wp_query = $temp; 
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Loads the single volunteer opportunity template using our template loader.
+	 *
+	 * Instead of loading the single opportunity template from the current theme, 
+	 * we load it using our template loader. 
+	 *
+	 * @see  https://codex.wordpress.org/Plugin_API/Filter_Reference/single_template
+	 * @param  string The default template file for our custom post type.
+	 * @return string The location of the correct template file.
+	 */
+	public function get_single_opp_template( $single_template ){
+		global $post;
+
+		if( $post->post_type == 'volunteer_opp' ){
+			$template_loader = new WI_Volunteer_Management_Template_Loader();
+			$single_template = $template_loader->get_template_part( 'opp-single', null, false );
+		}
+		
+		return $single_template;
+	}
+
+} //class WI_Volunteer_Management_Public
