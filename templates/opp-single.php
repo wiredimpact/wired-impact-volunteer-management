@@ -37,6 +37,30 @@ get_header(); ?>
 					</div><!-- .volunteer-opp-info -->
 
 					<?php the_content(); ?>
+
+					<h3><?php _e( 'Sign Up to Volunteer', 'wivm' ); ?></h3>
+					<div class="error-message"><?php _e( 'Please fill in every field and make sure you entered a valid email address.', 'wivm' ); ?></div>
+					<form id="wivm-sign-up-form" method="POST" url="<?php the_permalink(); ?>">
+						<?php wp_nonce_field( 'wivm_sign_up_form_nonce', 'wivm_sign_up_form_nonce_field' ); ?>
+
+						<?php do_action( 'wivm_start_sign_up_form_fields', $post ); ?>
+
+						<label for="wivm_first_name"><?php _e( 'First Name:', 'wivm' ); ?></label>
+						<input type="text" tabindex="900" id="wivm_first_name" name="wivm_first_name" value="" />
+
+						<label for="wivm_last_name"><?php _e( 'Last Name:', 'wivm' ); ?></label>
+						<input type="text" tabindex="901" id="wivm_last_name" name="wivm_last_name" value="" />
+
+						<label for="wivm_phone"><?php _e( 'Phone:', 'wivm' ); ?></label>
+						<input type="text" tabindex="902" id="wivm_phone" name="wivm_phone" value="" />
+
+						<label for="wivm_email"><?php _e( 'Email:', 'wivm' ); ?></label>
+						<input type="email" tabindex="903" id="wivm_email" name="wivm_email" value="" />
+
+						<?php do_action( 'wivm_end_sign_up_form_fields', $post ); ?>
+
+						<input type="submit" tabindex="904" value="<?php _e( 'Sign Up', 'wivm' ); ?>" />
+					</form>
 				</div><!-- .entry-content -->
 
 			</article><!-- #post-## -->

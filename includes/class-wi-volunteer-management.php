@@ -189,12 +189,14 @@ class WI_Volunteer_Management {
 
 		$plugin_public = new WI_Volunteer_Management_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 		'wp_enqueue_scripts', 		$plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 		'wp_enqueue_scripts', 		$plugin_public, 'enqueue_scripts' );
-		$this->loader->add_action( 		'init', 					$plugin_public, 'register_post_types' );
-		$this->loader->add_shortcode( 	'one_time_volunteer_opps', 	$plugin_public, 'display_one_time_volunteer_opps' );
-		$this->loader->add_shortcode( 	'flexible_volunteer_opps', 	$plugin_public, 'display_flexible_volunteer_opps' );
-		$this->loader->add_filter( 		'single_template', 			$plugin_public, 'get_single_opp_template' );
+		$this->loader->add_action( 		'wp_enqueue_scripts', 			$plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 		'wp_enqueue_scripts', 			$plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 		'init', 						$plugin_public, 'register_post_types' );
+		$this->loader->add_shortcode( 	'one_time_volunteer_opps', 		$plugin_public, 'display_one_time_volunteer_opps' );
+		$this->loader->add_shortcode( 	'flexible_volunteer_opps', 		$plugin_public, 'display_flexible_volunteer_opps' );
+		$this->loader->add_filter( 		'single_template', 				$plugin_public, 'get_single_opp_template' );
+		$this->loader->add_action( 		'wp_ajax_wivm_sign_up', 		$plugin_public, 'process_volunteer_sign_up' );
+ 		$this->loader->add_action( 		'wp_ajax_nopriv_wivm_sign_up', 	$plugin_public, 'process_volunteer_sign_up' );
 	}
 
 	/**

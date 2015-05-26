@@ -13,7 +13,7 @@
 class WI_Volunteer_Management_Opportunity {
 
 	/**
-	 * The ID of this plugin.
+	 * The metadata associated with this particular volunteer opportunity.
 	 *
 	 * @since    1.0.0
 	 * @access   public

@@ -97,6 +97,7 @@ class WI_Volunteer_Management_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wi-volunteer-management-public.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script( $this->plugin_name, 'wivm_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 
 	}
 
@@ -258,6 +259,41 @@ class WI_Volunteer_Management_Public {
 		}
 		
 		return $single_template;
+	}
+
+	/**
+	 * Process the AJAX request from the volunteer opportunity sign up form.
+	 * TODO Move a lot of this functionality to volunteer class. Also need to handle sanitization of form content.
+	 */
+	public function process_volunteer_sign_up(){
+		$form_fields = array();
+		parse_str( $_POST['data'], $form_fields );
+
+		//Verify our nonce.
+		if( !wp_verify_nonce( $form_fields['wivm_sign_up_form_nonce_field'], 'wivm_sign_up_form_nonce' ) ) {
+			_e( 'Security Check.', 'wivm' );
+			die();
+		}
+
+		//Check if the email address is already in use and if not, create a new user.
+		if( !email_exists( $form_fields['wivm_email'] ) ){
+
+			$userdata = array( 
+				'user_login' 	=> $form_fields['wivm_email'],
+				'user_pass'  	=> wp_generate_password(),
+				'role'			=> 'volunteer',
+				'user_email' 	=> $form_fields['wivm_email'],
+				'first_name' 	=> $form_fields['wivm_first_name'],
+				'last_name'  	=> $form_fields['wivm_last_name'],
+			);
+
+			$user_id = wp_insert_user( $userdata );
+			
+		}
+
+ 		echo $user_id;
+ 		
+ 		die(); //Must use die() when using AJAX
 	}
 
 } //class WI_Volunteer_Management_Public

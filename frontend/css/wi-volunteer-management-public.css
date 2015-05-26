@@ -46,3 +46,29 @@
 .single .volunteer_opp .entry-header {
 	padding-top: 8.3333%;
 }
+
+/* Sign Up Form Styles */
+#wivm-sign-up-form label {
+	margin-top: .5em;
+	display: block;
+}
+
+#wivm-sign-up-form label:first-child {
+	margin-top: 0;
+}
+
+#wivm-sign-up-form input[type=submit] {
+	margin-top: 1em;
+	float: right;
+}
+
+.volunteer_opp .error-message {
+	display: none;
+	font-size: .8em;
+	font-style: italic;
+	color: #990000;
+}
+
+#wivm-sign-up-form .error {
+	border: 2px solid #990000;
+}
