@@ -39,7 +39,9 @@ get_header(); ?>
 					<?php the_content(); ?>
 
 					<h3><?php _e( 'Sign Up to Volunteer', 'wivm' ); ?></h3>
-					<div class="error-message"><?php _e( 'Please fill in every field and make sure you entered a valid email address.', 'wivm' ); ?></div>
+					<div class="loading message"><?php _e( 'Please wait...', 'wivm' ); ?></div>
+					<div class="success message"><?php _e( 'Thanks for signing up. You\'ll receive a confirmation email shortly.', 'wivm' ); ?></div>
+					<div class="error message"><?php _e( 'Please fill in every field and make sure you entered a valid email address.', 'wivm' ); ?></div>
 					<form id="wivm-sign-up-form" method="POST" url="<?php the_permalink(); ?>">
 						<?php wp_nonce_field( 'wivm_sign_up_form_nonce', 'wivm_sign_up_form_nonce_field' ); ?>
 
@@ -59,6 +61,7 @@ get_header(); ?>
 
 						<?php do_action( 'wivm_end_sign_up_form_fields', $post ); ?>
 
+						<input type="hidden" id="wivm_opportunity_id" name="wivm_opportunity_id" value="<?php echo the_ID(); ?>" />
 						<input type="submit" tabindex="904" value="<?php _e( 'Sign Up', 'wivm' ); ?>" />
 					</form>
 				</div><!-- .entry-content -->

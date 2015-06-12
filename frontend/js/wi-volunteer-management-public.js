@@ -9,11 +9,17 @@
 		 */
 		$( '#wivm-sign-up-form input[type=submit]' ).click(function(e){
 			e.preventDefault();
-			var form_valid;
+			var $this = $( this ),
+				form_valid;
+
+			$( this ).prop( "disabled", true );
 
 			form_valid = validate_sign_up_form();
 			if( form_valid === true ){
-				submit_sign_up_form();
+				submit_sign_up_form( $this );
+			}
+			else { //Allow submission again if there were errors
+				$this.prop( "disabled", false );
 			}
 		});
 
@@ -27,29 +33,26 @@
 		var has_errors = false;
 		$( '#wivm-sign-up-form input[type=text], #wivm-sign-up-form input[type=email]' ).each(function() {
             if( this.value === '' ) {
-                console.log( 'Field left blank' );
-                $( this ).addClass( 'error' );
+                $( this ).addClass( 'field-error' );
                 has_errors = true;
             }
             else if ( this.type === 'email' && !validate_email( this.value ) ){
-            	console.log( 'Invalid Email address' );
-            	$( this ).addClass( 'error' );
+            	$( this ).addClass( 'field-error' );
                 has_errors = true;
             }
             else {
-            	$( this ).removeClass( 'error' );
+            	$( this ).removeClass( 'field-error' );
             }
         });
 
 		//If not valid return false.
         if( has_errors === true ){
-        	console.log( 'Form has errors!' );
-        	$( '.volunteer_opp .error-message' ).slideDown();
+        	$( '.volunteer_opp .loading, .volunteer_opp .success' ).slideUp();
+        	$( '.volunteer_opp .error' ).slideDown();
         	return false;
         }
         else {
-        	console.log( 'Form valid!' );
-        	$( '.volunteer_opp .error-message' ).slideUp();
+        	$( '.volunteer_opp .message' ).slideUp();
         	return true;
         }
 	}
@@ -73,18 +76,24 @@
 
 	/**
 	 * Submit the sign up form for processing on the backend.
-	 * 
-	 * @return {[type]} [description]
 	 */
-	function submit_sign_up_form(){
+	function submit_sign_up_form( submit_button ){
 		console.log( 'Submitting sign up form to server!' );
+		//Show messages to user
+		$( '.volunteer_opp .error' ).slideUp();
+		$( '.volunteer_opp .loading' ).slideDown();
+
 		jQuery.post( wivm_ajax.ajaxurl,
 			{
 				action: 'wivm_sign_up',
 				data: $( '#wivm-sign-up-form' ).serialize()
 			},
-			function( response_from_the_action_function ){
-				console.log( response_from_the_action_function );
+			function( response ){
+				console.log( 'User ID: ' + response );
+				//Show user success message and re-enable submit button
+				$( '.volunteer_opp .loading' ).slideUp();
+				$( '.volunteer_opp .success' ).slideDown();
+				submit_button.prop( "disabled", false );
 			}
 		);
 	}

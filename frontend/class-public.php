@@ -263,7 +263,8 @@ class WI_Volunteer_Management_Public {
 
 	/**
 	 * Process the AJAX request from the volunteer opportunity sign up form.
-	 * TODO Move a lot of this functionality to volunteer class. Also need to handle sanitization of form content.
+	 * 
+	 * @todo Move a lot of this functionality to volunteer class and rsvp class.
 	 */
 	public function process_volunteer_sign_up(){
 		$form_fields = array();
@@ -275,23 +276,37 @@ class WI_Volunteer_Management_Public {
 			die();
 		}
 
-		//Check if the email address is already in use and if not, create a new user.
-		if( !email_exists( $form_fields['wivm_email'] ) ){
+		//Prepare userdata to be added for a new user or updated for an existing user.
+		$userdata = array( 
+			'first_name' 	=> sanitize_text_field( $form_fields['wivm_first_name'] ),
+			'last_name'  	=> sanitize_text_field( $form_fields['wivm_last_name'] ),
+		);
 
-			$userdata = array( 
-				'user_login' 	=> $form_fields['wivm_email'],
-				'user_pass'  	=> wp_generate_password(),
-				'role'			=> 'volunteer',
-				'user_email' 	=> $form_fields['wivm_email'],
-				'first_name' 	=> $form_fields['wivm_first_name'],
-				'last_name'  	=> $form_fields['wivm_last_name'],
-			);
+		//Check if the email address is already in use and if not, create a new user.
+		$wivm_email = sanitize_email( $form_fields['wivm_email'] );
+		$existing_user = email_exists( $wivm_email );
+		if( !$existing_user ){
+			$userdata['user_login'] 	= $wivm_email;
+			$userdata['user_email']		= $wivm_email;
+			$userdata['user_pass'] 		= wp_generate_password();
+			$userdata['role']			= 'volunteer';
 
 			$user_id = wp_insert_user( $userdata );
-			
+		}
+		//If the user already exists, update the user based on their email address
+		else {
+			$userdata['ID'] = $existing_user;
+
+			$user_id = wp_update_user( $userdata );
 		}
 
- 		echo $user_id;
+		//Update custom user meta for new and existing volunteers.
+		update_user_meta( $user_id, 'phone', preg_replace( "/[^0-9,.]/", "", $form_fields['wivm_phone'] ) );
+
+		//RSVP this volunteer for the opportunity
+		$rsvp = new WI_Volunteer_Management_RSVP( $user_id, absint( $form_fields['wivm_opportunity_id'] ) );
+
+ 		echo $user_id; //Returned to the js as the user id or false if it broke.
  		
  		die(); //Must use die() when using AJAX
 	}

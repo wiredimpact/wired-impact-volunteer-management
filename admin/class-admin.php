@@ -406,4 +406,57 @@ class WI_Volunteer_Management_Admin {
 		}
 	}
 
+
+	/**
+	 * Display the additional profile fields we want to include on the user profile edit screen.
+	 * 
+	 * @param  object $user The WP_User object for the user who is going to be edited.
+	 */
+	public function show_extra_profile_fields( $user ){ ?>
+    
+	    <table class="form-table">
+	    	<tr scope="row">
+			    <th><label for="phone"><?php _e( 'Phone Number', 'wivm' ); ?></label></th>
+			    <td>
+			        <input type="text" name="phone" id="phone" value="<?php echo $this->format_phone_number( get_user_meta( $user->ID, 'phone', true ) ); ?>" class="regular-text" /><br />
+			        <p class="description"><?php _e( 'Please enter your phone number in the format (000) 000-0000.', 'wivm' ); ?></p>
+			    </td>
+			</tr>
+		</table>
+
+    <?php
+	}
+
+	/**
+	 * Save any additional user profile information we've added.
+	 * 
+	 * @param  int $user_id The user's ID whose profile we're going to edit.
+	 */
+	public function save_extra_profile_fields( $user_id ) {
+ 
+	    if ( !current_user_can( 'edit_user', $user_id ) ){
+	        return false;
+	    }
+	 	
+	 	//Phone Number
+	    update_usermeta( absint( $user_id ), 'phone', preg_replace( "/[^0-9,.]/", "", $_POST['phone'] ) );
+	}
+
+	/**
+	 * Format a phone number that's provided only in integers.
+	 *
+	 * @todo  Remove duplicate of this method that exists in class-opportunity.php
+	 * 
+	 * @param  int $unformmated_number Phone number in only integers
+	 * @return string Phone number formatted to look nice.
+	 */
+	public function format_phone_number( $unformatted_number ){
+		if( $unformatted_number != '' ){
+			return '(' . substr( $unformatted_number, 0, 3 ) . ') '. substr( $unformatted_number, 3, 3 ) . '-' . substr( $unformatted_number, 6 );	
+		}
+		else {
+			return '';
+		}
+	}
+
 } //class WI_Volunteer_Management_Admin

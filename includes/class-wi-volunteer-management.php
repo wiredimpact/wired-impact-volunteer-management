@@ -125,6 +125,11 @@ class WI_Volunteer_Management {
 		require_once WIVM_DIR . 'includes/class-opportunity.php';
 
 		/**
+		 * The class responsible for dealing with RSVPs to volunteer opportunities.
+		 */
+		require_once WIVM_DIR . 'includes/class-rsvp.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once WIVM_DIR . 'admin/class-admin.php';
@@ -174,8 +179,11 @@ class WI_Volunteer_Management {
 		$this->loader->add_action( 		'admin_init', 				$plugin_admin, 'register_settings' );
 		$this->loader->add_action( 		'add_meta_boxes', 			$plugin_admin, 'add_meta_boxes' );
 		$this->loader->add_action( 		'save_post', 				$plugin_admin, 'save_volunteer_opp_meta', 10, 2 );
+		$this->loader->add_action(		'show_user_profile', 		$plugin_admin, 'show_extra_profile_fields' );
+		$this->loader->add_action(		'edit_user_profile', 		$plugin_admin, 'show_extra_profile_fields' );
+		$this->loader->add_action(		'personal_options_update', 	$plugin_admin, 'save_extra_profile_fields' );
+		$this->loader->add_action(		'edit_user_profile_update', $plugin_admin, 'save_extra_profile_fields' );
 		
-
 	}
 
 	/**
