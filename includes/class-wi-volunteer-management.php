@@ -125,6 +125,11 @@ class WI_Volunteer_Management {
 		require_once WIVM_DIR . 'includes/class-opportunity.php';
 
 		/**
+		 * The class responsible for dealing with individual volunteers.
+		 */
+		require_once WIVM_DIR . 'includes/class-volunteer.php';
+
+		/**
 		 * The class responsible for dealing with RSVPs to volunteer opportunities.
 		 */
 		require_once WIVM_DIR . 'includes/class-rsvp.php';

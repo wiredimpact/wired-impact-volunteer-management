@@ -264,7 +264,7 @@ class WI_Volunteer_Management_Public {
 	/**
 	 * Process the AJAX request from the volunteer opportunity sign up form.
 	 * 
-	 * @todo Move a lot of this functionality to volunteer class and rsvp class.
+	 * @todo Move this functionality to volunteer class and rsvp class.
 	 */
 	public function process_volunteer_sign_up(){
 		$form_fields = array();

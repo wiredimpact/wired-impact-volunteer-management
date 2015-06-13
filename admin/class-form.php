@@ -43,7 +43,7 @@ class WI_Volunteer_Management_Form {
 			 */
 			require_once( ABSPATH . 'wp-admin/options-head.php' );
 			?>
-        	<h2>Wired Impact Volunteer Management: Settings</h2>
+        	<h2><?php _e( 'Wired Impact Volunteer Management: Settings', 'wivm' ); ?></h2>
         	<form action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>" id="wivm-settings-form" method="POST">
         <?php
 	}

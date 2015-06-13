@@ -119,6 +119,14 @@ class WI_Volunteer_Management_Admin {
 				'wi-volunteer-management-settings',
 				array( $this, 'load_page' ),
 			),
+			array(
+				NULL, //Not in menu
+				'',
+				__( 'Volunteer', 'wivm' ),
+				'manage_options',
+				'wi-volunteer-management-volunteer',
+				array( $this, 'load_page' ),
+			),
 		);
 
 		// Allow submenu pages manipulation
@@ -147,6 +155,10 @@ class WI_Volunteer_Management_Admin {
 
 		switch ( $page ) {
 			case 'wi-volunteer-management-volunteers':
+				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/pages/volunteers.php';
+				break;
+
+			case 'wi-volunteer-management-volunteer':
 				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/pages/volunteer.php';
 				break;
 
@@ -412,14 +424,22 @@ class WI_Volunteer_Management_Admin {
 	 * 
 	 * @param  object $user The WP_User object for the user who is going to be edited.
 	 */
-	public function show_extra_profile_fields( $user ){ ?>
-    
+	public function show_extra_profile_fields( $user ){ 
+    	$volunteer = new WI_Volunteer_Management_Volunteer( $user->ID );
+    	?>
 	    <table class="form-table">
 	    	<tr scope="row">
 			    <th><label for="phone"><?php _e( 'Phone Number', 'wivm' ); ?></label></th>
 			    <td>
-			        <input type="text" name="phone" id="phone" value="<?php echo $this->format_phone_number( get_user_meta( $user->ID, 'phone', true ) ); ?>" class="regular-text" /><br />
+			        <input type="text" name="phone" id="phone" value="<?php echo $volunteer->meta['phone']; ?>" class="regular-text" /><br />
 			        <p class="description"><?php _e( 'Please enter your phone number in the format (000) 000-0000.', 'wivm' ); ?></p>
+			    </td>
+			</tr>
+			<tr scope="row">
+			    <th><label for="notes"><?php _e( 'Notes', 'wivm' ); ?></label></th>
+			    <td>
+			        <textarea name="notes" id="notes" rows="5" cols="30"><?php echo $volunteer->meta['notes']; ?></textarea><br />
+			        <p class="description"><?php _e( 'Please enter any notes about this user.', 'wivm' ); ?></p>
 			    </td>
 			</tr>
 		</table>
@@ -440,23 +460,9 @@ class WI_Volunteer_Management_Admin {
 	 	
 	 	//Phone Number
 	    update_usermeta( absint( $user_id ), 'phone', preg_replace( "/[^0-9,.]/", "", $_POST['phone'] ) );
-	}
+	    //Notes
+	    update_usermeta( absint( $user_id ), 'notes', implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST['notes'] ) ) ) );
 
-	/**
-	 * Format a phone number that's provided only in integers.
-	 *
-	 * @todo  Remove duplicate of this method that exists in class-opportunity.php
-	 * 
-	 * @param  int $unformmated_number Phone number in only integers
-	 * @return string Phone number formatted to look nice.
-	 */
-	public function format_phone_number( $unformatted_number ){
-		if( $unformatted_number != '' ){
-			return '(' . substr( $unformatted_number, 0, 3 ) . ') '. substr( $unformatted_number, 3, 3 ) . '-' . substr( $unformatted_number, 6 );	
-		}
-		else {
-			return '';
-		}
 	}
 
 } //class WI_Volunteer_Management_Admin
