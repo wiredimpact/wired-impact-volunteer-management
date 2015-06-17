@@ -327,4 +327,4 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 		}
 	}
 
-} //WI_Volunteer_Users_List_Table
+} //class WI_Volunteer_Users_List_Table

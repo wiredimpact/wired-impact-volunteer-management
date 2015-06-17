@@ -37,7 +37,7 @@ class WI_Volunteer_Management_RSVP {
 
 		$user_id = absint( $user_id );
 		$opportunity_id = absint( $opportunity_id );
-		$rsvp = 1; //We always set to this 1 for going, 0 for not going.
+		$rsvp = 1; //We always set this to 1 for going, 0 for not going.
 
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'volunteer_rsvps';

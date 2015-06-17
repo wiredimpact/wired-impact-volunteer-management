@@ -61,18 +61,6 @@ class WI_Volunteer_Management_Public {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in WI_Volunteer_Management_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The WI_Volunteer_Management_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wi-volunteer-management-public.css', array(), $this->version, 'all' );
 
 	}
@@ -83,18 +71,6 @@ class WI_Volunteer_Management_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in WI_Volunteer_Management_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The WI_Volunteer_Management_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wi-volunteer-management-public.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( $this->plugin_name, 'wivm_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
@@ -263,8 +239,8 @@ class WI_Volunteer_Management_Public {
 
 	/**
 	 * Process the AJAX request from the volunteer opportunity sign up form.
-	 * 
-	 * @todo Move this functionality to volunteer class and rsvp class.
+	 *
+	 * @return  int|bool The user ID if everything worked, false otherwise [<description>]
 	 */
 	public function process_volunteer_sign_up(){
 		$form_fields = array();
@@ -276,37 +252,14 @@ class WI_Volunteer_Management_Public {
 			die();
 		}
 
-		//Prepare userdata to be added for a new user or updated for an existing user.
-		$userdata = array( 
-			'first_name' 	=> sanitize_text_field( $form_fields['wivm_first_name'] ),
-			'last_name'  	=> sanitize_text_field( $form_fields['wivm_last_name'] ),
-		);
-
-		//Check if the email address is already in use and if not, create a new user.
-		$wivm_email = sanitize_email( $form_fields['wivm_email'] );
-		$existing_user = email_exists( $wivm_email );
-		if( !$existing_user ){
-			$userdata['user_login'] 	= $wivm_email;
-			$userdata['user_email']		= $wivm_email;
-			$userdata['user_pass'] 		= wp_generate_password();
-			$userdata['role']			= 'volunteer';
-
-			$user_id = wp_insert_user( $userdata );
-		}
-		//If the user already exists, update the user based on their email address
-		else {
-			$userdata['ID'] = $existing_user;
-
-			$user_id = wp_update_user( $userdata );
-		}
-
-		//Update custom user meta for new and existing volunteers.
-		update_user_meta( $user_id, 'phone', preg_replace( "/[^0-9,.]/", "", $form_fields['wivm_phone'] ) );
+		//Add or update the new volunteer user
+		$user = new WI_Volunteer_Management_Volunteer( null, $form_fields );
 
 		//RSVP this volunteer for the opportunity
-		$rsvp = new WI_Volunteer_Management_RSVP( $user_id, absint( $form_fields['wivm_opportunity_id'] ) );
+		$rsvp = new WI_Volunteer_Management_RSVP( $user->ID, $form_fields['wivm_opportunity_id'] );
 
- 		echo $user_id; //Returned to the js as the user id or false if it broke.
+		//Return the user ID to the js or false if something broke.
+ 		echo $user->ID; 
  		
  		die(); //Must use die() when using AJAX
 	}
