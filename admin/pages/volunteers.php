@@ -24,9 +24,17 @@ if ( $pagenum > $total_pages && $total_pages > 0 ) {
 ?>
 
 <div class="wrap">
-	<h2><?php _e( 'Wired Impact Volunteer Management: Volunteers', 'wivm' ); ?></h2>
+	<h2>
+	<?php _e( 'Wired Impact Volunteer Management: Volunteers', 'wivm' );
+	global $usersearch;
+	if ( $usersearch ){
+		printf( '<span class="subtitle">' . __('Search results for &#8220;%s&#8221;') . '</span>', esc_html( $usersearch ) );
+	}
+	?>
+	</h2>
 
-	<form method="get">
+	<form method="get" action="">
+	<input type="hidden" name="page" value="<?php echo ( isset( $_REQUEST['page'] ) ) ? esc_attr( $_REQUEST['page'] ) : ''; ?>" />
 
 	<?php $wp_list_table->search_box( __( 'Search Volunteers', 'wivm' ), 'volunteer' ); ?>
 

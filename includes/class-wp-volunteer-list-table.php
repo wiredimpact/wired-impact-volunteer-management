@@ -71,15 +71,53 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 		if ( isset( $_REQUEST['order'] ) )
 			$args['order'] = $_REQUEST['order'];
 
+		//Order by phone number if necessary
+		if( isset( $_REQUEST['orderby'] ) && $_REQUEST['orderby'] == 'phone' ){
+			$args['meta_key'] = 'phone';
+		}
+
 		// Query the user IDs for this page
 		$wp_user_search = new WP_User_Query( $args );
 
 		$this->items = $wp_user_search->get_results();
 
+		//Order by number of volunteer activities if necessary
+		if( isset( $_REQUEST['orderby'] ) && $_REQUEST['orderby'] == 'num_volunteer_opps' ){
+			@uasort( $this->items, array( $this, "sort_users_by_number_volunteer_opportunities" ) ); //Errors suppressed due to PHP bug
+		}
+
 		$this->set_pagination_args( array(
 			'total_items' => $wp_user_search->get_total(),
 			'per_page' => $users_per_page,
 		) );
+	}
+
+	/**
+	 * Sort users by the number of volunteer opportunities they've participated in.
+	 *
+	 * This is used with usort to sort an array of users.
+	 * 
+	 * @param  array $a User a information
+	 * @param  array $b User b information
+	 * @return int      1 or -1 to pass back the correct order
+	 */
+	public function sort_users_by_number_volunteer_opportunities( $a, $b ){
+		//Set up variables for returning numbers so we can handle flip the order if order is set to descending.
+		$less = -1;
+		$more = 1; 
+		if( isset( $_REQUEST['order'] ) && $_REQUEST['order'] == 'desc' ){
+			$less = 1;
+			$more = -1;
+		}
+
+		$user_a = new WI_Volunteer_Management_Volunteer( $a->ID );
+		$user_b = new WI_Volunteer_Management_Volunteer( $b->ID );
+
+		if( $user_a->meta['num_volunteer_opps'] == $user_b->meta['num_volunteer_opps'] ) {
+	        return 0;
+	    }
+
+	    return ( $user_a->meta['num_volunteer_opps'] < $user_b->meta['num_volunteer_opps'] ) ? $less : $more;
 	}
 
 	/**
@@ -95,7 +133,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 			'name'     					=> __( 'Name', 'wivm' ),
 			'email'    					=> __( 'E-mail', 'wivm' ),
 			'phone'    					=> __( 'Phone Number', 'wivm' ),
-			'num_volunteer_activities'  => __( '# of Volunteer Activities', 'wivm' ),
+			'num_volunteer_opps'  		=> __( '# of Volunteer Opportunities', 'wivm' ),
 		);
 
 		return $c;
@@ -111,10 +149,10 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 	 */
 	protected function get_sortable_columns() {
 		$c = array(
-			'name'     					=> 'name',
-			'email'    					=> 'email',
-			'phone'     				=> 'phone',
-			'num_volunteer_activities'  => 'num_volunteer_activities',
+			'name'     					=> array( 'name', false ),
+			'email'    					=> array( 'email', false ),
+			'phone'     				=> array( 'phone', false ),
+			'num_volunteer_opps'  		=> array( 'num_volunteer_opps', false )
 		);
 
 		return $c;
@@ -238,7 +276,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 
 			switch ( $column_name ) {
 				case 'name':
-					$r .= "<td $attributes>$avatar <a href='" . get_admin_url( null, 'admin.php?page=wi-volunteer-management-volunteer&user_id=' . $user_object->ID ) . "'>$user_object->first_name $user_object->last_name</a></td>";
+					$r .= "<td $attributes>$avatar <strong><a href='" . get_admin_url( null, 'admin.php?page=wi-volunteer-management-volunteer&user_id=' . $user_object->ID ) . "'>$user_object->first_name $user_object->last_name</a><strong></td>";
 					break;
 				case 'email':
 					$r .= "<td $attributes>$email</td>";
@@ -246,7 +284,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 				case 'phone':
 					$r .= "<td $attributes>$phone</td>";
 					break;
-				case 'num_volunteer_activities':
+				case 'num_volunteer_opps':
 					$r .= "<td $attributes>$num_volunteer_opps</td>";
 					break;
 				default:
@@ -271,12 +309,22 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 	}
 
 	/**
-	 * Message to be displayed when no volunteers have signed up yet.
+	 * Message to be displayed when no volunteers have signed up yet or when a search returns no results.
+	 *
+	 * Checks that volunteer users do exist and if not, it shows a message that people will show up when they sign up
+	 * to volunteer. If they do exist then a message shows that the search returned no results.
 	 *
 	 * @since 1.0.0
 	 * @access public
 	 */
 	public function no_items() {
-		_e( 'No volunteers yet. Once they sign up they\'ll appear here.', 'wivm' );
+		$user_counts = count_users();
+		if( !isset( $user_counts['avail_roles']['volunteer'] ) || $user_counts['avail_roles']['volunteer'] == 0 ){
+			_e( 'No volunteers yet. Once they sign up they\'ll appear here.', 'wivm' );
+		}
+		else {
+			_e( 'Oops. Your search didn\'t return any volunteers. Please try search again.', 'wivm' );
+		}
 	}
-}
+
+} //WI_Volunteer_Users_List_Table
