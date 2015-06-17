@@ -13,6 +13,15 @@
 class WI_Volunteer_Management_Opportunity {
 
 	/**
+	 * The post ID of this particular volunteer opportunity.
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @var      array    $ID    The post ID of this volunteer opportunity.
+	 */
+	public $ID;
+
+	/**
 	 * The metadata associated with this particular volunteer opportunity.
 	 *
 	 * @since    1.0.0
@@ -29,8 +38,8 @@ class WI_Volunteer_Management_Opportunity {
 	 */
 	public function __construct( $volunteer_opp_id ) {
 
+		$this->ID = $volunteer_opp_id;
 		$this->opp_meta = $this->retrieve_volunteer_opp_meta( $volunteer_opp_id );
-		dbgx_trace_var( $this->opp_meta );
 
 	}
 
@@ -131,21 +140,6 @@ class WI_Volunteer_Management_Opportunity {
 	}
 
 	/**
-	 * Get open volunteer spots.
-	 * TODO Build this out to account for unlimited, and to remove from already filled spots.
-	 */
-	public function get_open_volunteer_spots(){
-		if( $this->opp_meta['has_volunteer_limit'] == 0 ){
-			return __( 'Unlimited', 'wivm' );
-		}
-		else if( $this->opp_meta['volunteer_limit'] == 0 ){
-			return __( 'Closed', 'wivm' );
-		}
-
-		return $this->opp_meta['volunteer_limit'];
-	}
-
-	/**
   	 * Get the event location with a Google Maps link if possible and requested.
   	 * 
   	 * @param bool $make_maps_link Whether to include a Google Maps link.
@@ -209,6 +203,64 @@ class WI_Volunteer_Management_Opportunity {
 	 */
 	public function get_email_as_link( $email_address ){
 		return '<a href="mailto:' . $email_address . '" title="Send email">' . $email_address . '</a>';
+	}
+
+	/**
+	 * Get the open number of volunteer spots for this opportunity.
+	 *
+	 * @return  int|string Integer for open number of spots, string for Unlimited or Closed.
+	 */
+	public function get_open_volunteer_spots(){
+		$num_rsvps = $this->get_number_rsvps();
+
+		//If there is no limit
+		if( $this->opp_meta['has_volunteer_limit'] == 0 ){
+			return __( 'Unlimited', 'wivm' );
+		}
+		//If the limit has been reached.
+		else if( $num_rsvps >= $this->opp_meta['volunteer_limit'] ){
+			return __( 'Closed', 'wivm' );
+		}
+		//If a limit exists and it hasn't been reached.
+		else {
+			return $this->opp_meta['volunteer_limit'] - $num_rsvps;
+		}
+	}
+
+	/**
+	 * Get the number of RSVPs that have taken place for this opportunity.
+	 * 
+	 * @return int The number of RSVPs for this opportunity.
+	 */
+	public function get_number_rsvps(){
+		global $wpdb;
+
+		$num_rsvps = $wpdb->get_var( $wpdb->prepare(
+		        "
+		         SELECT COUNT(*)
+		         FROM " . $wpdb->prefix  . "volunteer_rsvps
+		         WHERE post_id = %d
+		        ",
+		        $this->ID
+		) );
+
+		return $num_rsvps;
+	}
+
+	/**
+	 * Return whether we should allow people to sign up for this opportunity.
+	 * 
+	 * @return bool true if we should allow signups, false if not
+	 */
+	public function should_allow_rvsps(){
+		$num_rsvps = $this->get_number_rsvps();
+
+		//If there is a limit and its been reached then return false
+		if( $this->opp_meta['has_volunteer_limit'] == 1 && $num_rsvps >= $this->opp_meta['volunteer_limit'] ){
+			return false;
+		}
+		
+		return true;
 	}
 
 } //class WI_Volunteer_Management_Opportunity

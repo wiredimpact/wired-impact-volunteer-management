@@ -26,7 +26,7 @@ get_header(); ?>
 
 				<div class="entry-content">
 					<div class="volunteer-opp-info">
-						<span><strong><?php echo __( 'When: ', 'wivm' ); ?></strong> <?php echo $opp->format_opp_times(); ?></span>
+						<span><strong><?php echo __( 'When: ', 'wivm' ); ?></strong> <?php echo ( $opp->opp_meta['one_time_opp'] == 1 ) ? $opp->format_opp_times() : $opp->opp_meta['flexible_frequency']; ?></span>
 						<span><strong><?php echo __( 'Where: ', 'wivm' ); ?></strong> <?php echo $opp->format_address(); ?></span>
 
 						<span><strong><?php echo __( 'Contact: ', 'wivm' ); ?></strong> <?php echo $opp->opp_meta['contact_name']; ?></span>
@@ -40,6 +40,7 @@ get_header(); ?>
 
 					<h3><?php _e( 'Sign Up to Volunteer', 'wivm' ); ?></h3>
 					
+					<?php if( $opp->should_allow_rvsps() ): ?>
 					<div class="loading message"><?php _e( 'Please wait...', 'wivm' ); ?></div>
 					<div class="success message"><?php _e( 'Thanks for signing up. You\'ll receive a confirmation email shortly.', 'wivm' ); ?></div>
 					<div class="error message"><?php _e( 'Please fill in every field and make sure you entered a valid email address.', 'wivm' ); ?></div>
@@ -53,19 +54,22 @@ get_header(); ?>
 						<input type="text" tabindex="900" id="wivm_first_name" name="wivm_first_name" value="" />
 
 						<label for="wivm_last_name"><?php _e( 'Last Name:', 'wivm' ); ?></label>
-						<input type="text" tabindex="901" id="wivm_last_name" name="wivm_last_name" value="" />
+						<input type="text" tabindex="910" id="wivm_last_name" name="wivm_last_name" value="" />
 
 						<label for="wivm_phone"><?php _e( 'Phone:', 'wivm' ); ?></label>
-						<input type="text" tabindex="902" id="wivm_phone" name="wivm_phone" value="" />
+						<input type="text" tabindex="920" id="wivm_phone" name="wivm_phone" value="" />
 
 						<label for="wivm_email"><?php _e( 'Email:', 'wivm' ); ?></label>
-						<input type="email" tabindex="903" id="wivm_email" name="wivm_email" value="" />
+						<input type="email" tabindex="930" id="wivm_email" name="wivm_email" value="" />
 
 						<?php do_action( 'wivm_end_sign_up_form_fields', $post ); ?>
 
 						<input type="hidden" id="wivm_opportunity_id" name="wivm_opportunity_id" value="<?php echo the_ID(); ?>" />
-						<input type="submit" tabindex="904" value="<?php _e( 'Sign Up', 'wivm' ); ?>" />
+						<input type="submit" tabindex="940" value="<?php _e( 'Sign Up', 'wivm' ); ?>" />
 					</form>
+					<?php else: ?>
+						<p><?php _e( 'We\'re sorry, but we\'re no longer accepting new volunteers for this opportunity.', 'wivm' ); ?></p>
+					<?php endif; ?>
 				</div><!-- .entry-content -->
 
 			</article><!-- #post-## -->
