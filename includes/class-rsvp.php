@@ -42,13 +42,19 @@ class WI_Volunteer_Management_RSVP {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'volunteer_rsvps';
 		$volunteer_rsvp_status = $this->volunteer_rsvp_status( $user_id, $opportunity_id );
+		$time = current_time( 'mysql' );
 
 		//Insert data into database
 		if( $volunteer_rsvp_status === false ){
 			$wpdb->insert(
 		        $table_name,
-		        array( 'user_id' => $user_id, 'post_id' => $opportunity_id, 'rsvp' => $rsvp ),
-		        array( '%d', '%d', '%d' ) //All of these should be saved as integers
+		        array(
+		        	'user_id' 	=> $user_id,
+		        	'post_id' 	=> $opportunity_id,
+		        	'rsvp' 		=> $rsvp,
+		        	'time' 		=> $time
+		        ),
+		        array( '%d', '%d', '%d', '%s' ) //All of these should be saved as integers except for the current date-time
 			);
 
 			$result = true; //Successfully RSVPed

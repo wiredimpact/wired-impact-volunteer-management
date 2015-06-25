@@ -69,7 +69,7 @@ class WI_Volunteer_Management_Activator {
 				user_id bigint(20) NOT NULL,
 				post_id bigint(20) NOT NULL,
 				rsvp tinyint(2) NOT NULL,
-				time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				time datetime NOT NULL,
 				PRIMARY  KEY  (id),
 				UNIQUE KEY (user_id, post_id)
 			);";
