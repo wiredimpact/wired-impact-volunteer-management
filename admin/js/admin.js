@@ -6,47 +6,52 @@
 
 	$(function() {
 
-	/**
-	 * Hide and show tab content on click
-	 */
-	$('#wivm-tabs').find('a').click(function () {
-        $('#wivm-tabs').find('a').removeClass('nav-tab-active');
-        $('.wivmtab').removeClass('active');
+    //Only run on WI Volunteer Management settings page.
+    if( typeof pagenow != 'undefined' && pagenow == 'volunteer-mgmt_page_wi-volunteer-management-settings' ){
 
-        var id = $(this).attr('id').replace('-tab', '');
-        $('#' + id).addClass('active');
-        $(this).addClass('nav-tab-active');
-    });
+    	/**
+    	 * Hide and show options tab content on click
+    	 */
+    	$('#wivm-tabs').find('a').click(function () {
+            $('#wivm-tabs').find('a').removeClass('nav-tab-active');
+            $('.wivmtab').removeClass('active');
 
-    var wivm_active_tab = window.location.hash.replace('#top#', '');
+            var id = $(this).attr('id').replace('-tab', '');
+            $('#' + id).addClass('active');
+            $(this).addClass('nav-tab-active');
+        });
 
-    if (wivm_active_tab == '' || wivm_active_tab == '#_=_') {
-        wivm_active_tab = $('.wivmtab').attr('id');
-    }
+        var wivm_active_tab = window.location.hash.replace('#top#', '');
 
-    $('#' + wivm_active_tab).addClass('active');
-    $('#' + wivm_active_tab + '-tab').addClass('nav-tab-active');
-
-    $('.nav-tab-active').click();
-
-
-    function wivm_set_tab_hash() {
-        var settings = $('#wivm-settings-form');
-        if (settings.length) {
-            var currentUrl = settings.attr('action').split('#')[0];
-            settings.attr('action', currentUrl + window.location.hash);
+        if (wivm_active_tab == '' || wivm_active_tab == '#_=_') {
+            wivm_active_tab = $('.wivmtab').attr('id');
         }
-    }
 
-    /**
-     * When the hash changes, get the base url from the action and then add the current hash
-     */
-    $(window).on('hashchange', wivm_set_tab_hash);
+        $('#' + wivm_active_tab).addClass('active');
+        $('#' + wivm_active_tab + '-tab').addClass('nav-tab-active');
 
-    /**
-     * When the hash changes, get the base url from the action and then add the current hash
-     */
-    $(document).on('ready', wivm_set_tab_hash);
+        $('.nav-tab-active').click();
+
+
+        function wivm_set_tab_hash() {
+            var settings = $('#wivm-settings-form');
+            if (settings.length) {
+                var currentUrl = settings.attr('action').split('#')[0];
+                settings.attr('action', currentUrl + window.location.hash);
+            }
+        }
+
+        /**
+         * When the hash changes, get the base url from the action and then add the current hash
+         */
+        $(window).on('hashchange', wivm_set_tab_hash);
+
+        /**
+         * When the hash changes, get the base url from the action and then add the current hash
+         */
+        $(document).on('ready', wivm_set_tab_hash);
+
+    } //end if
 
 
     /**
@@ -123,6 +128,64 @@
             }
          }
     });
+
+
+    /**
+     * Turn an opportunity RSVP from on to off for an individual volunteer
+     * Happens on ...admin.php?page=wi-volunteer-management-volunteer
+     */
+    $( '.opps .opp' ).on( 'click', '.remove-rsvp', function() {
+
+        var remove_rsvp_button = $( this ),
+            post_id = remove_rsvp_button.data( 'post-id' ),
+            user_id = remove_rsvp_button.data( 'user-id' );
+
+        remove_rsvp_button.addClass( 'visible' );
+
+        remove_rsvp_button.pointer( {
+            content: wivm_ajax.remove_rsvp_pointer_text,
+            position: {
+                edge: 'top',
+                align: 'right'
+            },
+            buttons: function (event, t) {
+                        var button = $('<a id="pointer-close-' + post_id + '" style="margin:0 5px;" class="button-secondary">' + wivm_ajax.remove_rsvp_cancel_text + '</a>');
+                        button.bind('click.pointer', function () {
+                            t.element.pointer('close');
+                            remove_rsvp_button.removeClass( 'visible' );
+                        });
+                        return button;
+            }
+        }).pointer( 'open' );
+
+        $( '#pointer-close-' + post_id ).after( '<a id="pointer-primary-' + post_id + '" data-id="' + post_id + '" class="button-primary">' + wivm_ajax.remove_rsvp_confirm_text + '</a>' );
+        $( '#pointer-primary-' + post_id ).click(function() {
+
+            var pointer_remove_button = $( this );
+
+            $.post( ajaxurl,
+                {
+                    action: 'wivm_remove_rsvp',
+                    data: {
+                        post_id: post_id,
+                        user_id: user_id,
+                        nonce: wivm_ajax.remove_user_rsvp_nonce
+                    }
+                },
+                function( response ){
+                    if( response == 1 ){ //Success
+                        remove_rsvp_button.fadeOut().siblings( 'h3' ).addClass( 'removed' );
+                        pointer_remove_button.closest( '.wp-pointer' ).hide();
+                    }
+                    else { //Failure
+                        pointer_remove_button.addClass( 'error' ).text( wivm_ajax.remove_rsvp_error_text );
+                    }
+                }
+            );
+
+        }); //Pointer remove-rsvp click
+
+    }); //.remove-rsvp click
 
 
 	}); //document.ready()

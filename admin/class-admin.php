@@ -61,6 +61,7 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function enqueue_styles() {
 
+      	wp_enqueue_style( 'wp-pointer' );
 		wp_enqueue_style( 'jquery-ui-smoothness', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css' );
 		wp_enqueue_style( 'wivm-styles', plugin_dir_url( __FILE__ ) . 'css/admin.css', array(), $this->version, 'all' );
 
@@ -73,11 +74,31 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function enqueue_scripts() {
 
-		wp_enqueue_script( 'jquery-ui-slider' );
-    	wp_enqueue_script( 'jquery-ui-datepicker' );
-    	wp_enqueue_script( 'jquery-timepicker', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-timepicker.js', array( 'jquery-ui-core', 'jquery-ui-slider', 'jquery-ui-datepicker' ) );
-		wp_enqueue_script( 'wivm-admin', plugin_dir_url( __FILE__ ) . 'js/admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script(  'wp-pointer' );
+		wp_enqueue_script(  'jquery-ui-slider' );
+    	wp_enqueue_script(  'jquery-ui-datepicker' );
+    	wp_enqueue_script(  'jquery-timepicker', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-timepicker.js', array( 'jquery-ui-core', 'jquery-ui-slider', 'jquery-ui-datepicker' ) );
+		wp_enqueue_script(  'wivm-admin', plugin_dir_url( __FILE__ ) . 'js/admin.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script( 'wivm-admin', 'wivm_ajax', $this->get_localized_js_data() );
 
+	}
+
+	/**
+	 * Get all the JS data we want to display. This allows us to use PHP to include information
+	 * within the JS.
+	 * 
+	 * @return array Data to be displayed in the admin page's JS.
+	 */
+	public function get_localized_js_data(){
+		$data = array(
+			'remove_rsvp_pointer_text' 	=> '<h3>' . __( 'Are You Sure?', 'wivm' ) . '</h3><p>' . __( 'Are you sure you want to remove their RSVP for this opportunity?', 'wivm' ) . '</p>',
+			'remove_rsvp_cancel_text' 	=> __( 'Cancel', 'wivm' ),
+			'remove_rsvp_confirm_text' 	=> __( 'Remove RSVP', 'wivm' ),
+			'remove_rsvp_error_text' 	=> __( 'Error, try again later.', 'wivm' ),
+			'remove_user_rsvp_nonce' 	=> wp_create_nonce( 'remove_user_rsvp_nonce' ),
+		);
+
+		return $data;
 	}
 
 	/**
@@ -463,6 +484,35 @@ class WI_Volunteer_Management_Admin {
 	    //Notes
 	    update_usermeta( absint( $user_id ), 'notes', implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST['notes'] ) ) ) );
 
+	}
+
+	/**
+	 * Process the AJAX request from the remove RSVP button on the individual volunteer page.
+	 *
+	 * This turns a volunteer's RSVP for a specific opportunity from 1 to 0 (yes to no) in the 
+	 * volunteer_rsvps table. Much of this functionality happens within admin.js.
+	 *
+	 * @return  post_id|bool The post ID if everything worked, false otherwise
+	 */
+	public function remove_user_opp_rsvp(){
+		$post_id 	= absint( $_POST['data']['post_id'] );
+		$user_id 	= absint( $_POST['data']['user_id'] );
+		$nonce 		= $_POST['data']['nonce'];
+
+		//Verify our nonce
+		if( !wp_verify_nonce( $nonce, 'remove_user_rsvp_nonce' ) ) {
+			_e( 'Security Check.', 'wivm' );
+			die();
+		}
+
+		//Remove the user's RSVP from this opportunity.
+		$user   = new WI_Volunteer_Management_Volunteer( $user_id );
+		$status = $user->remove_rsvp_user_opp( $post_id );
+
+		//Return 1 if it worked, false it not.
+ 		echo $status;
+ 		
+ 		die(); //Must use die() when using AJAX
 	}
 
 } //class WI_Volunteer_Management_Admin

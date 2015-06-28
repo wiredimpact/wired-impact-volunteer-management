@@ -58,12 +58,13 @@ class WI_Volunteer_Management_Volunteer {
 	public function set_meta(){
 		$user_data = get_userdata( $this->ID );
 		$this->meta = array(
-			'first_name'			=> $user_data->first_name,
-			'last_name'				=> $user_data->last_name,
-			'email'					=> $user_data->user_email,
-			'phone' 				=> $this->format_phone_number( get_user_meta( $this->ID, 'phone', true ) ),
-			'notes'					=> esc_textarea( get_user_meta( $this->ID, 'notes', true ) ),
-			'num_volunteer_opps' 	=> $this->get_num_volunteer_opps()
+			'first_name'				=> $user_data->first_name,
+			'last_name'					=> $user_data->last_name,
+			'email'						=> $user_data->user_email,
+			'phone' 					=> $this->format_phone_number( get_user_meta( $this->ID, 'phone', true ) ),
+			'notes'						=> esc_textarea( get_user_meta( $this->ID, 'notes', true ) ),
+			'num_volunteer_opps' 		=> $this->get_num_volunteer_opps(),
+			'first_volunteer_opp_time'	=> $this->get_first_volunteer_opp_time()
 		);
 	}
 
@@ -94,12 +95,130 @@ class WI_Volunteer_Management_Volunteer {
 		        "
 		         SELECT COUNT(*)
 		         FROM " . $wpdb->prefix  . "volunteer_rsvps
-		         WHERE user_id = %d
+		         WHERE user_id = %d AND rsvp = %d
 		        ",
-		        $this->ID
+		        array( $this->ID, 1 )
 		) );
 
 		return $num_volunteer_opps;
+	}
+
+	/**
+	 * [get_first_volunteer_opp_timestamp description]
+	 * @return [type] [description]
+	 */
+	public function get_first_volunteer_opp_time(){
+		global $wpdb;
+
+		$first_volunteer_opp_time = $wpdb->get_var( $wpdb->prepare(
+		        "
+		         SELECT MIN( time )
+		         FROM " . $wpdb->prefix  . "volunteer_rsvps
+		         WHERE user_id = %d AND rsvp = %d
+		        ",
+		        array( $this->ID, 1 )
+		) );
+
+		return $first_volunteer_opp_time;
+	}
+
+	/**
+	 * Get an array with all of the volunteer opportunities this person has signed up for.
+	 *
+	 * First we pull only the IDs of the posts that have been signed up for with the most recent one they signed 
+	 * up for first. Then we create a new WI_Volunteer_Management_Opportunity object for each and return it.
+	 *
+	 * @todo  Fix order so it pulls them by volunteer opp date, not the date they signed up.
+	 *
+	 * @param  string $type Whether we want 'all', 'one-time' or 'flexible' volunteer opportunities.
+	 * @return array Array of all the volunteer opportunities as objects.
+	 */
+	public function get_volunteer_opps( $type ){
+		global $wpdb;
+
+		switch( $type ){
+			//All Volunteer Opportunities
+			case 'all':
+
+				$query = "
+				         SELECT post_id
+				         FROM " . $wpdb->prefix  . "volunteer_rsvps
+				         WHERE user_id = %d AND rsvp = %d
+				         ORDER BY time DESC
+				        ";
+
+				$query_values = array( $this->ID, 1 );
+				        
+				break;
+
+			//One-Time Volunteer Opportunities
+			//For this query we joined the postmeta table on itself in order to use two meta values.
+			case 'one-time':
+
+				$query = "
+				         SELECT rsvps.post_id
+				         FROM " . $wpdb->prefix  . "volunteer_rsvps AS rsvps
+				         INNER JOIN " . $wpdb->prefix  . "postmeta AS p1
+				         ON rsvps.post_id = p1.post_id
+				         INNER JOIN " . $wpdb->prefix  . "postmeta AS p2
+						 ON rsvps.post_id = p2.post_id
+				         WHERE rsvps.user_id = %d AND rsvps.rsvp = %d AND p1.meta_key = %s AND p1.meta_value = %d AND p2.meta_key = %s
+				         ORDER BY p2.meta_value DESC
+				        ";
+
+				$query_values = array( $this->ID, 1, '_one_time_opp', 1, '_start_date_time' );
+
+				break;
+
+			//Flexible Volunteer Opportunities
+			case 'flexible':
+
+				$query = "
+				         SELECT rsvps.post_id
+				         FROM " . $wpdb->prefix  . "volunteer_rsvps AS rsvps
+				         INNER JOIN " . $wpdb->prefix  . "postmeta AS postmeta
+						 ON rsvps.post_id = postmeta.post_id
+				         WHERE rsvps.user_id = %d AND rsvps.rsvp = %d AND postmeta.meta_key = %s AND postmeta.meta_value = %d
+				        ";
+
+				$query_values = array( $this->ID, 1, '_one_time_opp', 0 );
+
+				break;
+		}
+
+		$volunteer_opps = $wpdb->get_results( $wpdb->prepare( $query, $query_values ) );
+
+		//Use post id to get grab a bunch info on each opportunity and store in the same variable using &.
+		foreach( $volunteer_opps as &$opp ){
+			$opp = new WI_Volunteer_Management_Opportunity( $opp->post_id );
+		}
+
+		return $volunteer_opps;
+	}
+
+	/**
+	 * Remove an RSVP for a user for a specific volunteer opportunity. This is usually done through AJAX.
+	 * 
+	 * @param  int $post_id ID of the volunteer opportunity to have its RSVP removed
+	 * @return int|bool The number of rows updated or false if error
+	 */
+	public function remove_rsvp_user_opp( $post_id ){
+		global $wpdb;
+
+		$status = $wpdb->update( 
+			$wpdb->prefix  . 'volunteer_rsvps', 
+			array( //Data to update
+				'rsvp' => 0
+			), 
+			array( //Where
+				'user_id' => $this->ID,
+			 	'post_id' => $post_id
+			), 
+			array( '%d'	), //Data formats
+			array( '%d', '%d' ) //Where formats
+		);
+
+		return $status;
 	}
 
 	/**

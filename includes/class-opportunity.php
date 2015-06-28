@@ -239,9 +239,9 @@ class WI_Volunteer_Management_Opportunity {
 		        "
 		         SELECT COUNT(*)
 		         FROM " . $wpdb->prefix  . "volunteer_rsvps
-		         WHERE post_id = %d
+		         WHERE post_id = %d and rsvp = %d
 		        ",
-		        $this->ID
+		        array( $this->ID, 1 )
 		) );
 
 		return $num_rsvps;

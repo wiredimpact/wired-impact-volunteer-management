@@ -78,7 +78,6 @@
 	 * Submit the sign up form for processing on the backend.
 	 */
 	function submit_sign_up_form( submit_button ){
-		console.log( 'Submitting sign up form to server!' );
 		//Show messages to user
 		$( '.volunteer_opp .error' ).slideUp();
 		$( '.volunteer_opp .loading' ).slideDown();
@@ -89,7 +88,6 @@
 				data: $( '#wivm-sign-up-form' ).serialize()
 			},
 			function( response ){
-				console.log( 'User ID: ' + response );
 				//Show user success message and re-enable submit button
 				$( '.volunteer_opp .loading' ).slideUp();
 				$( '.volunteer_opp .success' ).slideDown();

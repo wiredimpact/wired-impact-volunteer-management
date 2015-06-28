@@ -240,7 +240,7 @@ class WI_Volunteer_Management_Public {
 	/**
 	 * Process the AJAX request from the volunteer opportunity sign up form.
 	 *
-	 * @return  int|bool The user ID if everything worked, false otherwise [<description>]
+	 * @return  int|bool The user ID if everything worked, false otherwise
 	 */
 	public function process_volunteer_sign_up(){
 		$form_fields = array();

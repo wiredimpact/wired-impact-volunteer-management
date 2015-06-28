@@ -69,3 +69,157 @@
   margin-right: 10px;
   margin-top: 1px;
 }
+
+/**
+ * Individual Volunteer page
+ */
+.wi-volunteer .volunteer-info {
+	width: 35%;
+	margin-right: 10%;
+	float: left;
+}
+
+.wi-volunteer .contact-info,
+.wi-volunteer .volunteer-notes,
+.wi-volunteer .volunteer-opps-wrapper h1 {
+	background-color: #fff; /* TO DO: Update with color from design */
+	padding: 15px;
+}
+
+.wi-volunteer .avatar {
+	float: left;
+	margin-right: 5px;
+}
+
+.wi-volunteer .contact-info h1,
+.wi-volunteer .volunteer-opps-wrapper h1,
+.wi-volunteer .volunteer-notes h3 {
+	padding-top: 0;
+	margin-top: 0;
+}
+
+.wi-volunteer .contact-info span {
+	display: block;
+	margin-bottom: 2px;
+}
+
+.wi-volunteer .volunteer-notes {
+	margin-top: 20px;
+}
+
+.wi-volunteer .edit-volunteer {
+	float: right;
+	margin-top: 10px;
+}
+
+.wi-volunteer .volunteer-opps-wrapper {
+	margin-left: 45%;
+}
+
+.wi-volunteer .volunteer-opps-wrapper h1 {
+	padding: 15px 10px 30px;
+	margin: 0;
+}
+
+.wi-volunteer .volunteer-opps-wrapper h1 span {
+	color: #999; /* TO DO: Update with color from design */
+}
+
+.wi-volunteer .opps {
+	border-left: 2px solid #fff;
+	margin-left: 5%;
+	padding-top: 1.33em;
+}
+
+.wi-volunteer .opps > h2 {
+	margin: 10px 0 0 20px;
+}
+
+.wi-volunteer .opp {
+	margin-left: 20px;
+	position: relative;
+}
+
+.wi-volunteer .opp .circle {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -31px;
+	width: 20px;
+	height: 20px;
+	background-color: #fff;
+	border-radius: 50%;
+}
+
+.wi-volunteer .opp .circle:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 6px;
+	height: 6px;
+	margin: -3px 0 0 -3px;
+	background-color: #0073aa;
+	border-radius: 50%;
+	transition: all .75s;
+}
+
+.wi-volunteer .opp:hover .circle:before {
+	background-color: #00a0d2;
+}
+
+.wi-volunteer .opp h3 {
+	margin-bottom: 0;
+}
+
+.wi-volunteer .opp h3.removed {
+	text-decoration: line-through;
+}
+
+.wi-volunteer .opp .button {
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.wi-volunteer .opp:hover .button,
+.wi-volunteer .opp .button.visible {
+	display: block;
+}
+
+.admin_page_wi-volunteer-management-volunteer .wp-pointer-arrow {
+	right: 10px;
+	left: initial;
+}
+
+.admin_page_wi-volunteer-management-volunteer .wp-pointer .button-primary.error {
+	background: red;
+	border: 1px solid red;
+}
+
+.wi-volunteer .today {
+    font-size: 15px;
+    margin: 20px 0;
+    position: relative;
+    text-align: center;
+    z-index: 1;  
+    color: #999;  
+}
+
+.wi-volunteer .today:before {
+    border-top: 1px solid #999;
+    content:"";
+    margin: 0 auto;
+    position: absolute;
+    top: 11px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 95%;
+    z-index: -1;
+}
+
+.wi-volunteer .today span { background: #f1f1f1; padding: 0 10px; }

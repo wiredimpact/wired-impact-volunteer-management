@@ -73,7 +73,7 @@ class WI_Volunteer_Management_RSVP {
 	 *
 	 * @param  int $user_id ID of user we want to sign up for this opportunity.
 	 * @param  int $opportunity_id Post ID of this volunteer opportunity.
-	 * @return bool|int False means hasn't RSVPed yes or no.  1 means going, 0 means not going.
+	 * @return bool|int False means hasn't RSVPed yes or no.  1 means going, 0 means not going, but signed up previously.
 	 */
 	public function volunteer_rsvp_status( $user_id, $opportunity_id ){
 		global $wpdb;
