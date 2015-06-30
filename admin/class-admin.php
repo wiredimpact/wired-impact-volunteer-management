@@ -213,6 +213,15 @@ class WI_Volunteer_Management_Admin {
             'volunteer_opp',                						// Post type
             'normal'												// Location
         );
+
+        //Opportunity RSVP details such as who signed up
+		add_meta_box(
+            'volunteer-opportunity-rsvps',							// Unique ID
+            __( 'Volunteer Opportunity RSVPs', 'wivm' ),			// Box title
+            array( $this, 'display_opportunity_rsvps_meta_box' ),	// Content callback
+            'volunteer_opp',                						// Post type
+            'normal'												// Location
+        );
 	}
 
 	/**
@@ -439,6 +448,52 @@ class WI_Volunteer_Management_Admin {
 		}
 	}
 
+	/**
+	 * Display the meta box for each volunteer that's signed up for the specific opportunity being viewed.
+	 * 
+	 * @param  object $post The volunteer opportunity object.
+	 * @todo   Add text for empty state when no one has signed up yet.
+	 * @todo   Use WI_Volunteer_Users_List_Table() object to display this information.
+	 */
+	public function display_opportunity_rsvps_meta_box( $post ){
+
+		$volunteer_opp 	= new WI_Volunteer_Management_Opportunity( $post->ID );
+		$num_rsvped 	= $volunteer_opp->get_number_rsvps();
+		$open_spots 	= $volunteer_opp->get_open_volunteer_spots();
+		$volunteers 	= $volunteer_opp->get_all_rsvped_volunteers();
+		?>
+
+		<span class="num">| <?php echo __( 'Number RSVPed:', 'wivm' ) . ' ' . $num_rsvped; ?></span>
+		<span class="num"><?php echo __( 'Number of Open Spots:', 'wivm' ) . ' ' . $open_spots; ?></span>
+		<table class="wp-list-table widefat fixed striped users">
+			<thead>
+				<th><?php _e( 'Name', 'wivm' ); ?></th>
+				<th><?php _e( 'E-mail', 'wivm' ); ?></th>
+				<th><?php _e( 'Phone', 'wivm' ); ?></th>
+				<th><?php _e( 'Remove RSVP', 'wivm' ); ?></th>
+			</thead>
+
+			<?php foreach( $volunteers as $volunteer ): ?>
+
+				<tr>
+					<td><a href="<?php echo $volunteer->get_admin_url(); ?>"><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></a></td>
+					<td><?php echo $volunteer->meta['email']; ?></td>
+					<td><?php echo $volunteer->meta['phone']; ?></td>
+					<td><a href="#remove-rsvp" class="button remove-rsvp" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo $volunteer->ID; ?>"><?php _e( 'Remove RSVP', 'wivm' ); ?></a></td>
+				</tr>
+
+			<?php endforeach; ?>
+
+			<tfoot>
+				<th><?php _e( 'Name', 'wivm' ); ?></th>
+				<th><?php _e( 'E-mail', 'wivm' ); ?></th>
+				<th><?php _e( 'Phone', 'wivm' ); ?></th>
+				<th><?php _e( 'Remove RSVP', 'wivm' ); ?></th>
+			</tfoot>
+		</table>
+
+		<?php
+	}
 
 	/**
 	 * Display the additional profile fields we want to include on the user profile edit screen.

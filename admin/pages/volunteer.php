@@ -34,7 +34,7 @@ $volunteer = new WI_Volunteer_Management_Volunteer( $volunteer_id );
 			<?php echo apply_filters( 'the_content', $volunteer->meta['notes'] ); ?>
 		</div>
 		
-		<a href="<?php echo admin_url( 'user-edit.php?user_id=' . $volunteer_id ); ?>" class="button button-small edit-volunteer">
+		<a href="<?php echo admin_url( 'user-edit.php?user_id=' . $volunteer_id ); ?>" class="button edit-volunteer">
 			<?php _e( 'Edit Volunteer Info', 'wivm' ); ?>
 		</a>
 	

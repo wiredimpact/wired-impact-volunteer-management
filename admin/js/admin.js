@@ -131,14 +131,17 @@
 
 
     /**
-     * Turn an opportunity RSVP from on to off for an individual volunteer
-     * Happens on ...admin.php?page=wi-volunteer-management-volunteer
+     * Turn an opportunity RSVP from on to off for an individual volunteer.
+     * Happens on wp-admin/admin.php?page=wi-volunteer-management-volunteer and within
+     * the edit screen for individual volunteer opportunities.
      */
-    $( '.opps .opp' ).on( 'click', '.remove-rsvp', function() {
+    $( '.opps .opp, #volunteer-opportunity-rsvps' ).on( 'click', '.remove-rsvp', function() {
 
         var remove_rsvp_button = $( this ),
             post_id = remove_rsvp_button.data( 'post-id' ),
-            user_id = remove_rsvp_button.data( 'user-id' );
+            user_id = remove_rsvp_button.data( 'user-id' ),
+            //button_id is set to the user_id when on an opportunity, and post_id when on the volunteer's page since each will be unique.
+            button_id = ( remove_rsvp_button.closest( '#volunteer-opportunity-rsvps' ).length == 1 ) ? user_id : post_id;
 
         remove_rsvp_button.addClass( 'visible' );
 
@@ -149,7 +152,7 @@
                 align: 'right'
             },
             buttons: function (event, t) {
-                        var button = $('<a id="pointer-close-' + post_id + '" style="margin:0 5px;" class="button-secondary">' + wivm_ajax.remove_rsvp_cancel_text + '</a>');
+                        var button = $('<a id="pointer-close-' + button_id + '" style="margin:0 5px;" class="button-secondary">' + wivm_ajax.remove_rsvp_cancel_text + '</a>');
                         button.bind('click.pointer', function () {
                             t.element.pointer('close');
                             remove_rsvp_button.removeClass( 'visible' );
@@ -158,8 +161,9 @@
             }
         }).pointer( 'open' );
 
-        $( '#pointer-close-' + post_id ).after( '<a id="pointer-primary-' + post_id + '" data-id="' + post_id + '" class="button-primary">' + wivm_ajax.remove_rsvp_confirm_text + '</a>' );
-        $( '#pointer-primary-' + post_id ).click(function() {
+        console.log( button_id );
+        $( '#pointer-close-' + button_id ).after( '<a id="pointer-primary-' + button_id + '" data-id="' + button_id + '" class="button-primary">' + wivm_ajax.remove_rsvp_confirm_text + '</a>' );
+        $( '#pointer-primary-' + button_id ).click(function() {
 
             var pointer_remove_button = $( this );
 
@@ -174,7 +178,8 @@
                 },
                 function( response ){
                     if( response == 1 ){ //Success
-                        remove_rsvp_button.fadeOut().siblings( 'h3' ).addClass( 'removed' );
+                        remove_rsvp_button.fadeOut().siblings( 'h3' ).addClass( 'removed' ); //For individual volunteer page
+                        remove_rsvp_button.fadeOut().parent( 'td' ).siblings().addClass( 'removed' ); //For individual opportunity page
                         pointer_remove_button.closest( '.wp-pointer' ).hide();
                     }
                     else { //Failure

@@ -188,7 +188,7 @@ class WI_Volunteer_Management_Volunteer {
 
 		$volunteer_opps = $wpdb->get_results( $wpdb->prepare( $query, $query_values ) );
 
-		//Use post id to get grab a bunch info on each opportunity and store in the same variable using &.
+		//Use post id to grab a bunch info on each opportunity and store in the same variable using &.
 		foreach( $volunteer_opps as &$opp ){
 			$opp = new WI_Volunteer_Management_Opportunity( $opp->post_id );
 		}
@@ -219,6 +219,20 @@ class WI_Volunteer_Management_Volunteer {
 		);
 
 		return $status;
+	}
+
+	/**
+	 * Get the admin link to look at this specific volunteer.
+	 *
+	 * This is not a link to the typical user edit screen. This page includes a lot of information on the 
+	 * volunteer including the contact info, notes on them and which volunteer opportunities they signed up for.
+	 * 
+	 * @param  int $user_id The volunteer's ID
+	 * @return string       The URL needed to view this volunteer's information.
+	 */
+	public function get_admin_url(){
+
+		return get_admin_url( null, 'admin.php?page=wi-volunteer-management-volunteer&user_id=' . $this->ID );		
 	}
 
 	/**

@@ -61,6 +61,16 @@
 .ui-timepicker-div.ui-timepicker-oneLine .ui_tpicker_unit_hide,
 .ui-timepicker-div.ui-timepicker-oneLine .ui_tpicker_unit_hide:before{ display: none; }
 
+#volunteer-opportunity-rsvps span.num {
+	float: right;
+	display: inline-block;
+	margin-right: 2px;
+	color: #777;
+	font-size: 12px;
+	line-height: 30px;
+	font-style: italic;
+}
+
 /**
  * Volunteers list
  */
@@ -174,7 +184,8 @@
 	margin-bottom: 0;
 }
 
-.wi-volunteer .opp h3.removed {
+.wi-volunteer .opp h3.removed,
+#volunteer-opportunity-rsvps td.removed {
 	text-decoration: line-through;
 }
 
@@ -190,7 +201,8 @@
 	display: block;
 }
 
-.admin_page_wi-volunteer-management-volunteer .wp-pointer-arrow {
+.admin_page_wi-volunteer-management-volunteer .wp-pointer-arrow,
+body.post-type-volunteer_opp .wp-pointer-arrow {
 	right: 10px;
 	left: initial;
 }

@@ -263,4 +263,31 @@ class WI_Volunteer_Management_Opportunity {
 		return true;
 	}
 
+	/**
+	 * Get array of all volunteers signed up for a specific volunteer opportunity.
+	 * 
+	 * @return array Array of volunteer objects for each person that signed up for this opportunity.
+	 */
+	public function get_all_rsvped_volunteers(){
+		global $wpdb;
+
+		$query = "
+		         SELECT user_id
+		         FROM " . $wpdb->prefix  . "volunteer_rsvps
+		         WHERE post_id = %d AND rsvp = %d
+		         ORDER BY time DESC
+		        ";
+
+		$query_values = array( $this->ID, 1 );
+
+		$volunteers = $wpdb->get_results( $wpdb->prepare( $query, $query_values ) );
+
+		//Use the user id to grab a bunch info on each volunteer and store in the same variable using &.
+		foreach( $volunteers as &$volunteer ){
+			$volunteer = new WI_Volunteer_Management_Volunteer( $volunteer->user_id );
+		}
+
+		return $volunteers;			        
+	}
+
 } //class WI_Volunteer_Management_Opportunity

@@ -211,6 +211,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 		$volunteer 			= new WI_Volunteer_Management_Volunteer( $user_object->ID );
 		$phone 				= $volunteer->meta['phone'];
 		$num_volunteer_opps = $volunteer->meta['num_volunteer_opps'];
+		$admin_url 			= $volunteer->get_admin_url();
 
 		if ( $this->is_site_users )
 			$url = "site-users.php?id={$this->site_id}&amp;";
@@ -276,7 +277,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 
 			switch ( $column_name ) {
 				case 'name':
-					$r .= "<td $attributes>$avatar <strong><a href='" . get_admin_url( null, 'admin.php?page=wi-volunteer-management-volunteer&user_id=' . $user_object->ID ) . "'>$user_object->first_name $user_object->last_name</a><strong></td>";
+					$r .= "<td $attributes>$avatar <strong><a href='" . $admin_url . "'>$user_object->first_name $user_object->last_name</a><strong></td>";
 					break;
 				case 'email':
 					$r .= "<td $attributes>$email</td>";
