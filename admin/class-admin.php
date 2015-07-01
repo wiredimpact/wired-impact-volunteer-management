@@ -463,8 +463,8 @@ class WI_Volunteer_Management_Admin {
 		$volunteers 	= $volunteer_opp->get_all_rsvped_volunteers();
 		?>
 
-		<span class="num">| <?php echo __( 'Number RSVPed:', 'wivm' ) . ' ' . $num_rsvped; ?></span>
-		<span class="num"><?php echo __( 'Number of Open Spots:', 'wivm' ) . ' ' . $open_spots; ?></span>
+		<span class="num">| <?php echo __( 'Number of Open Spots:', 'wivm' ) . ' ' . $open_spots; ?></span>
+		<span class="num"><?php echo __( 'Number RSVPed:', 'wivm' ) . ' ' . $num_rsvped; ?></span>
 		<table class="wp-list-table widefat fixed striped users">
 			<thead>
 				<th><?php _e( 'Name', 'wivm' ); ?></th>
@@ -473,7 +473,7 @@ class WI_Volunteer_Management_Admin {
 				<th><?php _e( 'Remove RSVP', 'wivm' ); ?></th>
 			</thead>
 
-			<?php foreach( $volunteers as $volunteer ): ?>
+			<?php if( !empty( $volunteers ) ): foreach( $volunteers as $volunteer ): ?>
 
 				<tr>
 					<td><a href="<?php echo $volunteer->get_admin_url(); ?>"><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></a></td>
@@ -482,7 +482,13 @@ class WI_Volunteer_Management_Admin {
 					<td><a href="#remove-rsvp" class="button remove-rsvp" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo $volunteer->ID; ?>"><?php _e( 'Remove RSVP', 'wivm' ); ?></a></td>
 				</tr>
 
-			<?php endforeach; ?>
+			<?php endforeach; else: ?>
+
+				<tr>
+					<td colspan="4"><?php _e( 'No one has signed up for this opportunity yet.', 'wivm' ); ?></td>
+				</tr>
+
+			<?php endif; ?>
 
 			<tfoot>
 				<th><?php _e( 'Name', 'wivm' ); ?></th>
