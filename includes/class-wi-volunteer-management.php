@@ -135,6 +135,11 @@ class WI_Volunteer_Management {
 		require_once WIVM_DIR . 'includes/class-rsvp.php';
 
 		/**
+		 * The class responsible for dealing with emails sent to volunteers and admins.
+		 */
+		require_once WIVM_DIR . 'includes/class-email.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once WIVM_DIR . 'admin/class-admin.php';
@@ -189,6 +194,8 @@ class WI_Volunteer_Management {
 		$this->loader->add_action(		'personal_options_update', 	$plugin_admin, 'save_extra_profile_fields' );
 		$this->loader->add_action(		'edit_user_profile_update', $plugin_admin, 'save_extra_profile_fields' );
 		$this->loader->add_action( 		'wp_ajax_wivm_remove_rsvp',	$plugin_admin, 'remove_user_opp_rsvp' );
+		$this->loader->add_action( 		'save_post',				$plugin_admin, 'schedule_auto_email_reminder', 99, 2 );
+		$this->loader->add_action( 		'send_auto_email_reminders',$plugin_admin, 'send_email_reminder' );
 		
 	}
 

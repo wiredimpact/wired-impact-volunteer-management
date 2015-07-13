@@ -46,6 +46,7 @@ class WI_Volunteer_Management_Volunteer {
 		}
 		elseif( $form_fields != null ) {
 			$this->create_update_user( $form_fields );
+			$this->set_meta();
 		}
 
 	}

@@ -48,6 +48,10 @@ class WI_Volunteer_Management_Activator {
 
 		//Create our volunteer opportunity table if it doesn't already exist.
 		WI_Volunteer_Management_Activator::create_rsvp_db_table();
+
+		//Add our default options if they don't already exist.
+		$options = new WI_Volunteer_Management_Options();
+		$options->set_defaults();
 	}
 
 	/*
@@ -74,8 +78,8 @@ class WI_Volunteer_Management_Activator {
 				UNIQUE KEY (user_id, post_id)
 			);";
 
-			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-			dbDelta($sql);
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			dbDelta( $sql );
 
 			//We set a variable in options in case we need to update the database in the future.
 			add_option('volunteer_opp_rsvp_db_version', 1.0);

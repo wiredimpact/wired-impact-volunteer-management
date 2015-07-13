@@ -11,6 +11,13 @@
 class WI_Volunteer_Management_RSVP {
 
 	/**
+	 * Whether the person rsvped to volunteer or not.
+	 *
+	 * @var bool True if the person RSVPed, false on error or if the person had already RSVPed for this opportunity.
+	 */
+	public $rsvped;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -18,7 +25,7 @@ class WI_Volunteer_Management_RSVP {
 	public function __construct( $user_id = null, $opportunity_id = null ) {
 
 		if( $user_id != null && $opportunity_id != null ){
-			$this->save_rsvp( $user_id, $opportunity_id );
+			$this->rsvped = $this->save_rsvp( $user_id, $opportunity_id );
 		}
 
 	}

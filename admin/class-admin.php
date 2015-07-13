@@ -576,4 +576,92 @@ class WI_Volunteer_Management_Admin {
  		die(); //Must use die() when using AJAX
 	}
 
+	/**
+	 * Set up an auto email reminder for a specific opportunity when that opportunity is saved.
+	 * 
+	 * @param int $opp_id Post ID of the volunteer opportunity we're creating a reminder for.
+	 * @param object $post The post object for the volunteer opportunity we're creating a reminder for.
+	 * @return bool Returns false if we aren't going to schedule an opportunity reminder.
+	 */
+	public function schedule_auto_email_reminder( $opp_id, $post ){
+
+		//Check autosave, post type, user caps
+		if( wp_is_post_autosave( $opp_id ) || wp_is_post_revision( $opp_id ) ) {
+		  return false;
+		}
+		if( $post->post_type != 'volunteer_opp' ){
+		  return false;
+		}
+		if( !current_user_can( 'manage_options' ) ){
+		  return false;
+		}
+
+		//Pull event information
+		$opp = new WI_Volunteer_Management_Opportunity( $opp_id );
+
+		//Gather cron info.  We have to convert everything to GMT since WP Cron sends based on GMT.
+		$cron_hook = 'send_auto_email_reminders';
+		$cron_args = array( $opp_id );
+		if( $opp->opp_meta['one_time_opp'] == 1 && $opp->opp_meta['start_date_time'] != '' ){
+		  $start_date_time_gmt = strtotime( get_gmt_from_date( date( 'Y-m-d H:i:s', $opp->opp_meta['start_date_time'] ) ) . ' GMT' );
+
+		  $options = new WI_Volunteer_Management_Options();
+		  $days_prior_reminder = $options->get_option( 'days_prior_reminder' );
+		  $new_reminder_time = $start_date_time_gmt - ( $days_prior_reminder * 86400 ); //86400 is one day in seconds
+		}
+		$current_time = current_time( 'timestamp', 1 );
+
+		//Remove existing cron event for this volunteer opportunity if one exists
+		wp_clear_scheduled_hook( $cron_hook, $cron_args );
+
+		//Don't schedule the reminder under certain circumstances
+		if( 
+		  $post->post_status != 'publish' || //If opportunity isn't published
+		  $opp->opp_meta['one_time_opp'] == 0 || //If opportunity is not at a specific date and time
+		  $opp->opp_meta['start_date_time'] == '' || //If there is no start date for the opportunity
+		  $current_time > $new_reminder_time //If the current time is passed the new reminder time
+		  ){
+		  return false;
+		}
+
+		//If we passed all the conditions then schedule the auto reminder
+		wp_schedule_single_event( $new_reminder_time, $cron_hook, $cron_args );
+		do_action( 'wivm_after_email_reminder_scheduled', $opp, $new_reminder_time );
+	}
+
+	/**
+	 * Send volunteer reminder email.
+	 *
+	 * This method is called using cron and is never called in any other way.
+	 * 
+	 * @param  int $opp_id Volunteer opportunity ID.
+	 */
+	public function send_email_reminder( $opp_id ){
+
+		$opp 	= new WI_Volunteer_Management_Opportunity( $opp_id );
+		$email 	= new WI_Volunteer_Management_Email( $opp );
+		$email->send_volunteer_reminder_email();
+
+	}
+
+	/**
+	 * Loop through all opportunities and create or remove all auto email reminders.
+	 *
+	 * @todo Set this function up to run when the number of days prior to send reminder is changed. Right now there is no way to determine if it's changed.
+	 */
+	public function rebuild_all_reminders(){
+
+		$opps = get_posts( array( 
+		    'post_type' => 'volunteer_opp',
+		    'post_status' => array( 'publish', 'pending', 'draft', 'future', 'trash' ),
+		    'numberposts' => -1
+		) );
+
+		foreach ( $opps as $opp ){
+			$this->schedule_auto_email_reminder( $opp->ID, $opp );
+		}
+
+	}
+   
+
 } //class WI_Volunteer_Management_Admin

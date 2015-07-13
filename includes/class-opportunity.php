@@ -80,6 +80,20 @@ class WI_Volunteer_Management_Opportunity {
 	}
 
 	/**
+	 * Return a single date and time for an opp, or the frequency if it's not a one-time opportunity.
+	 * 
+	 * @return string A string of the date and time, or the frequency of the opportunity.
+	 */
+	public function get_one_date_time(){
+		if( $this->opp_meta['one_time_opp'] == 1 ){
+			return $this->format_opp_times( $this->opp_meta['start_date_time'], $this->opp_meta['end_date_time'] );
+		}
+		else {
+			return $this->opp_meta['flexible_frequency'];
+		}
+	}
+
+	/**
 	 * Format the opportunity times to be displayed.
 	 * 
 	 * @param int $start_date_time Timestamp of the start of the opportunity.

@@ -258,6 +258,14 @@ class WI_Volunteer_Management_Public {
 		//RSVP this volunteer for the opportunity
 		$rsvp = new WI_Volunteer_Management_RSVP( $user->ID, $form_fields['wivm_opportunity_id'] );
 
+		//If the person hadn't already RSVPed then send out the signup emails.
+		if( $rsvp->rsvped == true ){
+			$opp 	= new WI_Volunteer_Management_Opportunity( $form_fields['wivm_opportunity_id'] );
+			$email 	= new WI_Volunteer_Management_Email( $user, $opp );
+			$email->send_volunteer_signup_email();
+			$email->send_admin_signup_email();
+		}
+
 		//Return the user ID to the js or false if something broke.
  		echo $user->ID; 
  		
