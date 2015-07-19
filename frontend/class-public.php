@@ -57,11 +57,16 @@ class WI_Volunteer_Management_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
+	 * Only load the frontend CSS if the setting is turned on to do so.
+	 *
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wi-volunteer-management-public.css', array(), $this->version, 'all' );
+		$options = new WI_Volunteer_Management_Options();
+		if( $options->get_option( 'use_css' ) == 1 ){
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wi-volunteer-management-public.css', array(), $this->version, 'all' );
+		}
 
 	}
 

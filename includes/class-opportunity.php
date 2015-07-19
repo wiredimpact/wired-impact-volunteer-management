@@ -54,17 +54,17 @@ class WI_Volunteer_Management_Opportunity {
 		$volunteer_opp_meta = array();
 
 		//Contact Information
-		$volunteer_opp_meta['contact_name'] 			= ( isset( $volunteer_opp_meta_raw['_contact_name'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_contact_name'][0] ) : '';
-		$volunteer_opp_meta['contact_phone']			= ( isset( $volunteer_opp_meta_raw['_contact_phone'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_contact_phone'][0] ) : '';
+		$volunteer_opp_meta['contact_name'] 			= ( isset( $volunteer_opp_meta_raw['_contact_name'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_contact_name'][0] ) : $this->get_default_meta( 'default_contact_name' );
+		$volunteer_opp_meta['contact_phone']			= ( isset( $volunteer_opp_meta_raw['_contact_phone'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_contact_phone'][0] ) : $this->get_default_meta( 'default_contact_phone' );
 		$volunteer_opp_meta['contact_formatted_phone']	= $this->format_phone_number( $volunteer_opp_meta['contact_phone'] );
-		$volunteer_opp_meta['contact_email']			= ( isset( $volunteer_opp_meta_raw['_contact_email'] ) ) ? sanitize_email( $volunteer_opp_meta_raw['_contact_email'][0] ) : '';
+		$volunteer_opp_meta['contact_email']			= ( isset( $volunteer_opp_meta_raw['_contact_email'] ) ) ? sanitize_email( $volunteer_opp_meta_raw['_contact_email'][0] ) : $this->get_default_meta( 'default_contact_email' );
 
 		//Location Information
-		$volunteer_opp_meta['location'] 				= ( isset( $volunteer_opp_meta_raw['_location'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_location'][0] ) : '';
-		$volunteer_opp_meta['street'] 					= ( isset( $volunteer_opp_meta_raw['_street'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_street'][0] ) : '';
-		$volunteer_opp_meta['city'] 					= ( isset( $volunteer_opp_meta_raw['_city'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_city'][0] ) : '';
-		$volunteer_opp_meta['state'] 					= ( isset( $volunteer_opp_meta_raw['_state'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_state'][0] ) : '';
-		$volunteer_opp_meta['zip'] 						= ( isset( $volunteer_opp_meta_raw['_zip'] ) && $volunteer_opp_meta_raw['_zip'][0] != '' ) ? (int)$volunteer_opp_meta_raw['_zip'][0] : '';
+		$volunteer_opp_meta['location'] 				= ( isset( $volunteer_opp_meta_raw['_location'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_location'][0] ) : $this->get_default_meta( 'default_location' );
+		$volunteer_opp_meta['street'] 					= ( isset( $volunteer_opp_meta_raw['_street'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_street'][0] ) : $this->get_default_meta( 'default_street' );
+		$volunteer_opp_meta['city'] 					= ( isset( $volunteer_opp_meta_raw['_city'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_city'][0] ) : $this->get_default_meta( 'default_city' );
+		$volunteer_opp_meta['state'] 					= ( isset( $volunteer_opp_meta_raw['_state'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_state'][0] ) : $this->get_default_meta( 'default_state' );
+		$volunteer_opp_meta['zip'] 						= ( isset( $volunteer_opp_meta_raw['_zip'] ) && $volunteer_opp_meta_raw['_zip'][0] != '' ) ? (int)$volunteer_opp_meta_raw['_zip'][0] : $this->get_default_meta( 'default_zip' );
 
 		//Date and Time Information
 		$volunteer_opp_meta['one_time_opp'] 			= ( isset( $volunteer_opp_meta_raw['_one_time_opp'] ) ) ? (int)$volunteer_opp_meta_raw['_one_time_opp'][0] : 0;
@@ -101,6 +101,27 @@ class WI_Volunteer_Management_Opportunity {
 		$html .= $meta_value . '</span>';
 
 		echo $html;
+	}
+
+	/**
+	 * Load default meta information from settings if available.
+	 *
+	 * This is used to load default contact and location information for new opportunities so the admin doesn't
+	 * have to enter the same information every time.
+	 * 
+	 * @param  string $key The key for this setting in the options, not the meta box.
+	 * @return string      The value of the default or a blank string if none exists.
+	 */
+	public function get_default_meta( $key ){
+		$options = new WI_Volunteer_Management_Options();
+		$default = $options->get_option( $key );
+
+		$value = '';
+		if( $default != '' ){
+			$value = $default;
+		}
+
+		return $value;
 	}
 
 	/**
