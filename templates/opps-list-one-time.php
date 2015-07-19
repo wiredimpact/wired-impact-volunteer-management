@@ -16,9 +16,9 @@ $opp = new WI_Volunteer_Management_Opportunity( $post->ID ); //Get volunteer opp
 
 	<div class="entry-content">
 		<div class="volunteer-opp-info">
-			<span><strong><?php echo __( 'When: ', 'wivm' ); ?></strong> <?php echo $opp->format_opp_times(); ?></span>
-			<span><strong><?php echo __( 'Where: ', 'wivm' ); ?></strong> <?php echo $opp->format_address(); ?></span>
-			<span><strong><?php echo __( 'Open Volunteer Spots: ', 'wivm' ); ?></strong> <?php echo $opp->get_open_volunteer_spots(); ?></span>
+			<?php $opp->display_meta( $opp->format_opp_times(), 		__( 'When:', 'wivm' ) ); ?>
+			<?php $opp->display_meta( $opp->format_address(), 			__( 'Where:', 'wivm' ) ); ?>
+			<?php $opp->display_meta( $opp->get_open_volunteer_spots(), __( 'Open Volunteer Spots:', 'wivm' ) ); ?>
 		</div><!-- .volunteer-opp-info -->
 
 		<?php the_excerpt(); ?>

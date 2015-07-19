@@ -80,6 +80,30 @@ class WI_Volunteer_Management_Opportunity {
 	}
 
 	/**
+	 * Display meta information for this opportunity including a heading.
+	 * 
+	 * @param  string $meta_value The meta information to display.
+	 * @param  string $heading    The heading to display in front of the meta information is one exists.
+	 * @return mixed 			  Returns an empty string if no meta value, or it will echo the resulting string.
+	 */
+	public function display_meta( $meta_value, $heading = '' ){
+
+		if( $meta_value == '' ){
+			return false;
+		}
+
+		$html = '<span>';
+
+		if( $heading != '' ){
+			$html .= '<strong>' . $heading . '</strong> ';
+		}
+
+		$html .= $meta_value . '</span>';
+
+		echo $html;
+	}
+
+	/**
 	 * Return a single date and time for an opp, or the frequency if it's not a one-time opportunity.
 	 * 
 	 * @return string A string of the date and time, or the frequency of the opportunity.
@@ -184,7 +208,7 @@ class WI_Volunteer_Management_Opportunity {
 		$location .= esc_html( $this->opp_meta['state'] );
 
 		//Add zip code
-		$location .= ' ' . esc_html( $this->opp_meta['zip'] );
+		$location .= ( $location != '' ) ? ' ' . esc_html( $this->opp_meta['zip'] ) : esc_html( $this->opp_meta['zip'] );
 
 		//Wrap in Google Maps link if requested
 		if( $make_maps_link == true && $this->opp_meta['street'] != '' && $this->opp_meta['city'] != '' ){
@@ -216,7 +240,12 @@ class WI_Volunteer_Management_Opportunity {
 	 * @return string Email address as clickable mailto link.
 	 */
 	public function get_email_as_link( $email_address ){
-		return '<a href="mailto:' . $email_address . '" title="Send email">' . $email_address . '</a>';
+		if( is_email( $email_address ) ){
+			return '<a href="mailto:' . $email_address . '" title="Send email">' . $email_address . '</a>';
+		}
+		else {
+			return $email_address;
+		}
 	}
 
 	/**

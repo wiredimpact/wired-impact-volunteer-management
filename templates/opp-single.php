@@ -26,14 +26,14 @@ get_header(); ?>
 
 				<div class="entry-content">
 					<div class="volunteer-opp-info">
-						<span><strong><?php echo __( 'When: ', 'wivm' ); ?></strong> <?php echo ( $opp->opp_meta['one_time_opp'] == 1 ) ? $opp->format_opp_times() : $opp->opp_meta['flexible_frequency']; ?></span>
-						<span><strong><?php echo __( 'Where: ', 'wivm' ); ?></strong> <?php echo $opp->format_address(); ?></span>
+						<?php $opp->display_meta( ( $opp->opp_meta['one_time_opp'] == 1 ) ? $opp->format_opp_times() : $opp->opp_meta['flexible_frequency'], __( 'When:', 'wivm' ) ); ?>
+						<?php $opp->display_meta( $opp->format_address(), 										__( 'Where:', 'wivm' ) ); ?>
 
-						<span><strong><?php echo __( 'Contact: ', 'wivm' ); ?></strong> <?php echo $opp->opp_meta['contact_name']; ?></span>
-						<span><strong><?php echo __( 'Contact Email: ', 'wivm' ); ?></strong> <?php echo $opp->get_email_as_link( $opp->opp_meta['contact_email'] ); ?></span>
-						<span><strong><?php echo __( 'Contact Phone: ', 'wivm' ); ?></strong> <?php echo $opp->opp_meta['contact_formatted_phone']; ?></span>
+						<?php $opp->display_meta( $opp->opp_meta['contact_name'], 								__( 'Contact:', 'wivm' ) ); ?>
+						<?php $opp->display_meta( $opp->get_email_as_link( $opp->opp_meta['contact_email'] ), 	__( 'Contact Email:', 'wivm' ) ); ?>
+						<?php $opp->display_meta( $opp->opp_meta['contact_formatted_phone'], 					__( 'Contact Phone:', 'wivm' ) ); ?>
 
-						<span><strong><?php echo __( 'Open Volunteer Spots: ', 'wivm' ); ?></strong> <?php echo $opp->get_open_volunteer_spots(); ?></span>
+						<?php $opp->display_meta( $opp->get_open_volunteer_spots(), 							__( 'Open Volunteer Spots:', 'wivm' ) ); ?>
 					</div><!-- .volunteer-opp-info -->
 
 					<?php the_content(); ?>
