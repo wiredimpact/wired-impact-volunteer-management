@@ -45,7 +45,8 @@ class WI_Volunteer_Management_Opportunity {
 
 	/**
 	 * Retrieve all the board event meta data.
-	 * 
+	 *
+	 * @todo  Fix zip code to use (int) sanitization, but this is tough given the use of defaults.
 	 * @param int $volunteer_opp_id The ID of the volunteer opportunity we're referencing.
 	 * @return array Associative array of all meta data for the board event.
 	 */
@@ -64,7 +65,7 @@ class WI_Volunteer_Management_Opportunity {
 		$volunteer_opp_meta['street'] 					= ( isset( $volunteer_opp_meta_raw['_street'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_street'][0] ) : $this->get_default_meta( 'default_street' );
 		$volunteer_opp_meta['city'] 					= ( isset( $volunteer_opp_meta_raw['_city'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_city'][0] ) : $this->get_default_meta( 'default_city' );
 		$volunteer_opp_meta['state'] 					= ( isset( $volunteer_opp_meta_raw['_state'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_state'][0] ) : $this->get_default_meta( 'default_state' );
-		$volunteer_opp_meta['zip'] 						= ( isset( $volunteer_opp_meta_raw['_zip'] ) && $volunteer_opp_meta_raw['_zip'][0] != '' ) ? (int)$volunteer_opp_meta_raw['_zip'][0] : $this->get_default_meta( 'default_zip' );
+		$volunteer_opp_meta['zip'] 						= ( isset( $volunteer_opp_meta_raw['_zip'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_zip'][0] ) : $this->get_default_meta( 'default_zip' );
 
 		//Date and Time Information
 		$volunteer_opp_meta['one_time_opp'] 			= ( isset( $volunteer_opp_meta_raw['_one_time_opp'] ) ) ? (int)$volunteer_opp_meta_raw['_one_time_opp'][0] : 0;

@@ -564,6 +564,60 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
+	 * Add custom columns the volunteer opportunities content type list.
+	 * 
+	 * @param array $columns The default columns for volunteer opps admin list view.
+	 * @return array Custom columns we want to use on the opps list.
+	 */
+	public function manage_opp_columns( $columns ) {
+		$columns = array(
+			'cb' 			=> '<input type="checkbox" />',
+			'title' 		=> __( 'Title', 'wivm' ),
+			'location' 		=> __( 'Location', 'wivm' ),
+			'date_time' 	=> __( 'When', 'wivm' ),
+			'num_rsvped' 	=> __( 'Number of RSVPs', 'wivm' ),
+			'num_open_spots'=> __( 'Number of Open Spots', 'wivm' )
+		);
+
+		return apply_filters( 'wivm_opp_columns', $columns );
+	}
+
+	/**
+  	 * Display content for each custom column for volunteer opps.
+  	 * 
+  	 * @param string $column Column to be displayed.
+  	 * @param int $post_id ID of the volunteer opp to be displayed.
+  	 */
+	public function show_opp_columns( $column, $post_id ){
+
+		$opp = new WI_Volunteer_Management_Opportunity( $post_id );
+
+		switch( $column ){
+
+			case 'location':
+
+				echo $opp->format_address();
+				break;
+
+			case 'date_time':
+
+				echo $opp->get_one_date_time();
+				break;
+
+			case 'num_rsvped':
+
+				echo $opp->get_number_rsvps();
+				break;
+
+			case 'num_open_spots':
+
+				echo $opp->get_open_volunteer_spots();
+				break;
+		}
+
+	}
+
+	/**
 	 * Process the AJAX request from the remove RSVP button on the individual volunteer page.
 	 *
 	 * This turns a volunteer's RSVP for a specific opportunity from 1 to 0 (yes to no) in the 
