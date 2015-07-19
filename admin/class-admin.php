@@ -198,7 +198,23 @@ class WI_Volunteer_Management_Admin {
 	 * @see  https://kovshenin.com/2012/the-wordpress-settings-api/ Article on how to use the Settings API
 	 */
 	public function register_settings(){
-		register_setting( 'wivm-settings-group', 'wivm-settings' );
+		register_setting( 'wivm-settings-group', 'wivm-settings', array( $this, 'process_wivm_settings_group_save' ) );
+	}
+
+	/**
+	 * Complete any additional processing that must take place before new settings are saved.
+	 * 
+	 * @param  array $new_options Array of new options that are about to be saved.
+	 * @return array              New options that are about to be saved, possibly adjusted.
+	 */
+	public function process_wivm_settings_group_save( $new_options ){
+
+		$existing_options = new WI_Volunteer_Management_Options();
+		if( $new_options['days_prior_reminder'] != $existing_options->get_option( 'days_prior_reminder' ) ){
+			$this->rebuild_all_reminders();
+		}
+
+		return apply_filters( 'wivm_process_settings_group_save', $new_options );
 	}
 
 	/**
