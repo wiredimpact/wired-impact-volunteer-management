@@ -51,7 +51,7 @@ class WI_Volunteer_Management_RSVP {
 		$volunteer_rsvp_status = $this->volunteer_rsvp_status( $user_id, $opportunity_id );
 		$time = current_time( 'mysql' );
 
-		//Insert data into database
+		//Insert data into database if this is a new RSVP.
 		if( $volunteer_rsvp_status === false ){
 			$wpdb->insert(
 		        $table_name,
@@ -66,7 +66,26 @@ class WI_Volunteer_Management_RSVP {
 
 			$result = true; //Successfully RSVPed
 		}
-		else { //This person was already RSVPed for this opportunity
+		//If the user was previously RSVPed, was removed and is RSVPing again.
+		elseif( $volunteer_rsvp_status === 0 ){
+			$wpdb->update(
+		        $table_name,
+		        array( //Values to enter
+		        	'rsvp' 		=> $rsvp,
+		        	'time'		=> $time
+		        ),
+		        array( //Where clause
+		        	'user_id' 	=> $user_id,
+		        	'post_id' 	=> $opportunity_id,
+		        ),
+		        array( '%d', '%s' ), //Format for values to be entered
+		        array( '%d', '%d' )  //Format for Where values
+			);
+
+			$result = true; //Successfully RSVPed
+		}
+		//This person is already RSVPed for this opportunity
+		else { 
 			$result = false;
 		}
 		

@@ -266,7 +266,7 @@ class WI_Volunteer_Management_Public {
 		//If the person hadn't already RSVPed then send out the signup emails.
 		if( $rsvp->rsvped == true ){
 			$opp 	= new WI_Volunteer_Management_Opportunity( $form_fields['wivm_opportunity_id'] );
-			$email 	= new WI_Volunteer_Management_Email( $user, $opp );
+			$email 	= new WI_Volunteer_Management_Email( $opp, $user );
 			$email->send_volunteer_signup_email();
 			$email->send_admin_signup_email();
 		}

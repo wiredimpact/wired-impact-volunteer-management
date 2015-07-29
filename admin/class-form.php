@@ -192,7 +192,7 @@ class WI_Volunteer_Management_Form {
 				wp_editor( $content, $var . '-editor',array(
 					'media_buttons' => false,
 					'textarea_name' => esc_attr( $this->option_name ) . '[' . esc_attr( $var ) . ']',
-					'textarea_rows' => 15,
+					'textarea_rows' => 20,
 					'editor_css'	=> $attr['class']
 				));
 				if( $attr['description'] ) echo '<p class="description">' . $attr['description'] . '</p>';
