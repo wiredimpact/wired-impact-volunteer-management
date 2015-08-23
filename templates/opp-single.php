@@ -43,6 +43,8 @@ get_header(); ?>
 					<?php if( $opp->should_allow_rvsps() ): ?>
 					<div class="loading message"><?php _e( 'Please wait...', 'wivm' ); ?></div>
 					<div class="success message"><?php _e( 'Thanks for signing up. You\'ll receive a confirmation email shortly.', 'wivm' ); ?></div>
+					<div class="already-rsvped message"><?php _e( 'It looks like you already signed up for this opportunity.', 'wivm' ); ?></div>
+					<div class="rsvp-closed message"><?php _e( 'We\'re sorry, but we weren\'t able to sign you up. We have no more open spots. ', 'wivm' ); ?></div>
 					<div class="error message"><?php _e( 'Please fill in every field and make sure you entered a valid email address.', 'wivm' ); ?></div>
 
 					<form id="wivm-sign-up-form" method="POST" url="<?php the_permalink(); ?>">

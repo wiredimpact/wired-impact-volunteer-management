@@ -257,22 +257,34 @@ class WI_Volunteer_Management_Public {
 			die();
 		}
 
-		//Add or update the new volunteer user
-		$user = new WI_Volunteer_Management_Volunteer( null, $form_fields );
+		$opp = new WI_Volunteer_Management_Opportunity( $form_fields['wivm_opportunity_id'] );
+		if( $opp->should_allow_rvsps() == true ){
 
-		//RSVP this volunteer for the opportunity
-		$rsvp = new WI_Volunteer_Management_RSVP( $user->ID, $form_fields['wivm_opportunity_id'] );
+			//Add or update the new volunteer user
+			$user = new WI_Volunteer_Management_Volunteer( null, $form_fields );
 
-		//If the person hadn't already RSVPed then send out the signup emails.
-		if( $rsvp->rsvped == true ){
-			$opp 	= new WI_Volunteer_Management_Opportunity( $form_fields['wivm_opportunity_id'] );
-			$email 	= new WI_Volunteer_Management_Email( $opp, $user );
-			$email->send_volunteer_signup_email();
-			$email->send_admin_signup_email();
+			//RSVP this volunteer for the opportunity
+			$rsvp = new WI_Volunteer_Management_RSVP( $user->ID, $form_fields['wivm_opportunity_id'] );
+
+			//If the person hadn't already RSVPed then send out the signup emails.
+			if( $rsvp->rsvped == true ){
+				$email 	= new WI_Volunteer_Management_Email( $opp, $user );
+				$email->send_volunteer_signup_email();
+				$email->send_admin_signup_email();
+				$result = 'rsvped';
+			}
+			else {
+				$result = 'already_rsvped';
+			}
+
 		}
-
-		//Return the user ID to the js or false if something broke.
- 		echo $user->ID; 
+		//If RSVPs have been closed
+		else {
+			$result = 'rsvp_closed';
+		}
+		
+		//Return a message which tells us what messages to show on the frontend
+ 		echo $result; 
  		
  		die(); //Must use die() when using AJAX
 	}

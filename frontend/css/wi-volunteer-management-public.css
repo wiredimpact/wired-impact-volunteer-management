@@ -68,7 +68,9 @@
 	font-style: italic;
 }
 
-.volunteer_opp .error {
+.volunteer_opp .error,
+.volunteer_opp .already-rsvped,
+.volunteer_opp .rsvp-closed {
 	color: #990000;
 }
 

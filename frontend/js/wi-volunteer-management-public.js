@@ -88,10 +88,24 @@
 				data: $( '#wivm-sign-up-form' ).serialize()
 			},
 			function( response ){
-				//Show user success message and re-enable submit button
+
 				$( '.volunteer_opp .loading' ).slideUp();
-				$( '.volunteer_opp .success' ).slideDown();
-				submit_button.prop( "disabled", false );
+				
+				//If submitter was RSVPed successfully
+				if( response === 'rsvped' ){
+					$( '.volunteer_opp .success' ).slideDown();
+					submit_button.prop( "disabled", false );
+				}
+				//If submitter had already RSVPed
+				else if( response === 'already_rsvped'){
+					$( '.volunteer_opp .already-rsvped' ).slideDown();
+					submit_button.prop( "disabled", false );
+				}
+				//If submitter tried to sign up, but there are no spots left.
+				else if( response === 'rsvp_closed' ){
+					$( '.volunteer_opp .rsvp-closed' ).slideDown();
+					$( '#wivm-sign-up-form' ).slideUp();
+				}
 			}
 		);
 	}
