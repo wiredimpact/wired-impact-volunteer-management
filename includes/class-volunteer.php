@@ -273,4 +273,23 @@ class WI_Volunteer_Management_Volunteer {
 		$this->ID = $user_id;
 	}
 
+	/**
+	 * Delete RSVPs for this user.
+	 *
+	 * This is typically done right before the user is deleted from WordPress entirely.
+	 * 
+	 * @return int|bool Int for number of rows updated of false on error
+	 */
+	public function delete_rsvps(){
+		global $wpdb;
+
+		$delete_info = $wpdb->delete(
+				$wpdb->prefix  . "volunteer_rsvps",
+				array( 'user_id' => $this->ID ),
+				array( '%d' )
+		);
+
+		return $delete_info;
+	}
+
 } //class WI_Volunteer_Management_Volunteer

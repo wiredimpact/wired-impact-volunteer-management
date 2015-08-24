@@ -732,6 +732,18 @@ class WI_Volunteer_Management_Admin {
 		}
 
 	}
-   
+
+	/**
+	 * Delete volunteer RSVPs. 
+	 *
+	 * This is called during the "delete_user" hook when a user is deleted.
+	 * 
+	 * @param int      $user_id  ID of the user who is being deleted.
+	 * @param int|null $reassign ID of the user to reassign posts and links to.
+	 */
+	public function delete_volunteer_rsvps( $user_id, $reassign ){
+		$volunteer = new WI_Volunteer_Management_Volunteer( $user_id );
+		$volunteer->delete_rsvps();
+	}
 
 } //class WI_Volunteer_Management_Admin
