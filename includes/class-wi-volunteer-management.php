@@ -168,7 +168,7 @@ class WI_Volunteer_Management {
 		$plugin_i18n = new Plugin_Name_i18n();
 		$plugin_i18n->set_domain( $this->get_plugin_name() );
 
-		$this->loader->add_action( 		'plugins_loaded', 			$plugin_i18n, 'load_plugin_textdomain' );
+		$this->loader->add_action( 		'plugins_loaded', 							$plugin_i18n, 'load_plugin_textdomain' );
 
 	}
 

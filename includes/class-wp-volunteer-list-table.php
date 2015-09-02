@@ -229,15 +229,15 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 
 			if ( current_user_can( 'edit_user',  $user_object->ID ) ) {
 				$edit = "<strong><a href=\"$edit_link\">$user_object->user_login</a></strong><br />";
-				$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit' ) . '</a>';
+				$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit', 'wivm' ) . '</a>';
 			} else {
 				$edit = "<strong>$user_object->user_login</strong><br />";
 			}
 
 			if ( !is_multisite() && get_current_user_id() != $user_object->ID && current_user_can( 'delete_user', $user_object->ID ) )
-				$actions['delete'] = "<a class='submitdelete' href='" . wp_nonce_url( "users.php?action=delete&amp;user=$user_object->ID", 'bulk-users' ) . "'>" . __( 'Delete' ) . "</a>";
+				$actions['delete'] = "<a class='submitdelete' href='" . wp_nonce_url( "users.php?action=delete&amp;user=$user_object->ID", 'bulk-users' ) . "'>" . __( 'Delete', 'wivm' ) . "</a>";
 			if ( is_multisite() && get_current_user_id() != $user_object->ID && current_user_can( 'remove_user', $user_object->ID ) )
-				$actions['remove'] = "<a class='submitdelete' href='" . wp_nonce_url( $url."action=remove&amp;user=$user_object->ID", 'bulk-users' ) . "'>" . __( 'Remove' ) . "</a>";
+				$actions['remove'] = "<a class='submitdelete' href='" . wp_nonce_url( $url."action=remove&amp;user=$user_object->ID", 'bulk-users' ) . "'>" . __( 'Remove', 'wivm' ) . "</a>";
 
 			/**
 			 * Filter the action links displayed under each volunteer in the Users list table.
@@ -253,13 +253,13 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 			$edit .= $this->row_actions( $actions );
 
 			// Set up the checkbox ( because the user is editable, otherwise it's empty )
-			$checkbox = '<label class="screen-reader-text" for="user_' . $user_object->ID . '">' . sprintf( __( 'Select %s' ), $user_object->user_login ) . '</label>'
+			$checkbox = '<label class="screen-reader-text" for="user_' . $user_object->ID . '">' . sprintf( __( 'Select %s', 'wivm' ), $user_object->user_login ) . '</label>'
 						. "<input type='checkbox' name='users[]' id='user_{$user_object->ID}' class='$role' value='{$user_object->ID}' />";
 
 		} else {
 			$edit = '<strong>' . $user_object->user_login . '</strong>';
 		}
-		$role_name = isset( $wp_roles->role_names[$role] ) ? translate_user_role( $wp_roles->role_names[$role] ) : __( 'None' );
+		$role_name = isset( $wp_roles->role_names[$role] ) ? translate_user_role( $wp_roles->role_names[$role] ) : __( 'None', 'wivm' );
 		$avatar = get_avatar( $user_object->ID, 32 );
 
 		$r = "<tr id='user-$user_object->ID'>";
@@ -324,7 +324,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 			_e( 'No volunteers yet. Once they sign up they\'ll appear here.', 'wivm' );
 		}
 		else {
-			_e( 'Oops. Your search didn\'t return any volunteers. Please try search again.', 'wivm' );
+			_e( 'Oops. Your search didn\'t return any volunteers. Please try again.', 'wivm' );
 		}
 	}
 

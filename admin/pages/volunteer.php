@@ -6,7 +6,7 @@
  */
 
 if ( !current_user_can( 'list_users' ) || !isset( $_REQUEST['user_id'] ) ){
-	wp_die( __( 'Cheatin&#8217; uh?' ), 403 );
+	wp_die( __( 'Cheatin&#8217; uh?', 'wivm' ), 403 );
 }
 
 $volunteer_id = absint( $_REQUEST['user_id'] );

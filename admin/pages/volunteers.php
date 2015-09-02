@@ -7,7 +7,7 @@
  */
 
 if ( !current_user_can( 'list_users' ) ){
-	wp_die( __( 'Cheatin&#8217; uh?' ), 403 );
+	wp_die( __( 'Cheatin&#8217; uh?', 'wivm' ), 403 );
 }
 
 require_once ABSPATH . 'wp-admin/includes/class-wp-users-list-table.php';
@@ -28,7 +28,7 @@ if ( $pagenum > $total_pages && $total_pages > 0 ) {
 	<?php _e( 'Wired Impact Volunteer Management: Volunteers', 'wivm' );
 	global $usersearch;
 	if ( $usersearch ){
-		printf( '<span class="subtitle">' . __('Search results for &#8220;%s&#8221;') . '</span>', esc_html( $usersearch ) );
+		printf( '<span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'wivm' ) . '</span>', esc_html( $usersearch ) );
 	}
 	?>
 	</h2>
