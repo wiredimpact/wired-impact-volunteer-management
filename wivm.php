@@ -38,17 +38,7 @@ function activate_wi_volunteer_management() {
 	WI_Volunteer_Management_Activator::activate();
 }
 
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-wi-volunteer-management-deactivator.php
- */
-function deactivate_wi_volunteer_management() {
-	require_once WIVM_DIR . 'includes/class-deactivator.php';
-	WI_Volunteer_Management_Deactivator::deactivate();
-}
-
 register_activation_hook( __FILE__, 'activate_wi_volunteer_management' );
-register_deactivation_hook( __FILE__, 'deactivate_wi_volunteer_management' );
 
 /**
  *  Add constant to allow us to easily load files.

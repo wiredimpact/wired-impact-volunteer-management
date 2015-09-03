@@ -82,7 +82,7 @@ class WI_Volunteer_Management_Activator {
 			dbDelta( $sql );
 
 			//We set a variable in options in case we need to update the database in the future.
-			add_option('volunteer_opp_rsvp_db_version', 1.0);
+			add_option( 'volunteer_opp_rsvp_db_version', 1.0 );
 		}
 	}
 
