@@ -26,10 +26,9 @@ $wi_form->admin_header();
 	//Display General settings tab
 	$wi_form->form_table_start( 'general' );
 
-		$wi_form->radio( 		'use_css', array( 1 => __( 'Yes, please provide basic styling.', 'wivm' ), 0 => __( 'No, I\'ll code my own styling.', 'wivm' ) ), 'Load Plugin CSS?' );
-    	//$wi_form->checkbox( 	'checkbox_1', 		__( 'Checkbox 1', 'wivm' ), 'Check this box and you\'ll Win' );
-    	//$wi_form->checkbox( 	'checkbox_2', 		__( 'Checkbox 2', 'wivm' ), 'This box is awesome' );
-    	//$wi_form->select( 		'select_1', 	'Awesome Select',	array( 'option 1', 'option 2', 'option 2' ), array( 'description' => 'This is a select you want to pick.' ) );
+		$wi_form->radio( 'use_css', array( 1 => __( 'Yes, please provide basic styling.', 'wivm' ), 0 => __( 'No, I\'ll code my own styling.', 'wivm' ) ), 'Load Plugin CSS?' );
+
+		do_action( 'wivm_display_general_settings', $wi_form );
 
 	$wi_form->form_table_end();
 
@@ -48,6 +47,8 @@ $wi_form->admin_header();
 		$wi_form->textinput( 'default_state', 		__( 'Default State', 'wivm' ) );
 		$wi_form->textinput( 'default_zip', 		__( 'Default Zip', 'wivm' ) );
 
+		do_action( 'wivm_display_defaults_settings', $wi_form );
+
 	$wi_form->form_table_end();
 
 	//Display Email settings tab
@@ -64,7 +65,8 @@ $wi_form->admin_header();
 		$wi_form->textinput( 		'volunteer_reminder_email_subject',	__( 'Volunteer Reminder Email Subject', 'wivm'), 					array( 'description' => __( 'The subject of the reminder email sent to volunteers prior to their opportunity.', 'wivm') ) );
     	$wi_form->wysiwyg_editor( 	'volunteer_reminder_email', 		__( 'Volunteer Reminder Email', 'wivm'), 							array( 'description' => __( 'The reminder email to volunteers before their opportunity arrives. This is sent to the admins with the volunteers BCC\'ed. That way you know when the email has gone out. You may use all the opportunity variables listed for the other emails, but since only one email is sent out do not use any of the volunteer variables.', 'wivm') ) );
 
-	$wi_form->form_table_end();
+    	do_action( 'wivm_display_email_settings', $wi_form );
 
+	$wi_form->form_table_end();
 
 $wi_form->admin_footer();

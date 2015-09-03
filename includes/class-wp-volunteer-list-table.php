@@ -136,7 +136,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 			'num_volunteer_opps'  		=> __( '# of Volunteer Opportunities', 'wivm' ),
 		);
 
-		return $c;
+		return apply_filters( 'wivm_volunteer_columns', $c );
 	}
 
 	/**
@@ -155,7 +155,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 			'num_volunteer_opps'  		=> array( 'num_volunteer_opps', false )
 		);
 
-		return $c;
+		return apply_filters( 'wivm_volunteer_sortable_columns', $c );
 	}
 
 	/**

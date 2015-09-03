@@ -462,6 +462,8 @@ class WI_Volunteer_Management_Admin {
 		if( isset($_REQUEST['volunteer-limit'] ) ) {
 			update_post_meta( $volunteer_opp_id, '_volunteer_limit', absint( $_REQUEST['volunteer-limit'] ) );
 		}
+
+		do_action( 'wivm_save_volunteer_opp_meta', $volunteer_opp_id, $volunteer_opp );
 	}
 
 	/**

@@ -191,12 +191,13 @@ class WI_Volunteer_Management_Opportunity {
 	 * @return string Phone number formatted to look nice.
 	 */
 	public function format_phone_number( $unformatted_number ){
+		$formatted_number = '';
+
 		if( $unformatted_number != '' ){
-			return '(' . substr( $unformatted_number, 0, 3 ) . ') '. substr( $unformatted_number, 3, 3 ) . '-' . substr( $unformatted_number, 6 );	
+			$formatted_number = '(' . substr( $unformatted_number, 0, 3 ) . ') '. substr( $unformatted_number, 3, 3 ) . '-' . substr( $unformatted_number, 6 );	
 		}
-		else {
-			return '';
-		}
+
+		return apply_filters( 'wivm_formatted_phone', $formatted_number, $unformatted_number );
 	}
 
 	/**
@@ -237,7 +238,7 @@ class WI_Volunteer_Management_Opportunity {
 			$location = $this->add_google_maps_link( $location );
 		}
 
-		return apply_filters( 'wivm_location', $location, $this->opp_meta, $make_maps_link );
+		return apply_filters( 'wivm_address', $location, $this->opp_meta, $make_maps_link );
 	}
 
 	/**

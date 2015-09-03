@@ -71,15 +71,16 @@ class WI_Volunteer_Management_Email {
 	 * @see    https://codex.wordpress.org/Function_Reference/wp_mail
 	 */
   	public function send_volunteer_signup_email(){
-  		$to  			= $this->user->meta['email'];
+  		$to  			  = $this->user->meta['email'];
   		$subject 		= $this->options['volunteer_signup_email_subject'];
   		$message 		= wpautop( $this->replace_variables( $this->options['volunteer_signup_email'] ) );
 
   		$headers		= array();
-  		$headers[] 		= 'From: ' . $this->options['from_email_name'] . ' <' . $this->options['from_email_address'] . '>';
-  		$headers[]		= 'Content-type: text/html';
+  		$headers[] 	= 'From: ' . $this->options['from_email_name'] . ' <' . $this->options['from_email_address'] . '>';
+  		$headers[]	= 'Content-type: text/html';
 
-  		wp_mail( $to, $subject, $message, $headers );
+  		$result = wp_mail( $to, $subject, $message, $headers );
+      do_action( 'wivm_volunteer_signup_email', $result, $to, $subject, $message );     
   	}
 
   	/**
@@ -90,15 +91,16 @@ class WI_Volunteer_Management_Email {
 	 * @see    https://codex.wordpress.org/Function_Reference/wp_mail
 	 */
   	public function send_admin_signup_email(){
-  		$to  			= $this->get_opp_admin_email_addresses();
+  		$to  			  = $this->get_opp_admin_email_addresses();
   		$subject 		= $this->options['admin_signup_email_subject'];
   		$message 		= wpautop( $this->replace_variables( $this->options['admin_signup_email'] ) );
 
   		$headers		= array();
-  		$headers[] 		= 'From: ' . $this->options['from_email_name'] . ' <' . $this->options['from_email_address'] . '>';
-  		$headers[]		= 'Content-type: text/html';
+  		$headers[] 	= 'From: ' . $this->options['from_email_name'] . ' <' . $this->options['from_email_address'] . '>';
+  		$headers[]	= 'Content-type: text/html';
 
-  		wp_mail( $to, $subject, $message, $headers );
+  		$result = wp_mail( $to, $subject, $message, $headers );
+      do_action( 'wivm_admin_signup_email', $result, $to, $subject, $message );  
   	}
 
   	/**
@@ -110,16 +112,17 @@ class WI_Volunteer_Management_Email {
   	 * @see    https://codex.wordpress.org/Function_Reference/wp_mail
   	 */
   	public function send_volunteer_reminder_email(){
-  		$to  			= $this->get_opp_admin_email_addresses();
+  		$to  			  = $this->get_opp_admin_email_addresses();
   		$subject 		= $this->options['volunteer_reminder_email_subject'];
   		$message 		= wpautop( $this->replace_variables( $this->options['volunteer_reminder_email'] ) );
 
   		$headers		= array();
-  		$headers[] 		= 'From: ' . $this->options['from_email_name'] . ' <' . $this->options['from_email_address'] . '>';
-  		$headers[]		= 'Content-type: text/html';
-  		$headers[]		= 'Bcc: ' . $this->get_volunteer_email_addresses();
+  		$headers[] 	= 'From: ' . $this->options['from_email_name'] . ' <' . $this->options['from_email_address'] . '>';
+  		$headers[]	= 'Content-type: text/html';
+  		$headers[]	= 'Bcc: ' . $this->get_volunteer_email_addresses();
 
-  		wp_mail( $to, $subject, $message, $headers );
+  		$result = wp_mail( $to, $subject, $message, $headers );
+      do_action( 'wivm_volunteer_reminder_email', $result, $to, $subject, $message );  
   	}
 
   	/**
@@ -171,20 +174,22 @@ class WI_Volunteer_Management_Email {
   	 */
   	public function set_replace_text(){
   		$search_and_replace_text = array(
-  				'{volunteer_first_name}' 	=> $this->user->meta['first_name'],
+  			'{volunteer_first_name}' 	=> $this->user->meta['first_name'],
 				'{volunteer_last_name}' 	=> $this->user->meta['last_name'],
-				'{volunteer_phone}'			=> $this->user->meta['phone'],
-				'{volunteer_email}'			=> $this->user->meta['email'],
-				'{opportunity_name}' 		=> get_the_title( $this->opp->ID ),
+				'{volunteer_phone}'			  => $this->user->meta['phone'],
+				'{volunteer_email}'			  => $this->user->meta['email'],
+				'{opportunity_name}' 		  => get_the_title( $this->opp->ID ),
 				'{opportunity_date_time}'	=> $this->opp->get_one_date_time(),
 				'{opportunity_location}'	=> $this->opp->format_address(),
-				'{contact_name}'			=> $this->opp->opp_meta['contact_name'],
-				'{contact_phone}'			=> $this->opp->opp_meta['contact_formatted_phone'],
-				'{contact_email}'			=> $this->opp->opp_meta['contact_email'],
+				'{contact_name}'			    => $this->opp->opp_meta['contact_name'],
+				'{contact_phone}'			    => $this->opp->opp_meta['contact_formatted_phone'],
+				'{contact_email}'			    => $this->opp->opp_meta['contact_email'],
   		);
 
+      $search_and_replace_text  = apply_filters( 'wivm_search_and_replace_text', $search_and_replace_text );
+
   		foreach( $search_and_replace_text as $key => $value ){
-  			$this->search_text[] 	= $key;
+  			$this->search_text[] 	  = $key;
   			$this->replace_text[] 	= $value;
   		}
   	}

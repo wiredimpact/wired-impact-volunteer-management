@@ -91,19 +91,19 @@ class WI_Volunteer_Management_Public {
 	public static function register_post_types(){
 
 		$labels = array(
-	      'name' =>               'Volunteer Opportunities',
-	      'singular_name' =>      'Volunteer Opportunity',
-	      'add_new' =>            'Add Volunteer Opportunity',
-	      'add_new_item' =>       'Add Volunteer Opportunity',
-	      'edit_item' =>          'Edit Volunteer Opportunity',
-	      'new_item' =>           'New Volunteer Opportunity',
-	      'all_items' =>          'All Volunteer Opportunities',
-	      'view_item' =>          'View Volunteer Opportunity',
-	      'search_items' =>       'Search Volunteer Opportunities',
-	      'not_found' =>          'No volunteer opportunities found',
-	      'not_found_in_trash' => 'No volunteer opportunities found in trash', 
-	      'parent_item_colon' =>  '',
-	      'menu_name' =>          'Volunteer Mgmt',
+	      'name' 				=> __( 'Volunteer Opportunities', 'wivm' ),
+	      'singular_name' 		=> __( 'Volunteer Opportunity', 'wivm' ),
+	      'add_new' 			=> __( 'Add Volunteer Opportunity', 'wivm' ),
+	      'add_new_item' 		=> __( 'Add Volunteer Opportunity', 'wivm' ),
+	      'edit_item' 			=> __( 'Edit Volunteer Opportunity', 'wivm' ),
+	      'new_item' 			=> __( 'New Volunteer Opportunity', 'wivm' ),
+	      'all_items' 			=> __( 'All Volunteer Opportunities', 'wivm' ),
+	      'view_item' 			=> __( 'View Volunteer Opportunity', 'wivm' ),
+	      'search_items' 		=> __( 'Search Volunteer Opportunities', 'wivm' ),
+	      'not_found' 			=> __( 'No volunteer opportunities found', 'wivm' ),
+	      'not_found_in_trash' 	=> __( 'No volunteer opportunities found in trash', 'wivm' ), 
+	      'parent_item_colon' 	=> __( '', 'wivm' ),
+	      'menu_name' 			=> __( 'Volunteer Mgmt', 'wivm' )
 	    );
 
 	    $args = array(
@@ -114,7 +114,7 @@ class WI_Volunteer_Management_Public {
 	      'menu_icon'         => 'dashicons-groups',
 	      'capability_type'   => 'post',
 	      'supports'          => array( 'title', 'editor', 'thumbnail', 'revisions'  ),
-	      'rewrite'           => array( 'slug' => 'volunteer-opportunity', 'with_front' => false )
+	      'rewrite'           => array( 'slug' => apply_filters( 'wivm_opp_rewrite', 'volunteer-opportunity' ), 'with_front' => false )
 	    ); 
 	    
 	    register_post_type( 'volunteer_opp', $args );

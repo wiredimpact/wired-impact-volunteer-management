@@ -76,12 +76,13 @@ class WI_Volunteer_Management_Volunteer {
 	 * @return string Phone number formatted to look nice.
 	 */
 	public function format_phone_number( $unformatted_number ){
+		$formatted_number = '';
+
 		if( $unformatted_number != '' ){
-			return '(' . substr( $unformatted_number, 0, 3 ) . ') '. substr( $unformatted_number, 3, 3 ) . '-' . substr( $unformatted_number, 6 );	
+			$formatted_number = '(' . substr( $unformatted_number, 0, 3 ) . ') '. substr( $unformatted_number, 3, 3 ) . '-' . substr( $unformatted_number, 6 );	
 		}
-		else {
-			return '';
-		}
+
+		return apply_filters( 'wivm_formatted_phone', $formatted_number, $unformatted_number );
 	}
 
 	/**
@@ -105,8 +106,12 @@ class WI_Volunteer_Management_Volunteer {
 	}
 
 	/**
-	 * [get_first_volunteer_opp_timestamp description]
-	 * @return [type] [description]
+	 * Get the date and time of the volunteer's first RSVP.
+	 *
+	 * This is used to display the year the person started volunteering within the admin. It's worth
+	 * noting that this isn't the time of the opportunity, but rather when they RSVPed.
+	 * 
+	 * @return string The date and time of the first volunteer RSVP.
 	 */
 	public function get_first_volunteer_opp_time(){
 		global $wpdb;
@@ -194,7 +199,7 @@ class WI_Volunteer_Management_Volunteer {
 			$opp = new WI_Volunteer_Management_Opportunity( $opp->post_id );
 		}
 
-		return $volunteer_opps;
+		return apply_filters( 'wivm_one_volunteers_opps', $volunteer_opps, $this->ID );
 	}
 
 	/**
@@ -271,6 +276,8 @@ class WI_Volunteer_Management_Volunteer {
 		update_user_meta( $user_id, 'phone', preg_replace( "/[^0-9,.]/", "", $form_fields['wivm_phone'] ) );
 
 		$this->ID = $user_id;
+
+		do_action( 'wivm_create_update_user', $this->ID );
 	}
 
 	/**
