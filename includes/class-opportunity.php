@@ -249,7 +249,7 @@ class WI_Volunteer_Management_Opportunity {
 	 */
 	protected function add_google_maps_link( $address ){
 		
-		$google_maps_string = str_replace( ' ', '+', $this->opp_meta['street'] . ' ' . $this->opp_meta['city'] );
+		$google_maps_string = str_replace( ' ', '+', $this->opp_meta['street'] . ' ' . $this->opp_meta['city'] . ' ' . $this->opp_meta['state'] . ' ' . $this->opp_meta['zip'] );
 		$google_maps_url    = 'https://maps.google.com/maps?q=' . $google_maps_string;
 		$google_maps_html   = '<a href="' . $google_maps_url . '" title="Map this location on Google Maps" target="_blank">';
 
