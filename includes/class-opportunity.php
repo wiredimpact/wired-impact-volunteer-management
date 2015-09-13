@@ -169,13 +169,13 @@ class WI_Volunteer_Management_Opportunity {
 		  $opp_time =  date( __( 'D, F d, Y', 'wivm' ), $start_date_time );
 		  $opp_time .= __( ' from ', 'wivm' );
 		  $opp_time .= date( __( 'g:i a', 'wivm' ), $start_date_time );
-		  $opp_time .= ' - ';
+		  $opp_time .= ' – ';
 		  $opp_time .= date( __( 'g:i a', 'wivm' ), $end_date_time );
 		}
 		//If dates are different then show dates for start and end
 		else{
 		  $opp_time = date( __( 'D, F d, Y g:i a', 'wivm' ), $start_date_time);
-		  $opp_time .= ' - ';
+		  $opp_time .= ' – ';
 		  $opp_time .= date( __( 'D, F d, Y g:i a', 'wivm' ), $end_date_time);
 		}
 
