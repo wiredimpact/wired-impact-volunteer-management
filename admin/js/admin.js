@@ -32,15 +32,6 @@
 
         $('.nav-tab-active').click();
 
-
-        function wivm_set_tab_hash() {
-            var settings = $('#wivm-settings-form');
-            if (settings.length) {
-                var currentUrl = settings.attr('action').split('#')[0];
-                settings.attr('action', currentUrl + window.location.hash);
-            }
-        }
-
         /**
          * When the hash changes, get the base url from the action and then add the current hash
          */
@@ -53,10 +44,22 @@
 
     } //end if
 
+    function wivm_set_tab_hash() {
+        var settings = $('#wivm-settings-form');
+        if (settings.length) {
+            var currentUrl = settings.attr('action').split('#')[0];
+            settings.attr('action', currentUrl + window.location.hash);
+        }
+    }
+
+    }); //document.ready()
+
 
     /**
      * For volunteer opportunity edit screen including jQuery Timepicker
      */
+    
+    $(function() {
     
     //Show and hide one-time volunteer opportunity fields
     $('#one-time-opportunity').change(function() {
