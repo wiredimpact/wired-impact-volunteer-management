@@ -31,7 +31,11 @@ $volunteer = new WI_Volunteer_Management_Volunteer( $volunteer_id );
 
 		<div class="volunteer-notes">
 			<h3><?php _e( 'Notes', 'wivm' ); ?></h3>
-			<?php echo apply_filters( 'the_content', $volunteer->meta['notes'] ); ?>
+			<?php
+			$default_volunteer_note = '<p><em>' . __( 'There aren\'t any notes for this volunteer. You can add some by clicking the Edit Volunteer Info button and filling out the Notes field.', 'wivm' ) . '</em></p>';
+			$volunteer_notes = ( $volunteer->meta['notes'] != '' ) ? $volunteer->meta['notes'] : $default_volunteer_note;
+			echo apply_filters( 'the_content', $volunteer_notes );
+			?>
 		</div>
 		
 		<a href="<?php echo admin_url( 'user-edit.php?user_id=' . $volunteer_id ); ?>" class="button edit-volunteer">
