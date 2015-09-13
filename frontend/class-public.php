@@ -197,8 +197,7 @@ class WI_Volunteer_Management_Public {
 					$wp_query->the_post();
 					$template_loader->get_template_part( 'opps-list', $list_type );
 				}
-
-				wp_reset_postdata();
+				
 			} 
 			else { ?>
 
@@ -216,7 +215,8 @@ class WI_Volunteer_Management_Public {
 		<?php
 		//Reset to default query 
 		$wp_query = null; 
-  		$wp_query = $temp; 
+  		$wp_query = $temp;
+  		wp_reset_postdata(); 
 
 		return ob_get_clean();
 	}
