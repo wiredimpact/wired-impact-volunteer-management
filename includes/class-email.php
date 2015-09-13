@@ -76,14 +76,14 @@ class WI_Volunteer_Management_Email {
   		$message 		= wpautop( $this->replace_variables( $this->options['volunteer_signup_email'] ) );
 
   		$headers		= array();
-  		$headers[] 	= 'From: ' . $this->options['from_email_name'] . ' <' . $this->options['from_email_address'] . '>';
+  		$headers[] 	= $this->get_from_header();
   		$headers[]	= 'Content-type: text/html';
 
   		$result = wp_mail( $to, $subject, $message, $headers );
       do_action( 'wivm_volunteer_signup_email', $result, $to, $subject, $message );     
   	}
 
-  	/**
+  /**
 	 * Send email to admins and volunteer opportunity contact immediately after someone signs up.
 	 *
 	 * We use the options settings to send the email and we also do a replace for the variables in the email.
@@ -96,7 +96,7 @@ class WI_Volunteer_Management_Email {
   		$message 		= wpautop( $this->replace_variables( $this->options['admin_signup_email'] ) );
 
   		$headers		= array();
-  		$headers[] 	= 'From: ' . $this->options['from_email_name'] . ' <' . $this->options['from_email_address'] . '>';
+  		$headers[] 	= $this->get_from_header();
   		$headers[]	= 'Content-type: text/html';
 
   		$result = wp_mail( $to, $subject, $message, $headers );
@@ -117,13 +117,27 @@ class WI_Volunteer_Management_Email {
   		$message 		= wpautop( $this->replace_variables( $this->options['volunteer_reminder_email'] ) );
 
   		$headers		= array();
-  		$headers[] 	= 'From: ' . $this->options['from_email_name'] . ' <' . $this->options['from_email_address'] . '>';
+  		$headers[] 	= $this->get_from_header();
   		$headers[]	= 'Content-type: text/html';
   		$headers[]	= 'Bcc: ' . $this->get_volunteer_email_addresses();
 
   		$result = wp_mail( $to, $subject, $message, $headers );
       do_action( 'wivm_volunteer_reminder_email', $result, $to, $subject, $message );  
   	}
+
+    /**
+     * Get the From email header which includes the from email address and name.
+     *
+     * We use the from email address and name if they're available. If not, we use the WordPress admin email and the website name.
+     * 
+     * @return string   The from header to use in the email.
+     */
+    public function get_from_header(){
+      $from_email_name    = ( $this->options['from_email_name'] != '' ) ? $this->options['from_email_name'] : get_option( 'blogname' );
+      $from_email_address = ( $this->options['from_email_address'] != '' ) ? $this->options['from_email_address'] : get_option( 'admin_email' );
+
+      return 'From: ' . $from_email_name . ' <' . $from_email_address . '>';
+    }
 
   	/**
   	 * Create an array representing the 'to' field for admins when someone signs up.
