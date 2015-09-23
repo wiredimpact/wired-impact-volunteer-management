@@ -68,7 +68,7 @@ $volunteer = new WI_Volunteer_Management_Volunteer( $volunteer_id );
 
 				<div class="opp">
 					<div class="circle"></div>
-					<h3><a href="<?php echo get_permalink( $opp->ID ); ?>"><?php echo get_the_title( $opp->ID ); ?></a></h3>
+					<h3><a href="<?php echo get_edit_post_link( $opp->ID ); ?>"><?php echo get_the_title( $opp->ID ); ?></a></h3>
 					<div class="opp-time"><?php echo ( $opp->opp_meta['one_time_opp'] == 1 ) ? $opp->format_opp_times() : $opp->opp_meta['flexible_frequency']; ?></div>
 					<a class="button button-small remove-rsvp" data-post-id="<?php echo $opp->ID; ?>" data-user-id="<?php echo $volunteer_id; ?>" href="#remove_rsvp"><?php _e( 'Remove RSVP', 'wivm' ); ?></a>
 				</div>
@@ -87,7 +87,7 @@ $volunteer = new WI_Volunteer_Management_Volunteer( $volunteer_id );
 
 				<div class="opp">
 					<div class="circle"></div>
-					<h3><a href="<?php echo get_permalink( $opp->ID ); ?>"><?php echo get_the_title( $opp->ID ); ?></a></h3>
+					<h3><a href="<?php echo get_edit_post_link( $opp->ID ); ?>"><?php echo get_the_title( $opp->ID ); ?></a></h3>
 					<div class="opp-time"><?php echo ( $opp->opp_meta['one_time_opp'] == 1 ) ? $opp->format_opp_times() : $opp->opp_meta['flexible_frequency']; ?></div>
 					<a class="button button-small remove-rsvp" data-post-id="<?php echo $opp->ID; ?>" data-user-id="<?php echo $volunteer_id; ?>" href="#remove_rsvp"><?php _e( 'Remove RSVP', 'wivm' ); ?></a>
 				</div>
