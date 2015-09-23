@@ -209,10 +209,15 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function process_wivm_settings_group_save( $new_options ){
 
+		//Rebuild reminder email cron events if necessary
 		$existing_options = new WI_Volunteer_Management_Options();
 		if( $new_options['days_prior_reminder'] != $existing_options->get_option( 'days_prior_reminder' ) ){
 			$this->rebuild_all_reminders();
 		}
+
+		//Strip all extra characters out of the default contact phone number except the numbers
+		$new_options['default_contact_phone'] = preg_replace( "/[^0-9,.]/", "", $new_options['default_contact_phone'] );
+
 
 		return apply_filters( 'wivm_process_settings_group_save', $new_options );
 	}
@@ -719,7 +724,7 @@ class WI_Volunteer_Management_Admin {
 	/**
 	 * Loop through all opportunities and create or remove all auto email reminders.
 	 *
-	 * @todo Set this function up to run when the number of days prior to send reminder is changed. Right now there is no way to determine if it's changed.
+	 * This is run when the number of days prior to send reminder emails changes.
 	 */
 	public function rebuild_all_reminders(){
 

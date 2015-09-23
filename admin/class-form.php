@@ -124,13 +124,17 @@ class WI_Volunteer_Management_Form {
 	 * @param string $label The label to show for the variable.
 	 * @param array  $attr  Extra class to add to the input field, Description for for field, Placeholder for field
 	 */
-	public function textinput( $var, $label, $attr = array() ) {
+	public function textinput( $var, $label, $attr = array(), $val_format = null ) {
 		$attr = wp_parse_args( $attr, array(
 			'placeholder' => '',
 			'class'       => '',
 			'description' => '',
 		) );
 		$val  = ( isset( $this->options[ $var ] ) ) ? $this->options[ $var ] : '';
+
+		if( $val_format != null ){
+			$val = $this->{$val_format}( $val );
+		}
 
 		echo '<tr>';
 			$this->label( $label, array( 'for' => $var ) );
@@ -301,5 +305,22 @@ class WI_Volunteer_Management_Form {
 			echo '</fieldset></td>';
 
 		echo '</tr>';
+	}
+
+	/**
+	 * Format a phone number that's provided only in integers.
+	 *
+	 * @todo   Remove duplicates of this method that exist in other classes
+	 * @param  int $unformmated_number Phone number in only integers
+	 * @return string Phone number formatted to look nice.
+	 */
+	public function format_phone_number( $unformatted_number ){
+		$formatted_number = '';
+
+		if( $unformatted_number != '' ){
+			$formatted_number = '(' . substr( $unformatted_number, 0, 3 ) . ') '. substr( $unformatted_number, 3, 3 ) . '-' . substr( $unformatted_number, 6 );	
+		}
+
+		return apply_filters( 'wivm_formatted_phone', $formatted_number, $unformatted_number );
 	}
 }

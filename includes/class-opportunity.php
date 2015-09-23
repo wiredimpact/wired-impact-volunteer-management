@@ -185,8 +185,7 @@ class WI_Volunteer_Management_Opportunity {
 	/**
 	 * Format a phone number that's provided only in integers.
 	 *
-	 * @todo  Remove duplicate of this method that exists in class-admin.php
-	 * 
+	 * @todo   Remove duplicates of this method that exist in other classes
 	 * @param  int $unformmated_number Phone number in only integers
 	 * @return string Phone number formatted to look nice.
 	 */

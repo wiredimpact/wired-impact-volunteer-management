@@ -37,7 +37,7 @@ $wi_form->admin_header();
 
 		$wi_form->section_heading( __( 'Default Contact Information', 'wivm' ), __( 'These contact settings will be loaded by default for all new volunteer opportunities, but you can customize each opportunity individually.', 'wivm' ) );
 		$wi_form->textinput( 'default_contact_name', 	__( 'Default Contact Name', 'wivm' ) );
-		$wi_form->textinput( 'default_contact_phone',	__( 'Default Contact Phone', 'wivm' ) );
+		$wi_form->textinput( 'default_contact_phone',	__( 'Default Contact Phone', 'wivm' ), array(), "format_phone_number" );
 		$wi_form->textinput( 'default_contact_email', 	__( 'Default Contact Email', 'wivm' ) );
 
 		$wi_form->section_heading( __( 'Default Location Information', 'wivm' ), __( 'These location settings will be loaded by default for all new volunteer opportunities, but you can customize each opportunity individually.', 'wivm' ) );

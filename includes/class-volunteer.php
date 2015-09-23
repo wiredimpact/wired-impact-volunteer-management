@@ -71,7 +71,8 @@ class WI_Volunteer_Management_Volunteer {
 
 	/**
 	 * Format a phone number that's provided only in integers.
-	 * 
+	 *
+	 * @todo   Remove duplicates of this method that exist in other classes
 	 * @param  int $unformmated_number Phone number in only integers
 	 * @return string Phone number formatted to look nice.
 	 */
