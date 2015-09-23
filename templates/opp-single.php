@@ -38,13 +38,13 @@ get_header(); ?>
 
 					<?php the_content(); ?>
 
-					<h3><?php _e( 'Sign Up to Volunteer', 'wivm' ); ?></h3>
+					<h3><?php ( $opp->opp_meta['one_time_opp'] == 1 ) ? _e( 'Sign Up to Volunteer', 'wivm' ) : _e( 'Express Interest in Volunteering', 'wivm' ) ; ?></h3>
 					
 					<?php if( $opp->should_allow_rvsps() ): ?>
 					<div class="loading message"><?php _e( 'Please wait...', 'wivm' ); ?></div>
 					<div class="success message"><?php _e( 'Thanks for signing up. You\'ll receive a confirmation email shortly.', 'wivm' ); ?></div>
 					<div class="already-rsvped message"><?php _e( 'It looks like you already signed up for this opportunity.', 'wivm' ); ?></div>
-					<div class="rsvp-closed message"><?php _e( 'We\'re sorry, but we weren\'t able to sign you up. We have no more open spots. ', 'wivm' ); ?></div>
+					<div class="rsvp-closed message"><?php _e( 'We\'re sorry, but we weren\'t able to sign you up. We have no more open spots.', 'wivm' ); ?></div>
 					<div class="error message"><?php _e( 'Please fill in every field and make sure you entered a valid email address.', 'wivm' ); ?></div>
 
 					<form id="wivm-sign-up-form" method="POST" url="<?php the_permalink(); ?>">
@@ -67,7 +67,7 @@ get_header(); ?>
 						<?php do_action( 'wivm_end_sign_up_form_fields', $post ); ?>
 
 						<input type="hidden" id="wivm_opportunity_id" name="wivm_opportunity_id" value="<?php echo the_ID(); ?>" />
-						<input type="submit" tabindex="940" value="<?php _e( 'Sign Up', 'wivm' ); ?>" />
+						<input type="submit" tabindex="940" value="<?php ( $opp->opp_meta['one_time_opp'] == 1 ) ? _e( 'Sign Up', 'wivm' ) : _e( 'Express Interest', 'wivm' ) ; ?>" />
 					</form>
 					<?php else: ?>
 						<p><?php _e( 'We\'re sorry, but we\'re no longer accepting new volunteers for this opportunity.', 'wivm' ); ?></p>
