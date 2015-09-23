@@ -218,6 +218,8 @@ class WI_Volunteer_Management {
 		$this->loader->add_action( 		'init', 						$plugin_public, 'register_post_types' );
 		$this->loader->add_shortcode( 	'one_time_volunteer_opps', 		$plugin_public, 'display_one_time_volunteer_opps' );
 		$this->loader->add_shortcode( 	'flexible_volunteer_opps', 		$plugin_public, 'display_flexible_volunteer_opps' );
+		$this->loader->add_filter( 		'wp_trim_words', 				$plugin_public, 'always_show_read_more' );
+		$this->loader->add_filter( 		'excerpt_more', 				$plugin_public, 'hide_default_read_more', 11 );
 		$this->loader->add_filter( 		'single_template', 				$plugin_public, 'get_single_opp_template' );
 		$this->loader->add_action( 		'wp_ajax_wivm_sign_up', 		$plugin_public, 'process_volunteer_sign_up' );
  		$this->loader->add_action( 		'wp_ajax_nopriv_wivm_sign_up', 	$plugin_public, 'process_volunteer_sign_up' );

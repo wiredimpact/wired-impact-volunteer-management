@@ -169,6 +169,51 @@ class WI_Volunteer_Management_Public {
 		return $this->display_volunteer_opp_list( 'flexible', apply_filters( $this->plugin_name . '_flexible_opp_shortcode_query', $args ) );
 	}
 
+
+	/**
+	 * Always show read more text on the list of opportunities even if there isn't enough content.
+	 *
+	 * We do this by displaying '' as the default read more then adding our own read more to the end
+	 * of the content.
+	 *
+	 * @see    hide_default_read_more()
+	 * @param  string $text  The shortened text that makes up the excerpt.
+	 * @return string        The final excerpt with the read more link included.
+	 */
+	public function always_show_read_more( $text ){
+
+		if( get_post_type() == 'volunteer_opp' ){
+
+			$link = sprintf( '<a href="%1$s" class="more-link">%2$s</a>',
+						get_permalink( get_the_ID() ),
+						__( 'Find Out More', 'wivm' )
+					);
+
+			return $text . '&hellip;' . $link;
+		}
+		
+		return $text;
+	}
+
+	/**
+	 * Hide the default read more text that shows when content is longer than provided number of words.
+	 *
+	 * We hide this since we provide our own read more text to every item in the list instead of only
+	 * the longer ones.
+	 *
+	 * @see    always_show_read_more()
+	 * @param  string $more_text Default read more text.
+	 * @return string            Empty string if volunteer opportunity or default read more if not.
+	 */
+	public function hide_default_read_more( $more_text ){
+
+		if( get_post_type() == 'volunteer_opp' ){
+			return '';
+		}
+
+		return $more_text;
+	}
+
 	/**
 	 * Displays the volunteer opportunities lists.
 	 *
