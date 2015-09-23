@@ -54,8 +54,8 @@ $wi_form->admin_header();
 	//Display Email settings tab
 	$wi_form->form_table_start( 'email' );
 
-		$wi_form->textinput( 		'from_email_address', 				__( 'From Email Address', 'wivm'), 									array( 'description' => __( 'The email address you\'d like to send from. Ex: info@wiredimpact.com', 'wivm') ) );
-		$wi_form->textinput( 		'from_email_name', 					__( 'From Email Name', 'wivm'), 									array( 'description' => __( 'The name of the person you\'d like the emails to be sent from. Ex: Wired Impact', 'wivm') ) );
+		$wi_form->textinput( 		'from_email_address', 				__( 'From Email Address', 'wivm'), 									array( 'description' => sprintf( __( 'The email address you\'d like to send from. If blank "%s" will be used from the General Settings.', 'wivm'), get_option( 'admin_email' ) ) ) );
+		$wi_form->textinput( 		'from_email_name', 					__( 'From Email Name', 'wivm'), 									array( 'description' => sprintf( __( 'The name of the person you\'d like the emails to be sent from. If blank "%s" will be used from the General Settings.', 'wivm'), get_option( 'blogname' ) ) ) );
 		$wi_form->textinput( 		'volunteer_signup_email_subject', 	__( 'Volunteer Signup Email Subject', 'wivm'), 						array( 'description' => __( 'The subject of the email to a volunteer after they sign up.', 'wivm') ) );
     	$wi_form->wysiwyg_editor( 	'volunteer_signup_email', 			__( 'Volunteer Signup Email', 'wivm'), 								array( 'description' => __( 'The email to a volunteer who just RSVPed. You can use the variables {volunteer_first_name}, {volunteer_last_name}, {volunteer_phone}, {volunteer_email}, {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent.', 'wivm') ) );
 		$wi_form->textinput( 		'admin_email_address', 				__( 'Admin Email Address', 'wivm'), 								array( 'description' => __( 'The person to notify when volunteers sign up. The contact for the volunteer opportunity will also be notified. If this field is blank then only the contact will be notified.', 'wivm') ) );
