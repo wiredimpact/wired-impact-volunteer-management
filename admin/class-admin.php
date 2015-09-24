@@ -223,6 +223,15 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
+	 * Show a helpful tip below the WordPress editor on what information to include there.
+	 */
+	public function show_opp_editor_description( $post ){
+		if( $post->post_type == 'volunteer_opp' ){
+			echo '<p class="editor-help"><em>' . __( 'Use the text editor above to include information such as what volunteers will be doing, any requirements or preparation needed from volunteers, how the community will benefit and other details aside from those provided below.', 'wivm' ) . '</em></p>';
+		}
+	}
+
+	/**
 	 * Add meta boxes for volunteer opportunities.
 	 */
 	public function add_meta_boxes(){

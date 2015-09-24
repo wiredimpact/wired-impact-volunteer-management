@@ -146,8 +146,6 @@
             //button_id is set to the user_id when on an opportunity, and post_id when on the volunteer's page since each will be unique.
             button_id = ( remove_rsvp_button.closest( '#volunteer-opportunity-rsvps' ).length == 1 ) ? user_id : post_id;
 
-        remove_rsvp_button.addClass( 'visible' );
-
         remove_rsvp_button.pointer( {
             content: wivm_ajax.remove_rsvp_pointer_text,
             position: {
@@ -158,7 +156,6 @@
                         var button = $('<a id="pointer-close-' + button_id + '" style="margin:0 5px;" class="button-secondary">' + wivm_ajax.remove_rsvp_cancel_text + '</a>');
                         button.bind('click.pointer', function () {
                             t.element.pointer('close');
-                            remove_rsvp_button.removeClass( 'visible' );
                         });
                         return button;
             }

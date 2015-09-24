@@ -187,6 +187,7 @@ class WI_Volunteer_Management {
 		$this->loader->add_action( 		'admin_enqueue_scripts', 					$plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 		'admin_menu', 								$plugin_admin, 'register_settings_page' );
 		$this->loader->add_action( 		'admin_init', 								$plugin_admin, 'register_settings' );
+		$this->loader->add_action(      'edit_form_after_editor', 					$plugin_admin, 'show_opp_editor_description' );
 		$this->loader->add_action( 		'add_meta_boxes', 							$plugin_admin, 'add_meta_boxes' );
 		$this->loader->add_action( 		'save_post', 								$plugin_admin, 'save_volunteer_opp_meta', 10, 2 );
 		$this->loader->add_action(		'show_user_profile', 						$plugin_admin, 'show_extra_profile_fields' );
