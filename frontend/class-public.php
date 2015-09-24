@@ -184,9 +184,10 @@ class WI_Volunteer_Management_Public {
 
 		if( get_post_type() == 'volunteer_opp' ){
 
+			$more_text = __( 'Find Out More', 'wivm' );
 			$link = sprintf( '<a href="%1$s" class="more-link">%2$s</a>',
 						get_permalink( get_the_ID() ),
-						__( 'Find Out More', 'wivm' )
+						apply_filters( 'wivm_read_more_text', $more_text )
 					);
 
 			return $text . '&hellip;' . $link;
