@@ -479,9 +479,9 @@ class WI_Volunteer_Management_Admin {
 	/**
 	 * Display the meta box for each volunteer that's signed up for the specific opportunity being viewed.
 	 * 
-	 * @param  object $post The volunteer opportunity object.
-	 * @todo   Add text for empty state when no one has signed up yet.
 	 * @todo   Use WI_Volunteer_Users_List_Table() object to display this information.
+	 * 
+	 * @param  object $post The volunteer opportunity object.
 	 */
 	public function display_opportunity_rsvps_meta_box( $post ){
 

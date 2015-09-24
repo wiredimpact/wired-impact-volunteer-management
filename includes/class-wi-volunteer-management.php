@@ -109,7 +109,7 @@ class WI_Volunteer_Management {
 		require_once WIVM_DIR . 'includes/class-i18n.php';
 
 		/**
-		 * The class responsible for defining internationalization functionality
+		 * The class responsible for handling template loading functionality
 		 * of the plugin.
 		 */
 		require_once WIVM_DIR . 'includes/class-template-loader.php';

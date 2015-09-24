@@ -140,9 +140,10 @@ class WI_Volunteer_Management_Form {
 	/**
 	 * Create a Text input field.
 	 *
-	 * @param string $var   The variable within the option to create the text input field for.
-	 * @param string $label The label to show for the variable.
-	 * @param array  $attr  Extra class to add to the input field, Description for for field, Placeholder for field
+	 * @param string $var   		The variable within the option to create the text input field for.
+	 * @param string $label 		The label to show for the variable.
+	 * @param array  $attr  		Extra class to add to the input field, Description for for field, Placeholder for field.
+	 * @param string $val_format 	Method to format the value before it's output into the form field.
 	 */
 	public function textinput( $var, $label, $attr = array(), $val_format = null ) {
 		$attr = wp_parse_args( $attr, array(
