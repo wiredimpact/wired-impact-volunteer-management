@@ -1,12 +1,18 @@
 <?php
-/**
- * @package WI_Volunteer_Management/Admin
- */
 
 /**
- * Output the HTML for our settings page. Utilizes the WI_Volunteer_Management_Form class to generate
- * the necessary HTML. Every setting added here needs a default in the WI_Volunteer_Management_Options() class.
+ * Output the HTML for our settings page.
+ * 
+ * Utilizes the WI_Volunteer_Management_Form class to generate the necessary HTML.
+ * Every setting added here needs a default in the WI_Volunteer_Management_Options() class.
+ *
+ * @link       http://wiredimpact.com
+ * @since      0.1
+ *
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/Admin
  */
+
 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'class-form.php';
 
 $wi_form = new WI_Volunteer_Management_Form();

@@ -1,8 +1,15 @@
 <?php
+
 /**
- * @package WI_Volunteer_Management/Admin
+ * Output the HTML for our individual volunteer page.
+ * 
+ * Utilizes the WI_Volunteer_Management_Volunteer class to pull the volunteer's information.
  *
- * Output the HTML for our individual volunteer page. Utilizes the WI_Volunteer_Management_Volunteer class to pull the volunteer's information.
+ * @link       http://wiredimpact.com
+ * @since      0.1
+ *
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/Admin
  */
 
 if ( !current_user_can( 'list_users' ) || !isset( $_REQUEST['user_id'] ) ){

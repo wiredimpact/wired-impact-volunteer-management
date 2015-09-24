@@ -1,19 +1,31 @@
 <?php
+
+/**
+ * Utility used to work with individual volunteers.
+ *
+ * @link       http://wiredimpact.com
+ * @since      0.1
+ *
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/Includes
+ */
+
 /**
  * Utility used to work with individual volunteers.
  *
  * Stores the data for an individual volunteer to be used throughout the application.
  *
- * @since      1.0.0
+ * @since      0.1
  * @package    WI_Volunteer_Management
- * @subpackage WI_Volunteer_Management/includes
+ * @subpackage WI_Volunteer_Management/Includes
+ * @author     Wired Impact <info@wiredimpact.com>s
  */
 class WI_Volunteer_Management_Volunteer {
 
 	/**
 	 * The user ID assicated with the volunteer.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   public
 	 * @var      int    $ID    The user ID associated with the volunteer.
 	 */
@@ -22,7 +34,7 @@ class WI_Volunteer_Management_Volunteer {
 	/**
 	 * The metadata assicated with the volunteer.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   public
 	 * @var      array    $meta    The metadata associated with the volunteer.
 	 */
@@ -34,7 +46,7 @@ class WI_Volunteer_Management_Volunteer {
 	 * If the user_id is provided then we populate the meta property with a bunch of info on the volunteer.
 	 * If the user_id is not provided, but the form_fields are then we either create a new user or update an existing one.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @param    int $user_id The user ID for the volunteer.
 	 * @param    array $form_fields The volunteer opportunity form fields as they were submitted.
 	 */
@@ -73,6 +85,7 @@ class WI_Volunteer_Management_Volunteer {
 	 * Format a phone number that's provided only in integers.
 	 *
 	 * @todo   Remove duplicates of this method that exist in other classes
+	 * 
 	 * @param  int $unformmated_number Phone number in only integers
 	 * @return string Phone number formatted to look nice.
 	 */

@@ -2,17 +2,29 @@
 /**
  * Utility used to work with an RSVP to a volunteer opportunity.
  *
+ * @link       http://wiredimpact.com
+ * @since      0.1
+ *
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/Includes
+ */
+
+/**
+ * Utility used to work with an RSVP to a volunteer opportunity.
+ *
  * Handles saving and bringing up information about a single RSVP for a specific opportunity.
  *
- * @since      1.0.0
+ * @since      0.1
  * @package    WI_Volunteer_Management
- * @subpackage WI_Volunteer_Management/includes
+ * @subpackage WI_Volunteer_Management/Includes
+ * @author     Wired Impact <info@wiredimpact.com>
  */
 class WI_Volunteer_Management_RSVP {
 
 	/**
-	 * Whether the person rsvped to volunteer or not.
-	 *
+	 * Whether the person has been rsvped to volunteer or not.
+	 * 
+	 * @since    0.1
 	 * @var bool True if the person RSVPed, false on error or if the person had already RSVPed for this opportunity.
 	 */
 	public $rsvped;
@@ -20,7 +32,7 @@ class WI_Volunteer_Management_RSVP {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 */
 	public function __construct( $user_id = null, $opportunity_id = null ) {
 

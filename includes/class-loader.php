@@ -3,11 +3,11 @@
 /**
  * Register all actions and filters for the plugin
  *
- * @link       http://example.com
- * @since      1.0.0
+ * @link       http://wiredimpact.com
+ * @since      0.1
  *
  * @package    WI_Volunteer_Management
- * @subpackage WI_Volunteer_Management/includes
+ * @subpackage WI_Volunteer_Management/Includes
  */
 
 /**
@@ -17,16 +17,17 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
+ * @since      0.1
  * @package    WI_Volunteer_Management
- * @subpackage WI_Volunteer_Management/includes
- * @author     Your Name <email@example.com>
+ * @subpackage WI_Volunteer_Management/Includes
+ * @author     Wired Impact <info@wiredimpact.com>
  */
 class WI_Volunteer_Management_Loader {
 
 	/**
 	 * The array of shortcodes to add to WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   protected
 	 * @var      array    $shortcodes    The shortcodes to allow within WordPress.
 	 */
@@ -35,7 +36,7 @@ class WI_Volunteer_Management_Loader {
 	/**
 	 * The array of actions registered with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   protected
 	 * @var      array    $actions    The actions registered with WordPress to fire when the plugin loads.
 	 */
@@ -44,7 +45,7 @@ class WI_Volunteer_Management_Loader {
 	/**
 	 * The array of filters registered with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   protected
 	 * @var      array    $filters    The filters registered with WordPress to fire when the plugin loads.
 	 */
@@ -53,7 +54,7 @@ class WI_Volunteer_Management_Loader {
 	/**
 	 * Initialize the collections used to maintain the actions and filters.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 */
 	public function __construct() {
 
@@ -66,7 +67,7 @@ class WI_Volunteer_Management_Loader {
 	/**
      * Add a new shortcode to the collection to be registered with WordPress
      *
-     * @since     1.0.0
+     * @since     0.1
      * @param     string        $tag           The name of the new shortcode.
      * @param     object        $component     A reference to the instance of the object on which the shortcode is defined.
      * @param     string        $callback      The name of the function that defines the shortcode.
@@ -78,7 +79,7 @@ class WI_Volunteer_Management_Loader {
 	/**
 	 * Add a new action to the collection to be registered with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @param      string               $hook             The name of the WordPress action that is being registered.
 	 * @param      object               $component        A reference to the instance of the object on which the action is defined.
 	 * @param      string               $callback         The name of the function definition on the $component.
@@ -92,7 +93,7 @@ class WI_Volunteer_Management_Loader {
 	/**
 	 * Add a new filter to the collection to be registered with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @param      string               $hook             The name of the WordPress filter that is being registered.
 	 * @param      object               $component        A reference to the instance of the object on which the filter is defined.
 	 * @param      string               $callback         The name of the function definition on the $component.
@@ -107,7 +108,7 @@ class WI_Volunteer_Management_Loader {
 	 * A utility function that is used to register the actions and hooks into a single
 	 * collection.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   private
 	 * @param      array                $hooks            The collection of hooks that is being registered (that is, actions or filters).
 	 * @param      string               $hook             The name of the WordPress filter that is being registered.
@@ -134,7 +135,7 @@ class WI_Volunteer_Management_Loader {
 	/**
 	 * Register the filters and actions with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 */
 	public function run() {
 

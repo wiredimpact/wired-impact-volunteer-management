@@ -1,5 +1,6 @@
 /**
- * All javascript for admin-specific functionality.
+ * Wired Impact Volunteer Management
+ * All javascript for admin-specific functionality for the plugin.
  */
 (function( $ ) {
 	'use strict';

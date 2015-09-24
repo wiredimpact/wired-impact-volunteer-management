@@ -1,4 +1,15 @@
 <?php
+
+/**
+ * Utility used to work with individual volunteer opportunities.
+ *
+ * @link       http://wiredimpact.com
+ * @since      0.1
+ *
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/Includes
+ */
+
 /**
  * Utility used to work with individual volunteer opportunities.
  *
@@ -6,16 +17,17 @@
  * the admin or on the frontend. Also handles display of opportunity information
  * such as phone numbers, times and addresses.
  *
- * @since      1.0.0
+ * @since      0.1
  * @package    WI_Volunteer_Management
- * @subpackage WI_Volunteer_Management/includes
+ * @subpackage WI_Volunteer_Management/Includes
+ * @author     Wired Impact <info@wiredimpact.com>
  */
 class WI_Volunteer_Management_Opportunity {
 
 	/**
 	 * The post ID of this particular volunteer opportunity.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   public
 	 * @var      array    $ID    The post ID of this volunteer opportunity.
 	 */
@@ -24,7 +36,7 @@ class WI_Volunteer_Management_Opportunity {
 	/**
 	 * The metadata associated with this particular volunteer opportunity.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   public
 	 * @var      array    $opp_meta    The metadata associated with the volunteer opportunity.
 	 */
@@ -33,7 +45,7 @@ class WI_Volunteer_Management_Opportunity {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @param    int $volunteer_opp_id The post ID for the volunteer opportunity.
 	 */
 	public function __construct( $volunteer_opp_id ) {

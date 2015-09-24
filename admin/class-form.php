@@ -1,21 +1,41 @@
 <?php
+
 /**
- * @package WI_Volunteer_Management\Admin
+ * Output the form and fields for all settings.
+ *
+ * @link       http://wiredimpact.com
+ * @since      0.1
+ *
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/Admin
  */
 
 /**
- * WI_Volunteer_Management_Form is used to generate the form and form fields for settings within
- * the WordPress admin. It is adapted from the WordPress SEO by Yoast plugin (https://wordpress.org/plugins/wordpress-seo/)
+ * Output the form and fields for all settings.
+ *
+ * Used to generate the form and fields for settings within the WordPress admin.
+ * It is adapted from the WordPress SEO by Yoast plugin (https://wordpress.org/plugins/wordpress-seo/)
+ * 
+ * @since      0.1
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/Admin
+ * @author     Wired Impact <info@wiredimpact.com>
  */
 class WI_Volunteer_Management_Form {
 
 	/**
-	 * @var string
+	 * Then name of our saved option.
+	 *
+	 * @since  0.1
+	 * @var    string
 	 */
 	public $option_name;
 
 	/**
-	 * @var array
+	 * The saved plugin options.
+	 *
+	 * @since 0.1
+	 * @var   array
 	 */
 	public $options;
 
@@ -311,6 +331,7 @@ class WI_Volunteer_Management_Form {
 	 * Format a phone number that's provided only in integers.
 	 *
 	 * @todo   Remove duplicates of this method that exist in other classes
+	 * 
 	 * @param  int $unformmated_number Phone number in only integers
 	 * @return string Phone number formatted to look nice.
 	 */

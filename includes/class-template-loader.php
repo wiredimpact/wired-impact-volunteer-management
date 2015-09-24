@@ -1,9 +1,24 @@
 <?php
+
 /**
  * Template Loader for Plugins.
  *
+ * @link       http://wiredimpact.com
+ * @since      0.1
+ *
  * @package    WI_Volunteer_Management
- * @subpackage WI_Volunteer_Management/includes
+ * @subpackage WI_Volunteer_Management/Includes
+ */
+
+/**
+ * Template Loader for Plugins.
+ *
+ * Template loader for plugins which first checks for a theme override, and if not
+ * then loads the template from the plugin.
+ *
+ * @since      0.1
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/Includes
  * @author     Gary Jones
  * @link       http://github.com/GaryJones/Gamajo-Template-Loader
  * @copyright  2013 Gary Jones

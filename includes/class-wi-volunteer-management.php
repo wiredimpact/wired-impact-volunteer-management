@@ -1,16 +1,16 @@
 <?php
 
 /**
- * The file that defines the core plugin class
+ * The file that defines the core plugin class.
  *
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       http://example.com
- * @since      1.0.0
+ * @link       http://wiredimpact.com
+ * @since      0.1
  *
  * @package    WI_Volunteer_Management
- * @subpackage WI_Volunteer_Management/includes
+ * @subpackage WI_Volunteer_Management/Includes
  */
 
 /**
@@ -22,10 +22,10 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      1.0.0
+ * @since      0.1
  * @package    WI_Volunteer_Management
- * @subpackage WI_Volunteer_Management/includes
- * @author     Your Name <email@example.com>
+ * @subpackage WI_Volunteer_Management/Includes
+ * @author     Wired Impact <info@wiredimpact.com>
  */
 class WI_Volunteer_Management {
 
@@ -33,7 +33,7 @@ class WI_Volunteer_Management {
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   protected
 	 * @var      WI_Volunteer_Management_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
@@ -42,7 +42,7 @@ class WI_Volunteer_Management {
 	/**
 	 * The unique identifier of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   protected
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
@@ -51,7 +51,7 @@ class WI_Volunteer_Management {
 	/**
 	 * The current version of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
@@ -64,7 +64,7 @@ class WI_Volunteer_Management {
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the public-facing side of the site.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 */
 	public function __construct() {
 
@@ -91,7 +91,7 @@ class WI_Volunteer_Management {
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   private
 	 */
 	private function load_dependencies() {
@@ -157,15 +157,15 @@ class WI_Volunteer_Management {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Plugin_Name_i18n class in order to set the domain and to register the hook
+	 * Uses the WI_Volunteer_Management_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   private
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Plugin_Name_i18n();
+		$plugin_i18n = new WI_Volunteer_Management_i18n();
 		$plugin_i18n->set_domain( $this->get_plugin_name() );
 
 		$this->loader->add_action( 		'plugins_loaded', 							$plugin_i18n, 'load_plugin_textdomain' );
@@ -176,7 +176,7 @@ class WI_Volunteer_Management {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
@@ -207,7 +207,7 @@ class WI_Volunteer_Management {
 	 * Register all of the hooks related to the public-facing functionality and that are used in both public-facing and the admin
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 * @access   private
 	 */
 	private function define_public_hooks() {
@@ -229,7 +229,7 @@ class WI_Volunteer_Management {
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 */
 	public function run() {
 		$this->loader->run();
@@ -239,7 +239,7 @@ class WI_Volunteer_Management {
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1
 	 * @return    string    The name of the plugin.
 	 */
 	public function get_plugin_name() {
@@ -249,8 +249,8 @@ class WI_Volunteer_Management {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since     1.0.0
-	 * @return    Plugin_Name_Loader    Orchestrates the hooks of the plugin.
+	 * @since     0.1
+	 * @return    WI_Volunteer_management_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;
@@ -259,7 +259,7 @@ class WI_Volunteer_Management {
 	/**
 	 * Retrieve the version number of the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     0.1
 	 * @return    string    The version number of the plugin.
 	 */
 	public function get_version() {

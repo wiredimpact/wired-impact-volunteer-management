@@ -13,14 +13,6 @@ error_log
 .sass-cache/**
 *.map
 
-node_modules/
-build/
-nbbuild/
-dist/
-nbdist/
-nbactions.xml
-nb-configuration.xml
-
 *.codekit
 sftp-config.json
 

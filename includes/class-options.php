@@ -1,24 +1,41 @@
 <?php
+
 /**
  * Utility used to retrieve all the settings and options for the plugin.
  *
- * @since      1.0.0
+ * @link       http://wiredimpact.com
+ * @since      0.1
+ *
  * @package    WI_Volunteer_Management
- * @subpackage WI_Volunteer_Management/includes
+ * @subpackage WI_Volunteer_Management/Includes
+ */
+
+/**
+ * Utility used to retrieve all the settings and options for the plugin.
+ *
+ * We use this to not only retrieve sendings, but also to load the defaults
+ * when the plugin is first actvated.
+ *
+ * @since      0.1
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/Includes
+ * @author     Wired Impact <info@wiredimpact.com>
  */
 class WI_Volunteer_Management_Options {
 
 	/**
 	 * Name of option saved in the WordPres options database table
-	 * 
-	 * @var  string  
+	 *
+	 * @since 0.1
+	 * @var   string  
 	 */
 	public $option_name = 'wivm-settings';
 
 	/**
 	 * Array of defaults for all of our settings
-	 * 
-	 * @var  array  
+	 *
+	 * @since 0.1
+	 * @var   array  
 	 */
 	public $defaults = array(
 		//General

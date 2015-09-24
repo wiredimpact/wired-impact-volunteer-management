@@ -3,11 +3,11 @@
 /**
  * Fired during plugin activation
  *
- * @link       http://example.com
- * @since      1.0.0
+ * @link       http://wiredimpact.com
+ * @since      0.1
  *
  * @package    WI_Volunteer_Management
- * @subpackage WI_Volunteer_Management/includes
+ * @subpackage WI_Volunteer_Management/Includes
  */
 
 /**
@@ -15,10 +15,10 @@
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @since      1.0.0
+ * @since      0.1
  * @package    WI_Volunteer_Management
- * @subpackage WI_Volunteer_Management/includes
- * @author     Your Name <email@example.com>
+ * @subpackage WI_Volunteer_Management/Includes
+ * @author     Wired Impact <info@wiredimpact.com>
  */
 class WI_Volunteer_Management_Activator {
 
@@ -30,7 +30,7 @@ class WI_Volunteer_Management_Activator {
 	 * Along with that we create our volunteer role to be used to easily track volunteers
 	 * who sign up for volunteer opportunities on the website.
 	 *
-	 * @since    1.0.0
+	 * @since    0.1
 	 */
 	public static function activate() {
 		WI_Volunteer_Management_Public::register_post_types();

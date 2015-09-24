@@ -1,44 +1,63 @@
 <?php
+
 /**
- * Utility used to work with sending reminder emails on a schedule.
- * *
- * @since      1.0.0
+ * Send emails associated with signups and reminders.
+ *
+ * @link       http://wiredimpact.com
+ * @since      0.1
+ *
  * @package    WI_Volunteer_Management
- * @subpackage WI_Volunteer_Management/includes
+ * @subpackage WI_Volunteer_Management/Includes
+ */
+
+/**
+ * Send emails associated with signups and reminders.
+ *
+ * Send all emails associated with volunteer sign ups as well as reminders to volunteers.
+ * 
+ * @since      0.1
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/Includes
+ * @author     Wired Impact <info@wiredimpact.com>
  */
 class WI_Volunteer_Management_Email { 
 
 	/**
 	 * Volunteer object with included meta data.
-	 * 		
-	 * @var object
+   *
+   * @since 0.1 
+	 * @var   object
 	 */
 	public $user;
 
 	/**
 	 * Opportunity object with included meta data.
-	 * 	
+   *
+   * @since 0.1 
 	 * @var object
 	 */
 	public $opp;
 
 	/**
 	 * All the options set within the plugin settings.
-	 * 
+   *
+   * @since 0.1 
 	 * @var array
 	 */
 	public $options;
 
 	/**
 	 * List of variables that will be replaced in emails.
-	 * 
+   *
+   * @since 0.1 
 	 * @var array
 	 */
 	public $search_text = array();
 
 	/**
 	 * List of text used to replace the search text within emails.
-	 * 
+   *
+   * @since 0.1 
 	 * @var array
 	 */
 	public $replace_text = array();

@@ -1,9 +1,15 @@
 <?php
+
 /**
- * @package WI_Volunteer_Management/Admin
+ * Output the HTML for our Volunteers page.
+ * 
+ * Utilizes the WI_Volunteer_Users_List_Table class to generate the necessary HTML.
  *
- * Output the HTML for our Volunteers page. Utilizes the XXXXXXXXXXXXXXXXXX class to generate
- * the necessary HTML.
+ * @link       http://wiredimpact.com
+ * @since      0.1
+ *
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/Admin
  */
 
 if ( !current_user_can( 'list_users' ) ){

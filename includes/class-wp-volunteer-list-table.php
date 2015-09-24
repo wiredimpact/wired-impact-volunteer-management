@@ -1,21 +1,32 @@
 <?php
+
 /**
- * Volunteer User List Table class.
+ * The volunteer user list table class.
+ *
+ * @link       http://wiredimpact.com
+ * @since      0.1
+ *
+ * @package    WI_Volunteer_Management
+ * @subpackage WI_Volunteer_Management/Includes
+ */
+
+/**
+ * The volunteer user list table class.
  *
  * This class uses many adapted methods from the WP_Users_List_Table and also extends that class.
  *
- * @since 1.0.0
  * @access private
- *
+ * @since      0.1
  * @package    WI_Volunteer_Management
- * @subpackage WI_Volunteer_Management/includes
+ * @subpackage WI_Volunteer_Management/Includes
+ * @author     Wired Impact <info@wiredimpact.com>
  */
 class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 
 	/**
 	 * Constructor.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1
 	 * @access public
 	 *
 	 * @see WP_List_Table::__construct() for more information on default arguments.
@@ -33,7 +44,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 	/**
 	 * Prepare the volunteers list for display.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1
 	 * @access public
 	 */
 	public function prepare_items() {
@@ -99,7 +110,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 	 * 
 	 * @param  array $a User a information
 	 * @param  array $b User b information
-	 * @return int      1 or -1 to pass back the correct order
+	 * @return int   1 or -1 to pass back the correct order
 	 */
 	public function sort_users_by_number_volunteer_opportunities( $a, $b ){
 		//Set up variables for returning numbers so we can handle flip the order if order is set to descending.
@@ -123,7 +134,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 	/**
 	 * Get a list of columns for the list table.
 	 *
-	 * @since  1.0.0
+	 * @since  0.1
 	 * @access public
 	 *
 	 * @return array Array in which the key is the ID of the column, and the value is the description.
@@ -142,7 +153,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 	/**
 	 * Get a list of sortable columns for the list table.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1
 	 * @access protected
 	 *
 	 * @return array Array of sortable columns.
@@ -161,7 +172,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 	/**
 	 * Retrieve an associative array of bulk actions available on this table. We have none so it's an empty array.
 	 *
-	 * @since  1.0.0
+	 * @since  0.1
 	 * @access protected
 	 *
 	 * @return array Array of bulk actions.
@@ -175,7 +186,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 	/**
 	 * Output nothing for extra bulk changes since we don't allow that at this point.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1
 	 * @access protected
 	 *
 	 * @param string $which Whether this is being invoked above ("top") or below the table ("bottom").
@@ -187,7 +198,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 	/**
 	 * Generate HTML for a single row on the volunteers list admin panel.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1
 	 * @access public
 	 *
 	 * @global WP_Roles $wp_roles User roles object.
@@ -294,7 +305,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 					/**
 					 * Filter the display output of custom columns in the volunteers list table.
 					 *
-					 * @since 1.0.0
+					 * @since 0.1
 					 *
 					 * @param string $output      Custom column output. Default empty.
 					 * @param string $column_name Column name.
@@ -315,7 +326,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 	 * Checks that volunteer users do exist and if not, it shows a message that people will show up when they sign up
 	 * to volunteer. If they do exist then a message shows that the search returned no results.
 	 *
-	 * @since 1.0.0
+	 * @since 0.1
 	 * @access public
 	 */
 	public function no_items() {
