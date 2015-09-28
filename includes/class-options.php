@@ -84,7 +84,7 @@ Location: {opportunity_location}',
 
 Thanks again for signing up to volunteer. Your opportunity is coming up soon. Here are the details:
 
-{opportunity_name}
+<strong>{opportunity_name}</strong>
 When: {opportunity_date_time}
 Location: {opportunity_location}
 
