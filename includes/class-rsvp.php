@@ -25,7 +25,7 @@ class WI_Volunteer_Management_RSVP {
 	 * Whether the person has been rsvped to volunteer or not.
 	 * 
 	 * @since    0.1
-	 * @var bool True if the person RSVPed, false on error or if the person had already RSVPed for this opportunity.
+	 * @var bool True if the person's RSVP completed successfully, false on error or if the person had previously RSVPed for this opportunity and shouldn't be added again.
 	 */
 	public $rsvped;
 
