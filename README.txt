@@ -1,8 +1,8 @@
 === Wired Impact Volunteer Management ===
 Contributors: wiredimpact
-Tags: nonprofits, non profits, not-for-profit, volunteers
+Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
-Tested up to: 4.3.1
+Tested up to: 4.3
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -91,12 +91,11 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 == Screenshots ==
 
-1. WE NEED TO ADD SCREENSHOTS
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-1. This is the second screen shot
+1. Advertise Volunteer Opportunities More Easily
+1. Make Signing Up to Volunteer Simple
+1. Control the Number of Volunteers Needed
+1. Send Customized Reminder Emails
+1. View Volunteer Profiles
 
 == Changelog ==
 
