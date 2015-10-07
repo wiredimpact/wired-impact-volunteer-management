@@ -35,8 +35,8 @@ If this doesn’t work, follow these steps:
 
 1.	Download the Wired Impact Volunteer Management plugin
 1.	Unzip the files
-1.	Upload the wivm folder to the /wp-content/plugins directory
-1.	Activate the Wired Impact Volunteer Management plugin through the “Plugins” menus in WordPress
+1.	Upload the wired-impact-volunteer-management folder to the /wp-content/plugins directory of your website
+1.	Activate the Wired Impact Volunteer Management plugin through the “Plugins” menu in WordPress
 
 == Frequently Asked Questions ==
 
