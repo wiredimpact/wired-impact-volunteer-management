@@ -21,6 +21,8 @@ A simple, free way to keep track of your nonprofit’s volunteers and opportunit
 * **Customizable reminder emails for one-time opportunities –** Make sure your volunteers get all the information they need before showing up to help. You control when they get the email and what information it includes.
 * **Volunteer profiles that track participation and more –** Keep track of all of your volunteers’ involvement. See what they’ve helped out with, how long they’ve been helping and add notes that will help you stay organized.
 
+*Thanks to [Habitat for Humanity East Bay/Silicon Valley](http://www.habitatebsv.org/) for being an awesome client and letting us use the photo above.*
+
 == Installation ==
 
 **How do I install the plugin?**
