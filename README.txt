@@ -101,5 +101,9 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 == Changelog ==
 
+= 0.2 =
+* Show admin notice when plugin is activated directing people to tips on how to get started.
+* Adjust how templates are loaded for a single volunteer opportunity to improve theme compatibility.
+
 = 0.1 =
 * Initial release.
