@@ -57,6 +57,11 @@
 	margin-top: 0;
 }
 
+#wivm-sign-up-form input[type=text],
+#wivm-sign-up-form input[type=email] {
+	display: block;
+}
+
 #wivm-sign-up-form input[type=submit] {
 	margin-top: 1em;
 	float: right;

@@ -268,24 +268,35 @@ class WI_Volunteer_Management_Public {
 	}
 
 	/**
-	 * Loads the single volunteer opportunity template using our template loader.
+	 * Show the meta info and the sign up form before and after the content on a single volunteer opp.
 	 *
-	 * Instead of loading the single opportunity template from the current theme, 
-	 * we load it using our template loader. 
+	 * We show this info using a filter for the_content to ensures the templates will work
+	 * on a number of different themes. opp-single-meta.php and opp-single-form.php templates
+	 * are both used within this function.
 	 *
-	 * @see  https://codex.wordpress.org/Plugin_API/Filter_Reference/single_template
-	 * @param  string The default template file for our custom post type.
-	 * @return string The location of the correct template file.
+	 * @param  string $content The content for the given post.
+	 * @return string If volunteer opp then we wrap the meta and form around the post's content.
 	 */
-	public function get_single_opp_template( $single_template ){
-		global $post;
+	public function show_meta_form_single( $content ){
 
-		if( $post->post_type == 'volunteer_opp' ){
+		if( is_singular( 'volunteer_opp' ) ){
+
 			$template_loader = new WI_Volunteer_Management_Template_Loader();
-			$single_template = $template_loader->get_template_part( 'opp-single', null, false );
+			ob_start();
+
+			$template_loader->get_template_part( 'opp-single', 'meta' );
+			echo $content;
+			$template_loader->get_template_part( 'opp-single', 'form' );
+
+			return ob_get_clean();
+
 		}
-		
-		return $single_template;
+		else {
+
+			return $content;
+
+		}
+
 	}
 
 	/**
