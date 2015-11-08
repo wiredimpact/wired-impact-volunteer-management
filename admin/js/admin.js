@@ -8,7 +8,7 @@
 	$(function() {
 
     //Only run on WI Volunteer Management settings page.
-    if( typeof pagenow != 'undefined' && pagenow == 'volunteer-mgmt_page_wi-volunteer-management-settings' ){
+    if( typeof pagenow != 'undefined' && pagenow == 'volunteer-mgmt_page_wi-volunteer-management-help-settings' ){
 
     	/**
     	 * Hide and show options tab content on click
@@ -20,6 +20,13 @@
             var id = $(this).attr('id').replace('-tab', '');
             $('#' + id).addClass('active');
             $(this).addClass('nav-tab-active');
+            
+            //Hide Save Changes button on Help tab
+            var submit = $( '#wivm-settings-form p.submit' );
+            submit.show();
+            if( id == 'help' ){
+                submit.hide();
+            }
         });
 
         var wivm_active_tab = window.location.hash.replace('#top#', '');
@@ -192,6 +199,22 @@
         }); //Pointer remove-rsvp click
 
     }); //.remove-rsvp click
+
+
+    /**
+     * Hide our admin notices for good by using AJAX to store that it has been clicked.
+     */
+    $( '.wivm-notice' ).on('click', '.notice-dismiss, a', function( event ){
+
+        $.post( ajaxurl, {
+            action: 'wivm_hide_notice',
+            data: {
+                notice_id: $( this ).closest( '.wivm-notice' ).attr( 'id' ),
+                nonce: wivm_ajax.hide_notice_nonce
+            }
+        });
+
+    });
 
 
 	}); //document.ready()

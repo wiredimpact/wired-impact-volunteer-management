@@ -92,6 +92,7 @@ class WI_Volunteer_Management_Admin {
 			'remove_rsvp_confirm_text' 	=> __( 'Remove RSVP', 'wivm' ),
 			'remove_rsvp_error_text' 	=> __( 'Error, try again later.', 'wivm' ),
 			'remove_user_rsvp_nonce' 	=> wp_create_nonce( 'remove_user_rsvp_nonce' ),
+			'hide_notice_nonce'			=> wp_create_nonce( 'hide_notice_nonce' ),
 		);
 
 		return $data;
@@ -109,7 +110,7 @@ class WI_Volunteer_Management_Admin {
 
 		// Add main page
 		$admin_page = add_menu_page(
-			__( 'Wired Impact Volunteer Management: ', 'wivm' ) . ' ' . __( 'Settings', 'wivm' ),
+			__( 'Wired Impact Volunteer Management: ', 'wivm' ) . ' ' . __( 'Help & Settings', 'wivm' ),
 			__( 'Volunteer Mgmt', 'wivm' ),
 			'manage_options',
 			'wi-volunteer-management',
@@ -131,9 +132,9 @@ class WI_Volunteer_Management_Admin {
 			array(
 				'wi-volunteer-management',
 				'',
-				__( 'Settings', 'wivm' ),
+				__( 'Help & Settings', 'wivm' ),
 				'manage_options',
-				'wi-volunteer-management-settings',
+				'wi-volunteer-management-help-settings',
 				array( $this, 'load_page' ),
 			),
 			array(
@@ -179,8 +180,8 @@ class WI_Volunteer_Management_Admin {
 				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/pages/volunteer.php';
 				break;
 
-			case 'wi-volunteer-management-settings':
-				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/pages/settings.php';
+			case 'wi-volunteer-management-help-settings':
+				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/pages/help-settings.php';
 				break;
 		}
 	}
@@ -756,6 +757,52 @@ class WI_Volunteer_Management_Admin {
 	public function delete_volunteer_rsvps( $user_id, $reassign ){
 		$volunteer = new WI_Volunteer_Management_Volunteer( $user_id );
 		$volunteer->delete_rsvps();
+	}
+
+	/**
+	 * Show a notice after the plugin is activated pushing people to info on how to get started.
+	 *
+	 * The notice only shows if the 'show_getting_started_notice' option in the database is set to 1.
+	 * If users click the link or dismiss the notice using the 'x' we don't show it again.
+	 *
+	 * @todo  Create a class to allow for easy adding and hiding of notices.
+	 */
+	public function show_getting_started_notice(){
+		$options = new WI_Volunteer_Management_Options();
+		$show_notice = $options->get_option( 'show_getting_started_notice' );
+
+		if( $show_notice == true ){
+
+			$id = 'show_getting_started_notice';
+			$classes = 'updated notice is-dismissible wivm-notice';
+			$message = 'We\'re excited for you to try Wired Impact Volunteer Management. <a href="' . admin_url( 'admin.php?page=wi-volunteer-management-help-settings' ) . '">Learn how to get started.</a>';
+
+			echo '<div id="' . $id . '" class="' . $classes . ' "><p>' .  $message . '</p></div>';
+			
+		}
+
+	}
+
+	/**
+	 * Use AJAX to hide an admin notice by adjusting a setting.
+	 *
+	 * The notice must have an id that is named the same as the option to update.
+	 */
+	public function hide_notice(){
+		$notice_id 	= sanitize_text_field( $_POST['data']['notice_id'] );
+		$nonce 		= $_POST['data']['nonce'];
+
+		//Verify our nonce
+		if( !wp_verify_nonce( $nonce, 'hide_notice_nonce' ) ) {
+			_e( 'Security Check.', 'wivm' );
+			die();
+		}
+
+		//Hide the notice so it's never shown again.
+		$options = new WI_Volunteer_Management_Options();
+		$options->set_option( $notice_id, 0 );
+ 		
+ 		die(); //Must use die() when using AJAX
 	}
 
 } //class WI_Volunteer_Management_Admin

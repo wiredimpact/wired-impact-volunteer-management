@@ -200,7 +200,9 @@ class WI_Volunteer_Management {
 		$this->loader->add_action( 		'save_post',								$plugin_admin, 'schedule_auto_email_reminder', 99, 2 );
 		$this->loader->add_action( 		'send_auto_email_reminders',				$plugin_admin, 'send_email_reminder' );
 		$this->loader->add_action( 		'delete_user', 								$plugin_admin, 'delete_volunteer_rsvps', 10, 2 );
-		
+		$this->loader->add_action( 		'admin_notices', 							$plugin_admin, 'show_getting_started_notice' );
+		$this->loader->add_action( 		'wp_ajax_wivm_hide_notice', 				$plugin_admin, 'hide_notice' );
+
 	}
 
 	/**

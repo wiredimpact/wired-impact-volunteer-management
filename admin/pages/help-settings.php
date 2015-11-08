@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Output the HTML for our settings page.
+ * Output the HTML for our help & settings page.
  * 
  * Utilizes the WI_Volunteer_Management_Form class to generate the necessary HTML.
  * Every setting added here needs a default in the WI_Volunteer_Management_Options() class.
@@ -20,6 +20,7 @@ $wi_form->admin_header();
 ?>
 	
 	<h2 class="nav-tab-wrapper" id="wivm-tabs">
+		<a class="nav-tab" id="help-tab" href="#top#help"><span class="dashicons dashicons-editor-help"></span> <?php _e( 'Help', 'wivm' ); ?></a>
 		<a class="nav-tab" id="general-tab" href="#top#general"><span class="dashicons dashicons-admin-tools"></span> <?php _e( 'General', 'wivm' ); ?></a>
 		<a class="nav-tab" id="defaults-tab" href="#top#defaults"><span class="dashicons dashicons-admin-generic"></span> <?php _e( 'Opportunity Defaults', 'wivm' ); ?></a>
 		<a class="nav-tab" id="email-tab" href="#top#email"><span class="dashicons dashicons-email-alt"></span> <?php _e( 'Email', 'wivm' ); ?></a>
@@ -28,6 +29,19 @@ $wi_form->admin_header();
 	<?php
 	//Display hidden fields and nonces
 	settings_fields( 'wivm-settings-group' );
+
+	//Display a Help tab
+	$wi_form->form_table_start( 'help' ); ?>
+
+		<h2>FAQs and Get Started</h2>
+		<p>Check out the <a target="_blank" href="https://wordpress.org/plugins/wired-impact-volunteer-management/faq/">FAQs on the WordPress plugin repository</a> to get help and learn how to get started.</p>
+
+		<h2>Need More Help?</h2>
+		<p>If the FAQs aren't cutting it and you need more help reach out to us on the <a target="_blank" href="https://wordpress.org/support/plugin/wired-impact-volunteer-management">WordPress support forums.</a></p> 
+	
+	<?php do_action( 'wivm_display_help_settings', $wi_form );
+
+	$wi_form->form_table_end();
 
 	//Display General settings tab
 	$wi_form->form_table_start( 'general' );

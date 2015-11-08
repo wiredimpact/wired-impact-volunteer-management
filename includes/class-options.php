@@ -40,6 +40,7 @@ class WI_Volunteer_Management_Options {
 	public $defaults = array(
 		//General
 		'use_css'              				=> 1,
+		'show_getting_started_notice'		=> 1,
 
 		//Defaults
 		'default_contact_name'				=> '',
@@ -123,9 +124,24 @@ If you have any questions please reach out to {contact_name} at {contact_email} 
 	 * @return mixed Value of option
 	 */
 	public function get_option( $option_name ){
-		return $this->all_options[$option_name];
+		if( isset( $this->all_options[$option_name] ) ){
+			return $this->all_options[$option_name];
+		}
+		else {
+			return $this->defaults[$option_name];
+		}
 	}
 
+	/**
+	 * Set a single option for our settings.
+	 * 
+	 * @param string $option_name The name of the option to set.
+	 * @param mixed  $new_value   The new value for the option.
+	 */
+	public function set_option( $option_name, $new_value ){
+		$this->all_options[$option_name] = $new_value;
+		update_option( $this->option_name, $this->all_options );
+	}
 
 	/**
 	 * Add our default settings to the database via the options table.
