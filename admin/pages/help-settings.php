@@ -4,7 +4,7 @@
  * Output the HTML for our help & settings page.
  * 
  * Utilizes the WI_Volunteer_Management_Form class to generate the necessary HTML.
- * Every setting added here needs a default in the WI_Volunteer_Management_Options() class.
+ * Every setting here needs a default in the WI_Volunteer_Management_Options() class and every setting needs to be listed here.
  *
  * @link       http://wiredimpact.com
  * @since      0.1
@@ -47,6 +47,7 @@ $wi_form->admin_header();
 	$wi_form->form_table_start( 'general' );
 
 		$wi_form->radio( 'use_css', array( 1 => __( 'Yes, please provide basic styling.', 'wivm' ), 0 => __( 'No, I\'ll code my own styling.', 'wivm' ) ), 'Load Plugin CSS?' );
+		$wi_form->hidden( 'show_getting_started_notice' );
 
 		do_action( 'wivm_display_general_settings', $wi_form );
 

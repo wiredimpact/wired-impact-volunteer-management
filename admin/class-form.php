@@ -329,6 +329,30 @@ class WI_Volunteer_Management_Form {
 	}
 
 	/**
+	 * Create a hidden input field.
+	 *
+	 * @param string $var   		The variable within the option to create the hidden input field for.
+	 * @param array  $attr  		Extra class to add to the input field
+	 * @param string $val_format 	Method to format the value before it's output into the form field.
+	 */
+	public function hidden( $var, $attr = array(), $val_format = null ) {
+		$attr = wp_parse_args( $attr, array(
+			'class'       => '',
+		) );
+		$val  = ( isset( $this->options[ $var ] ) ) ? $this->options[ $var ] : '';
+
+		if( $val_format != null ){
+			$val = $this->{$val_format}( $val );
+		}
+
+		echo '<tr style="display: none;">';
+			echo '<td>';
+				echo '<input class="' . esc_attr( $attr['class'] ) . '" type="hidden" id="', esc_attr( $var ), '" name="', esc_attr( $this->option_name ), '[', esc_attr( $var ), ']" value="', esc_attr( $val ), '"/>';
+			echo '</td>';
+		echo '</tr>';
+	}
+
+	/**
 	 * Format a phone number that's provided only in integers.
 	 *
 	 * @todo   Remove duplicates of this method that exist in other classes
