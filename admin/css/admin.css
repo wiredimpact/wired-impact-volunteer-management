@@ -96,7 +96,6 @@ p.editor-help {
  */
 .wi-volunteer .volunteer-info {
 	width: 35%;
-	margin-right: 10%;
 	float: left;
 }
 
@@ -107,9 +106,23 @@ p.editor-help {
 	padding: 15px;
 }
 
+.wi-volunteer .contact-info {
+	padding-left: 126px;
+	position: relative;
+}
+
+.wi-volunteer .contact-info h1 {
+	word-wrap: break-word;
+}
+
+.wi-volunteer .avatar-container {
+	position: absolute;
+	top: 15px;
+	left: 15px;
+}
+
 .wi-volunteer .avatar {
-	float: left;
-	margin-right: 5px;
+	display: block;
 }
 
 .wi-volunteer .contact-info h1,
