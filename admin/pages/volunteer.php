@@ -44,10 +44,12 @@ $volunteer = new WI_Volunteer_Management_Volunteer( $volunteer_id );
 			echo apply_filters( 'the_content', $volunteer_notes );
 			?>
 		</div>
-		
-		<a href="<?php echo admin_url( 'user-edit.php?user_id=' . $volunteer_id ); ?>" class="button edit-volunteer">
-			<?php _e( 'Edit Volunteer Info', 'wivm' ); ?>
-		</a>
+
+		<div class="contact-footer clear">
+			<a href="<?php echo admin_url( 'user-edit.php?user_id=' . $volunteer_id ); ?>" class="button edit-volunteer">
+				<?php _e( 'Edit Volunteer Info', 'wivm' ); ?>
+			</a>
+		</div>
 	
 	</div><!-- .volunteer-info -->
 
