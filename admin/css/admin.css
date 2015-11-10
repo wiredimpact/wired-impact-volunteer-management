@@ -114,6 +114,7 @@ p.editor-help {
 
 .wi-volunteer .contact-info {
 	padding-left: 95px;
+	min-height: 65px;
 	position: relative;
 }
 

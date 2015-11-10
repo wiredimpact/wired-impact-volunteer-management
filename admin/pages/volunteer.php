@@ -22,12 +22,13 @@ $volunteer = new WI_Volunteer_Management_Volunteer( $volunteer_id );
 
 <div class="wrap wi-volunteer">
 
+	<h2><?php echo __( 'Volunteer: ' ) . $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></h2>
+
 	<div class="volunteer-info">
 		
 		<div class="contact-info">
 
 			<?php echo get_avatar( $volunteer->ID, 65 ); ?>
-			<h1><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></h1>
 			<span><?php echo __( 'E-mail:', 'wivm' ) . ' ' . $volunteer->meta['email']; ?></span>
 			<span><?php echo __( 'Phone:', 'wivm' ) . ' ' . $volunteer->meta['phone']; ?></span>
 			<span><?php echo __( 'Volunteer since', 'wivm' ) . ' ' . mysql2date( 'Y', $volunteer->meta['first_volunteer_opp_time'] ); ?></span>
