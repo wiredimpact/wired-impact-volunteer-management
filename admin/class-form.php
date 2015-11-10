@@ -24,6 +24,14 @@
 class WI_Volunteer_Management_Form {
 
 	/**
+	 * The options object.
+	 *
+	 * @since  0.1
+	 * @var    object
+	 */
+	public $wivm_options;
+
+	/**
 	 * Then name of our saved option.
 	 *
 	 * @since  0.1
@@ -32,21 +40,12 @@ class WI_Volunteer_Management_Form {
 	public $option_name;
 
 	/**
-	 * The saved plugin options.
-	 *
-	 * @since 0.1
-	 * @var   array
-	 */
-	public $options;
-
-	/**
 	 * Use WI_Volunteer_Management_Options to retrieve our options
 	 * or the defaults if necessary.
 	 */
 	public function __construct(){
-		$wivm_options 		= new WI_Volunteer_Management_Options();
-		$this->option_name 	= $wivm_options->option_name;
-		$this->options 		= $wivm_options->get_options();
+		$this->wivm_options = new WI_Volunteer_Management_Options();
+		$this->option_name 	= $this->wivm_options->option_name;
 	}
 
 	/**
@@ -151,7 +150,7 @@ class WI_Volunteer_Management_Form {
 			'class'       => '',
 			'description' => '',
 		) );
-		$val  = ( isset( $this->options[ $var ] ) ) ? $this->options[ $var ] : '';
+		$val = $this->wivm_options->get_option( $var );
 
 		if( $val_format != null ){
 			$val = $this->{$val_format}( $val );
@@ -180,7 +179,7 @@ class WI_Volunteer_Management_Form {
 			'class' 		=> '',
 			'description' 	=> ''
 		) );
-		$val  = ( isset( $this->options[ $var ] ) ) ? $this->options[ $var ] : '';
+		$val = $this->wivm_options->get_option( $var );
 
 		echo '<tr>';
 
@@ -207,7 +206,7 @@ class WI_Volunteer_Management_Form {
 			'class'       => '',
 			'description' => '',
 		) );
-		$content  = ( isset( $this->options[ $var ] ) ) ? $this->options[ $var ] : '';
+		$content = $this->wivm_options->get_option( $var );
 
 		echo '<tr>';
 
@@ -235,20 +234,12 @@ class WI_Volunteer_Management_Form {
 	 * @param string $checkbox_label The label that shows just to the right of the checkbox.
 	 */
 	public function checkbox( $var, $main_label, $checkbox_label ) {
-		if ( ! isset( $this->options[ $var ] ) ) {
-			$this->options[ $var ] = false;
-		}
-
-		if ( $this->options[ $var ] === true ) {
-			$this->options[ $var ] = 'on';
-		}
-
 		echo '<tr>';
 
 			$this->label( $main_label, array( 'text_only' => true ) );
 			echo '<td>';
 
-				echo '<input class="checkbox" type="checkbox" id="' . esc_attr( $var ) . '" name="' . esc_attr( $this->option_name ) . '[' . esc_attr( $var ) . ']" value="on"' . checked( $this->options[ $var ], 'on', false ), '/>';
+				echo '<input class="checkbox" type="checkbox" id="' . esc_attr( $var ) . '" name="' . esc_attr( $this->option_name ) . '[' . esc_attr( $var ) . ']" value="on"' . checked( $this->wivm_options->get_option( $var ), 'on', false ), '/>';
 				echo '<label for="' . $var . '">' . $checkbox_label . '</label>';
 
 			echo '</td>';
@@ -272,7 +263,7 @@ class WI_Volunteer_Management_Form {
 		if ( ! is_array( $values ) || $values === array() ) {
 			return;
 		}
-		$val = ( isset( $this->options[ $var ] ) ) ? $this->options[ $var ] : '';
+		$val = $this->wivm_options->get_option( $var );
 
 		echo '<tr>';
 
@@ -304,9 +295,6 @@ class WI_Volunteer_Management_Form {
 		if ( ! is_array( $values ) || $values === array() ) {
 			return;
 		}
-		if ( ! isset( $this->options[ $var ] ) ) {
-			$this->options[ $var ] = false;
-		}
 
 		$var_esc = esc_attr( $var );
 
@@ -319,7 +307,7 @@ class WI_Volunteer_Management_Form {
 				foreach ( $values as $key => $value ) {
 					$key_esc = esc_attr( $key );
 					echo '<label for="' . $var_esc . '-' . $key_esc . '">';
-						echo '<input type="radio" class="radio" id="' . $var_esc . '-' . $key_esc . '" name="' . esc_attr( $this->option_name ) . '[' . $var_esc . ']" value="' . $key_esc . '" ' . checked( $this->options[ $var ], $key_esc, false ) . ' />';
+						echo '<input type="radio" class="radio" id="' . $var_esc . '-' . $key_esc . '" name="' . esc_attr( $this->option_name ) . '[' . $var_esc . ']" value="' . $key_esc . '" ' . checked( $this->wivm_options->get_option( $var ), $key_esc, false ) . ' />';
 					echo ' ' . $value . '</label><br>';
 				}
 
@@ -339,7 +327,7 @@ class WI_Volunteer_Management_Form {
 		$attr = wp_parse_args( $attr, array(
 			'class'       => '',
 		) );
-		$val  = ( isset( $this->options[ $var ] ) ) ? $this->options[ $var ] : '';
+		$val = $this->wivm_options->get_option( $var );
 
 		if( $val_format != null ){
 			$val = $this->{$val_format}( $val );
