@@ -96,7 +96,7 @@ p.editor-help {
  */
 @media only screen and (min-width: 1024px) {
 	.wi-volunteer .volunteer-info {
-		width: 35%;
+		width: 40%;
 		float: left;
 	}
 
@@ -139,6 +139,7 @@ p.editor-help {
 }
 
 .wi-volunteer .contact-info span {
+	word-wrap: break-word;
 	display: block;
 	margin-bottom: 2px;
 }
