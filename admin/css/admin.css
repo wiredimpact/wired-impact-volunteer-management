@@ -94,10 +94,15 @@ p.editor-help {
 /**
  * Individual Volunteer page
  */
-.wi-volunteer .volunteer-info {
-	width: 35%;
-	margin-right: 10%;
-	float: left;
+@media only screen and (min-width: 1024px) {
+	.wi-volunteer .volunteer-info {
+		width: 40%;
+		float: left;
+	}
+
+	.wi-volunteer .volunteer-opps-wrapper {
+		margin-left: 45%;
+	}
 }
 
 .wi-volunteer .contact-info,
@@ -107,9 +112,20 @@ p.editor-help {
 	padding: 15px;
 }
 
+.wi-volunteer .contact-info {
+	padding-left: 95px;
+	position: relative;
+}
+
+.wi-volunteer .contact-info h1 {
+	word-wrap: break-word;
+}
+
 .wi-volunteer .avatar {
-	float: left;
-	margin-right: 5px;
+	display: block;
+	position: absolute;
+	top: 15px;
+	left: 15px;
 }
 
 .wi-volunteer .contact-info h1,
@@ -120,6 +136,7 @@ p.editor-help {
 }
 
 .wi-volunteer .contact-info span {
+	word-wrap: break-word;
 	display: block;
 	margin-bottom: 2px;
 }
@@ -128,13 +145,15 @@ p.editor-help {
 	margin-top: 20px;
 }
 
+@media only screen and (max-width: 1023px) {
+	.wi-volunteer .contact-footer {
+		margin-bottom: 40px;
+	}
+}
+
 .wi-volunteer .edit-volunteer {
 	float: right;
 	margin-top: 10px;
-}
-
-.wi-volunteer .volunteer-opps-wrapper {
-	margin-left: 45%;
 }
 
 .wi-volunteer .volunteer-opps-wrapper h1 {
@@ -158,7 +177,14 @@ p.editor-help {
 
 .wi-volunteer .opp {
 	margin-left: 20px;
+	padding-right: 7.5em;
 	position: relative;
+}
+
+@media only screen and (max-width: 782px) {
+	.wi-volunteer .opp {
+		padding-right: 9.9em;
+	}
 }
 
 .wi-volunteer .opp .circle {
@@ -240,3 +266,14 @@ body.post-type-volunteer_opp .wp-pointer-arrow {
 }
 
 .wi-volunteer .today span { background: #f1f1f1; padding: 0 10px; }
+
+.clear:before,
+.clear:after {
+	content: " ";
+	display: table;
+}
+
+
+.clear:after {
+	clear: both;
+}

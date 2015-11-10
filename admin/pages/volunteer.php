@@ -26,9 +26,7 @@ $volunteer = new WI_Volunteer_Management_Volunteer( $volunteer_id );
 		
 		<div class="contact-info">
 
-			<div class="avatar">
-				<?php echo get_avatar( $volunteer->ID ); ?>
-			</div>
+			<?php echo get_avatar( $volunteer->ID, 65 ); ?>
 			<h1><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></h1>
 			<span><?php echo __( 'E-mail:', 'wivm' ) . ' ' . $volunteer->meta['email']; ?></span>
 			<span><?php echo __( 'Phone:', 'wivm' ) . ' ' . $volunteer->meta['phone']; ?></span>
@@ -44,10 +42,12 @@ $volunteer = new WI_Volunteer_Management_Volunteer( $volunteer_id );
 			echo apply_filters( 'the_content', $volunteer_notes );
 			?>
 		</div>
-		
-		<a href="<?php echo admin_url( 'user-edit.php?user_id=' . $volunteer_id ); ?>" class="button edit-volunteer">
-			<?php _e( 'Edit Volunteer Info', 'wivm' ); ?>
-		</a>
+
+		<div class="contact-footer clear">
+			<a href="<?php echo admin_url( 'user-edit.php?user_id=' . $volunteer_id ); ?>" class="button edit-volunteer">
+				<?php _e( 'Edit Volunteer Info', 'wivm' ); ?>
+			</a>
+		</div>
 	
 	</div><!-- .volunteer-info -->
 
