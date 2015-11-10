@@ -113,7 +113,7 @@ p.editor-help {
 }
 
 .wi-volunteer .contact-info {
-	padding-left: 126px;
+	padding-left: 95px;
 	position: relative;
 }
 
@@ -121,14 +121,11 @@ p.editor-help {
 	word-wrap: break-word;
 }
 
-.wi-volunteer .avatar-container {
+.wi-volunteer .avatar {
+	display: block;
 	position: absolute;
 	top: 15px;
 	left: 15px;
-}
-
-.wi-volunteer .avatar {
-	display: block;
 }
 
 .wi-volunteer .contact-info h1,

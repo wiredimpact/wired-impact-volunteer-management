@@ -26,9 +26,7 @@ $volunteer = new WI_Volunteer_Management_Volunteer( $volunteer_id );
 		
 		<div class="contact-info">
 
-			<div class="avatar-container">
-				<?php echo get_avatar( $volunteer->ID ); ?>
-			</div>
+			<?php echo get_avatar( $volunteer->ID, 65 ); ?>
 			<h1><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></h1>
 			<span><?php echo __( 'E-mail:', 'wivm' ) . ' ' . $volunteer->meta['email']; ?></span>
 			<span><?php echo __( 'Phone:', 'wivm' ) . ' ' . $volunteer->meta['phone']; ?></span>
