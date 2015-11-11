@@ -17,7 +17,7 @@
  * Plugin Name:       Wired Impact Volunteer Management
  * Plugin URI:        http://wiredimpact.com/services-and-pricing/apps-for-nonprofits/volunteer-management/
  * Description:       A simple, free way to keep track of your nonprofit’s volunteers and opportunities.
- * Version:           0.2.1
+ * Version:           0.3.1
  * Author:            Wired Impact
  * Author URI:        http://wiredimpact.com
  * License:           GPL-2.0+

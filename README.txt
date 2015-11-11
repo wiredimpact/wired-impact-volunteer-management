@@ -101,6 +101,10 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 == Changelog ==
 
+= 0.3.1 =
+* Made individual volunteer view responsive so it shows correctly on all device widths.
+* Adjusted system used to add new settings in the future.
+
 = 0.2.1 =
 * Bugfix: Fix issue where admin notice would show again after the settings were changed.
 
