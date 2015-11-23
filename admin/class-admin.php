@@ -654,7 +654,7 @@ class WI_Volunteer_Management_Admin {
 	public function edit_opps_query( $query ) {
 		global $pagenow;
 
-		if ( $pagenow == 'edit.php' && isset( $_GET['post_type'] ) && $_GET['post_type'] == 'volunteer_opp' ) {
+		if ( $pagenow == 'edit.php' && isset( $_GET['post_type'] ) && 'volunteer_opp' == $_GET['post_type'] ) {
 
 			// Set the filter queries
 			if ( isset( $_GET['opportunities'] ) && 'all' != $_GET['opportunities'] ) {
@@ -685,7 +685,7 @@ class WI_Volunteer_Management_Admin {
 				$query->query_vars['order'] 	= 'desc';
 
 				/*
-				 * Set the order of opportunities with the closed at the top when
+				 * Set the order of opportunities with the closest opportunity at the top when
 				 * viewing upcoming opportunities.
 				 */
 				if ( 'upcoming_one_time' == $_GET['opportunities'] ) {
