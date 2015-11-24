@@ -596,7 +596,7 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
-	 * Add Date & Time as a sortable field.
+	 * Add When column as a sortable field.
 	 * 
 	 * @param array $columns List of sortable columns.
 	 * @return array List of sortable columns with date_time included.
@@ -648,6 +648,9 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Query to construct the Opportunity filter views.
+	 *
+	 * This filtering is used for the Opportunities list view within the admin. The views being
+	 * built here are Upcoming One-Time Opportunities, Past One-Time Opportunities and Flexible Opportunities.
 	 * 
 	 * @param object $query Post type WP Query
 	 */
@@ -698,7 +701,7 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
-	 * Adds view filters for Upcoming and Past one-time opportunities
+	 * Adds view filters links for Upcoming One-Time Opportunities, Past One-Time opportunities
 	 * and Flexible opportunities.
 	 * 
 	 * @param array $views Existing views array
