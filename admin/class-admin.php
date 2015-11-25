@@ -752,16 +752,14 @@ class WI_Volunteer_Management_Admin {
 	 * @return array $vars Adjusted variables needed to handle sorting.
 	 */
 	public function sort_opportunities( $vars ) {
-		if ( isset( $vars['post_type'] ) && 'volunteer_opp' == $vars['post_type'] ) {
-			if ( isset( $vars['orderby'] ) && 'date_time' == $vars['orderby'] ) {
-				$vars = array_merge(
-					$vars,
-					array(
-						'meta_key'	=> '_start_date_time',
-						'orderby'	=> 'meta_value_num'
-					)
-				);
-			}
+		if ( isset( $vars['post_type'] ) && 'volunteer_opp' == $vars['post_type'] && isset( $vars['orderby'] ) && 'date_time' == $vars['orderby'] ) {
+			$vars = array_merge(
+				$vars,
+				array(
+					'meta_key'	=> '_start_date_time',
+					'orderby'	=> 'meta_value_num'
+				)
+			);
 		}
 
 		return $vars;
