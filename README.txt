@@ -2,7 +2,7 @@
 Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
-Tested up to: 4.3
+Tested up to: 4.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,6 +100,11 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. View Volunteer Profiles
 
 == Changelog ==
+
+= 0.4.1 =
+* Added ability to filter different opportunity types in the WordPress admin.
+* Added ability to sort the opportunities by date in the WordPress admin.
+* Tested up to WordPress 4.4.
 
 = 0.3.1 =
 * Made individual volunteer view responsive so it shows correctly on all device widths.

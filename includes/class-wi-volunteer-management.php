@@ -69,7 +69,7 @@ class WI_Volunteer_Management {
 	public function __construct() {
 
 		$this->plugin_name = 'wivm';
-		$this->version = '1.0.0';
+		$this->version = '0.4.1';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -187,7 +187,7 @@ class WI_Volunteer_Management {
 		$this->loader->add_action( 		'admin_enqueue_scripts', 					$plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 		'admin_menu', 								$plugin_admin, 'register_settings_page' );
 		$this->loader->add_action( 		'admin_init', 								$plugin_admin, 'register_settings' );
-		$this->loader->add_action(      'edit_form_after_editor', 					$plugin_admin, 'show_opp_editor_description' );
+		$this->loader->add_action(		'edit_form_after_editor', 					$plugin_admin, 'show_opp_editor_description' );
 		$this->loader->add_action( 		'add_meta_boxes', 							$plugin_admin, 'add_meta_boxes' );
 		$this->loader->add_action( 		'save_post', 								$plugin_admin, 'save_volunteer_opp_meta', 10, 2 );
 		$this->loader->add_action(		'show_user_profile', 						$plugin_admin, 'show_extra_profile_fields' );
@@ -195,7 +195,11 @@ class WI_Volunteer_Management {
 		$this->loader->add_action(		'personal_options_update', 					$plugin_admin, 'save_extra_profile_fields' );
 		$this->loader->add_action(		'edit_user_profile_update', 				$plugin_admin, 'save_extra_profile_fields' );
 		$this->loader->add_filter( 		'manage_edit-volunteer_opp_columns',		$plugin_admin, 'manage_opp_columns' );
+		$this->loader->add_filter( 		'manage_edit-volunteer_opp_sortable_columns', $plugin_admin, 'sort_opp_columns' );
 		$this->loader->add_action( 		'manage_volunteer_opp_posts_custom_column', $plugin_admin, 'show_opp_columns', 10, 2 );
+		$this->loader->add_filter( 		'parse_query',								$plugin_admin, 'edit_opps_query' );
+		$this->loader->add_action( 		'views_edit-volunteer_opp',					$plugin_admin, 'set_opp_views' );
+		$this->loader->add_action( 		'load-edit.php',							$plugin_admin, 'load_opp_sort' );
 		$this->loader->add_action( 		'wp_ajax_wivm_remove_rsvp',					$plugin_admin, 'remove_user_opp_rsvp' );
 		$this->loader->add_action( 		'save_post',								$plugin_admin, 'schedule_auto_email_reminder', 99, 2 );
 		$this->loader->add_action( 		'send_auto_email_reminders',				$plugin_admin, 'send_email_reminder' );

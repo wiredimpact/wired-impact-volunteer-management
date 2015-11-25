@@ -596,6 +596,22 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
+	 * Add When column as a sortable field.
+	 * 
+	 * @param array $columns List of sortable columns.
+	 * @return array List of sortable columns with date_time included.
+	 */
+	public function sort_opp_columns( $columns ) {
+		// Bail if the request is a flexible opportunity
+		if ( isset( $_GET['opportunities'] ) && 'flexible' == $_GET['opportunities'] ) {
+			return $columns;
+		}
+
+		$columns['date_time'] = 'date_time';
+		return $columns;
+	}
+
+	/**
   	 * Display content for each custom column for volunteer opps.
   	 * 
   	 * @param string $column Column to be displayed.
@@ -628,6 +644,125 @@ class WI_Volunteer_Management_Admin {
 				break;
 		}
 
+	}
+
+	/**
+	 * Query to construct the Opportunity filter views.
+	 *
+	 * This filtering is used for the Opportunities list view within the admin. The views being
+	 * built here are Upcoming One-Time Opportunities, Past One-Time Opportunities and Flexible Opportunities.
+	 * 
+	 * @param object $query Post type WP Query
+	 */
+	public function edit_opps_query( $query ) {
+		global $pagenow;
+
+		if ( $pagenow == 'edit.php' && isset( $_GET['post_type'] ) && 'volunteer_opp' == $_GET['post_type'] ) {
+
+			// Set the filter queries
+			if ( isset( $_GET['opportunities'] ) && 'all' != $_GET['opportunities'] ) {
+				$query_args = array(
+					'key' 		=> '_one_time_opp',
+					'value' 	=> 1,
+					'compare' 	=> 'flexible' == $_GET['opportunities'] ? '!=' : '=='
+				);
+
+				$query->query_vars['meta_query'] = array( $query_args );
+
+				// Set one-time opp date based queries
+				if ( 'flexible' != $_GET['opportunities'] ) {
+					$date_args = array(
+						'key' 		=> '_end_date_time',
+						'value' 	=> current_time( 'timestamp' ),
+						'compare' 	=> 'past_one_time' == $_GET['opportunities'] ? '<' : '>'
+					);
+
+					$query->query_vars['meta_query'] = array( $query_args, $date_args );
+				}
+			}
+
+			// Set the initial sort order
+			if ( isset( $_GET['opportunities'] ) && ! isset( $_GET['orderby'] ) ) {
+				$query->query_vars['meta_key'] 	= '_start_date_time';
+				$query->query_vars['orderby'] 	= 'meta_value_num';
+
+				/*
+				 * Set the order of opportunities with the closest opportunity at the top when
+				 * viewing upcoming opportunities.
+				 */
+				$query->query_vars['order'] 	= 'upcoming_one_time' == $_GET['opportunities'] ? 'asc' : 'desc';
+			} 
+
+			do_action( 'wivm_after_opps_query', $query );
+		}
+	}
+
+	/**
+	 * Adds view filters links for Upcoming One-Time Opportunities, Past One-Time opportunities
+	 * and Flexible opportunities.
+	 * 
+	 * @param array $views Existing views array
+	 * @return array $views Reordered array
+	 */
+	public function set_opp_views( $views ) {
+
+		// Store our new views in an array
+		$new_views = array();
+
+		// Removed args to allow a clean query for each view
+		$stripped_query_args = esc_url( remove_query_arg( array( 'opportunities', 'orderby', 'order', 'post_status' ) ) );
+
+		// All opportunities
+		$class = ( isset( $_GET['opportunities'] ) && 'all' == $_GET['opportunities'] || ! isset( $_GET['opportunities'] ) ) ? 'current' : '';
+		$all_query = esc_url( add_query_arg( 'opportunities', urlencode( 'all' ), $stripped_query_args ) ); 
+		$new_views['all_opportunities'] = sprintf( '<a href="%s" class="%s">%s</a>', $all_query, $class, __( 'All Opportunities', 'wivm' ) );
+
+		// Upcoming one-time opportunities
+		$class = ( isset( $_GET['opportunities'] ) && 'upcoming_one_time' == $_GET['opportunities'] ) ? 'current' : '';
+		$upcoming_one_time_query = esc_url( add_query_arg( 'opportunities', urlencode( 'upcoming_one_time' ), $stripped_query_args ) );  
+		$new_views['upcoming_one_time'] = sprintf( '<a href="%s" class="%s">%s</a>', $upcoming_one_time_query, $class, __( 'Upcoming One-time Opportunities', 'wivm' ) );
+
+		// Past one-time opportunities
+		$class = ( isset( $_GET['opportunities'] ) && 'past_one_time' == $_GET['opportunities'] ) ? 'current' : '';
+		$past_one_time_query = esc_url( add_query_arg( 'opportunities', urlencode( 'past_one_time' ), $stripped_query_args ) );  
+		$new_views['past_one_time'] = sprintf( '<a href="%s" class="%s">%s</a>', $past_one_time_query, $class, __( 'Past One-time Opportunities', 'wivm' ) );
+
+		// Flexible opportunities
+		$class = ( isset( $_GET['opportunities'] ) && 'flexible' == $_GET['opportunities'] ) ? 'current' : '';
+		$flexible_query = esc_url( add_query_arg( 'opportunities', urlencode( 'flexible' ), $stripped_query_args ) );  
+		$new_views['flexible'] = sprintf( '<a href="%s" class="%s">%s</a>', $flexible_query, $class, __( 'Flexible Opportunities', 'wivm' ) );
+
+		// Remove and replace the default views array with the new views array
+		array_splice( $views, 0, 1, $new_views );
+
+		return apply_filters( 'wivm_opportunities_views', $views );
+	}
+
+	/**
+	 * Load the column sort method when the admin menu page is loaded.
+	 */
+	public function load_opp_sort() {
+		add_filter( 'request', array( $this, 'sort_opportunities' ) );
+	}
+
+	/**
+	 * Method to handle sorting the "When" column by _start_date_time.
+	 * 
+	 * @param array $vars All variables needed to handle sorting.
+	 * @return array $vars Adjusted variables needed to handle sorting.
+	 */
+	public function sort_opportunities( $vars ) {
+		if ( isset( $vars['post_type'] ) && 'volunteer_opp' == $vars['post_type'] && isset( $vars['orderby'] ) && 'date_time' == $vars['orderby'] ) {
+			$vars = array_merge(
+				$vars,
+				array(
+					'meta_key'	=> '_start_date_time',
+					'orderby'	=> 'meta_value_num'
+				)
+			);
+		}
+
+		return $vars;
 	}
 
 	/**
