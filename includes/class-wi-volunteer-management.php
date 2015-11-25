@@ -69,7 +69,7 @@ class WI_Volunteer_Management {
 	public function __construct() {
 
 		$this->plugin_name = 'wivm';
-		$this->version = '1.0.0';
+		$this->version = '0.4.1';
 
 		$this->load_dependencies();
 		$this->set_locale();

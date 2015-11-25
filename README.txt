@@ -101,6 +101,11 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 == Changelog ==
 
+= 0.4.1 =
+* Added ability to filter different opportunity types in the WordPress admin.
+* Added ability to sort the opportunities by date in the WordPress admin.
+* Tested up to WordPress 4.4.
+
 = 0.3.1 =
 * Made individual volunteer view responsive so it shows correctly on all device widths.
 * Adjusted system used to add new settings in the future.
