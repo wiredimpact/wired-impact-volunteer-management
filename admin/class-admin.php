@@ -690,7 +690,7 @@ class WI_Volunteer_Management_Admin {
 				 * Set the order of opportunities with the closest opportunity at the top when
 				 * viewing upcoming opportunities.
 				 */
-				$query->query_vars['order'] 	= 'upcoming_one_time' == $_GET['opportunities'] ? 'asc' : 'desc'
+				$query->query_vars['order'] 	= 'upcoming_one_time' == $_GET['opportunities'] ? 'asc' : 'desc';
 			} 
 
 			do_action( 'wivm_after_opps_query', $query );
