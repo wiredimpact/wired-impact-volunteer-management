@@ -685,15 +685,12 @@ class WI_Volunteer_Management_Admin {
 			if ( isset( $_GET['opportunities'] ) && ! isset( $_GET['orderby'] ) ) {
 				$query->query_vars['meta_key'] 	= '_start_date_time';
 				$query->query_vars['orderby'] 	= 'meta_value_num';
-				$query->query_vars['order'] 	= 'desc';
 
 				/*
 				 * Set the order of opportunities with the closest opportunity at the top when
 				 * viewing upcoming opportunities.
 				 */
-				if ( 'upcoming_one_time' == $_GET['opportunities'] ) {
-					$query->query_vars['order'] = 'asc';
-				}
+				$query->query_vars['order'] 	= 'upcoming_one_time' == $_GET['opportunities'] ? 'asc' : 'desc'
 			} 
 
 			do_action( 'wivm_after_opps_query', $query );
@@ -705,7 +702,7 @@ class WI_Volunteer_Management_Admin {
 	 * and Flexible opportunities.
 	 * 
 	 * @param array $views Existing views array
-	 * @return array $new_views New views array
+	 * @return array $views Reordered array
 	 */
 	public function set_opp_views( $views ) {
 
