@@ -171,24 +171,24 @@ class WI_Volunteer_Management_Opportunity {
 
 		//If they want the start date and time only
 		if( $start_only == true ){
-		  $opp_time = date( __( 'D, F d, Y \&#64; g:i a', 'wivm' ), $start_date_time);
+		  $opp_time = date( __( 'D, F d, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $start_date_time);
 		  
 		  return apply_filters( 'wivm_opp_time', $opp_time, $start_date_time, $end_date_time, $start_only );
 		}
 
 		//If dates are the same then only show date on first date, with time on both
 		if( date( 'Ymd', $start_date_time ) == date( 'Ymd', $end_date_time ) ){
-		  $opp_time =  date( __( 'D, F d, Y', 'wivm' ), $start_date_time );
-		  $opp_time .= __( ' from ', 'wivm' );
-		  $opp_time .= date( __( 'g:i a', 'wivm' ), $start_date_time );
+		  $opp_time =  date( __( 'D, F d, Y', 'wired-impact-volunteer-management' ), $start_date_time );
+		  $opp_time .= __( ' from ', 'wired-impact-volunteer-management' );
+		  $opp_time .= date( __( 'g:i a', 'wired-impact-volunteer-management' ), $start_date_time );
 		  $opp_time .= ' – ';
-		  $opp_time .= date( __( 'g:i a', 'wivm' ), $end_date_time );
+		  $opp_time .= date( __( 'g:i a', 'wired-impact-volunteer-management' ), $end_date_time );
 		}
 		//If dates are different then show dates for start and end
 		else{
-		  $opp_time = date( __( 'D, F d, Y g:i a', 'wivm' ), $start_date_time);
+		  $opp_time = date( __( 'D, F d, Y g:i a', 'wired-impact-volunteer-management' ), $start_date_time);
 		  $opp_time .= ' – ';
-		  $opp_time .= date( __( 'D, F d, Y g:i a', 'wivm' ), $end_date_time);
+		  $opp_time .= date( __( 'D, F d, Y g:i a', 'wired-impact-volunteer-management' ), $end_date_time);
 		}
 
 		return apply_filters( 'wivm_opp_time', $opp_time, $start_date_time, $end_date_time, $start_only );
@@ -223,7 +223,7 @@ class WI_Volunteer_Management_Opportunity {
 		//Add location name and comma only if content will be added after
 		$location .= esc_html( $this->opp_meta['location'] );
 		if( $this->opp_meta['location'] != '' && ( $this->opp_meta['street'] != '' || $this->opp_meta['city'] != '' || $this->opp_meta['state'] != '' || $this->opp_meta['zip'] != '' ) ){
-			$location .= __( ', ', 'wivm' );
+			$location .= __( ', ', 'wired-impact-volunteer-management' );
 		}
 
 		//Add street
@@ -292,11 +292,11 @@ class WI_Volunteer_Management_Opportunity {
 
 		//If there is no limit
 		if( $this->opp_meta['has_volunteer_limit'] == 0 ){
-			return __( 'Unlimited', 'wivm' );
+			return __( 'Unlimited', 'wired-impact-volunteer-management' );
 		}
 		//If the limit has been reached.
 		else if( $num_rsvps >= $this->opp_meta['volunteer_limit'] ){
-			return __( 'Closed', 'wivm' );
+			return __( 'Closed', 'wired-impact-volunteer-management' );
 		}
 		//If a limit exists and it hasn't been reached.
 		else {

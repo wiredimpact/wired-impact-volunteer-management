@@ -13,7 +13,7 @@
  */
 
 if ( !current_user_can( 'list_users' ) ){
-	wp_die( __( 'Cheatin&#8217; uh?', 'wivm' ), 403 );
+	wp_die( __( 'Cheatin&#8217; uh?', 'wired-impact-volunteer-management' ), 403 );
 }
 
 require_once ABSPATH . 'wp-admin/includes/class-wp-users-list-table.php';
@@ -31,10 +31,10 @@ if ( $pagenum > $total_pages && $total_pages > 0 ) {
 
 <div class="wrap">
 	<h2>
-	<?php _e( 'Wired Impact Volunteer Management: Volunteers', 'wivm' );
+	<?php _e( 'Wired Impact Volunteer Management: Volunteers', 'wired-impact-volunteer-management' );
 	global $usersearch;
 	if ( $usersearch ){
-		printf( '<span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'wivm' ) . '</span>', esc_html( $usersearch ) );
+		printf( '<span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'wired-impact-volunteer-management' ) . '</span>', esc_html( $usersearch ) );
 	}
 	?>
 	</h2>
@@ -42,7 +42,7 @@ if ( $pagenum > $total_pages && $total_pages > 0 ) {
 	<form method="get" action="">
 	<input type="hidden" name="page" value="<?php echo ( isset( $_REQUEST['page'] ) ) ? esc_attr( $_REQUEST['page'] ) : ''; ?>" />
 
-	<?php $wp_list_table->search_box( __( 'Search Volunteers', 'wivm' ), 'volunteer' ); ?>
+	<?php $wp_list_table->search_box( __( 'Search Volunteers', 'wired-impact-volunteer-management' ), 'volunteer' ); ?>
 
 	<?php $wp_list_table->display(); ?>
 

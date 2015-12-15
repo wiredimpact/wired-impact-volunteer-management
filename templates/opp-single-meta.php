@@ -9,12 +9,12 @@ $opp = new WI_Volunteer_Management_Opportunity( $post->ID ); //Get volunteer opp
 ?>
 
 <div class="volunteer-opp-info">
-	<?php $opp->display_meta( ( $opp->opp_meta['one_time_opp'] == 1 ) ? $opp->format_opp_times() : $opp->opp_meta['flexible_frequency'], __( 'When:', 'wivm' ) ); ?>
-	<?php $opp->display_meta( $opp->format_address(), 										__( 'Where:', 'wivm' ) ); ?>
+	<?php $opp->display_meta( ( $opp->opp_meta['one_time_opp'] == 1 ) ? $opp->format_opp_times() : $opp->opp_meta['flexible_frequency'], __( 'When:', 'wired-impact-volunteer-management' ) ); ?>
+	<?php $opp->display_meta( $opp->format_address(), 										__( 'Where:', 'wired-impact-volunteer-management' ) ); ?>
 
-	<?php $opp->display_meta( $opp->opp_meta['contact_name'], 								__( 'Contact:', 'wivm' ) ); ?>
-	<?php $opp->display_meta( $opp->get_email_as_link( $opp->opp_meta['contact_email'] ), 	__( 'Contact Email:', 'wivm' ) ); ?>
-	<?php $opp->display_meta( $opp->opp_meta['contact_formatted_phone'], 					__( 'Contact Phone:', 'wivm' ) ); ?>
+	<?php $opp->display_meta( $opp->opp_meta['contact_name'], 								__( 'Contact:', 'wired-impact-volunteer-management' ) ); ?>
+	<?php $opp->display_meta( $opp->get_email_as_link( $opp->opp_meta['contact_email'] ), 	__( 'Contact Email:', 'wired-impact-volunteer-management' ) ); ?>
+	<?php $opp->display_meta( $opp->opp_meta['contact_formatted_phone'], 					__( 'Contact Phone:', 'wired-impact-volunteer-management' ) ); ?>
 
-	<?php $opp->display_meta( $opp->get_open_volunteer_spots(), 							__( 'Open Volunteer Spots:', 'wivm' ) ); ?>
+	<?php $opp->display_meta( $opp->get_open_volunteer_spots(), 							__( 'Open Volunteer Spots:', 'wired-impact-volunteer-management' ) ); ?>
 </div><!-- .volunteer-opp-info -->

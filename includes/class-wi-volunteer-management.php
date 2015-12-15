@@ -68,7 +68,7 @@ class WI_Volunteer_Management {
 	 */
 	public function __construct() {
 
-		$this->plugin_name = 'wivm';
+		$this->plugin_name = 'wired-impact-volunteer-management';
 		$this->version = '0.4.1';
 
 		$this->load_dependencies();

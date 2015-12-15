@@ -87,10 +87,10 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function get_localized_js_data(){
 		$data = array(
-			'remove_rsvp_pointer_text' 	=> '<h3>' . __( 'Are You Sure?', 'wivm' ) . '</h3><p>' . __( 'Are you sure you want to remove their RSVP for this opportunity?', 'wivm' ) . '</p>',
-			'remove_rsvp_cancel_text' 	=> __( 'Cancel', 'wivm' ),
-			'remove_rsvp_confirm_text' 	=> __( 'Remove RSVP', 'wivm' ),
-			'remove_rsvp_error_text' 	=> __( 'Error, try again later.', 'wivm' ),
+			'remove_rsvp_pointer_text' 	=> '<h3>' . __( 'Are You Sure?', 'wired-impact-volunteer-management' ) . '</h3><p>' . __( 'Are you sure you want to remove their RSVP for this opportunity?', 'wired-impact-volunteer-management' ) . '</p>',
+			'remove_rsvp_cancel_text' 	=> __( 'Cancel', 'wired-impact-volunteer-management' ),
+			'remove_rsvp_confirm_text' 	=> __( 'Remove RSVP', 'wired-impact-volunteer-management' ),
+			'remove_rsvp_error_text' 	=> __( 'Error, try again later.', 'wired-impact-volunteer-management' ),
 			'remove_user_rsvp_nonce' 	=> wp_create_nonce( 'remove_user_rsvp_nonce' ),
 			'hide_notice_nonce'			=> wp_create_nonce( 'hide_notice_nonce' ),
 		);
@@ -110,8 +110,8 @@ class WI_Volunteer_Management_Admin {
 
 		// Add main page
 		$admin_page = add_menu_page(
-			__( 'Wired Impact Volunteer Management: ', 'wivm' ) . ' ' . __( 'Help & Settings', 'wivm' ),
-			__( 'Volunteer Mgmt', 'wivm' ),
+			__( 'Wired Impact Volunteer Management: ', 'wired-impact-volunteer-management' ) . ' ' . __( 'Help & Settings', 'wired-impact-volunteer-management' ),
+			__( 'Volunteer Mgmt', 'wired-impact-volunteer-management' ),
 			'manage_options',
 			'wi-volunteer-management',
 			array( $this, 'load_page' ),
@@ -124,7 +124,7 @@ class WI_Volunteer_Management_Admin {
 			array(
 				'wi-volunteer-management',
 				'',
-				__( 'Volunteers', 'wivm' ),
+				__( 'Volunteers', 'wired-impact-volunteer-management' ),
 				'manage_options',
 				'wi-volunteer-management-volunteers',
 				array( $this, 'load_page' ),
@@ -132,7 +132,7 @@ class WI_Volunteer_Management_Admin {
 			array(
 				'wi-volunteer-management',
 				'',
-				__( 'Help & Settings', 'wivm' ),
+				__( 'Help & Settings', 'wired-impact-volunteer-management' ),
 				'manage_options',
 				'wi-volunteer-management-help-settings',
 				array( $this, 'load_page' ),
@@ -140,7 +140,7 @@ class WI_Volunteer_Management_Admin {
 			array(
 				NULL, //Not in menu
 				'',
-				__( 'Volunteer', 'wivm' ),
+				__( 'Volunteer', 'wired-impact-volunteer-management' ),
 				'manage_options',
 				'wi-volunteer-management-volunteer',
 				array( $this, 'load_page' ),
@@ -154,14 +154,14 @@ class WI_Volunteer_Management_Admin {
 		if ( count( $submenu_pages ) ) {
 			foreach ( $submenu_pages as $submenu_page ) {
 				// Add submenu page
-				add_submenu_page( $submenu_page[0], $submenu_page[2] . ' - ' . __( 'Wired Impact Volunteer Management', 'wivm' ), $submenu_page[2], $submenu_page[3], $submenu_page[4], $submenu_page[5] );
+				add_submenu_page( $submenu_page[0], $submenu_page[2] . ' - ' . __( 'Wired Impact Volunteer Management', 'wired-impact-volunteer-management' ), $submenu_page[2], $submenu_page[3], $submenu_page[4], $submenu_page[5] );
 			}
 		}
 
 		//Change the submenu name for the 1st item
 		global $submenu;
 		if ( isset( $submenu['wi-volunteer-management'] ) && current_user_can( 'manage_options' ) ) {
-			$submenu['wi-volunteer-management'][0][0] = __( 'Opportunities', 'wivm' );
+			$submenu['wi-volunteer-management'][0][0] = __( 'Opportunities', 'wired-impact-volunteer-management' );
 		}
 	}
 
@@ -224,7 +224,7 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function show_opp_editor_description( $post ){
 		if( $post->post_type == 'volunteer_opp' ){
-			echo '<p class="editor-help"><em>' . __( 'Use the text editor above to include information such as what volunteers will be doing, any requirements or preparation needed from volunteers, how the community will benefit and other details aside from those provided below.', 'wivm' ) . '</em></p>';
+			echo '<p class="editor-help"><em>' . __( 'Use the text editor above to include information such as what volunteers will be doing, any requirements or preparation needed from volunteers, how the community will benefit and other details aside from those provided below.', 'wired-impact-volunteer-management' ) . '</em></p>';
 		}
 	}
 
@@ -235,7 +235,7 @@ class WI_Volunteer_Management_Admin {
 		//Opportunity details such as location and time
 		add_meta_box(
             'volunteer-opportunity-details',						// Unique ID
-            __( 'Volunteer Opportunity Details', 'wivm' ),			// Box title
+            __( 'Volunteer Opportunity Details', 'wired-impact-volunteer-management' ),			// Box title
             array( $this, 'display_opportunity_details_meta_box' ),	// Content callback
             'volunteer_opp',                						// Post type
             'normal'												// Location
@@ -244,7 +244,7 @@ class WI_Volunteer_Management_Admin {
         //Opportunity RSVP details such as who signed up
 		add_meta_box(
             'volunteer-opportunity-rsvps',							// Unique ID
-            __( 'Volunteer Opportunity RSVPs', 'wivm' ),			// Box title
+            __( 'Volunteer Opportunity RSVPs', 'wired-impact-volunteer-management' ),			// Box title
             array( $this, 'display_opportunity_rsvps_meta_box' ),	// Content callback
             'volunteer_opp',                						// Post type
             'normal'												// Location
@@ -266,101 +266,101 @@ class WI_Volunteer_Management_Admin {
 		  <?php do_action( 'wivm_before_opportunity_detail_meta_fields', $post ); ?>
 
 		  <tr>
-		    <td colspan="2"><h3><?php _e( 'Contact Information', 'wivm' ); ?></h3></td>
+		    <td colspan="2"><h3><?php _e( 'Contact Information', 'wired-impact-volunteer-management' ); ?></h3></td>
 		  </tr>	
 
 		  <tr>
-		    <td><label for="contact_name"><?php _e( 'Name', 'wivm' ); ?></label></td>
+		    <td><label for="contact_name"><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="contact_name" name="contact_name" tabindex="10" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_name']; ?>" /></td>
 		  </tr>
 		  
 		  <tr>
-		    <td><label for="contact_phone"><?php _e( 'Phone Number', 'wivm' ); ?></label></td>
+		    <td><label for="contact_phone"><?php _e( 'Phone Number', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="contact_phone" name="contact_phone" tabindex="20" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_formatted_phone']; ?>" /></td>
 		  </tr>
 		  
 		  <tr>
-		    <td><label for="contact_email"><?php _e( 'Email', 'wivm' ); ?></label></td>
+		    <td><label for="contact_email"><?php _e( 'Email', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="contact_email" name="contact_email" tabindex="30" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_email']; ?>" /></td>
 		  </tr>
 
 		  
 		  <tr>
-		    <td colspan="2"><h3><?php _e( 'Location Information', 'wivm' ); ?></h3></td>
+		    <td colspan="2"><h3><?php _e( 'Location Information', 'wired-impact-volunteer-management' ); ?></h3></td>
 		  </tr>	
 
 		  <tr>
-		    <td><label for="location"><?php _e( 'Location Name', 'wivm' ); ?></label></td>
+		    <td><label for="location"><?php _e( 'Location Name', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="location" name="location" tabindex="40" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['location']; ?>" /></td>
 		  </tr>
 		  
 		  <tr>
-		    <td><label for="street"><?php _e( 'Street Address', 'wivm' ); ?></label></td>
+		    <td><label for="street"><?php _e( 'Street Address', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="street" name="street" tabindex="50" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['street']; ?>" /></td>
 		  </tr>
 		  
 		  <tr>
-		    <td><label for="city"><?php _e( 'City', 'wivm' ); ?></label></td>
+		    <td><label for="city"><?php _e( 'City', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="city" name="city" tabindex="60" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['city']; ?>" /></td>
 		  </tr>
 
 		  <tr>
-		    <td><label for="state"><?php _e( 'State', 'wivm' ); ?></label></td>
+		    <td><label for="state"><?php _e( 'State', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="state" name="state" tabindex="70" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['state']; ?>" /></td>
 		  </tr>
 
 		  <tr>
-		    <td><label for="zip"><?php _e( 'Zip', 'wivm' ); ?></label></td>
+		    <td><label for="zip"><?php _e( 'Zip', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="zip" name="zip" tabindex="80" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['zip']; ?>" /></td>
 		  </tr>
 
 		  
 		  <tr>
-		    <td colspan="2"><h3><?php _e( 'Date and Time', 'wivm' ); ?></h3></td>
+		    <td colspan="2"><h3><?php _e( 'Date and Time', 'wired-impact-volunteer-management' ); ?></h3></td>
 		  </tr>	
 
 		  <tr>
-		    <td><?php _e( 'One-Time Opportunity?', 'wivm' ); ?></td>
+		    <td><?php _e( 'One-Time Opportunity?', 'wired-impact-volunteer-management' ); ?></td>
 		    <td>
 		    		<input type="checkbox" id="one-time-opportunity" name="one-time-opportunity" tabindex="90" value="1" <?php checked( 1, $volunteer_opp->opp_meta['one_time_opp'] ); ?> />
-		    		<label for="one-time-opportunity"><?php _e( 'This is a one-time opportunity at a fixed date and time.', 'wivm' ); ?></label>
+		    		<label for="one-time-opportunity"><?php _e( 'This is a one-time opportunity at a fixed date and time.', 'wired-impact-volunteer-management' ); ?></label>
 		    </td>
 		  </tr>
 
 		  <?php $one_time_class = ( $volunteer_opp->opp_meta['one_time_opp'] == 1 ) ? 'one-time' : 'flexible'; ?>
 		  <tr class="one-time-field <?php echo $one_time_class; ?>">
-		    <td><label for="start-date-time"><?php _e( 'Start Date & Time', 'wivm' ); ?></label></td>
+		    <td><label for="start-date-time"><?php _e( 'Start Date & Time', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="start-date-time" name="start-date-time" tabindex="100" class="regular-text" value="<?php if ( $volunteer_opp->opp_meta['start_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['start_date_time'], '', true ); ?>" /></td>
 		  </tr>
 		  
 		  <tr class="one-time-field <?php echo $one_time_class; ?>">
-		    <td><label for="end-date-time"><?php _e( 'End Date & Time', 'wivm' ); ?></label></td>
+		    <td><label for="end-date-time"><?php _e( 'End Date & Time', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td>
 		      <input type="text" id="end-date-time" name="end-date-time" tabindex="110" class="regular-text" value="<?php if( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['end_date_time'], '', true ); ?>" />
-		      <span class="error" style="display: none;"><?php _e( 'Woops, it looks like you set your event to end before it started.', 'wivm' ); ?></span>
+		      <span class="error" style="display: none;"><?php _e( 'Woops, it looks like you set your event to end before it started.', 'wired-impact-volunteer-management' ); ?></span>
 		    </td>
 		  </tr>
 
 		  <tr class="flexible-field <?php echo $one_time_class; ?>">
-		    <td><label for="flexible_frequency"><?php _e( 'When Will This Event Happen?', 'wivm' ); ?></label></td>
-		    <td><input type="text" id="flexible_frequency" name="flexible_frequency" tabindex="120" class="regular-text" placeholder="<?php _e( 'On your own time, All summer, etc.', 'wivm' ); ?>" value="<?php echo $volunteer_opp->opp_meta['flexible_frequency']; ?>" /></td>
+		    <td><label for="flexible_frequency"><?php _e( 'When Will This Event Happen?', 'wired-impact-volunteer-management' ); ?></label></td>
+		    <td><input type="text" id="flexible_frequency" name="flexible_frequency" tabindex="120" class="regular-text" placeholder="<?php _e( 'On your own time, All summer, etc.', 'wired-impact-volunteer-management' ); ?>" value="<?php echo $volunteer_opp->opp_meta['flexible_frequency']; ?>" /></td>
 		  </tr>
 
 		  <tr>
-		    <td colspan="2"><h3><?php _e( 'Volunteer Limit', 'wivm' ); ?></h3></td>
+		    <td colspan="2"><h3><?php _e( 'Volunteer Limit', 'wired-impact-volunteer-management' ); ?></h3></td>
 		  </tr>	
 
 		  <tr>
-		    <td><?php _e( 'Is There a Volunteer Limit?', 'wivm' ); ?></td>
+		    <td><?php _e( 'Is There a Volunteer Limit?', 'wired-impact-volunteer-management' ); ?></td>
 		    <td>
 		    		<input type="checkbox" id="has-volunteer-limit" name="has-volunteer-limit" tabindex="130" value="1" <?php checked( 1, $volunteer_opp->opp_meta['has_volunteer_limit'] ); ?> />
-		    		<label for="has-volunteer-limit"><?php _e( 'Only a fixed number of people can participate in this volunteer opportunity.', 'wivm' ); ?></label>
+		    		<label for="has-volunteer-limit"><?php _e( 'Only a fixed number of people can participate in this volunteer opportunity.', 'wired-impact-volunteer-management' ); ?></label>
 		    </td>
 		  </tr>
 
 		  <?php $volunteer_limit_class = ( $volunteer_opp->opp_meta['has_volunteer_limit'] == 1 ) ? 'has-volunteer-limit' : 'no-volunteer-limit'; ?>
 		  <tr class="volunteer-limit-field <?php echo $volunteer_limit_class; ?>">
-		    <td><label for="volunteer-limit"><?php _e( 'Max Number of Volunteers', 'wivm' ); ?></label></td>
+		    <td><label for="volunteer-limit"><?php _e( 'Max Number of Volunteers', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="volunteer-limit" name="volunteer-limit" tabindex="140" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['volunteer_limit']; ?>" /></td>
 		  </tr>
 
@@ -492,14 +492,14 @@ class WI_Volunteer_Management_Admin {
 		$volunteers 	= $volunteer_opp->get_all_rsvped_volunteers();
 		?>
 
-		<span class="num">| <?php echo __( 'Number of Open Spots:', 'wivm' ) . ' ' . $open_spots; ?></span>
-		<span class="num"><?php echo __( 'Number RSVPed:', 'wivm' ) . ' ' . $num_rsvped; ?></span>
+		<span class="num">| <?php echo __( 'Number of Open Spots:', 'wired-impact-volunteer-management' ) . ' ' . $open_spots; ?></span>
+		<span class="num"><?php echo __( 'Number RSVPed:', 'wired-impact-volunteer-management' ) . ' ' . $num_rsvped; ?></span>
 		<table class="wp-list-table widefat fixed striped users">
 			<thead>
-				<th><?php _e( 'Name', 'wivm' ); ?></th>
-				<th><?php _e( 'E-mail', 'wivm' ); ?></th>
-				<th><?php _e( 'Phone', 'wivm' ); ?></th>
-				<th><?php _e( 'Remove RSVP', 'wivm' ); ?></th>
+				<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
+				<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
+				<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
+				<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
 			</thead>
 
 			<?php if( !empty( $volunteers ) ): foreach( $volunteers as $volunteer ): ?>
@@ -508,22 +508,22 @@ class WI_Volunteer_Management_Admin {
 					<td><a href="<?php echo $volunteer->get_admin_url(); ?>"><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></a></td>
 					<td><?php echo $volunteer->meta['email']; ?></td>
 					<td><?php echo $volunteer->meta['phone']; ?></td>
-					<td><a href="#remove-rsvp" class="button remove-rsvp" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo $volunteer->ID; ?>"><?php _e( 'Remove RSVP', 'wivm' ); ?></a></td>
+					<td><a href="#remove-rsvp" class="button remove-rsvp" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo $volunteer->ID; ?>"><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></a></td>
 				</tr>
 
 			<?php endforeach; else: ?>
 
 				<tr>
-					<td colspan="4"><?php _e( 'No one has signed up for this opportunity yet.', 'wivm' ); ?></td>
+					<td colspan="4"><?php _e( 'No one has signed up for this opportunity yet.', 'wired-impact-volunteer-management' ); ?></td>
 				</tr>
 
 			<?php endif; ?>
 
 			<tfoot>
-				<th><?php _e( 'Name', 'wivm' ); ?></th>
-				<th><?php _e( 'E-mail', 'wivm' ); ?></th>
-				<th><?php _e( 'Phone', 'wivm' ); ?></th>
-				<th><?php _e( 'Remove RSVP', 'wivm' ); ?></th>
+				<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
+				<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
+				<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
+				<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
 			</tfoot>
 		</table>
 
@@ -540,17 +540,17 @@ class WI_Volunteer_Management_Admin {
     	?>
 	    <table class="form-table">
 	    	<tr scope="row">
-			    <th><label for="phone"><?php _e( 'Phone Number', 'wivm' ); ?></label></th>
+			    <th><label for="phone"><?php _e( 'Phone Number', 'wired-impact-volunteer-management' ); ?></label></th>
 			    <td>
 			        <input type="text" name="phone" id="phone" value="<?php echo $volunteer->meta['phone']; ?>" class="regular-text" /><br />
-			        <p class="description"><?php _e( 'Please enter your phone number in the format (000) 000-0000.', 'wivm' ); ?></p>
+			        <p class="description"><?php _e( 'Please enter your phone number in the format (000) 000-0000.', 'wired-impact-volunteer-management' ); ?></p>
 			    </td>
 			</tr>
 			<tr scope="row">
-			    <th><label for="notes"><?php _e( 'Notes', 'wivm' ); ?></label></th>
+			    <th><label for="notes"><?php _e( 'Notes', 'wired-impact-volunteer-management' ); ?></label></th>
 			    <td>
 			        <textarea name="notes" id="notes" rows="5" cols="30"><?php echo $volunteer->meta['notes']; ?></textarea><br />
-			        <p class="description"><?php _e( 'Please enter any notes about this user.', 'wivm' ); ?></p>
+			        <p class="description"><?php _e( 'Please enter any notes about this user.', 'wired-impact-volunteer-management' ); ?></p>
 			    </td>
 			</tr>
 		</table>
@@ -585,11 +585,11 @@ class WI_Volunteer_Management_Admin {
 	public function manage_opp_columns( $columns ) {
 		$columns = array(
 			'cb' 			=> '<input type="checkbox" />',
-			'title' 		=> __( 'Title', 'wivm' ),
-			'location' 		=> __( 'Location', 'wivm' ),
-			'date_time' 	=> __( 'When', 'wivm' ),
-			'num_rsvped' 	=> __( 'Number of RSVPs', 'wivm' ),
-			'num_open_spots'=> __( 'Number of Open Spots', 'wivm' )
+			'title' 		=> __( 'Title', 'wired-impact-volunteer-management' ),
+			'location' 		=> __( 'Location', 'wired-impact-volunteer-management' ),
+			'date_time' 	=> __( 'When', 'wired-impact-volunteer-management' ),
+			'num_rsvped' 	=> __( 'Number of RSVPs', 'wired-impact-volunteer-management' ),
+			'num_open_spots'=> __( 'Number of Open Spots', 'wired-impact-volunteer-management' )
 		);
 
 		return apply_filters( 'wivm_opp_columns', $columns );
@@ -715,22 +715,22 @@ class WI_Volunteer_Management_Admin {
 		// All opportunities
 		$class = ( isset( $_GET['opportunities'] ) && 'all' == $_GET['opportunities'] || ! isset( $_GET['opportunities'] ) ) ? 'current' : '';
 		$all_query = esc_url( add_query_arg( 'opportunities', urlencode( 'all' ), $stripped_query_args ) ); 
-		$new_views['all_opportunities'] = sprintf( '<a href="%s" class="%s">%s</a>', $all_query, $class, __( 'All Opportunities', 'wivm' ) );
+		$new_views['all_opportunities'] = sprintf( '<a href="%s" class="%s">%s</a>', $all_query, $class, __( 'All Opportunities', 'wired-impact-volunteer-management' ) );
 
 		// Upcoming one-time opportunities
 		$class = ( isset( $_GET['opportunities'] ) && 'upcoming_one_time' == $_GET['opportunities'] ) ? 'current' : '';
 		$upcoming_one_time_query = esc_url( add_query_arg( 'opportunities', urlencode( 'upcoming_one_time' ), $stripped_query_args ) );  
-		$new_views['upcoming_one_time'] = sprintf( '<a href="%s" class="%s">%s</a>', $upcoming_one_time_query, $class, __( 'Upcoming One-time Opportunities', 'wivm' ) );
+		$new_views['upcoming_one_time'] = sprintf( '<a href="%s" class="%s">%s</a>', $upcoming_one_time_query, $class, __( 'Upcoming One-time Opportunities', 'wired-impact-volunteer-management' ) );
 
 		// Past one-time opportunities
 		$class = ( isset( $_GET['opportunities'] ) && 'past_one_time' == $_GET['opportunities'] ) ? 'current' : '';
 		$past_one_time_query = esc_url( add_query_arg( 'opportunities', urlencode( 'past_one_time' ), $stripped_query_args ) );  
-		$new_views['past_one_time'] = sprintf( '<a href="%s" class="%s">%s</a>', $past_one_time_query, $class, __( 'Past One-time Opportunities', 'wivm' ) );
+		$new_views['past_one_time'] = sprintf( '<a href="%s" class="%s">%s</a>', $past_one_time_query, $class, __( 'Past One-time Opportunities', 'wired-impact-volunteer-management' ) );
 
 		// Flexible opportunities
 		$class = ( isset( $_GET['opportunities'] ) && 'flexible' == $_GET['opportunities'] ) ? 'current' : '';
 		$flexible_query = esc_url( add_query_arg( 'opportunities', urlencode( 'flexible' ), $stripped_query_args ) );  
-		$new_views['flexible'] = sprintf( '<a href="%s" class="%s">%s</a>', $flexible_query, $class, __( 'Flexible Opportunities', 'wivm' ) );
+		$new_views['flexible'] = sprintf( '<a href="%s" class="%s">%s</a>', $flexible_query, $class, __( 'Flexible Opportunities', 'wired-impact-volunteer-management' ) );
 
 		// Remove and replace the default views array with the new views array
 		array_splice( $views, 0, 1, $new_views );
@@ -780,7 +780,7 @@ class WI_Volunteer_Management_Admin {
 
 		//Verify our nonce
 		if( !wp_verify_nonce( $nonce, 'remove_user_rsvp_nonce' ) ) {
-			_e( 'Security Check.', 'wivm' );
+			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
 
@@ -929,7 +929,7 @@ class WI_Volunteer_Management_Admin {
 
 		//Verify our nonce
 		if( !wp_verify_nonce( $nonce, 'hide_notice_nonce' ) ) {
-			_e( 'Security Check.', 'wivm' );
+			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
 
