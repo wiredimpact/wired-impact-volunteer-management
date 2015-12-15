@@ -1,0 +1,683 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Wired Impact Volunteer Management\n"
+"POT-Creation-Date: 2015-12-15 14:53-0600\n"
+"PO-Revision-Date: 2015-12-15 14:54-0600\n"
+"Last-Translator: \n"
+"Language-Team: Wired Impact\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _;__;gettext;gettext_noop;_e;_n;_x\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/class-admin.php:90
+msgid "Are You Sure?"
+msgstr ""
+
+#: admin/class-admin.php:90
+msgid "Are you sure you want to remove their RSVP for this opportunity?"
+msgstr ""
+
+#: admin/class-admin.php:91
+msgid "Cancel"
+msgstr ""
+
+#: admin/class-admin.php:92 admin/class-admin.php:502 admin/class-admin.php:511
+#: admin/class-admin.php:526 admin/pages/volunteer.php:81
+#: admin/pages/volunteer.php:100
+msgid "Remove RSVP"
+msgstr ""
+
+#: admin/class-admin.php:93
+msgid "Error, try again later."
+msgstr ""
+
+#: admin/class-admin.php:113
+msgid "Wired Impact Volunteer Management: "
+msgstr ""
+
+#: admin/class-admin.php:113 admin/class-admin.php:135
+msgid "Help & Settings"
+msgstr ""
+
+#: admin/class-admin.php:114 frontend/class-public.php:106
+msgid "Volunteer Mgmt"
+msgstr ""
+
+#: admin/class-admin.php:127
+msgid "Volunteers"
+msgstr ""
+
+#: admin/class-admin.php:143 includes/class-activator.php:42
+msgid "Volunteer"
+msgstr ""
+
+#: admin/class-admin.php:157
+msgid "Wired Impact Volunteer Management"
+msgstr ""
+
+#: admin/class-admin.php:164
+msgid "Opportunities"
+msgstr ""
+
+#: admin/class-admin.php:227
+msgid ""
+"Use the text editor above to include information such as what volunteers "
+"will be doing, any requirements or preparation needed from volunteers, how "
+"the community will benefit and other details aside from those provided below."
+msgstr ""
+
+#: admin/class-admin.php:238
+msgid "Volunteer Opportunity Details"
+msgstr ""
+
+#: admin/class-admin.php:247
+msgid "Volunteer Opportunity RSVPs"
+msgstr ""
+
+#: admin/class-admin.php:269
+msgid "Contact Information"
+msgstr ""
+
+#: admin/class-admin.php:273 admin/class-admin.php:499
+#: admin/class-admin.php:523 includes/class-wp-volunteer-list-table.php:144
+msgid "Name"
+msgstr ""
+
+#: admin/class-admin.php:278 admin/class-admin.php:543
+#: includes/class-wp-volunteer-list-table.php:146
+msgid "Phone Number"
+msgstr ""
+
+#: admin/class-admin.php:283 admin/pages/help-settings.php:26
+msgid "Email"
+msgstr ""
+
+#: admin/class-admin.php:289
+msgid "Location Information"
+msgstr ""
+
+#: admin/class-admin.php:293
+msgid "Location Name"
+msgstr ""
+
+#: admin/class-admin.php:298
+msgid "Street Address"
+msgstr ""
+
+#: admin/class-admin.php:303
+msgid "City"
+msgstr ""
+
+#: admin/class-admin.php:308
+msgid "State"
+msgstr ""
+
+#: admin/class-admin.php:313
+msgid "Zip"
+msgstr ""
+
+#: admin/class-admin.php:319
+msgid "Date and Time"
+msgstr ""
+
+#: admin/class-admin.php:323
+msgid "One-Time Opportunity?"
+msgstr ""
+
+#: admin/class-admin.php:326
+msgid "This is a one-time opportunity at a fixed date and time."
+msgstr ""
+
+#: admin/class-admin.php:332
+msgid "Start Date & Time"
+msgstr ""
+
+#: admin/class-admin.php:337
+msgid "End Date & Time"
+msgstr ""
+
+#: admin/class-admin.php:340
+msgid "Woops, it looks like you set your event to end before it started."
+msgstr ""
+
+#: admin/class-admin.php:345
+msgid "When Will This Event Happen?"
+msgstr ""
+
+#: admin/class-admin.php:346
+msgid "On your own time, All summer, etc."
+msgstr ""
+
+#: admin/class-admin.php:350
+msgid "Volunteer Limit"
+msgstr ""
+
+#: admin/class-admin.php:354
+msgid "Is There a Volunteer Limit?"
+msgstr ""
+
+#: admin/class-admin.php:357
+msgid ""
+"Only a fixed number of people can participate in this volunteer opportunity."
+msgstr ""
+
+#: admin/class-admin.php:363
+msgid "Max Number of Volunteers"
+msgstr ""
+
+#: admin/class-admin.php:495
+msgid "Number of Open Spots:"
+msgstr ""
+
+#: admin/class-admin.php:496
+msgid "Number RSVPed:"
+msgstr ""
+
+#: admin/class-admin.php:500 admin/class-admin.php:524
+#: includes/class-wp-volunteer-list-table.php:145
+msgid "E-mail"
+msgstr ""
+
+#: admin/class-admin.php:501 admin/class-admin.php:525
+msgid "Phone"
+msgstr ""
+
+#: admin/class-admin.php:517
+msgid "No one has signed up for this opportunity yet."
+msgstr ""
+
+#: admin/class-admin.php:546
+msgid "Please enter your phone number in the format (000) 000-0000."
+msgstr ""
+
+#: admin/class-admin.php:550 admin/pages/volunteer.php:39
+msgid "Notes"
+msgstr ""
+
+#: admin/class-admin.php:553
+msgid "Please enter any notes about this user."
+msgstr ""
+
+#: admin/class-admin.php:588
+msgid "Title"
+msgstr ""
+
+#: admin/class-admin.php:589
+msgid "Location"
+msgstr ""
+
+#: admin/class-admin.php:590
+msgid "When"
+msgstr ""
+
+#: admin/class-admin.php:591
+msgid "Number of RSVPs"
+msgstr ""
+
+#: admin/class-admin.php:592
+msgid "Number of Open Spots"
+msgstr ""
+
+#: admin/class-admin.php:718
+msgid "All Opportunities"
+msgstr ""
+
+#: admin/class-admin.php:723
+msgid "Upcoming One-time Opportunities"
+msgstr ""
+
+#: admin/class-admin.php:728
+msgid "Past One-time Opportunities"
+msgstr ""
+
+#: admin/class-admin.php:733
+msgid "Flexible Opportunities"
+msgstr ""
+
+#: admin/class-admin.php:783 admin/class-admin.php:932
+#: frontend/class-public.php:313
+msgid "Security Check."
+msgstr ""
+
+#: admin/class-form.php:65
+msgid "Wired Impact Volunteer Management: Help & Settings"
+msgstr ""
+
+#: admin/pages/help-settings.php:23
+msgid "Help"
+msgstr ""
+
+#: admin/pages/help-settings.php:24
+msgid "General"
+msgstr ""
+
+#: admin/pages/help-settings.php:25
+msgid "Opportunity Defaults"
+msgstr ""
+
+#: admin/pages/help-settings.php:49
+msgid "Yes, please provide basic styling."
+msgstr ""
+
+#: admin/pages/help-settings.php:49
+msgid "No, I'll code my own styling."
+msgstr ""
+
+#: admin/pages/help-settings.php:59
+msgid "Default Contact Information"
+msgstr ""
+
+#: admin/pages/help-settings.php:59
+msgid ""
+"These contact settings will be loaded by default for all new volunteer "
+"opportunities, but you can customize each opportunity individually."
+msgstr ""
+
+#: admin/pages/help-settings.php:60
+msgid "Default Contact Name"
+msgstr ""
+
+#: admin/pages/help-settings.php:61
+msgid "Default Contact Phone"
+msgstr ""
+
+#: admin/pages/help-settings.php:62
+msgid "Default Contact Email"
+msgstr ""
+
+#: admin/pages/help-settings.php:64
+msgid "Default Location Information"
+msgstr ""
+
+#: admin/pages/help-settings.php:64
+msgid ""
+"These location settings will be loaded by default for all new volunteer "
+"opportunities, but you can customize each opportunity individually."
+msgstr ""
+
+#: admin/pages/help-settings.php:65
+msgid "Default Location Name"
+msgstr ""
+
+#: admin/pages/help-settings.php:66
+msgid "Default Street"
+msgstr ""
+
+#: admin/pages/help-settings.php:67
+msgid "Default City"
+msgstr ""
+
+#: admin/pages/help-settings.php:68
+msgid "Default State"
+msgstr ""
+
+#: admin/pages/help-settings.php:69
+msgid "Default Zip"
+msgstr ""
+
+#: admin/pages/help-settings.php:78
+msgid "From Email Address"
+msgstr ""
+
+#: admin/pages/help-settings.php:78
+#, php-format
+msgid ""
+"The email address you'd like to send from. If blank \"%s\" will be used from "
+"the General Settings."
+msgstr ""
+
+#: admin/pages/help-settings.php:79
+msgid "From Email Name"
+msgstr ""
+
+#: admin/pages/help-settings.php:79
+#, php-format
+msgid ""
+"The name of the person you'd like the emails to be sent from. If blank \"%s"
+"\" will be used from the General Settings."
+msgstr ""
+
+#: admin/pages/help-settings.php:80
+msgid "Volunteer Signup Email Subject"
+msgstr ""
+
+#: admin/pages/help-settings.php:80
+msgid "The subject of the email to a volunteer after they sign up."
+msgstr ""
+
+#: admin/pages/help-settings.php:81
+msgid "Volunteer Signup Email"
+msgstr ""
+
+#: admin/pages/help-settings.php:81
+msgid ""
+"The email to a volunteer who just RSVPed. You can use the variables "
+"{volunteer_first_name}, {volunteer_last_name}, {volunteer_phone}, "
+"{volunteer_email}, {opportunity_name}, {opportunity_date_time}, "
+"{opportunity_location}, {contact_name}, {contact_phone} and {contact_email} "
+"which will be replaced when the email is sent."
+msgstr ""
+
+#: admin/pages/help-settings.php:82
+msgid "Admin Email Address"
+msgstr ""
+
+#: admin/pages/help-settings.php:82
+msgid ""
+"The person to notify when volunteers sign up. The contact for the volunteer "
+"opportunity will also be notified. If this field is blank then only the "
+"contact will be notified."
+msgstr ""
+
+#: admin/pages/help-settings.php:83
+msgid "Admin Signup Email Subject"
+msgstr ""
+
+#: admin/pages/help-settings.php:83
+msgid "The subject of the email to the admin after someone RSVPs."
+msgstr ""
+
+#: admin/pages/help-settings.php:84
+msgid "Admin Signup Email"
+msgstr ""
+
+#: admin/pages/help-settings.php:84
+msgid ""
+"The email to the admin after someone RSVPs. You can use the variables "
+"{volunteer_first_name}, {volunteer_last_name}, {volunteer_phone}, "
+"{volunteer_email}, {opportunity_name}, {opportunity_date_time}, "
+"{opportunity_location}, {contact_name}, {contact_phone} and {contact_email} "
+"which will be replaced when the email is sent."
+msgstr ""
+
+#: admin/pages/help-settings.php:85
+msgid "Number of Days Prior to Opportunity to Send Reminder"
+msgstr ""
+
+#: admin/pages/help-settings.php:85
+msgid ""
+"The number of days prior to a one-time volunteer opportunity to send a "
+"reminder. Flexible opportunities do not send a reminder email. Ex: 4"
+msgstr ""
+
+#: admin/pages/help-settings.php:86
+msgid "Volunteer Reminder Email Subject"
+msgstr ""
+
+#: admin/pages/help-settings.php:86
+msgid ""
+"The subject of the reminder email sent to volunteers prior to their "
+"opportunity."
+msgstr ""
+
+#: admin/pages/help-settings.php:87
+msgid "Volunteer Reminder Email"
+msgstr ""
+
+#: admin/pages/help-settings.php:87
+msgid ""
+"The reminder email to volunteers before their opportunity arrives. This is "
+"sent to the admins with the volunteers BCC'ed. That way you know when the "
+"email has gone out. You can use the variables {opportunity_name}, "
+"{opportunity_date_time}, {opportunity_location}, {contact_name}, "
+"{contact_phone} and {contact_email} which will be replaced when the email is "
+"sent. Since only one email is sent do not use any of the volunteer specific "
+"variables."
+msgstr ""
+
+#: admin/pages/volunteer.php:16 admin/pages/volunteers.php:16
+msgid "Cheatin&#8217; uh?"
+msgstr ""
+
+#: admin/pages/volunteer.php:25
+msgid "Volunteer: "
+msgstr ""
+
+#: admin/pages/volunteer.php:32
+msgid "E-mail:"
+msgstr ""
+
+#: admin/pages/volunteer.php:33 templates/opp-single-form.php:31
+msgid "Phone:"
+msgstr ""
+
+#: admin/pages/volunteer.php:34
+msgid "Volunteer since"
+msgstr ""
+
+#: admin/pages/volunteer.php:41
+msgid ""
+"There aren't any notes for this volunteer. You can add some by clicking the "
+"Edit Volunteer Info button and filling out the Notes field."
+msgstr ""
+
+#: admin/pages/volunteer.php:49
+msgid "Edit Volunteer Info"
+msgstr ""
+
+#: admin/pages/volunteer.php:57 frontend/class-public.php:94
+msgid "Volunteer Opportunities"
+msgstr ""
+
+#: admin/pages/volunteer.php:69
+msgid "One-Time Volunteer Opportunities"
+msgstr ""
+
+#: admin/pages/volunteer.php:74
+msgid "Today"
+msgstr ""
+
+#: admin/pages/volunteer.php:92
+msgid "Flexible Volunteer Opportunities"
+msgstr ""
+
+#: admin/pages/volunteers.php:34
+msgid "Wired Impact Volunteer Management: Volunteers"
+msgstr ""
+
+#: admin/pages/volunteers.php:37
+#, php-format
+msgid "Search results for &#8220;%s&#8221;"
+msgstr ""
+
+#: admin/pages/volunteers.php:45
+msgid "Search Volunteers"
+msgstr ""
+
+#: frontend/class-public.php:95
+msgid "Volunteer Opportunity"
+msgstr ""
+
+#: frontend/class-public.php:96 frontend/class-public.php:97
+msgid "Add Volunteer Opportunity"
+msgstr ""
+
+#: frontend/class-public.php:98
+msgid "Edit Volunteer Opportunity"
+msgstr ""
+
+#: frontend/class-public.php:99
+msgid "New Volunteer Opportunity"
+msgstr ""
+
+#: frontend/class-public.php:100
+msgid "All Volunteer Opportunities"
+msgstr ""
+
+#: frontend/class-public.php:101
+msgid "View Volunteer Opportunity"
+msgstr ""
+
+#: frontend/class-public.php:102
+msgid "Search Volunteer Opportunities"
+msgstr ""
+
+#: frontend/class-public.php:103
+msgid "No volunteer opportunities found"
+msgstr ""
+
+#: frontend/class-public.php:104
+msgid "No volunteer opportunities found in trash"
+msgstr ""
+
+#: frontend/class-public.php:187
+msgid "Find Out More"
+msgstr ""
+
+#: frontend/class-public.php:250
+msgid "Sorry, there are no volunteer opportunities available right now."
+msgstr ""
+
+#: includes/class-opportunity.php:174
+msgid "D, F d, Y \\&#64; g:i a"
+msgstr ""
+
+#: includes/class-opportunity.php:181
+msgid "D, F d, Y"
+msgstr ""
+
+#: includes/class-opportunity.php:182
+msgid " from "
+msgstr ""
+
+#: includes/class-opportunity.php:183 includes/class-opportunity.php:185
+msgid "g:i a"
+msgstr ""
+
+#: includes/class-opportunity.php:189 includes/class-opportunity.php:191
+msgid "D, F d, Y g:i a"
+msgstr ""
+
+#: includes/class-opportunity.php:226
+msgid ", "
+msgstr ""
+
+#: includes/class-opportunity.php:295
+msgid "Unlimited"
+msgstr ""
+
+#: includes/class-opportunity.php:299
+msgid "Closed"
+msgstr ""
+
+#: includes/class-wp-volunteer-list-table.php:147
+msgid "# of Volunteer Opportunities"
+msgstr ""
+
+#: includes/class-wp-volunteer-list-table.php:243
+msgid "Edit"
+msgstr ""
+
+#: includes/class-wp-volunteer-list-table.php:249
+msgid "Delete"
+msgstr ""
+
+#: includes/class-wp-volunteer-list-table.php:251
+msgid "Remove"
+msgstr ""
+
+#: includes/class-wp-volunteer-list-table.php:267
+#, php-format
+msgid "Select %s"
+msgstr ""
+
+#: includes/class-wp-volunteer-list-table.php:273
+msgid "None"
+msgstr ""
+
+#: includes/class-wp-volunteer-list-table.php:335
+msgid "No volunteers yet. Once they sign up they'll appear here."
+msgstr ""
+
+#: includes/class-wp-volunteer-list-table.php:338
+msgid "Oops. Your search didn't return any volunteers. Please try again."
+msgstr ""
+
+#: templates/opp-single-form.php:11
+msgid "Sign Up to Volunteer"
+msgstr ""
+
+#: templates/opp-single-form.php:11
+msgid "Express Interest in Volunteering"
+msgstr ""
+
+#: templates/opp-single-form.php:14
+msgid "Please wait..."
+msgstr ""
+
+#: templates/opp-single-form.php:15
+msgid "Thanks for signing up. You'll receive a confirmation email shortly."
+msgstr ""
+
+#: templates/opp-single-form.php:16
+msgid "It looks like you already signed up for this opportunity."
+msgstr ""
+
+#: templates/opp-single-form.php:17
+msgid ""
+"We're sorry, but we weren't able to sign you up. We have no more open spots."
+msgstr ""
+
+#: templates/opp-single-form.php:18
+msgid ""
+"Please fill in every field and make sure you entered a valid email address."
+msgstr ""
+
+#: templates/opp-single-form.php:25
+msgid "First Name:"
+msgstr ""
+
+#: templates/opp-single-form.php:28
+msgid "Last Name:"
+msgstr ""
+
+#: templates/opp-single-form.php:34
+msgid "Email:"
+msgstr ""
+
+#: templates/opp-single-form.php:40
+msgid "Sign Up"
+msgstr ""
+
+#: templates/opp-single-form.php:40
+msgid "Express Interest"
+msgstr ""
+
+#: templates/opp-single-form.php:43
+msgid ""
+"We're sorry, but we're no longer accepting new volunteers for this "
+"opportunity."
+msgstr ""
+
+#: templates/opp-single-meta.php:12 templates/opps-list-flexible.php:19
+#: templates/opps-list-one-time.php:19
+msgid "When:"
+msgstr ""
+
+#: templates/opp-single-meta.php:13 templates/opps-list-flexible.php:20
+#: templates/opps-list-one-time.php:20
+msgid "Where:"
+msgstr ""
+
+#: templates/opp-single-meta.php:15
+msgid "Contact:"
+msgstr ""
+
+#: templates/opp-single-meta.php:16
+msgid "Contact Email:"
+msgstr ""
+
+#: templates/opp-single-meta.php:17
+msgid "Contact Phone:"
+msgstr ""
+
+#: templates/opp-single-meta.php:19 templates/opps-list-flexible.php:21
+#: templates/opps-list-one-time.php:21
+msgid "Open Volunteer Spots:"
+msgstr ""
