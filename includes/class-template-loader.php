@@ -45,7 +45,7 @@ if ( !class_exists( 'WI_Volunteer_Management_Template_Loader' ) )  {
 		 *
 		 * @type string
 		 */
-		protected $filter_prefix = 'wivm';
+		protected $filter_prefix = 'wired-impact-volunteer-management';
 
 		/**
 		 * Directory name where custom templates for this plugin should be found in the theme.
@@ -54,7 +54,7 @@ if ( !class_exists( 'WI_Volunteer_Management_Template_Loader' ) )  {
 		 *
 		 * @type string
 		 */
-		protected $theme_template_directory = 'wivm'; // or 'your-plugin-templates' etc.
+		protected $theme_template_directory = 'wired-impact-volunteer-management'; // or 'your-plugin-templates' etc.
 
 		/**
 		 * Reference to the root directory path of this plugin.

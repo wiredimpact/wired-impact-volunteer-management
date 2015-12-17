@@ -141,10 +141,10 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 	 */
 	public function get_columns() {
 		$c = array(
-			'name'     					=> __( 'Name', 'wivm' ),
-			'email'    					=> __( 'E-mail', 'wivm' ),
-			'phone'    					=> __( 'Phone Number', 'wivm' ),
-			'num_volunteer_opps'  		=> __( '# of Volunteer Opportunities', 'wivm' ),
+			'name'     					=> __( 'Name', 'wired-impact-volunteer-management' ),
+			'email'    					=> __( 'E-mail', 'wired-impact-volunteer-management' ),
+			'phone'    					=> __( 'Phone Number', 'wired-impact-volunteer-management' ),
+			'num_volunteer_opps'  		=> __( '# of Volunteer Opportunities', 'wired-impact-volunteer-management' ),
 		);
 
 		return apply_filters( 'wivm_volunteer_columns', $c );
@@ -240,15 +240,15 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 
 			if ( current_user_can( 'edit_user',  $user_object->ID ) ) {
 				$edit = "<strong><a href=\"$edit_link\">$user_object->user_login</a></strong><br />";
-				$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit', 'wivm' ) . '</a>';
+				$actions['edit'] = '<a href="' . $edit_link . '">' . __( 'Edit', 'wired-impact-volunteer-management' ) . '</a>';
 			} else {
 				$edit = "<strong>$user_object->user_login</strong><br />";
 			}
 
 			if ( !is_multisite() && get_current_user_id() != $user_object->ID && current_user_can( 'delete_user', $user_object->ID ) )
-				$actions['delete'] = "<a class='submitdelete' href='" . wp_nonce_url( "users.php?action=delete&amp;user=$user_object->ID", 'bulk-users' ) . "'>" . __( 'Delete', 'wivm' ) . "</a>";
+				$actions['delete'] = "<a class='submitdelete' href='" . wp_nonce_url( "users.php?action=delete&amp;user=$user_object->ID", 'bulk-users' ) . "'>" . __( 'Delete', 'wired-impact-volunteer-management' ) . "</a>";
 			if ( is_multisite() && get_current_user_id() != $user_object->ID && current_user_can( 'remove_user', $user_object->ID ) )
-				$actions['remove'] = "<a class='submitdelete' href='" . wp_nonce_url( $url."action=remove&amp;user=$user_object->ID", 'bulk-users' ) . "'>" . __( 'Remove', 'wivm' ) . "</a>";
+				$actions['remove'] = "<a class='submitdelete' href='" . wp_nonce_url( $url."action=remove&amp;user=$user_object->ID", 'bulk-users' ) . "'>" . __( 'Remove', 'wired-impact-volunteer-management' ) . "</a>";
 
 			/**
 			 * Filter the action links displayed under each volunteer in the Users list table.
@@ -264,13 +264,13 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 			$edit .= $this->row_actions( $actions );
 
 			// Set up the checkbox ( because the user is editable, otherwise it's empty )
-			$checkbox = '<label class="screen-reader-text" for="user_' . $user_object->ID . '">' . sprintf( __( 'Select %s', 'wivm' ), $user_object->user_login ) . '</label>'
+			$checkbox = '<label class="screen-reader-text" for="user_' . $user_object->ID . '">' . sprintf( __( 'Select %s', 'wired-impact-volunteer-management' ), $user_object->user_login ) . '</label>'
 						. "<input type='checkbox' name='users[]' id='user_{$user_object->ID}' class='$role' value='{$user_object->ID}' />";
 
 		} else {
 			$edit = '<strong>' . $user_object->user_login . '</strong>';
 		}
-		$role_name = isset( $wp_roles->role_names[$role] ) ? translate_user_role( $wp_roles->role_names[$role] ) : __( 'None', 'wivm' );
+		$role_name = isset( $wp_roles->role_names[$role] ) ? translate_user_role( $wp_roles->role_names[$role] ) : __( 'None', 'wired-impact-volunteer-management' );
 		$avatar = get_avatar( $user_object->ID, 32 );
 
 		$r = "<tr id='user-$user_object->ID'>";
@@ -332,10 +332,10 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 	public function no_items() {
 		$user_counts = count_users();
 		if( !isset( $user_counts['avail_roles']['volunteer'] ) || $user_counts['avail_roles']['volunteer'] == 0 ){
-			_e( 'No volunteers yet. Once they sign up they\'ll appear here.', 'wivm' );
+			_e( 'No volunteers yet. Once they sign up they\'ll appear here.', 'wired-impact-volunteer-management' );
 		}
 		else {
-			_e( 'Oops. Your search didn\'t return any volunteers. Please try again.', 'wivm' );
+			_e( 'Oops. Your search didn\'t return any volunteers. Please try again.', 'wired-impact-volunteer-management' );
 		}
 	}
 

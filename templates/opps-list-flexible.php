@@ -16,9 +16,9 @@ $opp = new WI_Volunteer_Management_Opportunity( $post->ID ); //Get volunteer opp
 
 	<div class="entry-content">
 		<div class="volunteer-opp-info">
-			<?php $opp->display_meta( $opp->opp_meta['flexible_frequency'], __( 'When:', 'wivm' ) ); ?>
-			<?php $opp->display_meta( $opp->format_address(), 				__( 'Where:', 'wivm' ) ); ?>
-			<?php $opp->display_meta( $opp->get_open_volunteer_spots(), 	__( 'Open Volunteer Spots:', 'wivm' ) ); ?>
+			<?php $opp->display_meta( $opp->opp_meta['flexible_frequency'], __( 'When:', 'wired-impact-volunteer-management' ) ); ?>
+			<?php $opp->display_meta( $opp->format_address(), 				__( 'Where:', 'wired-impact-volunteer-management' ) ); ?>
+			<?php $opp->display_meta( $opp->get_open_volunteer_spots(), 	__( 'Open Volunteer Spots:', 'wired-impact-volunteer-management' ) ); ?>
 		</div><!-- .volunteer-opp-info -->
 
 		<?php the_excerpt(); ?>

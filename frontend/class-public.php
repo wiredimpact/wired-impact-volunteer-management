@@ -91,19 +91,19 @@ class WI_Volunteer_Management_Public {
 	public static function register_post_types(){
 
 		$labels = array(
-	      'name' 				=> __( 'Volunteer Opportunities', 'wivm' ),
-	      'singular_name' 		=> __( 'Volunteer Opportunity', 'wivm' ),
-	      'add_new' 			=> __( 'Add Volunteer Opportunity', 'wivm' ),
-	      'add_new_item' 		=> __( 'Add Volunteer Opportunity', 'wivm' ),
-	      'edit_item' 			=> __( 'Edit Volunteer Opportunity', 'wivm' ),
-	      'new_item' 			=> __( 'New Volunteer Opportunity', 'wivm' ),
-	      'all_items' 			=> __( 'All Volunteer Opportunities', 'wivm' ),
-	      'view_item' 			=> __( 'View Volunteer Opportunity', 'wivm' ),
-	      'search_items' 		=> __( 'Search Volunteer Opportunities', 'wivm' ),
-	      'not_found' 			=> __( 'No volunteer opportunities found', 'wivm' ),
-	      'not_found_in_trash' 	=> __( 'No volunteer opportunities found in trash', 'wivm' ), 
-	      'parent_item_colon' 	=> __( '', 'wivm' ),
-	      'menu_name' 			=> __( 'Volunteer Mgmt', 'wivm' )
+	      'name' 				=> __( 'Volunteer Opportunities', 'wired-impact-volunteer-management' ),
+	      'singular_name' 		=> __( 'Volunteer Opportunity', 'wired-impact-volunteer-management' ),
+	      'add_new' 			=> __( 'Add Volunteer Opportunity', 'wired-impact-volunteer-management' ),
+	      'add_new_item' 		=> __( 'Add Volunteer Opportunity', 'wired-impact-volunteer-management' ),
+	      'edit_item' 			=> __( 'Edit Volunteer Opportunity', 'wired-impact-volunteer-management' ),
+	      'new_item' 			=> __( 'New Volunteer Opportunity', 'wired-impact-volunteer-management' ),
+	      'all_items' 			=> __( 'All Volunteer Opportunities', 'wired-impact-volunteer-management' ),
+	      'view_item' 			=> __( 'View Volunteer Opportunity', 'wired-impact-volunteer-management' ),
+	      'search_items' 		=> __( 'Search Volunteer Opportunities', 'wired-impact-volunteer-management' ),
+	      'not_found' 			=> __( 'No volunteer opportunities found', 'wired-impact-volunteer-management' ),
+	      'not_found_in_trash' 	=> __( 'No volunteer opportunities found in trash', 'wired-impact-volunteer-management' ), 
+	      'parent_item_colon' 	=> '',
+	      'menu_name' 			=> __( 'Volunteer Mgmt', 'wired-impact-volunteer-management' )
 	    );
 
 	    $args = array(
@@ -184,7 +184,7 @@ class WI_Volunteer_Management_Public {
 
 		if( get_post_type() == 'volunteer_opp' ){
 
-			$more_text = __( 'Find Out More', 'wivm' );
+			$more_text = __( 'Find Out More', 'wired-impact-volunteer-management' );
 			$link = sprintf( '<a href="%1$s" class="more-link">%2$s</a>',
 						get_permalink( get_the_ID() ),
 						apply_filters( 'wivm_read_more_text', $more_text )
@@ -247,7 +247,7 @@ class WI_Volunteer_Management_Public {
 			} 
 			else { ?>
 
-				<p class="no-opps"><?php _e( 'Sorry, there are no volunteer opportunities available right now.', 'wivm' ); ?></p>
+				<p class="no-opps"><?php _e( 'Sorry, there are no volunteer opportunities available right now.', 'wired-impact-volunteer-management' ); ?></p>
 
 			<?php } ?>
 
@@ -310,7 +310,7 @@ class WI_Volunteer_Management_Public {
 
 		//Verify our nonce.
 		if( !wp_verify_nonce( $form_fields['wivm_sign_up_form_nonce_field'], 'wivm_sign_up_form_nonce' ) ) {
-			_e( 'Security Check.', 'wivm' );
+			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
 

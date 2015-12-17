@@ -39,7 +39,7 @@ class WI_Volunteer_Management_Activator {
 		//Add our volunteer role
 		add_role(
 		    'volunteer',
-		    __( 'Volunteer', 'wivm' ),
+		    __( 'Volunteer', 'wired-impact-volunteer-management' ),
 		    array(
 		        'read'         			=> true,
 		        'serve_as_volunteer' 	=> true //Custom capability
