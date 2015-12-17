@@ -33,11 +33,11 @@ $wi_form->admin_header();
 	//Display a Help tab
 	$wi_form->form_table_start( 'help' ); ?>
 
-		<h2>FAQs and Get Started</h2>
-		<p>Check out the <a target="_blank" href="https://wordpress.org/plugins/wired-impact-volunteer-management/faq/">FAQs on the WordPress plugin repository</a> to get help and learn how to get started.</p>
+		<h2><?php _e( 'FAQs and Get Started', 'wired-impact-volunteer-management' ); ?></h2>
+		<p><?php printf( __( 'Check out the <a target="_blank" href="%s">FAQs on the WordPress plugin repository</a> to get help and learn how to get started.' ), 'https://wordpress.org/plugins/wired-impact-volunteer-management/faq/' ); ?></p>
 
-		<h2>Need More Help?</h2>
-		<p>If the FAQs aren't cutting it and you need more help reach out to us on the <a target="_blank" href="https://wordpress.org/support/plugin/wired-impact-volunteer-management">WordPress support forums.</a></p> 
+		<h2><?php _e( 'Need More Help?', 'wired-impact-volunteer-management' ); ?></h2>
+		<p><?php printf( __( 'If the FAQs aren\'t cutting it and you need more help reach out to us on the <a target="_blank" href="%s">WordPress support forums.</a>' ), 'https://wordpress.org/support/plugin/wired-impact-volunteer-management' ); ?></p> 
 	
 	<?php do_action( 'wivm_display_help_settings', $wi_form );
 

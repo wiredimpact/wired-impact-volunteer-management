@@ -101,6 +101,9 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 == Changelog ==
 
+= 0.4.2 =
+* Updated plugin to allow for translation
+
 = 0.4.1 =
 * Added ability to filter different opportunity types in the WordPress admin.
 * Added ability to sort the opportunities by date in the WordPress admin.

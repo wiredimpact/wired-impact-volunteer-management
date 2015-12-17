@@ -229,13 +229,13 @@ class WI_Volunteer_Management_Opportunity {
 		//Add street
 		$location .= esc_html( $this->opp_meta['street'] );
 		if( $this->opp_meta['street'] != '' && ( $this->opp_meta['city'] != '' || $this->opp_meta['state'] != '' || $this->opp_meta['zip'] != '' ) ) {
-			$location .= ', ';
+			$location .= __( ', ', 'wired-impact-volunteer-management' );
 		}
 
 		//Add city
 		$location .= esc_html( $this->opp_meta['city'] );
 		if(  $this->opp_meta['city'] != '' && ( $this->opp_meta['state'] != '' || $this->opp_meta['zip'] != '' ) ) {
-			$location .= ', ';
+			$location .= __( ', ', 'wired-impact-volunteer-management' );
 		}
 
 		//Add state

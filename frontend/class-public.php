@@ -102,7 +102,7 @@ class WI_Volunteer_Management_Public {
 	      'search_items' 		=> __( 'Search Volunteer Opportunities', 'wired-impact-volunteer-management' ),
 	      'not_found' 			=> __( 'No volunteer opportunities found', 'wired-impact-volunteer-management' ),
 	      'not_found_in_trash' 	=> __( 'No volunteer opportunities found in trash', 'wired-impact-volunteer-management' ), 
-	      'parent_item_colon' 	=> __( '', 'wired-impact-volunteer-management' ),
+	      'parent_item_colon' 	=> '',
 	      'menu_name' 			=> __( 'Volunteer Mgmt', 'wired-impact-volunteer-management' )
 	    );
 
