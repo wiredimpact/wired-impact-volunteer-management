@@ -49,6 +49,9 @@ class WI_Volunteer_Management_Activator {
 		//Create our volunteer opportunity table if it doesn't already exist.
 		WI_Volunteer_Management_Activator::create_rsvp_db_table();
 
+		//Create our volunteer email table if it doesn't already exist.
+		WI_Volunteer_Management_Activator::create_rsvp_email_table();
+
 		//Add our default options if they don't already exist.
 		$options = new WI_Volunteer_Management_Options();
 		$options->set_defaults();
@@ -61,7 +64,7 @@ class WI_Volunteer_Management_Activator {
      * We check first to make sure the table doesn't exist by seeing if the
      * version exists in the options table.
      */
-    public static function create_rsvp_db_table(){
+	public static function create_rsvp_db_table(){
 		//Only create table if it doesn't exist.
 		if( get_option( 'volunteer_opp_rsvp_db_version' ) == false ){
 			global $wpdb;
@@ -83,6 +86,35 @@ class WI_Volunteer_Management_Activator {
 
 			//We set a variable in options in case we need to update the database in the future.
 			add_option( 'volunteer_opp_rsvp_db_version', 1.0 );
+		}
+	}
+
+	/**
+     * Create the database table that will hold the sent volunteer emails for each opportunity.
+     *
+     * We check first to make sure the table doesn't exist by seeing if the
+     * version exists in the options table.
+     */
+	public static function create_rsvp_email_table(){
+		//Only create table if it doesn't exist.
+		if( get_option( 'volunteer_opp_rsvp_email_version' ) == false ){
+			global $wpdb;
+
+			$table_name =  $wpdb->prefix . 'volunteer_emails';
+
+			$sql = "CREATE TABLE $table_name (
+				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				user_id bigint(20) NOT NULL,
+				post_id bigint(20) NOT NULL,
+				time datetime NOT NULL,
+				PRIMARY  KEY  (id)
+			);";
+
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			dbDelta( $sql );
+
+			//We set a variable in options in case we need to update the database in the future.
+			add_option( 'volunteer_opp_rsvp_email_version', 1.0 );
 		}
 	}
 
