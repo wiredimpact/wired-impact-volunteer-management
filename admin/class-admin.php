@@ -76,6 +76,7 @@ class WI_Volunteer_Management_Admin {
     	wp_enqueue_script(  'jquery-timepicker', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-timepicker.js', array( 'jquery-ui-core', 'jquery-ui-slider', 'jquery-ui-datepicker' ) );
 		wp_enqueue_script(  'wivm-admin', plugin_dir_url( __FILE__ ) . 'js/admin.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( 'wivm-admin', 'wivm_ajax', $this->get_localized_js_data() );
+		wp_localize_script( 'wivm-admin', 'wivm_l10n', $this->get_localized_l10n_data() );
 
 	}
 
@@ -92,7 +93,23 @@ class WI_Volunteer_Management_Admin {
 			'remove_rsvp_confirm_text' 	=> __( 'Remove RSVP', 'wired-impact-volunteer-management' ),
 			'remove_rsvp_error_text' 	=> __( 'Error, try again later.', 'wired-impact-volunteer-management' ),
 			'remove_user_rsvp_nonce' 	=> wp_create_nonce( 'remove_user_rsvp_nonce' ),
-			'hide_notice_nonce'			=> wp_create_nonce( 'hide_notice_nonce' ),
+			'hide_notice_nonce'			=> wp_create_nonce( 'hide_notice_nonce' )
+		);
+
+		return $data;
+	}
+
+	/**
+	 * Set localized translations of any strings used in the JS.
+	 *
+	 * @return array Data to be displayed in the admin page's JS.
+	 */
+	public function get_localized_l10n_data(){
+		$data = array(
+			'strings' => array(
+				'volunteer_email' 		=> __( 'Email the Volunteers', 'wired-impact-volunteer-management' ),
+				'volunteer_email_close' => __( 'Close', 'wired-impact-volunteer-management' )
+			)
 		);
 
 		return $data;
@@ -244,11 +261,20 @@ class WI_Volunteer_Management_Admin {
         //Opportunity RSVP details such as who signed up
 		add_meta_box(
             'volunteer-opportunity-rsvps',							// Unique ID
-            __( 'Volunteer Opportunity RSVPs', 'wired-impact-volunteer-management' ),			// Box title
+            __( 'Volunteer Opportunity RSVPs', 'wired-impact-volunteer-management' ), // Box title
             array( $this, 'display_opportunity_rsvps_meta_box' ),	// Content callback
             'volunteer_opp',                						// Post type
             'normal'												// Location
         );
+
+		//Volunteer RSVP Email details
+		add_meta_box(
+			'volunteer-opportunity-emails',                                     // Unique ID
+			__( 'Volunteer RSVP Emails', 'wired-impact-volunteer-management' ), // Box title
+			array( $this, 'display_opportunity_emails_meta_box' ),              // Content callback
+			'volunteer_opp',                                                    // Post type
+			'side'                                                              // Location
+		);
 	}
 
 	/**
@@ -322,8 +348,8 @@ class WI_Volunteer_Management_Admin {
 		  <tr>
 		    <td><?php _e( 'One-Time Opportunity?', 'wired-impact-volunteer-management' ); ?></td>
 		    <td>
-		    		<input type="checkbox" id="one-time-opportunity" name="one-time-opportunity" tabindex="90" value="1" <?php checked( 1, $volunteer_opp->opp_meta['one_time_opp'] ); ?> />
-		    		<label for="one-time-opportunity"><?php _e( 'This is a one-time opportunity at a fixed date and time.', 'wired-impact-volunteer-management' ); ?></label>
+		    	<input type="checkbox" id="one-time-opportunity" name="one-time-opportunity" tabindex="90" value="1" <?php checked( 1, $volunteer_opp->opp_meta['one_time_opp'] ); ?> />
+		    	<label for="one-time-opportunity"><?php _e( 'This is a one-time opportunity at a fixed date and time.', 'wired-impact-volunteer-management' ); ?></label>
 		    </td>
 		  </tr>
 
@@ -353,8 +379,8 @@ class WI_Volunteer_Management_Admin {
 		  <tr>
 		    <td><?php _e( 'Is There a Volunteer Limit?', 'wired-impact-volunteer-management' ); ?></td>
 		    <td>
-		    		<input type="checkbox" id="has-volunteer-limit" name="has-volunteer-limit" tabindex="130" value="1" <?php checked( 1, $volunteer_opp->opp_meta['has_volunteer_limit'] ); ?> />
-		    		<label for="has-volunteer-limit"><?php _e( 'Only a fixed number of people can participate in this volunteer opportunity.', 'wired-impact-volunteer-management' ); ?></label>
+		    	<input type="checkbox" id="has-volunteer-limit" name="has-volunteer-limit" tabindex="130" value="1" <?php checked( 1, $volunteer_opp->opp_meta['has_volunteer_limit'] ); ?> />
+		    	<label for="has-volunteer-limit"><?php _e( 'Only a fixed number of people can participate in this volunteer opportunity.', 'wired-impact-volunteer-management' ); ?></label>
 		    </td>
 		  </tr>
 
@@ -486,48 +512,95 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function display_opportunity_rsvps_meta_box( $post ){
 
-		$volunteer_opp 	= new WI_Volunteer_Management_Opportunity( $post->ID );
-		$num_rsvped 	= $volunteer_opp->get_number_rsvps();
-		$open_spots 	= $volunteer_opp->get_open_volunteer_spots();
-		$volunteers 	= $volunteer_opp->get_all_rsvped_volunteers();
+		$volunteer_opp  = new WI_Volunteer_Management_Opportunity( $post->ID );
+		$num_rsvped     = $volunteer_opp->get_number_rsvps();
+		$open_spots     = $volunteer_opp->get_open_volunteer_spots();
+		$volunteers     = $volunteer_opp->get_all_rsvped_volunteers();
+
+		// Set the editor ID
+		$editor_id      = 'volunteer-email-editor';
+		$content        = get_option( $editor_id );
+
+		// Set the editor options array
+		$editor_options = array(
+			'media_buttons' => false,
+			'textarea_name' => $editor_id,
+			'textarea_rows' => 10
+		);
+
 		?>
 
+		<a class="open-volunteer-email">Email the volunteers</a>
 		<span class="num">| <?php echo __( 'Number of Open Spots:', 'wired-impact-volunteer-management' ) . ' ' . $open_spots; ?></span>
 		<span class="num"><?php echo __( 'Number RSVPed:', 'wired-impact-volunteer-management' ) . ' ' . $num_rsvped; ?></span>
-		<table class="wp-list-table widefat fixed striped users">
-			<thead>
-				<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
-				<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
-				<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
-				<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
-			</thead>
 
-			<?php if( !empty( $volunteers ) ): foreach( $volunteers as $volunteer ): ?>
+		<div class="volunteer-email-editor clear">
+			<?php wp_editor( $content, $editor_id, $editor_options ); ?>
+			<input name="save" type="submit" class="button button-primary button-large" id="publish" value="<?php _e( 'Send Email', 'wired-impact-volunteer-management' ); ?>">
+		</div>
+		
+		<div class="rsvp-list-table clear">
+			<table class="wp-list-table widefat fixed striped users">
+				<thead>
+					<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
+					<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
+					<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
+					<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
+				</thead>
 
-				<tr>
-					<td><a href="<?php echo $volunteer->get_admin_url(); ?>"><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></a></td>
-					<td><?php echo $volunteer->meta['email']; ?></td>
-					<td><?php echo $volunteer->meta['phone']; ?></td>
-					<td><a href="#remove-rsvp" class="button remove-rsvp" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo $volunteer->ID; ?>"><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></a></td>
-				</tr>
+				<?php if( !empty( $volunteers ) ): foreach( $volunteers as $volunteer ): ?>
 
-			<?php endforeach; else: ?>
+					<tr>
+						<td><a href="<?php echo $volunteer->get_admin_url(); ?>"><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></a></td>
+						<td><?php echo $volunteer->meta['email']; ?></td>
+						<td><?php echo $volunteer->meta['phone']; ?></td>
+						<td><a href="#remove-rsvp" class="button remove-rsvp" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo $volunteer->ID; ?>"><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></a></td>
+					</tr>
 
-				<tr>
-					<td colspan="4"><?php _e( 'No one has signed up for this opportunity yet.', 'wired-impact-volunteer-management' ); ?></td>
-				</tr>
+				<?php endforeach; else: ?>
 
-			<?php endif; ?>
+					<tr>
+						<td colspan="4"><?php _e( 'No one has signed up for this opportunity yet.', 'wired-impact-volunteer-management' ); ?></td>
+					</tr>
 
-			<tfoot>
-				<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
-				<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
-				<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
-				<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
-			</tfoot>
-		</table>
+				<?php endif; ?>
 
+				<tfoot>
+					<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
+					<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
+					<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
+					<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
+				</tfoot>
+			</table>
+		</div>
 		<?php
+	}
+
+	/**
+	 * Display the meta box to output the list of volunteer emails for this opportunity.
+	 * 
+	 * @param object $post The volunteer opportunity object.
+	 */
+	public function display_opportunity_emails_meta_box( $post ) {
+		$volunteer_opp  = new WI_Volunteer_Management_Opportunity( $post->ID );
+		$emails         = $volunteer_opp->get_rsvp_emails();
+		$email_count    = count( $emails );
+
+		// If this opportunity has any sent emails
+		if ( ! empty( $emails ) ) {
+			printf( __( '<strong>%s</strong> emails have been sent', 'wired-impact-volunteer-management' ), $email_count );
+
+			echo '<ul class="volunteer-email-list">';
+
+			foreach ( $emails as $email ) {
+				$user_data = get_userdata( $email->user_id );
+				printf( '<li>%s by %s</li>', $email->time, $user_data->user_nicename );
+			}
+
+			echo '</ul>';
+		} else {
+			printf( __( 'No emails have been sent yet.', 'wired-impact-volunteer-management' ), $email_count );
+		}
 	}
 
 	/**
@@ -568,11 +641,11 @@ class WI_Volunteer_Management_Admin {
 	    if ( !current_user_can( 'edit_user', $user_id ) ){
 	        return false;
 	    }
-	 	
+
 	 	//Phone Number
-	    update_usermeta( absint( $user_id ), 'phone', preg_replace( "/[^0-9,.]/", "", $_POST['phone'] ) );
+	    update_user_meta( absint( $user_id ), 'phone', preg_replace( "/[^0-9,.]/", "", $_POST['phone'] ) );
 	    //Notes
-	    update_usermeta( absint( $user_id ), 'notes', implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST['notes'] ) ) ) );
+	    update_user_meta( absint( $user_id ), 'notes', implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST['notes'] ) ) ) );
 
 	}
 
