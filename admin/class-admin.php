@@ -599,7 +599,7 @@ class WI_Volunteer_Management_Admin {
 
 			echo '</ul>';
 		} else {
-			printf( __( 'No emails have been sent yet.', 'wired-impact-volunteer-management' ), $email_count );
+			_e( 'No emails have been sent yet.', 'wired-impact-volunteer-management' );
 		}
 	}
 
