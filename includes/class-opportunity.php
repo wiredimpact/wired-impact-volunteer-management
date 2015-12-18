@@ -325,6 +325,25 @@ class WI_Volunteer_Management_Opportunity {
 	}
 
 	/**
+	 * Get the object array of email variables for this opportunity.
+	 * 
+	 * @return object The array of email vars for this opportunity.
+	 */
+	public function get_rsvp_emails(){
+		global $wpdb;
+
+		$query = "
+		         SELECT *
+		         FROM " . $wpdb->prefix  . "volunteer_emails
+		         WHERE post_id = %d
+		        ";
+
+		$query_values = array( $this->ID, 1 );
+
+		return $wpdb->get_results( $wpdb->prepare( $query, $query_values ) );
+	}
+
+	/**
 	 * Return whether we should allow people to sign up for this opportunity.
 	 * 
 	 * @return bool true if we should allow signups, false if not
