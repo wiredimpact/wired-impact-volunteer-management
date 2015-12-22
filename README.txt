@@ -44,7 +44,7 @@ If this doesn’t work, follow these steps:
 
 = How do you get started? =
 
-Once you’ve downloaded the plugin, you’ll want to adjust the setting to fit your specific needs. You can do this by visiting the Volunteer Management menu and clicking “Settings”. Here, you can choose to include our styles, set a default contact and location for volunteer opportunities, and create a template for your confirmation and reminder emails.
+Once you’ve downloaded the plugin, you’ll want to adjust the settings to fit your specific needs. You can do this by visiting the Volunteer Management menu and clicking “Help & Settings”. Here, you can choose to include our styles, set a default contact and location for volunteer opportunities, and create a template for your confirmation and reminder emails.
 
 = How do you create a new volunteer opportunity? =
 
