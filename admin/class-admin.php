@@ -588,8 +588,10 @@ class WI_Volunteer_Management_Admin {
 			die();
 		}
 
-		$opp    = new WI_Volunteer_Management_Opportunity( $post_id );
-		$email  = new WI_Volunteer_Management_Email( $opp );
+		// Get the opportunity data
+		$opp   = new WI_Volunteer_Management_Opportunity( $post_id );
+
+		$email = new WI_Volunteer_Management_Email( $opp );
 		$email->send_volunteer_email( $data_array );
 		$email->store_volunteer_email( $data_array );
 
@@ -612,7 +614,7 @@ class WI_Volunteer_Management_Admin {
 
 		// If this opportunity has any sent emails
 		if ( ! empty( $emails ) ) {
-			printf( __( '<strong>%s</strong> emails have been sent', 'wired-impact-volunteer-management' ), $email_count );
+			printf( _nx( '1 email has been sent', '%d emails have been sent', $email_count, 'email count', 'wired-impact-volunteer-management' ), $email_count );
 
 			echo '<ul class="volunteer-email-list">';
 

@@ -72,7 +72,7 @@ class WI_Volunteer_Management_Email {
 
 		$this->opp = $opp;
 
-		if( $user != null ){
+		if ( $user != null ){
 			$this->user = $user;
 		}
 
@@ -161,7 +161,7 @@ class WI_Volunteer_Management_Email {
 			$headers[]  = 'Bcc: ' . $this->get_volunteer_email_addresses();
 
 			$result = wp_mail( $to, $subject, $message, $headers );
-			do_action( 'wivm_volunteer_reminder_email', $result, $to, $subject, $message );
+			do_action( 'wivm_volunteer_email', $result, $to, $subject, $message );
 		}
 
 		/**
