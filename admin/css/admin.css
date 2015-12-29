@@ -76,7 +76,7 @@ p.editor-help {
 	float: right;
 	display: inline-block;
 	margin: 2px 2px 0 0;
-	color: #777;
+	color: #555;
 	font-size: 12px;
 	font-style: italic;
 	line-height: 2.5;
@@ -89,23 +89,56 @@ p.editor-help {
 }
 
 #volunteer-opportunity-rsvps .volunteer-email-editor {
-	padding-bottom: 13px;
+	padding-bottom: 23px;
 }
 
 #volunteer-opportunity-rsvps #wp-volunteer-email-editor-wrap {
 	margin-bottom: 15px;
 }
 
-#volunteer-opportunity-rsvps .volunteer-email-editor .button {
+.volunteer-email-editor .email-subject-field {
+	display: table;
+	padding-top: 25px;
+}
+
+.volunteer-email-editor .email-subject-field label,
+.volunteer-email-editor .email-subject-field .field {
+	display: table-cell;
+}
+
+.volunteer-email-editor .email-subject-field label {
+	width: 195px;
+}
+
+.volunteer-email-editor .volunteer-email-footer .helper-text {
+	width: 70%;
+	float: left;
+	margin: 0;
+}
+
+.volunteer-email-editor .has-error {
+	border-color: #fb3048;
+}
+
+.volunteer-email-editor .volunteer-email-footer .button {
 	float: right;
+}
+
+.volunteer-email-success {
+	width: 100%;
+	display: none;
+	color: #389040;
+	border-top: 1px solid #389040;
+	border-bottom: 1px solid #389040;
+	background-color: #c8e3cd;
+}
+
+.volunteer-email-success h4 {
+	margin: 10px 15px;
 }
 
 #volunteer-opportunity-rsvps .rsvp-list-table {
 	padding: 8px 0 15px 0;
-}
-
-#volunteer-opportunity-rsvps .has-error {
-	border-color: #fb3048;
 }
 
 /**

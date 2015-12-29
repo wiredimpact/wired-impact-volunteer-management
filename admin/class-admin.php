@@ -514,16 +514,25 @@ class WI_Volunteer_Management_Admin {
 
 		?>
 
-		<a class="open-volunteer-email"><?php _e( 'Email the Volunteers', 'wired-impact-volunteer-management' ); ?></a>
+		<a class="open-volunteer-email">&#43; <?php _e( 'Email the Volunteers', 'wired-impact-volunteer-management' ); ?></a>
 		<span class="num">| <?php echo __( 'Number of Open Spots:', 'wired-impact-volunteer-management' ) . ' ' . $open_spots; ?></span>
 		<span class="num"><?php echo __( 'Number RSVPed:', 'wired-impact-volunteer-management' ) . ' ' . $num_rsvped; ?></span>
 
 		<div class="volunteer-email-editor clear">
-			<label for="volunteer-email-subject">Subject</label>
-			<input type="text" name="volunteer-email-subject" id="volunteer-email-subject" class="regular-text" />
+			<div class="email-subject-field">
+				<label for="volunteer-email-subject">Email Subject</label>
+				<div class="field">
+					<input type="text" name="volunteer-email-subject" id="volunteer-email-subject" class="regular-text" />
+				</div>
+			</div>
 			<?php wp_editor( $content, $editor_id, $editor_options ); ?>
-			<?php _e( '{volunteer_first_name}, {volunteer_last_name}, {volunteer_phone}, {volunteer_email}, {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone}, {contact_email}.', 'wired-impact-volunteer-management' ) ?>
-			<button type="button" class="button button-primary button-large wivm-send-email" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo get_current_user_id(); ?>"><?php _e( 'Send Email', 'wired-impact-volunteer-management' ); ?></button>
+			<div class="volunteer-email-footer clear">
+				<p class="helper-text"><?php _e( '{opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone}, {contact_email}.', 'wired-impact-volunteer-management' ) ?></p>
+				<button type="button" class="button button-primary button-large wivm-send-email" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo get_current_user_id(); ?>"><?php _e( 'Send Email', 'wired-impact-volunteer-management' ); ?></button>
+			</div>
+		</div>
+		<div class="volunteer-email-success clear">
+			<h4><?php _e( 'Email sent!', 'wired-impact-volunteer-management' ); ?></h4>
 		</div>
 
 		<div class="rsvp-list-table clear">

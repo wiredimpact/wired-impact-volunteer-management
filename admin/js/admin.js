@@ -225,16 +225,18 @@
 
         if ( $( email_editor ).exists() ) {
             // Fadeout the editor on page load so it remains in the DOM
-            //email_editor.fadeOut( 1 );
+            email_editor.fadeOut( 1 );
 
             $( '.open-volunteer-email' ).on( 'click', function( event ) {
                 event.preventDefault();
 
+                var text = $( this ).text();
+
                 if ( $( this ).is( '.is-open' ) ) {
-                    $( this ).removeClass( 'is-open' );
+                    $( this ).removeClass( 'is-open' ).text( text.replace( '\u2013', '\u002B' ) );
                     email_editor.fadeOut(1);
                 } else {
-                    $( this ).addClass( 'is-open' );
+                    $( this ).addClass( 'is-open' ).text( text.replace( '\u002B', '\u2013' ) );
                     email_editor.fadeIn(1);
                 }
             });
@@ -287,11 +289,15 @@
                             },
                         },
                         function( response ) {
+                            // Success
                             if ( response == 1 ) {
-
+                                email_editor.fadeTo( 300, 0, function() {
+                                    email_editor.fadeOut(1).removeAttr( 'style' );
+                                    $( '.volunteer-email-success' ).fadeIn( 300 );
+                                });
                             }
+                            // Failure
                             else {
-
                             }
                         }
                     );
