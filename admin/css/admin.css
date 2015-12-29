@@ -10,7 +10,7 @@
 
 .wivmtab {
 	display: none;
-  	margin-top: 15px;
+	margin-top: 15px;
 }
 
 .wivmtab.active {
@@ -102,6 +102,10 @@ p.editor-help {
 
 #volunteer-opportunity-rsvps .rsvp-list-table {
 	padding: 8px 0 15px 0;
+}
+
+#volunteer-opportunity-rsvps .has-error {
+	border-color: #fb3048;
 }
 
 /**
@@ -272,25 +276,25 @@ body.post-type-volunteer_opp .wp-pointer-arrow {
 }
 
 .wi-volunteer .today {
-    font-size: 15px;
-    margin: 20px 0;
-    position: relative;
-    text-align: center;
-    z-index: 1;  
-    color: #999;  
+	font-size: 15px;
+	margin: 20px 0;
+	position: relative;
+	text-align: center;
+	z-index: 1;  
+	color: #999;  
 }
 
 .wi-volunteer .today:before {
-    border-top: 1px solid #999;
-    content:"";
-    margin: 0 auto;
-    position: absolute;
-    top: 11px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 95%;
-    z-index: -1;
+	border-top: 1px solid #999;
+	content:"";
+	margin: 0 auto;
+	position: absolute;
+	top: 11px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 95%;
+	z-index: -1;
 }
 
 .wi-volunteer .today span { background: #f1f1f1; padding: 0 10px; }

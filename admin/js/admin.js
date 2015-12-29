@@ -10,9 +10,6 @@
         return $(this).length > 0;
     };
 
-    // Get the localized strings
-    var l10n = window.wivm_l10n
-
     $(function() {
 
         //Only run on WI Volunteer Management settings page.
@@ -177,7 +174,6 @@
                 }
             }).pointer( 'open' );
 
-            console.log( button_id );
             $( '#pointer-close-' + button_id ).after( '<a id="pointer-primary-' + button_id + '" data-id="' + button_id + '" class="button-primary">' + wivm_ajax.remove_rsvp_confirm_text + '</a>' );
             $( '#pointer-primary-' + button_id ).click(function() {
 
@@ -229,20 +225,78 @@
 
         if ( $( email_editor ).exists() ) {
             // Fadeout the editor on page load so it remains in the DOM
-            email_editor.fadeOut(1);
+            //email_editor.fadeOut( 1 );
 
             $( '.open-volunteer-email' ).on( 'click', function( event ) {
                 event.preventDefault();
 
                 if ( $( this ).is( '.is-open' ) ) {
-                    $( this ).removeClass( 'is-open' ).text( l10n.strings.volunteer_email );
+                    $( this ).removeClass( 'is-open' );
                     email_editor.fadeOut(1);
                 } else {
-                    $( this ).addClass( 'is-open' ).text( l10n.strings.volunteer_email_close );
+                    $( this ).addClass( 'is-open' );
                     email_editor.fadeIn(1);
                 }
             });
 
+            $( '.wivm-send-email' ).on( 'click', function( event ) {
+                event.preventDefault();
+
+                var is_valid = true,
+                    editor_value,
+                    email_button = $( this ),
+                    post_id = email_button.data( 'post-id' ),
+                    user_id = email_button.data( 'user-id' );
+
+                var subject_field = $( '#volunteer-email-subject' ),
+                    subject_value = subject_field.val();
+
+                // Get content if visual editor is selected, otherwise fall back to textarea
+                if ( $( '#wp-volunteer-email-editor-wrap' ).is( '.tmce-active' ) ) {
+                    editor_value = tinyMCE.activeEditor.getContent();
+                } else {
+                    editor_value = $( '#volunteer-email-editor' ).val();
+                }
+
+                // @todo
+                check_valid( subject_field );
+
+                function check_valid( field ) {
+                    $( field ).keyup( function() {
+                        $( this ).removeClass( 'has-error' );
+                    });
+
+                    if ( '' == field.val() ) {
+                        field.addClass( 'has-error' );
+                        is_valid = false;
+                    } else {
+                        is_valid = true;
+                    }
+                }
+
+                if ( is_valid ) {
+                    $.post( ajaxurl,
+                        {
+                            action: 'wivm_process_email',
+                            data: {
+                                post_id: post_id,
+                                user_id: user_id,
+                                nonce: wivm_ajax.volunteer_email_nonce,
+                                subject: subject_value,
+                                message: editor_value
+                            },
+                        },
+                        function( response ) {
+                            if ( response == 1 ) {
+
+                            }
+                            else {
+
+                            }
+                        }
+                    );
+                }
+            });
         }
 
     }); //document.ready()

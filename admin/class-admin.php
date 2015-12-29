@@ -76,7 +76,6 @@ class WI_Volunteer_Management_Admin {
     	wp_enqueue_script(  'jquery-timepicker', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-timepicker.js', array( 'jquery-ui-core', 'jquery-ui-slider', 'jquery-ui-datepicker' ) );
 		wp_enqueue_script(  'wivm-admin', plugin_dir_url( __FILE__ ) . 'js/admin.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( 'wivm-admin', 'wivm_ajax', $this->get_localized_js_data() );
-		wp_localize_script( 'wivm-admin', 'wivm_l10n', $this->get_localized_l10n_data() );
 
 	}
 
@@ -93,23 +92,8 @@ class WI_Volunteer_Management_Admin {
 			'remove_rsvp_confirm_text' 	=> __( 'Remove RSVP', 'wired-impact-volunteer-management' ),
 			'remove_rsvp_error_text' 	=> __( 'Error, try again later.', 'wired-impact-volunteer-management' ),
 			'remove_user_rsvp_nonce' 	=> wp_create_nonce( 'remove_user_rsvp_nonce' ),
-			'hide_notice_nonce'			=> wp_create_nonce( 'hide_notice_nonce' )
-		);
-
-		return $data;
-	}
-
-	/**
-	 * Set localized translations of any strings used in the JS.
-	 *
-	 * @return array Data to be displayed in the admin page's JS.
-	 */
-	public function get_localized_l10n_data(){
-		$data = array(
-			'strings' => array(
-				'volunteer_email' 		=> __( 'Email the Volunteers', 'wired-impact-volunteer-management' ),
-				'volunteer_email_close' => __( 'Close', 'wired-impact-volunteer-management' )
-			)
+			'hide_notice_nonce'			=> wp_create_nonce( 'hide_notice_nonce' ),
+			'volunteer_email_nonce'		=> wp_create_nonce( 'volunteer_email_nonce' )
 		);
 
 		return $data;
@@ -530,15 +514,18 @@ class WI_Volunteer_Management_Admin {
 
 		?>
 
-		<a class="open-volunteer-email">Email the volunteers</a>
+		<a class="open-volunteer-email"><?php _e( 'Email the Volunteers', 'wired-impact-volunteer-management' ); ?></a>
 		<span class="num">| <?php echo __( 'Number of Open Spots:', 'wired-impact-volunteer-management' ) . ' ' . $open_spots; ?></span>
 		<span class="num"><?php echo __( 'Number RSVPed:', 'wired-impact-volunteer-management' ) . ' ' . $num_rsvped; ?></span>
 
 		<div class="volunteer-email-editor clear">
+			<label for="volunteer-email-subject">Subject</label>
+			<input type="text" name="volunteer-email-subject" id="volunteer-email-subject" class="regular-text" />
 			<?php wp_editor( $content, $editor_id, $editor_options ); ?>
-			<input name="save" type="submit" class="button button-primary button-large" id="publish" value="<?php _e( 'Send Email', 'wired-impact-volunteer-management' ); ?>">
+			<?php _e( '{volunteer_first_name}, {volunteer_last_name}, {volunteer_phone}, {volunteer_email}, {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone}, {contact_email}.', 'wired-impact-volunteer-management' ) ?>
+			<button type="button" class="button button-primary button-large wivm-send-email" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo get_current_user_id(); ?>"><?php _e( 'Send Email', 'wired-impact-volunteer-management' ); ?></button>
 		</div>
-		
+
 		<div class="rsvp-list-table clear">
 			<table class="wp-list-table widefat fixed striped users">
 				<thead>
@@ -575,6 +562,43 @@ class WI_Volunteer_Management_Admin {
 		</div>
 		<?php
 	}
+
+
+	/**
+	 * @todo description
+	 */
+	public function process_volunteer_email() {
+
+		$post_id  = absint( $_POST['data']['post_id'] );
+		$user_id  = absint( $_POST['data']['user_id'] );
+		$nonce    = $_POST['data']['nonce'];
+		$subject  = $_POST['data']['subject'];
+		$message  = $_POST['data']['message'];
+
+		$data_array = array(
+			'post_id' => $post_id,
+			'user_id' => $user_id,
+			'subject' => $subject,
+			'message' => $message
+		);
+
+		// Verify our nonce
+		if ( ! wp_verify_nonce( $nonce, 'volunteer_email_nonce' ) ) {
+			_e( 'Security Check.', 'wired-impact-volunteer-management' );
+			die();
+		}
+
+		$opp    = new WI_Volunteer_Management_Opportunity( $post_id );
+		$email  = new WI_Volunteer_Management_Email( $opp );
+		$email->send_volunteer_email( $data_array );
+		$email->store_volunteer_email( $data_array );
+
+		// Return 1 if it worked, false it not.
+		echo '1';
+
+		die();
+	}
+
 
 	/**
 	 * Display the meta box to output the list of volunteer emails for this opportunity.
