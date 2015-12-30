@@ -629,12 +629,13 @@ class WI_Volunteer_Management_Admin {
 
 			foreach ( $emails as $email ) {
 				$user_data = get_userdata( $email->user_id );
-				printf( '<li>%s by %s</li>', $email->time, $user_data->user_nicename );
+				$time_stamp = mysql2date( __( 'F d, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $email->time );
+				printf( '<li>%s by %s</li>', $time_stamp, $user_data->display_name );
 			}
 
 			echo '</ul>';
 		} else {
-			_e( 'No emails have been sent yet.', 'wired-impact-volunteer-management' );
+			_e( "No emails have been sent yet. We'll list them here when we send automated reminders and when you send custom emails to volunteers.", 'wired-impact-volunteer-management' );
 		}
 	}
 

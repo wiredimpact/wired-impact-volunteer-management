@@ -50,7 +50,7 @@ class WI_Volunteer_Management_Activator {
 		WI_Volunteer_Management_Activator::create_rsvp_db_table();
 
 		//Create our volunteer email table if it doesn't already exist.
-		WI_Volunteer_Management_Activator::create_rsvp_email_table();
+		WI_Volunteer_Management_Activator::create_volunteer_email_table();
 
 		//Add our default options if they don't already exist.
 		$options = new WI_Volunteer_Management_Options();
@@ -95,7 +95,7 @@ class WI_Volunteer_Management_Activator {
      * We check first to make sure the table doesn't exist by seeing if the
      * version exists in the options table.
      */
-	public static function create_rsvp_email_table(){
+	public static function create_volunteer_email_table(){
 		//Only create table if it doesn't exist.
 		if( get_option( 'volunteer_opp_rsvp_email_version' ) == false ){
 			global $wpdb;
