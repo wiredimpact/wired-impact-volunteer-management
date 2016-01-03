@@ -54,6 +54,19 @@ class WI_Volunteer_Management_Admin {
 
 	}
 
+	public function do_upgrades() {
+
+		if ( get_option( 'wivm_version' ) == false && get_option( 'volunteer_opp_rsvp_db_version' ) == false ) {
+			delete_option( 'volunteer_opp_rsvp_db_version' );
+		}
+
+		if ( get_option( 'volunteer_opp_rsvp_db_version' ) && get_option( 'wivm_version' ) == false ) {
+			delete_option( 'volunteer_opp_rsvp_db_version' );
+		}
+
+		update_option( 'wivm_version', $this->version );
+	}
+
 	/**
 	 * Register the stylesheets for the admin area.
 	 */
@@ -254,7 +267,7 @@ class WI_Volunteer_Management_Admin {
 		//Volunteer RSVP Email details
 		add_meta_box(
 			'volunteer-opportunity-emails',                                     // Unique ID
-			__( 'Volunteer RSVP Emails', 'wired-impact-volunteer-management' ), // Box title
+			__( 'Emails to Volunteers', 'wired-impact-volunteer-management' ), // Box title
 			array( $this, 'display_opportunity_emails_meta_box' ),              // Content callback
 			'volunteer_opp',                                                    // Post type
 			'side'                                                              // Location
@@ -488,7 +501,8 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
-	 * Display the meta box for each volunteer that's signed up for the specific opportunity being viewed.
+	 * Display the meta box for each volunteer that's signed up for the specific opportunity being viewed
+	 * Also contains a method for sending custom emails to the signed up volunteers.
 	 * 
 	 * @todo   Use WI_Volunteer_Users_List_Table() object to display this information.
 	 * 
@@ -578,11 +592,11 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function process_volunteer_email() {
 
+		$nonce    = $_POST['data']['nonce'];
 		$post_id  = absint( $_POST['data']['post_id'] );
 		$user_id  = absint( $_POST['data']['user_id'] );
-		$nonce    = $_POST['data']['nonce'];
-		$subject  = $_POST['data']['subject'];
-		$message  = $_POST['data']['message'];
+		$subject  = stripslashes_deep( $_POST['data']['subject'] );
+		$message  = stripslashes_deep( $_POST['data']['message'] );
 
 		$data_array = array(
 			'post_id' => $post_id,
@@ -601,7 +615,7 @@ class WI_Volunteer_Management_Admin {
 		$opp   = new WI_Volunteer_Management_Opportunity( $post_id );
 
 		$email = new WI_Volunteer_Management_Email( $opp );
-		$email->send_volunteer_email( $data_array );
+		$email->send_custom_volunteer_email( $data_array );
 		$email->store_volunteer_email( $data_array );
 
 		// Return 1 if it worked, false it not.
@@ -613,7 +627,7 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Display the meta box to output the list of volunteer emails for this opportunity.
-	 * 
+	 *
 	 * @param object $post The volunteer opportunity object.
 	 */
 	public function display_opportunity_emails_meta_box( $post ) {

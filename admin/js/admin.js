@@ -290,6 +290,7 @@
                         },
                         function( response ) {
                             // Success
+                            console.log(response);
                             if ( response == 1 ) {
                                 email_editor.fadeTo( 300, 0, function() {
                                     email_editor.fadeOut(1).removeAttr( 'style' );

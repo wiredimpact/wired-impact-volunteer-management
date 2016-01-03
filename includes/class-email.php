@@ -72,7 +72,7 @@ class WI_Volunteer_Management_Email {
 
 		$this->opp = $opp;
 
-		if ( $user != null ){
+		if ( $user != null ) {
 			$this->user = $user;
 		}
 
@@ -150,9 +150,9 @@ class WI_Volunteer_Management_Email {
 		 *
 		 * @see https://codex.wordpress.org/Function_Reference/wp_mail
 		 */
-		public function send_volunteer_email( $email_data ) {
+		public function send_custom_volunteer_email( $email_data ) {
 			$to         = $this->get_opp_admin_email_addresses();
-			$subject    = esc_attr( $email_data['subject'] );
+			$subject    = $email_data['subject'];
 			$message    = wpautop( $this->replace_variables( $email_data['message'] ) );
 
 			$headers    = array();
@@ -161,7 +161,7 @@ class WI_Volunteer_Management_Email {
 			$headers[]  = 'Bcc: ' . $this->get_volunteer_email_addresses();
 
 			$result = wp_mail( $to, $subject, $message, $headers );
-			do_action( 'wivm_volunteer_email', $result, $to, $subject, $message );
+			do_action( 'wivm_custom_volunteer_email', $result, $to, $subject, $message );
 		}
 
 		/**
@@ -254,10 +254,10 @@ class WI_Volunteer_Management_Email {
 		 */
 		public function set_replace_text(){
 			$search_and_replace_text = array(
-				'{volunteer_first_name}'    => $this->user->meta['first_name'],
-				'{volunteer_last_name}'     => $this->user->meta['last_name'],
-				'{volunteer_phone}'         => $this->user->meta['phone'],
-				'{volunteer_email}'         => $this->user->meta['email'],
+				'{volunteer_first_name}'    => $this->user ? $this->user->meta['first_name'] : '',
+				'{volunteer_last_name}'     => $this->user ? $this->user->meta['last_name'] : '',
+				'{volunteer_phone}'         => $this->user ? $this->user->meta['phone'] : '',
+				'{volunteer_email}'         => $this->user ? $this->user->meta['email'] : '',
 				'{opportunity_name}'        => get_the_title( $this->opp->ID ),
 				'{opportunity_date_time}'   => $this->opp->get_one_date_time(),
 				'{opportunity_location}'    => $this->opp->format_address(),
