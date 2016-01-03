@@ -631,8 +631,8 @@ class WI_Volunteer_Management_Admin {
 	 * @param object $post The volunteer opportunity object.
 	 */
 	public function display_opportunity_emails_meta_box( $post ) {
-		$volunteer_opp  = new WI_Volunteer_Management_Opportunity( $post->ID );
-		$emails         = $volunteer_opp->get_rsvp_emails();
+		$opp            = new WI_Volunteer_Management_Opportunity( $post->ID );
+		$emails         = $opp->get_rsvp_emails();
 		$email_count    = count( $emails );
 
 		// If this opportunity has any sent emails
