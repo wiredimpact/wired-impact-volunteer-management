@@ -541,7 +541,7 @@ class WI_Volunteer_Management_Admin {
 			</div>
 			<?php wp_editor( $content, $editor_id, $editor_options ); ?>
 			<div class="volunteer-email-footer clear">
-				<p class="helper-text"><?php _e( '{opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone}, {contact_email}.', 'wired-impact-volunteer-management' ) ?></p>
+				<p class="helper-text"><?php _e( "This is a custom email sent to volunteers registered for this Opportunity. This is sent to the admins with the volunteers BCC'ed. That way you know that the email was sent successfully. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent. Since only one email is sent do not use any of the volunteer specific variables.", 'wired-impact-volunteer-management' ) ?></p>
 				<button type="button" class="button button-primary button-large wivm-send-email" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo get_current_user_id(); ?>"><?php _e( 'Send Email', 'wired-impact-volunteer-management' ); ?></button>
 			</div>
 		</div>
