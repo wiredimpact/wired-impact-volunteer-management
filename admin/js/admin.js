@@ -5,7 +5,7 @@
 (function( $ ) {
     'use strict';
 
-    // @todo
+    // Check if a selector/var exists
     $.fn.exists = function() {
         return $(this).length > 0;
     };

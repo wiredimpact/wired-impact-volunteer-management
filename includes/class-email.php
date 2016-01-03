@@ -144,9 +144,10 @@ class WI_Volunteer_Management_Email {
 		}
 
 		/**
-		 * @todo short desc
+		 * Send custom email to volunteers RSVP for a specific opportunity.
 		 *
-		 * @todo long desc
+		 * We send the email "to" the admins, but BCC those that have signed up to volunteer. This allows us to send 
+		 * only one email instead of sending multiples.
 		 *
 		 * @see https://codex.wordpress.org/Function_Reference/wp_mail
 		 */
@@ -165,9 +166,10 @@ class WI_Volunteer_Management_Email {
 		}
 
 		/**
-		 * @todo short desc
+		 * Store the email variables in the 'volunteer_emails' database table.
 		 *
-		 * @todo long desc
+		 * This method allows us to capture the frequency of emails sent to volunteers
+		 * on a specific opportunity, whether they're custom or auto reminders.
 		 *
 		 * @see https://codex.wordpress.org/Function_Reference/wp_mail
 		 */
