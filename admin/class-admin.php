@@ -637,7 +637,7 @@ class WI_Volunteer_Management_Admin {
 
 		// If this opportunity has any sent emails
 		if ( ! empty( $emails ) ) {
-			printf( '<p>%s</p>', _nx( '1 email has been sent', '%d emails have been sent', $email_count, 'email count', 'wired-impact-volunteer-management' ), $email_count );
+			printf( _nx( '<p>1 email has been sent</p>', '<p>%d emails have been sent</p>', $email_count, 'email count', 'wired-impact-volunteer-management' ), $email_count );
 
 			?>
 			<table class="wp-list-table widefat fixed striped sent-emails">
@@ -651,26 +651,27 @@ class WI_Volunteer_Management_Admin {
 
 				foreach ( $emails as $email ) {
 
-					if ( $email->user_id && 0 === $email->user_id ) {
-						$user_data = 'Auto';
+					if ( '0' === $email->user_id ) {
+						$user_output = 'Auto';
 					} else {
 						$user_data = get_userdata( $email->user_id );
+						$user_output = $user_data->display_name;
 					}
 
 					$time_stamp = mysql2date( __( 'F d, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $email->time );
 
 					echo '<tr>';
 
-					// Output the notice
+					// Output each email notice
 					printf( '<td>%s</td>', $time_stamp );
-					printf( '<td>%s</td>', $user_data->display_name );
+					printf( '<td>%s</td>', $user_output );
 
 					echo '</tr>';
 				}
 
 			echo '</table>';
 		} else {
-			_e( "No emails have been sent yet. We'll list them here when we send automated reminders and when you send custom emails to volunteers.", 'wired-impact-volunteer-management' );
+			printf( '<p>%s</p>', __( "No emails have been sent yet. We'll list them here when we send automated reminders and when you send custom emails to volunteers.", 'wired-impact-volunteer-management' ) );
 		}
 	}
 
@@ -964,12 +965,12 @@ class WI_Volunteer_Management_Admin {
 		//Gather cron info.  We have to convert everything to GMT since WP Cron sends based on GMT.
 		$cron_hook = 'send_auto_email_reminders';
 		$cron_args = array( $opp_id );
-		if( $opp->opp_meta['one_time_opp'] == 1 && $opp->opp_meta['start_date_time'] != '' ){
-		  $start_date_time_gmt = strtotime( get_gmt_from_date( date( 'Y-m-d H:i:s', $opp->opp_meta['start_date_time'] ) ) . ' GMT' );
+		if ( $opp->opp_meta['one_time_opp'] == 1 && $opp->opp_meta['start_date_time'] != '' ){
+			$start_date_time_gmt = strtotime( get_gmt_from_date( date( 'Y-m-d H:i:s', $opp->opp_meta['start_date_time'] ) ) . ' GMT' );
 
-		  $options = new WI_Volunteer_Management_Options();
-		  $days_prior_reminder = $options->get_option( 'days_prior_reminder' );
-		  $new_reminder_time = $start_date_time_gmt - ( $days_prior_reminder * 86400 ); //86400 is one day in seconds
+			$options = new WI_Volunteer_Management_Options();
+			$days_prior_reminder = $options->get_option( 'days_prior_reminder' );
+			$new_reminder_time = $start_date_time_gmt - ( $days_prior_reminder * 86400 ); //86400 is one day in seconds
 		}
 		$current_time = current_time( 'timestamp', 1 );
 
@@ -981,7 +982,7 @@ class WI_Volunteer_Management_Admin {
 			$post->post_status != 'publish' || //If opportunity isn't published
 			$opp->opp_meta['one_time_opp'] == 0 || //If opportunity is not at a specific date and time
 			$opp->opp_meta['start_date_time'] == '' || //If there is no start date for the opportunity
-			$current_time > $new_reminder_time //If the current time is passed the new reminder time
+ 			$current_time > $new_reminder_time //If the current time is passed the new reminder time
 		) {
 			return false;
 		}
@@ -1003,6 +1004,13 @@ class WI_Volunteer_Management_Admin {
 		$opp 	= new WI_Volunteer_Management_Opportunity( $opp_id );
 		$email 	= new WI_Volunteer_Management_Email( $opp );
 		$email->send_volunteer_reminder_email();
+
+		$data_array = array(
+			'post_id' => $opp_id,
+			'user_id' => 0,
+		);
+
+		$email->store_volunteer_email( $data_array );
 
 	}
 
