@@ -230,13 +230,14 @@
             $( '.open-volunteer-email' ).on( 'click', function( event ) {
                 event.preventDefault();
 
-                var text = $( this ).text();
+                var $this = $( this ),
+                    text = $this.text();
 
-                if ( $( this ).is( '.is-open' ) ) {
-                    $( this ).removeClass( 'is-open' ).text( text.replace( '\u2013', '\u002B' ) );
+                if ( $this.is( '.is-open' ) ) {
+                    $this.removeClass( 'is-open' ).text( text.replace( '\u2013', '\u002B' ) );
                     email_editor.fadeOut(1);
                 } else {
-                    $( this ).addClass( 'is-open' ).text( text.replace( '\u002B', '\u2013' ) );
+                    $this.addClass( 'is-open' ).text( text.replace( '\u002B', '\u2013' ) );
                     email_editor.fadeIn(1);
                 }
             });
@@ -244,9 +245,10 @@
             $( '.wivm-send-email' ).on( 'click', function( event ) {
                 event.preventDefault();
 
-                var is_valid = true,
+                var $this = $( this ),
+                    is_valid = true,
                     editor_value,
-                    email_button = $( this ),
+                    email_button = $this,
                     post_id = email_button.data( 'post-id' ),
                     user_id = email_button.data( 'user-id' );
 
@@ -260,12 +262,12 @@
                     editor_value = $( '#volunteer-email-editor' ).val();
                 }
 
-                // @todo
+                // Check that the subject field is valid/not null
                 check_valid( subject_field );
 
                 function check_valid( field ) {
                     $( field ).keyup( function() {
-                        $( this ).removeClass( 'has-error' );
+                        $this.removeClass( 'has-error' );
                     });
 
                     if ( '' == field.val() ) {
@@ -276,6 +278,7 @@
                     }
                 }
 
+                // Process the email if the subject is valid
                 if ( is_valid ) {
                     $.post( ajaxurl,
                         {
@@ -293,7 +296,7 @@
                             console.log(response);
                             if ( response == 1 ) {
                                 email_editor.fadeTo( 300, 0, function() {
-                                    email_editor.fadeOut(1).removeAttr( 'style' );
+                                    email_editor.fadeOut( 1 ).removeAttr( 'style' );
                                     $( '.volunteer-email-success' ).fadeIn( 300 );
                                 });
                             }
