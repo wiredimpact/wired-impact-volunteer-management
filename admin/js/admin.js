@@ -227,18 +227,24 @@
             // Fadeout the editor on page load so it remains in the DOM
             email_editor.fadeOut( 1 );
 
-            $( '.open-volunteer-email' ).on( 'click', function( event ) {
+            var $editor_trigger = $( '.open-volunteer-email' ),
+                trigger_text = $editor_trigger.text();
+
+            $editor_trigger.on( 'click', function( event ) {
                 event.preventDefault();
 
-                var $this = $( this ),
-                    text = $this.text();
+                var $this = $( this );
 
                 if ( $this.is( '.is-open' ) ) {
-                    $this.removeClass( 'is-open' ).text( text.replace( '\u2013', '\u002B' ) );
-                    email_editor.fadeOut(1);
+                    $this.removeClass( 'is-open' ).text( trigger_text.replace( '\u2013', '\u002B' ) );
+                    email_editor.fadeOut( 1 );
                 } else {
-                    $this.addClass( 'is-open' ).text( text.replace( '\u002B', '\u2013' ) );
-                    email_editor.fadeIn(1);
+                    $this.addClass( 'is-open' ).text( trigger_text.replace( '\u002B', '\u2013' ) );
+                    email_editor.fadeIn( 1 );
+
+                    if ( $( '.volunteer-email-success' ).is( '.is-open' ) ) {
+                        $( '.volunteer-email-success' ).removeClass( 'is-open' ).hide();
+                    }
                 }
             });
 
@@ -246,6 +252,7 @@
                 event.preventDefault();
 
                 var $this = $( this ),
+                    button_text = $this.text(),
                     is_valid = true,
                     editor_value,
                     email_button = $this,
@@ -280,6 +287,9 @@
 
                 // Process the email if the subject is valid
                 if ( is_valid ) {
+
+                    $this.prop( 'disabled', true ).text( 'Sending...' );
+
                     $.post( ajaxurl,
                         {
                             action: 'wivm_process_email',
@@ -293,11 +303,17 @@
                         },
                         function( response ) {
                             // Success
-                            console.log(response);
-                            if ( response == 1 ) {
+                            if ( response == 'success' ) {
+                                // Fadeout the editor
                                 email_editor.fadeTo( 300, 0, function() {
+                                    // Hide the editor and cleanup the attributes
                                     email_editor.fadeOut( 1 ).removeAttr( 'style' );
-                                    $( '.volunteer-email-success' ).fadeIn( 300 );
+                                    // Fade in the success message
+                                    $( '.volunteer-email-success' ).show().fadeTo( 300, 1 ).addClass( 'is-open' );
+                                    // Reset the editor trigger link
+                                    $editor_trigger.removeClass( 'is-open' ).text( trigger_text.replace( '\u2013', '\u002B' ) );
+                                    // Reset the submit button
+                                    $this.prop( 'disabled', false ).text( button_text );
                                 });
                             }
                             // Failure

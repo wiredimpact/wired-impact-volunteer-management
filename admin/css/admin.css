@@ -131,6 +131,7 @@ p.editor-help {
 	border-top: 1px solid #389040;
 	border-bottom: 1px solid #389040;
 	background-color: #c8e3cd;
+	opacity: 0;
 }
 
 .volunteer-email-success h4 {

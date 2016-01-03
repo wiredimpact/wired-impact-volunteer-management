@@ -100,13 +100,14 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function get_localized_js_data(){
 		$data = array(
-			'remove_rsvp_pointer_text' 	=> '<h3>' . __( 'Are You Sure?', 'wired-impact-volunteer-management' ) . '</h3><p>' . __( 'Are you sure you want to remove their RSVP for this opportunity?', 'wired-impact-volunteer-management' ) . '</p>',
-			'remove_rsvp_cancel_text' 	=> __( 'Cancel', 'wired-impact-volunteer-management' ),
-			'remove_rsvp_confirm_text' 	=> __( 'Remove RSVP', 'wired-impact-volunteer-management' ),
-			'remove_rsvp_error_text' 	=> __( 'Error, try again later.', 'wired-impact-volunteer-management' ),
-			'remove_user_rsvp_nonce' 	=> wp_create_nonce( 'remove_user_rsvp_nonce' ),
-			'hide_notice_nonce'			=> wp_create_nonce( 'hide_notice_nonce' ),
-			'volunteer_email_nonce'		=> wp_create_nonce( 'volunteer_email_nonce' )
+			'remove_rsvp_pointer_text'     => '<h3>' . __( 'Are You Sure?', 'wired-impact-volunteer-management' ) . '</h3><p>' . __( 'Are you sure you want to remove their RSVP for this opportunity?', 'wired-impact-volunteer-management' ) . '</p>',
+			'remove_rsvp_cancel_text'      => __( 'Cancel', 'wired-impact-volunteer-management' ),
+			'remove_rsvp_confirm_text'     => __( 'Remove RSVP', 'wired-impact-volunteer-management' ),
+			'remove_rsvp_error_text'       => __( 'Error, try again later.', 'wired-impact-volunteer-management' ),
+			'volunteer_email_error_text'   => __( 'Error, try again later.', 'wired-impact-volunteer-management' ),
+			'remove_user_rsvp_nonce'       => wp_create_nonce( 'remove_user_rsvp_nonce' ),
+			'hide_notice_nonce'            => wp_create_nonce( 'hide_notice_nonce' ),
+			'volunteer_email_nonce'        => wp_create_nonce( 'volunteer_email_nonce' )
 		);
 
 		return $data;
@@ -586,9 +587,10 @@ class WI_Volunteer_Management_Admin {
 		<?php
 	}
 
-
 	/**
-	 * @todo description
+	 * Process the AJAX request to send out the custom volunteer email.
+	 *
+	 * @return post_id|bool The post ID if everything worked, false otherwise
 	 */
 	public function process_volunteer_email() {
 
@@ -619,7 +621,7 @@ class WI_Volunteer_Management_Admin {
 		$email->store_volunteer_email( $data_array );
 
 		// Return 1 if it worked, false it not.
-		echo '1';
+		echo 'success';
 
 		die();
 	}
