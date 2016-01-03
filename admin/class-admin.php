@@ -637,17 +637,38 @@ class WI_Volunteer_Management_Admin {
 
 		// If this opportunity has any sent emails
 		if ( ! empty( $emails ) ) {
-			printf( _nx( '1 email has been sent', '%d emails have been sent', $email_count, 'email count', 'wired-impact-volunteer-management' ), $email_count );
+			printf( '<p>%s</p>', _nx( '1 email has been sent', '%d emails have been sent', $email_count, 'email count', 'wired-impact-volunteer-management' ), $email_count );
 
-			echo '<ul class="volunteer-email-list">';
+			?>
+			<table class="wp-list-table widefat fixed striped sent-emails">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>User</th>
+					</tr>
+				</thead>
+				<?php
 
-			foreach ( $emails as $email ) {
-				$user_data = get_userdata( $email->user_id );
-				$time_stamp = mysql2date( __( 'F d, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $email->time );
-				printf( '<li>%s by %s</li>', $time_stamp, $user_data->display_name );
-			}
+				foreach ( $emails as $email ) {
 
-			echo '</ul>';
+					if ( $email->user_id && 0 === $email->user_id ) {
+						$user_data = 'Auto';
+					} else {
+						$user_data = get_userdata( $email->user_id );
+					}
+
+					$time_stamp = mysql2date( __( 'F d, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $email->time );
+
+					echo '<tr>';
+
+					// Output the notice
+					printf( '<td>%s</td>', $time_stamp );
+					printf( '<td>%s</td>', $user_data->display_name );
+
+					echo '</tr>';
+				}
+
+			echo '</table>';
 		} else {
 			_e( "No emails have been sent yet. We'll list them here when we send automated reminders and when you send custom emails to volunteers.", 'wired-impact-volunteer-management' );
 		}
@@ -956,13 +977,13 @@ class WI_Volunteer_Management_Admin {
 		wp_clear_scheduled_hook( $cron_hook, $cron_args );
 
 		//Don't schedule the reminder under certain circumstances
-		if( 
-		  $post->post_status != 'publish' || //If opportunity isn't published
-		  $opp->opp_meta['one_time_opp'] == 0 || //If opportunity is not at a specific date and time
-		  $opp->opp_meta['start_date_time'] == '' || //If there is no start date for the opportunity
-		  $current_time > $new_reminder_time //If the current time is passed the new reminder time
-		  ){
-		  return false;
+		if (
+			$post->post_status != 'publish' || //If opportunity isn't published
+			$opp->opp_meta['one_time_opp'] == 0 || //If opportunity is not at a specific date and time
+			$opp->opp_meta['start_date_time'] == '' || //If there is no start date for the opportunity
+			$current_time > $new_reminder_time //If the current time is passed the new reminder time
+		) {
+			return false;
 		}
 
 		//If we passed all the conditions then schedule the auto reminder

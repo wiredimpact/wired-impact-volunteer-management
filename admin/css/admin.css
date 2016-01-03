@@ -141,6 +141,18 @@ p.editor-help {
 	padding: 8px 0 15px 0;
 }
 
+#volunteer-opportunity-emails th {
+	font-size: 13px;
+}
+
+#volunteer-opportunity-emails th:first-child {
+	width: 60%;
+}
+
+#volunteer-opportunity-emails th:last-child {
+	width: 40%;
+}
+
 /**
  * Volunteers list
  */
