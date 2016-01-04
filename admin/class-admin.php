@@ -54,17 +54,89 @@ class WI_Volunteer_Management_Admin {
 
 	}
 
+	/**
+	 * @todo
+	 */
 	public function do_upgrades() {
 
+		// This one should apply for new installs as both options will not exists, so
+		// we run both table creation methods
 		if ( get_option( 'wivm_version' ) == false && get_option( 'volunteer_opp_rsvp_db_version' ) == false ) {
 			delete_option( 'volunteer_opp_rsvp_db_version' );
+
+			//Create our volunteer opportunity table if it doesn't already exist.
+			WI_Volunteer_Management_Admin::create_rsvp_db_table();
+
+			//Create our volunteer email table if it doesn't already exist.
+			WI_Volunteer_Management_Admin::create_volunteer_email_table();
 		}
 
+		// This one should apply for upgrades as existing installs would have 'volunteer_opp_rsvp_db_version'
+		// and RSVP table. But they wouldn't and not have 'wivm_version' and the email table. So we create the
+		// email table and remove the rsvp database option
 		if ( get_option( 'volunteer_opp_rsvp_db_version' ) && get_option( 'wivm_version' ) == false ) {
 			delete_option( 'volunteer_opp_rsvp_db_version' );
+
+			//Create our volunteer email table if it doesn't already exist.
+			WI_Volunteer_Management_Admin::create_volunteer_email_table();
 		}
 
 		update_option( 'wivm_version', $this->version );
+	}
+
+	/**
+     * Create the database table that will hold the sent volunteer emails for each opportunity.
+     *
+     * We check first to make sure the table doesn't exist by seeing if the
+     * version exists in the options table.
+     */
+	public static function create_volunteer_email_table(){
+		//Only create table if it doesn't exist.
+		if ( get_option( 'wivm_version' ) == false ) {
+			global $wpdb;
+
+			$table_name =  $wpdb->prefix . 'volunteer_emails';
+
+			$sql = "CREATE TABLE $table_name (
+				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				user_id bigint(20) NOT NULL,
+				post_id bigint(20) NOT NULL,
+				time datetime NOT NULL,
+				PRIMARY  KEY  (id)
+			);";
+
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			dbDelta( $sql );
+		}
+	}
+
+	/*
+     * Create the database table that will hold our volunteer opportunity RSVP information.
+     * 
+     * We create a database table that will hold our volunteer opportunity RSVP information.
+     * We check first to make sure the table doesn't exist by seeing if the
+     * version exists in the options table.
+     */
+	public static function create_rsvp_db_table(){
+		//Only create table if it doesn't exist.
+		if ( get_option( 'wivm_version' ) == false ) {
+			global $wpdb;
+
+			$table_name =  $wpdb->prefix . 'volunteer_rsvps';
+
+			$sql = "CREATE TABLE $table_name (
+				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				user_id bigint(20) NOT NULL,
+				post_id bigint(20) NOT NULL,
+				rsvp tinyint(2) NOT NULL,
+				time datetime NOT NULL,
+				PRIMARY  KEY  (id),
+				UNIQUE KEY (user_id, post_id)
+			);";
+
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			dbDelta( $sql );
+		}
 	}
 
 	/**

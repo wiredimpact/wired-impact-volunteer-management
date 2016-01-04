@@ -69,7 +69,7 @@ class WI_Volunteer_Management {
 	public function __construct() {
 
 		$this->plugin_name = 'wired-impact-volunteer-management';
-		$this->version = '0.4.2';
+		$this->version = '0.5.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -183,6 +183,8 @@ class WI_Volunteer_Management {
 
 		$plugin_admin = new WI_Volunteer_Management_Admin( $this->get_plugin_name(), $this->get_version() );
 
+		
+		$this->loader->add_action(   'plugins_loaded',                             $plugin_admin, 'do_upgrades' );
 		$this->loader->add_action(   'admin_enqueue_scripts',                      $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action(   'admin_enqueue_scripts',                      $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action(   'admin_menu',                                 $plugin_admin, 'register_settings_page' );
