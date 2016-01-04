@@ -171,7 +171,8 @@ class WI_Volunteer_Management_Email {
 		 * This method allows us to capture the frequency of emails sent to volunteers
 		 * on a specific opportunity, whether they're custom or auto reminders.
 		 *
-		 * @see https://codex.wordpress.org/Function_Reference/wp_mail
+		 * @param array $email_data User ID of sender and ID of the opportunity the email was sent for.
+		 *
 		 */
 		public function store_volunteer_email( $email_data ) {
 

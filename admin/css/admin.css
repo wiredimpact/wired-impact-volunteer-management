@@ -110,10 +110,8 @@ p.editor-help {
 	width: 195px;
 }
 
-.volunteer-email-editor .volunteer-email-footer .helper-text {
-	width: 70%;
-	float: left;
-	margin: 0;
+.volunteer-email-editor .helper-text {
+	margin: 1em 0 0;
 }
 
 .volunteer-email-editor .has-error {
@@ -125,17 +123,13 @@ p.editor-help {
 }
 
 .volunteer-email-success {
-	width: 100%;
 	display: none;
-	color: #389040;
-	border-top: 1px solid #389040;
-	border-bottom: 1px solid #389040;
-	background-color: #c8e3cd;
 	opacity: 0;
-}
-
-.volunteer-email-success h4 {
-	margin: 10px 15px;
+    border-left: 4px solid #46b450;
+	margin: 5px 0 15px;
+	padding: 0 12px;
+	-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 }
 
 #volunteer-opportunity-rsvps .rsvp-list-table {

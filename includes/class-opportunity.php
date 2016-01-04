@@ -178,7 +178,7 @@ class WI_Volunteer_Management_Opportunity {
 
 		//If dates are the same then only show date on first date, with time on both
 		if( date( 'Ymd', $start_date_time ) == date( 'Ymd', $end_date_time ) ){
-		  $opp_time =  date( __( 'D, F d, Y', 'wired-impact-volunteer-management' ), $start_date_time );
+		  $opp_time =  date( __( 'D, F j, Y', 'wired-impact-volunteer-management' ), $start_date_time );
 		  $opp_time .= __( ' from ', 'wired-impact-volunteer-management' );
 		  $opp_time .= date( __( 'g:i a', 'wired-impact-volunteer-management' ), $start_date_time );
 		  $opp_time .= ' – ';
@@ -325,7 +325,7 @@ class WI_Volunteer_Management_Opportunity {
 	}
 
 	/**
-	 * Get the object array of email variables for this opportunity.
+	 * Get the object array of all emails sent for this opportunity.
 	 * 
 	 * @return object The array of email vars for this opportunity.
 	 */

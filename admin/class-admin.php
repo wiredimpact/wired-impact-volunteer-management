@@ -55,30 +55,24 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
-	 * @todo
+	 * Upgrade the database when needed for volunteer management.
 	 */
 	public function do_upgrades() {
 
-		// This one should apply for new installs as both options will not exists, so
-		// we run both table creation methods
+		// For new installs add both the RSVP and emails tables.
 		if ( get_option( 'wivm_version' ) == false && get_option( 'volunteer_opp_rsvp_db_version' ) == false ) {
-			delete_option( 'volunteer_opp_rsvp_db_version' );
 
-			//Create our volunteer opportunity table if it doesn't already exist.
 			WI_Volunteer_Management_Admin::create_rsvp_db_table();
-
-			//Create our volunteer email table if it doesn't already exist.
 			WI_Volunteer_Management_Admin::create_volunteer_email_table();
+
 		}
 
-		// This one should apply for upgrades as existing installs would have 'volunteer_opp_rsvp_db_version'
-		// and RSVP table. But they wouldn't and not have 'wivm_version' and the email table. So we create the
-		// email table and remove the rsvp database option
+		// Upgrade existing installs which have the RSVP table, but not the email table.
 		if ( get_option( 'volunteer_opp_rsvp_db_version' ) && get_option( 'wivm_version' ) == false ) {
-			delete_option( 'volunteer_opp_rsvp_db_version' );
 
-			//Create our volunteer email table if it doesn't already exist.
+			delete_option( 'volunteer_opp_rsvp_db_version' );
 			WI_Volunteer_Management_Admin::create_volunteer_email_table();
+
 		}
 
 		update_option( 'wivm_version', $this->version );
@@ -606,6 +600,7 @@ class WI_Volunteer_Management_Admin {
 		<span class="num"><?php echo __( 'Number RSVPed:', 'wired-impact-volunteer-management' ) . ' ' . $num_rsvped; ?></span>
 
 		<div class="volunteer-email-editor clear">
+			<p class="helper-text"><?php _e( "Below you can send a custom email to volunteers who signed up for this Opportunity. This is sent to the admins with the volunteers BCC'ed, so you know that the email was sent successfully. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent.", 'wired-impact-volunteer-management' ) ?></p>
 			<div class="email-subject-field">
 				<label for="volunteer-email-subject">Email Subject</label>
 				<div class="field">
@@ -614,12 +609,11 @@ class WI_Volunteer_Management_Admin {
 			</div>
 			<?php wp_editor( $content, $editor_id, $editor_options ); ?>
 			<div class="volunteer-email-footer clear">
-				<p class="helper-text"><?php _e( "This is a custom email sent to volunteers registered for this Opportunity. This is sent to the admins with the volunteers BCC'ed. That way you know that the email was sent successfully. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent. Since only one email is sent do not use any of the volunteer specific variables.", 'wired-impact-volunteer-management' ) ?></p>
 				<button type="button" class="button button-primary button-large wivm-send-email" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo get_current_user_id(); ?>"><?php _e( 'Send Email', 'wired-impact-volunteer-management' ); ?></button>
 			</div>
 		</div>
 		<div class="volunteer-email-success clear">
-			<h4><?php _e( 'Email sent!', 'wired-impact-volunteer-management' ); ?></h4>
+			<p><strong><?php _e( 'Your email has been sent!', 'wired-impact-volunteer-management' ); ?></strong></p>
 		</div>
 
 		<div class="rsvp-list-table clear">
@@ -711,14 +705,14 @@ class WI_Volunteer_Management_Admin {
 
 		// If this opportunity has any sent emails
 		if ( ! empty( $emails ) ) {
-			printf( _nx( '<p>1 email has been sent</p>', '<p>%d emails have been sent</p>', $email_count, 'email count', 'wired-impact-volunteer-management' ), $email_count );
+			printf( _nx( '<p>1 email has been sent.</p>', '<p>%d emails have been sent.</p>', $email_count, 'email count', 'wired-impact-volunteer-management' ), $email_count );
 
 			?>
 			<table class="wp-list-table widefat fixed striped sent-emails">
 				<thead>
 					<tr>
-						<th>Date</th>
-						<th>User</th>
+						<th><?php _e( 'When', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'Sender', 'wired-impact-volunteer-management' ); ?></th>
 					</tr>
 				</thead>
 				<?php
@@ -726,13 +720,13 @@ class WI_Volunteer_Management_Admin {
 				foreach ( $emails as $email ) {
 
 					if ( '0' === $email->user_id ) {
-						$user_output = 'Auto';
+						$user_output = '<em>Automated Reminder Email</em>';
 					} else {
 						$user_data = get_userdata( $email->user_id );
 						$user_output = $user_data->display_name;
 					}
 
-					$time_stamp = mysql2date( __( 'F d, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $email->time );
+					$time_stamp = mysql2date( __( 'D, M j, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $email->time );
 
 					echo '<tr>';
 
@@ -1067,7 +1061,7 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
-	 * Send volunteer reminder email.
+	 * Send volunteer reminder email and store it in the database.
 	 *
 	 * This method is called using cron and is never called in any other way.
 	 * 
@@ -1075,15 +1069,14 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function send_email_reminder( $opp_id ){
 
-		$opp 	= new WI_Volunteer_Management_Opportunity( $opp_id );
-		$email 	= new WI_Volunteer_Management_Email( $opp );
-		$email->send_volunteer_reminder_email();
-
 		$data_array = array(
 			'post_id' => $opp_id,
 			'user_id' => 0,
 		);
 
+		$opp 	= new WI_Volunteer_Management_Opportunity( $opp_id );
+		$email 	= new WI_Volunteer_Management_Email( $opp );
+		$email->send_volunteer_reminder_email();
 		$email->store_volunteer_email( $data_array );
 
 	}
