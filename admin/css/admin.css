@@ -139,10 +139,6 @@ p.editor-help {
 	border-left: 4px solid #dc3232;
 }
 
-#volunteer-opportunity-rsvps .rsvp-list-table {
-	padding: 8px 0 15px 0;
-}
-
 #volunteer-opportunity-emails th {
 	font-size: 13px;
 }
@@ -162,6 +158,39 @@ p.editor-help {
   float: left;
   margin-right: 10px;
   margin-top: 1px;
+}
+
+#volunteer-opportunity-rsvps .rsvp-list-table {
+	padding: 8px 0 15px 0;
+}
+
+@media only screen and (max-width: 782px) {
+	.rsvp-list-table thead tr,
+	.rsvp-list-table tfoot tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	.rsvp-list-table td { 
+		padding-left: 30%; 
+		border: none;
+		border-bottom: 1px solid #e5e5e5;
+		position: relative;
+	}
+
+	.rsvp-list-table td::before {
+		font-weight: bold;
+		width: 28% !important;
+	}
+
+	.rsvp-list-table .remove-rsvp-column::before {
+		padding-top: 9px;
+	}
+
+	.rsvp-list-table tr:last-child td:last-child {
+		border: none;
+	}
 }
 
 /**

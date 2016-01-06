@@ -631,10 +631,10 @@ class WI_Volunteer_Management_Admin {
 				<?php if( !empty( $volunteers ) ): foreach( $volunteers as $volunteer ): ?>
 
 					<tr>
-						<td><a href="<?php echo $volunteer->get_admin_url(); ?>"><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></a></td>
-						<td><?php echo $volunteer->meta['email']; ?></td>
-						<td><?php echo $volunteer->meta['phone']; ?></td>
-						<td><a href="#remove-rsvp" class="button remove-rsvp" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo $volunteer->ID; ?>"><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></a></td>
+						<td data-colname='<?php _e( 'Name', 'wired-impact-volunteer-management' ); ?>'><a href="<?php echo $volunteer->get_admin_url(); ?>"><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></a></td>
+						<td data-colname='<?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?>'><?php echo $volunteer->meta['email']; ?></td>
+						<td data-colname='<?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?>'><?php echo $volunteer->meta['phone']; ?></td>
+						<td data-colname='<?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?>' class="remove-rsvp-column"><a href="#remove-rsvp" class="button remove-rsvp" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo $volunteer->ID; ?>"><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></a></td>
 					</tr>
 
 				<?php endforeach; else: ?>
