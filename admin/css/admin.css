@@ -96,18 +96,39 @@ p.editor-help {
 	margin-bottom: 15px;
 }
 
-.volunteer-email-editor .email-subject-field {
+.volunteer-email-subject-field {
 	display: table;
 	padding-top: 25px;
 }
 
-.volunteer-email-editor .email-subject-field label,
-.volunteer-email-editor .email-subject-field .field {
+.volunteer-email-subject-field label,
+.volunteer-email-subject-field .field {
 	display: table-cell;
 }
 
-.volunteer-email-editor .email-subject-field label {
+.volunteer-email-subject-field label {
 	width: 195px;
+}
+
+@media only screen and (max-width: 782px) {
+	.volunteer-email-subject-field,
+	.volunteer-email-subject-field label,
+	.volunteer-email-subject-field .field {
+		display: block;
+	}
+
+	.volunteer-email-subject-field {
+		margin-bottom: 15px;
+	}
+
+	.volunteer-email-subject-field label {
+		margin-bottom: 10px;
+	}
+
+	.volunteer-email-subject-field .field,
+	.volunteer-email-subject-field input {
+		width: 100%;
+	}
 }
 
 .volunteer-email-editor .helper-text {
@@ -173,7 +194,7 @@ p.editor-help {
 	}
 
 	.rsvp-list-table td { 
-		padding-left: 30%; 
+		padding-left: 35%; 
 		border: none;
 		border-bottom: 1px solid #e5e5e5;
 		position: relative;
@@ -181,7 +202,7 @@ p.editor-help {
 
 	.rsvp-list-table td::before {
 		font-weight: bold;
-		width: 28% !important;
+		width: 32% !important;
 	}
 
 	.rsvp-list-table .remove-rsvp-column::before {

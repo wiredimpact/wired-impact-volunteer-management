@@ -601,7 +601,7 @@ class WI_Volunteer_Management_Admin {
 
 		<div class="volunteer-email-editor clear">
 			<p class="helper-text"><?php _e( "Below you can send a custom email to volunteers who signed up for this Opportunity. This is sent to the admins with the volunteers BCC'ed, so you know that the email was sent successfully. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent.", 'wired-impact-volunteer-management' ) ?></p>
-			<div class="email-subject-field">
+			<div class="volunteer-email-subject-field">
 				<label for="volunteer-email-subject">Email Subject</label>
 				<div class="field">
 					<input type="text" name="volunteer-email-subject" id="volunteer-email-subject" class="regular-text" />
