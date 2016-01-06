@@ -590,7 +590,7 @@ class WI_Volunteer_Management_Admin {
 		$editor_options = array(
 			'media_buttons' => false,
 			'textarea_name' => $editor_id,
-			'textarea_rows' => 10
+			'editor_height' => 230,
 		);
 
 		?>
