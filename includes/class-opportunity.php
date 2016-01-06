@@ -336,6 +336,7 @@ class WI_Volunteer_Management_Opportunity {
 		         SELECT *
 		         FROM " . $wpdb->prefix  . "volunteer_emails
 		         WHERE post_id = %d
+		         ORDER BY time DESC
 		        ";
 
 		$query_values = array( $this->ID, 1 );
