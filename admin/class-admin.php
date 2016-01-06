@@ -631,10 +631,10 @@ class WI_Volunteer_Management_Admin {
 				<?php if( !empty( $volunteers ) ): foreach( $volunteers as $volunteer ): ?>
 
 					<tr>
-						<td data-colname='<?php _e( 'Name', 'wired-impact-volunteer-management' ); ?>'><a href="<?php echo $volunteer->get_admin_url(); ?>"><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></a></td>
-						<td data-colname='<?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?>'><?php echo $volunteer->meta['email']; ?></td>
-						<td data-colname='<?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?>'><?php echo $volunteer->meta['phone']; ?></td>
-						<td data-colname='<?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?>' class="remove-rsvp-column"><a href="#remove-rsvp" class="button remove-rsvp" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo $volunteer->ID; ?>"><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></a></td>
+						<td data-colname="<?php _e( 'Name', 'wired-impact-volunteer-management' ); ?>"><a href="<?php echo $volunteer->get_admin_url(); ?>"><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></a></td>
+						<td data-colname="<?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?>"><?php echo $volunteer->meta['email']; ?></td>
+						<td data-colname="<?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?>"><?php echo $volunteer->meta['phone']; ?></td>
+						<td data-colname="<?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?>" class="remove-rsvp-column"><a href="#remove-rsvp" class="button remove-rsvp" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo $volunteer->ID; ?>"><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></a></td>
 					</tr>
 
 				<?php endforeach; else: ?>
@@ -715,36 +715,41 @@ class WI_Volunteer_Management_Admin {
 			printf( _nx( '<p>1 email has been sent.</p>', '<p>%d emails have been sent.</p>', $email_count, 'email count', 'wired-impact-volunteer-management' ), $email_count );
 
 			?>
-			<table class="wp-list-table widefat fixed striped sent-emails">
-				<thead>
-					<tr>
-						<th><?php _e( 'When', 'wired-impact-volunteer-management' ); ?></th>
-						<th><?php _e( 'Sender', 'wired-impact-volunteer-management' ); ?></th>
-					</tr>
-				</thead>
-				<?php
+			<div class="sent-emails-table">
+				<table class="wp-list-table widefat fixed striped sent-emails">
+					<thead>
+						<tr>
+							<th><?php _e( 'When', 'wired-impact-volunteer-management' ); ?></th>
+							<th><?php _e( 'Sender', 'wired-impact-volunteer-management' ); ?></th>
+						</tr>
+					</thead>
+					<?php
 
-				foreach ( $emails as $email ) {
+					foreach ( $emails as $email ) {
 
-					if ( '0' === $email->user_id ) {
-						// If the 
-						$user_output = sprintf( '<em>%s</em>', __( 'Automated Reminder Email', 'wired-impact-volunteer-management' ) );
-					} else {
-						$user_data = get_userdata( $email->user_id );
-						$user_output = $user_data->display_name;
+						if ( '0' === $email->user_id ) {
+							// If the 
+							$user_output = sprintf( '<em>%s</em>', __( 'Automated Reminder Email', 'wired-impact-volunteer-management' ) );
+						} else {
+							$user_data = get_userdata( $email->user_id );
+							$user_output = $user_data->display_name;
+						}
+
+						$time_stamp = mysql2date( __( 'D, M j, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $email->time );
+
+						echo '<tr>';
+
+						// Output each email notice
+						printf( '<td>%s</td>', $time_stamp );
+						printf( '<td>%s</td>', $user_output );
+
+						echo '</tr>';
 					}
 
-					$time_stamp = mysql2date( __( 'D, M j, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $email->time );
-
-					echo '<tr>';
-
-					// Output each email notice
-					printf( '<td>%s</td>', $time_stamp );
-					printf( '<td>%s</td>', $user_output );
-
-					echo '</tr>';
-				}
-
+					?>
+				</table>
+			</div>
+			<?php
 			echo '</table>';
 		} else {
 			printf( '<p>%s</p>', __( "No emails have been sent yet. We'll list them here when we send automated reminders and when you send custom emails to volunteers.", 'wired-impact-volunteer-management' ) );

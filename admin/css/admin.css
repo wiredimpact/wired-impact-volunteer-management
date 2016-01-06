@@ -193,6 +193,10 @@ p.editor-help {
 		left: -9999px;
 	}
 
+	.rsvp-list-table tr { 
+		display: block;
+	}
+
 	.rsvp-list-table td { 
 		padding-left: 35%; 
 		border: none;
@@ -397,16 +401,25 @@ body.post-type-volunteer_opp .wp-pointer-arrow {
 .wi-volunteer .today span { background: #f1f1f1; padding: 0 10px; }
 
 /**
- * Volunteer Email list
+ * Sent Emails Table
  */
-.volunteer-email-list {
-	margin-bottom: 0;
+@media only screen and (max-width: 782px) {
+	.sent-emails-table tr { 
+		display: table-row !important;
+	}
+
+	.sent-emails-table td { 
+		display: table-cell !important;
+	}
+
+	.sent-emails-table td::before {
+		display: none !important;
+	}
 }
 
-.volunteer-email-list li:last-child {
-	margin-bottom: 0;
-}
-
+/**
+ * Globals
+ */
 .clear:before,
 .clear:after {
 	content: " ";
