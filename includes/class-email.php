@@ -162,7 +162,10 @@ class WI_Volunteer_Management_Email {
 			$headers[]  = 'Bcc: ' . $this->get_volunteer_email_addresses();
 
 			$result = wp_mail( $to, $subject, $message, $headers );
+
 			do_action( 'wivm_custom_volunteer_email', $result, $to, $subject, $message );
+
+			return $result;
 		}
 
 		/**

@@ -242,8 +242,8 @@
                     $this.addClass( 'is-open' ).text( trigger_text.replace( '\u002B', '\u2013' ) );
                     email_editor.fadeIn( 1 );
 
-                    if ( $( '.volunteer-email-success' ).is( '.is-open' ) ) {
-                        $( '.volunteer-email-success' ).removeClass( 'is-open' ).hide();
+                    if ( $( '.volunteer-email-response-message' ).is( '.is-open' ) ) {
+                        $( '.volunteer-email-response-message' ).removeClass( 'is-open' ).hide();
                     }
                 }
             });
@@ -301,24 +301,26 @@
                                 message: editor_value
                             },
                         },
-                        function( response ) {
-                            // Success
-                            if ( response == 'success' ) {
-                                // Fadeout the editor
-                                email_editor.fadeTo( 300, 0, function() {
-                                    // Hide the editor and cleanup the attributes
-                                    email_editor.fadeOut( 1 ).removeAttr( 'style' );
-                                    // Fade in the success message
+                        function( response ) {                          
+                            // Fadeout the editor
+                            email_editor.fadeTo( 300, 0, function() {
+                                // Hide the editor and cleanup the attributes
+                                email_editor.fadeOut( 1 ).removeAttr( 'style' );                            
+                                // Reset the editor trigger link
+                                $editor_trigger.removeClass( 'is-open' ).text( trigger_text.replace( '\u2013', '\u002B' ) );
+                                // Reset the submit button
+                                $this.prop( 'disabled', false ).text( button_text );
+
+                                // Fade in the response message
+                                // Success
+                                if ( response == 'success' ) {
                                     $( '.volunteer-email-success' ).show().fadeTo( 300, 1 ).addClass( 'is-open' );
-                                    // Reset the editor trigger link
-                                    $editor_trigger.removeClass( 'is-open' ).text( trigger_text.replace( '\u2013', '\u002B' ) );
-                                    // Reset the submit button
-                                    $this.prop( 'disabled', false ).text( button_text );
-                                });
-                            }
-                            // Failure
-                            else {
-                            }
+                                }
+                                // Failure
+                                else {
+                                    $( '.volunteer-email-failure' ).show().fadeTo( 300, 1 ).addClass( 'is-open' );
+                                }
+                            });
                         }
                     );
                 }

@@ -62,8 +62,8 @@ class WI_Volunteer_Management_Admin {
 		// For new installs add both the RSVP and emails tables.
 		if ( get_option( 'wivm_version' ) == false && get_option( 'volunteer_opp_rsvp_db_version' ) == false ) {
 
-			WI_Volunteer_Management_Admin::create_rsvp_db_table();
-			WI_Volunteer_Management_Admin::create_volunteer_email_table();
+			$this->create_rsvp_db_table();
+			$this->create_volunteer_email_table();
 
 		}
 
@@ -71,37 +71,11 @@ class WI_Volunteer_Management_Admin {
 		if ( get_option( 'volunteer_opp_rsvp_db_version' ) && get_option( 'wivm_version' ) == false ) {
 
 			delete_option( 'volunteer_opp_rsvp_db_version' );
-			WI_Volunteer_Management_Admin::create_volunteer_email_table();
+			$this->create_volunteer_email_table();
 
 		}
 
 		update_option( 'wivm_version', $this->version );
-	}
-
-	/**
-     * Create the database table that will hold the sent volunteer emails for each opportunity.
-     *
-     * We check first to make sure the table doesn't exist by seeing if the
-     * version exists in the options table.
-     */
-	public static function create_volunteer_email_table(){
-		//Only create table if it doesn't exist.
-		if ( get_option( 'wivm_version' ) == false ) {
-			global $wpdb;
-
-			$table_name =  $wpdb->prefix . 'volunteer_emails';
-
-			$sql = "CREATE TABLE $table_name (
-				id mediumint(9) NOT NULL AUTO_INCREMENT,
-				user_id bigint(20) NOT NULL,
-				post_id bigint(20) NOT NULL,
-				time datetime NOT NULL,
-				PRIMARY  KEY  (id)
-			);";
-
-			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-			dbDelta( $sql );
-		}
 	}
 
 	/*
@@ -111,7 +85,7 @@ class WI_Volunteer_Management_Admin {
      * We check first to make sure the table doesn't exist by seeing if the
      * version exists in the options table.
      */
-	public static function create_rsvp_db_table(){
+	public function create_rsvp_db_table(){
 		//Only create table if it doesn't exist.
 		if ( get_option( 'wivm_version' ) == false ) {
 			global $wpdb;
@@ -126,6 +100,32 @@ class WI_Volunteer_Management_Admin {
 				time datetime NOT NULL,
 				PRIMARY  KEY  (id),
 				UNIQUE KEY (user_id, post_id)
+			);";
+
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			dbDelta( $sql );
+		}
+	}
+
+	/**
+     * Create the database table that will hold the sent volunteer emails for each opportunity.
+     *
+     * We check first to make sure the table doesn't exist by seeing if the
+     * version exists in the options table.
+     */
+	public function create_volunteer_email_table(){
+		//Only create table if it doesn't exist.
+		if ( get_option( 'wivm_version' ) == false ) {
+			global $wpdb;
+
+			$table_name =  $wpdb->prefix . 'volunteer_emails';
+
+			$sql = "CREATE TABLE $table_name (
+				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				user_id bigint(20) NOT NULL,
+				post_id bigint(20) NOT NULL,
+				time datetime NOT NULL,
+				PRIMARY  KEY  (id)
 			);";
 
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -612,8 +612,11 @@ class WI_Volunteer_Management_Admin {
 				<button type="button" class="button button-primary button-large wivm-send-email" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo get_current_user_id(); ?>"><?php _e( 'Send Email', 'wired-impact-volunteer-management' ); ?></button>
 			</div>
 		</div>
-		<div class="volunteer-email-success clear">
+		<div class="volunteer-email-success volunteer-email-response-message clear">
 			<p><strong><?php _e( 'Your email has been sent!', 'wired-impact-volunteer-management' ); ?></strong></p>
+		</div>
+		<div class="volunteer-email-failure volunteer-email-response-message clear">
+			<p><strong><?php _e( 'Error sending the email. Try again later.', 'wired-impact-volunteer-management' ); ?></strong></p>
 		</div>
 
 		<div class="rsvp-list-table clear">
@@ -658,7 +661,7 @@ class WI_Volunteer_Management_Admin {
 	 *
 	 * @return post_id|bool The post ID if everything worked, false otherwise
 	 */
-	public function process_volunteer_email() {
+	public function send_custom_volunteer_email() {
 
 		$nonce    = $_POST['data']['nonce'];
 		$post_id  = absint( $_POST['data']['post_id'] );
@@ -680,14 +683,18 @@ class WI_Volunteer_Management_Admin {
 		}
 
 		// Get the opportunity data
-		$opp   = new WI_Volunteer_Management_Opportunity( $post_id );
-
-		$email = new WI_Volunteer_Management_Email( $opp );
-		$email->send_custom_volunteer_email( $data_array );
-		$email->store_volunteer_email( $data_array );
-
-		// Return 1 if it worked, false it not.
-		echo 'success';
+		$opp    = new WI_Volunteer_Management_Opportunity( $post_id );
+		$email  = new WI_Volunteer_Management_Email( $opp );
+		$result = $email->send_custom_volunteer_email( $data_array );
+		
+		// Return success if the email processed, failure if not
+		if ( $result ) {
+			// Store the email data in the "volunteer_emails" table
+			$email->store_volunteer_email( $data_array );
+			echo 'success';
+		} else {
+			echo 'failure';
+		}
 
 		die();
 	}
@@ -696,10 +703,10 @@ class WI_Volunteer_Management_Admin {
 	/**
 	 * Display the meta box to output the list of volunteer emails for this opportunity.
 	 *
-	 * @param object $post The volunteer opportunity object.
+	 * @param object $opp The volunteer opportunity object.
 	 */
-	public function display_opportunity_emails_meta_box( $post ) {
-		$opp            = new WI_Volunteer_Management_Opportunity( $post->ID );
+	public function display_opportunity_emails_meta_box( $opp ) {
+		$opp            = new WI_Volunteer_Management_Opportunity( $opp->ID );
 		$emails         = $opp->get_rsvp_emails();
 		$email_count    = count( $emails );
 
@@ -720,7 +727,8 @@ class WI_Volunteer_Management_Admin {
 				foreach ( $emails as $email ) {
 
 					if ( '0' === $email->user_id ) {
-						$user_output = '<em>Automated Reminder Email</em>';
+						// If the 
+						$user_output = sprintf( '<em>%s</em>', __( 'Automated Reminder Email', 'wired-impact-volunteer-management' ) );
 					} else {
 						$user_data = get_userdata( $email->user_id );
 						$user_output = $user_data->display_name;
