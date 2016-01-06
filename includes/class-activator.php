@@ -41,8 +41,8 @@ class WI_Volunteer_Management_Activator {
 		    'volunteer',
 		    __( 'Volunteer', 'wired-impact-volunteer-management' ),
 		    array(
-		        'read'         			=> true,
-		        'serve_as_volunteer' 	=> true //Custom capability
+		        'read'                  => true,
+		        'serve_as_volunteer'    => true //Custom capability
 		    )
 		);
 

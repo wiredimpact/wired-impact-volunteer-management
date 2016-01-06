@@ -73,7 +73,13 @@ class WI_Volunteer_Management {
 
 		$this->load_dependencies();
 		$this->set_locale();
-		$this->define_admin_hooks();
+
+		// Quick admin check and load if needed
+		if ( is_admin() ) {
+			$this->define_admin_hooks();
+		}
+
+		// Load the public hooks
 		$this->define_public_hooks();
 
 	}
@@ -142,7 +148,9 @@ class WI_Volunteer_Management {
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once WIVM_DIR . 'admin/class-admin.php';
+		if ( is_admin() ) {
+			require_once WIVM_DIR . 'admin/class-admin.php';
+		}
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
@@ -183,7 +191,6 @@ class WI_Volunteer_Management {
 
 		$plugin_admin = new WI_Volunteer_Management_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		
 		$this->loader->add_action(   'plugins_loaded',                             $plugin_admin, 'do_upgrades' );
 		$this->loader->add_action(   'admin_enqueue_scripts',                      $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action(   'admin_enqueue_scripts',                      $plugin_admin, 'enqueue_scripts' );
@@ -274,5 +281,5 @@ class WI_Volunteer_Management {
 	public function get_version() {
 		return $this->version;
 	}
-	
+
 } //class WI_Volunteer_Management
