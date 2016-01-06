@@ -613,7 +613,7 @@ class WI_Volunteer_Management_Admin {
 			</div>
 		</div>
 		<div class="volunteer-email-success volunteer-email-response-message clear">
-			<p><strong><?php _e( 'Your email has been sent!', 'wired-impact-volunteer-management' ); ?></strong></p>
+			<p><strong><?php _e( 'Your email has been sent to the volunteers!', 'wired-impact-volunteer-management' ); ?></strong></p>
 		</div>
 		<div class="volunteer-email-failure volunteer-email-response-message clear">
 			<p><strong><?php _e( 'Error sending the email. Try again later.', 'wired-impact-volunteer-management' ); ?></strong></p>
