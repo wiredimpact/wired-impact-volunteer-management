@@ -635,9 +635,7 @@ class WI_Volunteer_Management_Admin {
 	/**
 	 * Displays the meta box for sending custom emails to the signed up volunteers.
 	 * 
-	 * @todo   Use WI_Volunteer_Users_List_Table() object to display this information.
-	 * 
-	 * @param  object $post The volunteer opportunity object.
+	 * @param  object $opp The volunteer opportunity object.
 	 */
 	public function display_opportunity_email_form_meta_box( $opp ){
 
