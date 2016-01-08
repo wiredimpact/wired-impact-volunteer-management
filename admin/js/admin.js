@@ -224,29 +224,6 @@
         var email_editor = $( '.volunteer-email-editor' );
 
         if ( $( email_editor ).exists() ) {
-            // Fadeout the editor on page load so it remains in the DOM
-            email_editor.fadeOut( 1 );
-
-            var $editor_trigger = $( '.open-volunteer-email' ),
-                trigger_text = $editor_trigger.text();
-
-            $editor_trigger.on( 'click', function( event ) {
-                event.preventDefault();
-
-                var $this = $( this );
-
-                if ( $this.is( '.is-open' ) ) {
-                    $this.removeClass( 'is-open' ).text( trigger_text.replace( '\u2013', '\u002B' ) );
-                    email_editor.fadeOut( 1 );
-                } else {
-                    $this.addClass( 'is-open' ).text( trigger_text.replace( '\u002B', '\u2013' ) );
-                    email_editor.fadeIn( 1 );
-
-                    if ( $( '.volunteer-email-response-message' ).is( '.is-open' ) ) {
-                        $( '.volunteer-email-response-message' ).removeClass( 'is-open' ).hide();
-                    }
-                }
-            });
 
             $( '.wivm-send-email' ).on( 'click', function( event ) {
                 event.preventDefault();
@@ -302,25 +279,16 @@
                             },
                         },
                         function( response ) {                          
-                            // Fadeout the editor
-                            email_editor.fadeTo( 300, 0, function() {
-                                // Hide the editor and cleanup the attributes
-                                email_editor.fadeOut( 1 ).removeAttr( 'style' );                            
-                                // Reset the editor trigger link
-                                $editor_trigger.removeClass( 'is-open' ).text( trigger_text.replace( '\u2013', '\u002B' ) );
-                                // Reset the submit button
-                                $this.prop( 'disabled', false ).text( button_text );
+ 
+                            $this.prop( 'disabled', false ).text( button_text );
 
-                                // Fade in the response message
-                                // Success
-                                if ( response == 'success' ) {
-                                    $( '.volunteer-email-success' ).show().fadeTo( 300, 1 ).addClass( 'is-open' );
-                                }
-                                // Failure
-                                else {
-                                    $( '.volunteer-email-failure' ).show().fadeTo( 300, 1 ).addClass( 'is-open' );
-                                }
-                            });
+                            if ( response == 'success' ) {
+                                $( '.volunteer-email-success' ).show().fadeTo( 300, 1 ).addClass( 'is-open' );
+                            }
+                            // Failure
+                            else {
+                                $( '.volunteer-email-failure' ).show().fadeTo( 300, 1 ).addClass( 'is-open' );
+                            }
                         }
                     );
                 }

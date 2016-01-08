@@ -215,7 +215,7 @@ class WI_Volunteer_Management {
 		$this->loader->add_action(   'delete_user',                                $plugin_admin, 'delete_volunteer_rsvps', 10, 2 );
 		$this->loader->add_action(   'admin_notices',                              $plugin_admin, 'show_getting_started_notice' );
 		$this->loader->add_action(   'wp_ajax_wivm_hide_notice',                   $plugin_admin, 'hide_notice' );
-		$this->loader->add_action(   'wp_ajax_wivm_process_email',                 $plugin_admin, 'send_custom_volunteer_email' );
+		$this->loader->add_action(   'wp_ajax_wivm_process_email',                 $plugin_admin, 'process_custom_volunteer_email' );
 
 	}
 

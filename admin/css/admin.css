@@ -82,17 +82,17 @@ p.editor-help {
 	line-height: 2.5;
 }
 
-#volunteer-opportunity-rsvps .open-volunteer-email {
+#volunteer-opportunity-email-form .open-volunteer-email {
 	float: left;
 	cursor: pointer;
 	line-height: 2.5;
 }
 
-#volunteer-opportunity-rsvps .volunteer-email-editor {
-	padding-bottom: 23px;
+#volunteer-opportunity-email-form .volunteer-email-editor {
+	padding: 1em 0;
 }
 
-#volunteer-opportunity-rsvps #wp-volunteer-email-editor-wrap {
+#volunteer-opportunity-email-form #wp-volunteer-email-editor-wrap {
 	margin-bottom: 15px;
 }
 
@@ -132,7 +132,7 @@ p.editor-help {
 }
 
 .volunteer-email-editor .helper-text {
-	margin: 1em 0 0;
+	margin: 0;
 }
 
 .volunteer-email-editor .has-error {
@@ -146,7 +146,7 @@ p.editor-help {
 .volunteer-email-response-message {
 	display: none;
 	opacity: 0;
-	margin: 5px 0 15px;
+	margin-bottom: 15px;
 	padding: 0 12px;
 	-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
@@ -183,6 +183,9 @@ p.editor-help {
 
 #volunteer-opportunity-rsvps .rsvp-list-table {
 	padding: 8px 0 15px 0;
+	max-height: 500px;
+	overflow: auto;
+	overflow-y: auto;
 }
 
 @media only screen and (max-width: 782px) {
@@ -403,6 +406,12 @@ body.post-type-volunteer_opp .wp-pointer-arrow {
 /**
  * Sent Emails Table
  */
+.sent-emails-table {
+	max-height: 412px;
+	overflow: auto;
+	overflow-y: auto;
+}
+
 @media only screen and (max-width: 782px) {
 	.sent-emails-table tr { 
 		display: table-row !important;

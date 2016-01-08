@@ -315,27 +315,36 @@ class WI_Volunteer_Management_Admin {
 	public function add_meta_boxes(){
 		//Opportunity details such as location and time
 		add_meta_box(
-            'volunteer-opportunity-details',						// Unique ID
-            __( 'Volunteer Opportunity Details', 'wired-impact-volunteer-management' ),			// Box title
-            array( $this, 'display_opportunity_details_meta_box' ),	// Content callback
-            'volunteer_opp',                						// Post type
-            'normal'												// Location
-        );
+			'volunteer-opportunity-details',                                            // Unique ID
+			__( 'Volunteer Opportunity Details', 'wired-impact-volunteer-management' ), // Box title
+			array( $this, 'display_opportunity_details_meta_box' ),                     // Content callback
+			'volunteer_opp',                                                            // Post type
+			'normal'                                                                    // Location
+		);
 
-        //Opportunity RSVP details such as who signed up
+		//Opportunity RSVP details such as who signed up
 		add_meta_box(
-            'volunteer-opportunity-rsvps',							// Unique ID
-            __( 'Volunteer Opportunity RSVPs', 'wired-impact-volunteer-management' ), // Box title
-            array( $this, 'display_opportunity_rsvps_meta_box' ),	// Content callback
-            'volunteer_opp',                						// Post type
-            'normal'												// Location
-        );
+			'volunteer-opportunity-rsvps',                                            // Unique ID
+			__( 'Volunteer Opportunity RSVPs', 'wired-impact-volunteer-management' ), // Box title
+			array( $this, 'display_opportunity_rsvps_meta_box' ),                     // Content callback
+			'volunteer_opp',                                                          // Post type
+			'normal'                                                                  // Location
+		);
 
-		//Volunteer RSVP Email details
+		//Volunteer custom email form
 		add_meta_box(
-			'volunteer-opportunity-emails',                                     // Unique ID
-			__( 'Emails to Volunteers', 'wired-impact-volunteer-management' ), // Box title
-			array( $this, 'display_opportunity_emails_meta_box' ),              // Content callback
+			'volunteer-opportunity-email-form',                                // Unique ID
+			__( 'Volunteer Email Form', 'wired-impact-volunteer-management' ), // Box title
+			array( $this, 'display_opportunity_email_form_meta_box' ),         // Content callback
+			'volunteer_opp',                                                   // Post type
+			'normal'                                                           // Location
+		);
+
+		//List of sent custom volunteer emails
+		add_meta_box(
+			'volunteer-opportunity-email-list',                                 // Unique ID
+			__( 'Emails to Volunteers', 'wired-impact-volunteer-management' ),  // Box title
+			array( $this, 'display_opportunity_email_list_meta_box' ),          // Content callback
 			'volunteer_opp',                                                    // Post type
 			'side'                                                              // Location
 		);
@@ -568,8 +577,7 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
-	 * Display the meta box for each volunteer that's signed up for the specific opportunity being viewed
-	 * Also contains a method for sending custom emails to the signed up volunteers.
+	 * Display the meta box for each volunteer that's signed up for the specific opportunity being viewed.
 	 * 
 	 * @todo   Use WI_Volunteer_Users_List_Table() object to display this information.
 	 * 
@@ -582,42 +590,10 @@ class WI_Volunteer_Management_Admin {
 		$open_spots     = $volunteer_opp->get_open_volunteer_spots();
 		$volunteers     = $volunteer_opp->get_all_rsvped_volunteers();
 
-		// Set the editor ID
-		$editor_id      = 'volunteer-email-editor';
-		$content        = get_option( $editor_id );
-
-		// Set the editor options array
-		$editor_options = array(
-			'media_buttons' => false,
-			'textarea_name' => $editor_id,
-			'editor_height' => 230,
-		);
-
 		?>
 
-		<a class="open-volunteer-email">&#43; <?php _e( 'Email the Volunteers', 'wired-impact-volunteer-management' ); ?></a>
 		<span class="num">| <?php echo __( 'Number of Open Spots:', 'wired-impact-volunteer-management' ) . ' ' . $open_spots; ?></span>
 		<span class="num"><?php echo __( 'Number RSVPed:', 'wired-impact-volunteer-management' ) . ' ' . $num_rsvped; ?></span>
-
-		<div class="volunteer-email-editor clear">
-			<p class="helper-text"><?php _e( "Below you can send a custom email to volunteers who signed up for this Opportunity. This is sent to the admins with the volunteers BCC'ed, so you know that the email was sent successfully. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent.", 'wired-impact-volunteer-management' ) ?></p>
-			<div class="volunteer-email-subject-field">
-				<label for="volunteer-email-subject">Email Subject</label>
-				<div class="field">
-					<input type="text" name="volunteer-email-subject" id="volunteer-email-subject" class="regular-text" />
-				</div>
-			</div>
-			<?php wp_editor( $content, $editor_id, $editor_options ); ?>
-			<div class="volunteer-email-footer clear">
-				<button type="button" class="button button-primary button-large wivm-send-email" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo get_current_user_id(); ?>"><?php _e( 'Send Email', 'wired-impact-volunteer-management' ); ?></button>
-			</div>
-		</div>
-		<div class="volunteer-email-success volunteer-email-response-message clear">
-			<p><strong><?php _e( 'Your email has been sent to the volunteers!', 'wired-impact-volunteer-management' ); ?></strong></p>
-		</div>
-		<div class="volunteer-email-failure volunteer-email-response-message clear">
-			<p><strong><?php _e( 'Error sending the email. Try again later.', 'wired-impact-volunteer-management' ); ?></strong></p>
-		</div>
 
 		<div class="rsvp-list-table clear">
 			<table class="wp-list-table widefat fixed striped users">
@@ -657,11 +633,54 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
-	 * Process the AJAX request to send out the custom volunteer email.
-	 *
-	 * @return post_id|bool The post ID if everything worked, false otherwise
+	 * Displays the meta box for sending custom emails to the signed up volunteers.
+	 * 
+	 * @todo   Use WI_Volunteer_Users_List_Table() object to display this information.
+	 * 
+	 * @param  object $post The volunteer opportunity object.
 	 */
-	public function send_custom_volunteer_email() {
+	public function display_opportunity_email_form_meta_box( $opp ){
+
+		// Set the editor ID
+		$editor_id      = 'volunteer-email-editor';
+		$content        = get_option( $editor_id );
+
+		// Set the editor options array
+		$editor_options = array(
+			'media_buttons' => false,
+			'textarea_name' => $editor_id,
+			'editor_height' => 150,
+		);
+
+		?>
+
+		<div class="volunteer-email-editor clear">
+			<div class="volunteer-email-success volunteer-email-response-message clear">
+				<p><strong><?php _e( 'Your email has been sent to the volunteers!', 'wired-impact-volunteer-management' ); ?></strong></p>
+			</div>
+			<div class="volunteer-email-failure volunteer-email-response-message clear">
+				<p><strong><?php _e( 'Error sending the email. Try again later.', 'wired-impact-volunteer-management' ); ?></strong></p>
+			</div>
+			<p class="helper-text"><?php _e( "Below you can send a custom email to volunteers who signed up for this Opportunity. This is sent to the admins with the volunteers BCC'ed, so you know that the email was sent successfully. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent.", 'wired-impact-volunteer-management' ) ?></p>
+			<div class="volunteer-email-subject-field">
+				<label for="volunteer-email-subject">Email Subject</label>
+				<div class="field">
+					<input type="text" name="volunteer-email-subject" id="volunteer-email-subject" class="regular-text" />
+				</div>
+			</div>
+			<?php wp_editor( $content, $editor_id, $editor_options ); ?>
+			<div class="volunteer-email-footer clear">
+				<button type="button" class="button button-primary button-large wivm-send-email" data-post-id="<?php echo $opp->ID; ?>" data-user-id="<?php echo get_current_user_id(); ?>"><?php _e( 'Send Email', 'wired-impact-volunteer-management' ); ?></button>
+			</div>
+		</div>
+
+		<?php
+	}
+
+	/**
+	 * Process the AJAX request to send out the custom volunteer email.
+	 */
+	public function process_custom_volunteer_email() {
 
 		$nonce    = $_POST['data']['nonce'];
 		$post_id  = absint( $_POST['data']['post_id'] );
@@ -705,7 +724,7 @@ class WI_Volunteer_Management_Admin {
 	 *
 	 * @param object $opp The volunteer opportunity object.
 	 */
-	public function display_opportunity_emails_meta_box( $opp ) {
+	public function display_opportunity_email_list_meta_box( $opp ) {
 		$opp            = new WI_Volunteer_Management_Opportunity( $opp->ID );
 		$emails         = $opp->get_rsvp_emails();
 		$email_count    = count( $emails );
