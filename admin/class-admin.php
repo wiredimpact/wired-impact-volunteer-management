@@ -333,20 +333,20 @@ class WI_Volunteer_Management_Admin {
 
 		//Volunteer custom email form
 		add_meta_box(
-			'volunteer-opportunity-email-form',                                // Unique ID
-			__( 'Volunteer Email Form', 'wired-impact-volunteer-management' ), // Box title
-			array( $this, 'display_opportunity_email_form_meta_box' ),         // Content callback
-			'volunteer_opp',                                                   // Post type
-			'normal'                                                           // Location
+			'volunteer-opportunity-email-form',                                 // Unique ID
+			__( 'Email Your Volunteers', 'wired-impact-volunteer-management' ), // Box title
+			array( $this, 'display_opportunity_email_form_meta_box' ),          // Content callback
+			'volunteer_opp',                                                    // Post type
+			'normal'                                                            // Location
 		);
 
 		//List of sent custom volunteer emails
 		add_meta_box(
-			'volunteer-opportunity-email-list',                                 // Unique ID
-			__( 'Emails to Volunteers', 'wired-impact-volunteer-management' ),  // Box title
-			array( $this, 'display_opportunity_email_list_meta_box' ),          // Content callback
-			'volunteer_opp',                                                    // Post type
-			'side'                                                              // Location
+			'volunteer-opportunity-email-list',                                // Unique ID
+			__( 'Emails to Volunteers', 'wired-impact-volunteer-management' ), // Box title
+			array( $this, 'display_opportunity_email_list_meta_box' ),         // Content callback
+			'volunteer_opp',                                                   // Post type
+			'side'                                                             // Location
 		);
 	}
 
@@ -592,8 +592,8 @@ class WI_Volunteer_Management_Admin {
 
 		?>
 
-		<span class="num">| <?php echo __( 'Number of Open Spots:', 'wired-impact-volunteer-management' ) . ' ' . $open_spots; ?></span>
-		<span class="num"><?php echo __( 'Number RSVPed:', 'wired-impact-volunteer-management' ) . ' ' . $num_rsvped; ?></span>
+		<span class="num">| <?php printf( __( 'Number of Open Spots: %s', 'wired-impact-volunteer-management' ), $open_spots ); ?></span>
+		<span class="num"><?php printf( __( 'Number RSVPed: %d', 'wired-impact-volunteer-management' ), $num_rsvped ); ?></span>
 
 		<div class="rsvp-list-table clear">
 			<table class="wp-list-table widefat fixed striped users">
@@ -659,7 +659,7 @@ class WI_Volunteer_Management_Admin {
 			<div class="volunteer-email-failure volunteer-email-response-message clear">
 				<p><strong><?php _e( 'Error sending the email. Try again later.', 'wired-impact-volunteer-management' ); ?></strong></p>
 			</div>
-			<p class="helper-text"><?php _e( "Below you can send a custom email to volunteers who signed up for this Opportunity. This is sent to the admins with the volunteers BCC'ed, so you know that the email was sent successfully. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent.", 'wired-impact-volunteer-management' ) ?></p>
+			<p class="helper-text"><?php _e( "Below you can send a custom email to all volunteers who signed up for this Opportunity. This is sent to the admins with the volunteers BCC'ed, so you know that the email was sent successfully. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent.", 'wired-impact-volunteer-management' ) ?></p>
 			<div class="volunteer-email-subject-field">
 				<label for="volunteer-email-subject">Email Subject</label>
 				<div class="field">
@@ -769,7 +769,7 @@ class WI_Volunteer_Management_Admin {
 			<?php
 			echo '</table>';
 		} else {
-			printf( '<p>%s</p>', __( "No emails have been sent yet. We'll list them here when we send automated reminders and when you send custom emails to volunteers.", 'wired-impact-volunteer-management' ) );
+			printf( '<p>%s</p>', __( 'No emails have been sent yet. We\'ll list them here when we send automated reminders and when you send custom emails to volunteers.', 'wired-impact-volunteer-management' ) );
 		}
 	}
 

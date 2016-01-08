@@ -282,6 +282,11 @@
  
                             $this.prop( 'disabled', false ).text( button_text );
 
+                            // Hide any previously open response messages
+                            if ( $( '.volunteer-email-response-message' ).is( '.is-open' ) ) {
+                                $( '.volunteer-email-response-message' ).hide().removeClass( 'is-open' )
+                            }
+
                             if ( response == 'success' ) {
                                 $( '.volunteer-email-success' ).show().fadeTo( 300, 1 ).addClass( 'is-open' );
                             }
