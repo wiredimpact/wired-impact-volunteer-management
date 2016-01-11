@@ -201,7 +201,7 @@ class WI_Volunteer_Management_Form {
 	 * @param string       $label The label to show for the variable.
 	 * @param array $attr  Extra class to add to the input field, Description for the field, Placeholder for field
 	 */
-	public function wysiwyg_editor( $var, $label, $attr = array() ){
+	public function wysiwyg_editor( $var, $label, $attr = array() ) {
 		$attr = wp_parse_args( $attr, array(
 			'class'       => '',
 			'description' => '',
@@ -213,11 +213,11 @@ class WI_Volunteer_Management_Form {
 			$this->label( $label, array( 'for' => $var . '-editor' ) );
 			echo '<td>';
 
-				wp_editor( $content, $var . '-editor',array(
+				wp_editor( $content, $var . '-editor', array(
 					'media_buttons' => false,
 					'textarea_name' => esc_attr( $this->option_name ) . '[' . esc_attr( $var ) . ']',
-					'textarea_rows' => 20,
-					'editor_css'	=> $attr['class']
+					'editor_height' => 425,
+					'editor_css'    => $attr['class']
 				));
 				if( $attr['description'] ) echo '<p class="description">' . $attr['description'] . '</p>';
 

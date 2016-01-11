@@ -10,7 +10,7 @@
 
 .wivmtab {
 	display: none;
-  	margin-top: 15px;
+	margin-top: 15px;
 }
 
 .wivmtab.active {
@@ -72,14 +72,104 @@ p.editor-help {
 .ui-timepicker-div.ui-timepicker-oneLine .ui_tpicker_unit_hide,
 .ui-timepicker-div.ui-timepicker-oneLine .ui_tpicker_unit_hide:before{ display: none; }
 
-#volunteer-opportunity-rsvps span.num {
+#volunteer-opportunity-rsvps .num {
 	float: right;
 	display: inline-block;
-	margin-right: 2px;
-	color: #777;
+	margin: 2px 2px 0 0;
+	color: #555;
 	font-size: 12px;
-	line-height: 30px;
 	font-style: italic;
+	line-height: 2.5;
+}
+
+#volunteer-opportunity-email-form .open-volunteer-email {
+	float: left;
+	cursor: pointer;
+	line-height: 2.5;
+}
+
+#volunteer-opportunity-email-form .volunteer-email-editor {
+	padding: 1em 0;
+}
+
+#volunteer-opportunity-email-form #wp-volunteer-email-editor-wrap {
+	margin-bottom: 15px;
+}
+
+.volunteer-email-subject-field {
+	display: table;
+	padding-top: 25px;
+}
+
+.volunteer-email-subject-field label,
+.volunteer-email-subject-field .field {
+	display: table-cell;
+}
+
+.volunteer-email-subject-field label {
+	width: 195px;
+}
+
+@media only screen and (max-width: 782px) {
+	.volunteer-email-subject-field,
+	.volunteer-email-subject-field label,
+	.volunteer-email-subject-field .field {
+		display: block;
+	}
+
+	.volunteer-email-subject-field {
+		margin-bottom: 15px;
+	}
+
+	.volunteer-email-subject-field label {
+		margin-bottom: 10px;
+	}
+
+	.volunteer-email-subject-field .field,
+	.volunteer-email-subject-field input {
+		width: 100%;
+	}
+}
+
+.volunteer-email-editor .helper-text {
+	margin: 0;
+}
+
+.volunteer-email-editor .has-error {
+	border-color: #fb3048;
+}
+
+.volunteer-email-editor .volunteer-email-footer .button {
+	float: right;
+}
+
+.volunteer-email-response-message {
+	display: none;
+	opacity: 0;
+	margin-bottom: 15px;
+	padding: 0 12px;
+	-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+}
+
+.volunteer-email-success {
+	border-left: 4px solid #46b450;
+}
+
+.volunteer-email-failure {
+	border-left: 4px solid #dc3232;
+}
+
+#volunteer-opportunity-emails th {
+	font-size: 13px;
+}
+
+#volunteer-opportunity-emails th:first-child {
+	width: 60%;
+}
+
+#volunteer-opportunity-emails th:last-child {
+	width: 40%;
 }
 
 /**
@@ -89,6 +179,46 @@ p.editor-help {
   float: left;
   margin-right: 10px;
   margin-top: 1px;
+}
+
+#volunteer-opportunity-rsvps .rsvp-list-table {
+	padding: 8px 0 15px 0;
+	max-height: 500px;
+	overflow: auto;
+	overflow-y: auto;
+}
+
+@media only screen and (max-width: 782px) {
+	.rsvp-list-table thead tr,
+	.rsvp-list-table tfoot tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	.rsvp-list-table tr { 
+		display: block;
+	}
+
+	.rsvp-list-table td { 
+		padding-left: 35%; 
+		border: none;
+		border-bottom: 1px solid #e5e5e5;
+		position: relative;
+	}
+
+	.rsvp-list-table td::before {
+		font-weight: bold;
+		width: 32% !important;
+	}
+
+	.rsvp-list-table .remove-rsvp-column::before {
+		padding-top: 9px;
+	}
+
+	.rsvp-list-table tr:last-child td:last-child {
+		border: none;
+	}
 }
 
 /**
@@ -250,35 +380,60 @@ body.post-type-volunteer_opp .wp-pointer-arrow {
 }
 
 .wi-volunteer .today {
-    font-size: 15px;
-    margin: 20px 0;
-    position: relative;
-    text-align: center;
-    z-index: 1;  
-    color: #999;  
+	font-size: 15px;
+	margin: 20px 0;
+	position: relative;
+	text-align: center;
+	z-index: 1;  
+	color: #999;  
 }
 
 .wi-volunteer .today:before {
-    border-top: 1px solid #999;
-    content:"";
-    margin: 0 auto;
-    position: absolute;
-    top: 11px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 95%;
-    z-index: -1;
+	border-top: 1px solid #999;
+	content:"";
+	margin: 0 auto;
+	position: absolute;
+	top: 11px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 95%;
+	z-index: -1;
 }
 
 .wi-volunteer .today span { background: #f1f1f1; padding: 0 10px; }
 
+/**
+ * Sent Emails Table
+ */
+.sent-emails-table {
+	max-height: 412px;
+	overflow: auto;
+	overflow-y: auto;
+}
+
+@media only screen and (max-width: 782px) {
+	.sent-emails-table tr { 
+		display: table-row !important;
+	}
+
+	.sent-emails-table td { 
+		display: table-cell !important;
+	}
+
+	.sent-emails-table td::before {
+		display: none !important;
+	}
+}
+
+/**
+ * Globals
+ */
 .clear:before,
 .clear:after {
 	content: " ";
 	display: table;
 }
-
 
 .clear:after {
 	clear: both;

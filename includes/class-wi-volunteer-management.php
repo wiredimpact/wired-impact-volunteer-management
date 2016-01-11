@@ -69,11 +69,17 @@ class WI_Volunteer_Management {
 	public function __construct() {
 
 		$this->plugin_name = 'wired-impact-volunteer-management';
-		$this->version = '0.4.2';
+		$this->version = '0.5.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
-		$this->define_admin_hooks();
+
+		// Quick admin check and load if needed
+		if ( is_admin() ) {
+			$this->define_admin_hooks();
+		}
+
+		// Load the public hooks
 		$this->define_public_hooks();
 
 	}
@@ -142,7 +148,9 @@ class WI_Volunteer_Management {
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once WIVM_DIR . 'admin/class-admin.php';
+		if ( is_admin() ) {
+			require_once WIVM_DIR . 'admin/class-admin.php';
+		}
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
@@ -168,7 +176,7 @@ class WI_Volunteer_Management {
 		$plugin_i18n = new WI_Volunteer_Management_i18n();
 		$plugin_i18n->set_domain( $this->get_plugin_name() );
 
-		$this->loader->add_action( 		'plugins_loaded', 							$plugin_i18n, 'load_plugin_textdomain' );
+		$this->loader->add_action(   'plugins_loaded',                             $plugin_i18n, 'load_plugin_textdomain' );
 
 	}
 
@@ -183,29 +191,31 @@ class WI_Volunteer_Management {
 
 		$plugin_admin = new WI_Volunteer_Management_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 		'admin_enqueue_scripts', 					$plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 		'admin_enqueue_scripts', 					$plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 		'admin_menu', 								$plugin_admin, 'register_settings_page' );
-		$this->loader->add_action( 		'admin_init', 								$plugin_admin, 'register_settings' );
-		$this->loader->add_action(		'edit_form_after_editor', 					$plugin_admin, 'show_opp_editor_description' );
-		$this->loader->add_action( 		'add_meta_boxes', 							$plugin_admin, 'add_meta_boxes' );
-		$this->loader->add_action( 		'save_post', 								$plugin_admin, 'save_volunteer_opp_meta', 10, 2 );
-		$this->loader->add_action(		'show_user_profile', 						$plugin_admin, 'show_extra_profile_fields' );
-		$this->loader->add_action(		'edit_user_profile', 						$plugin_admin, 'show_extra_profile_fields' );
-		$this->loader->add_action(		'personal_options_update', 					$plugin_admin, 'save_extra_profile_fields' );
-		$this->loader->add_action(		'edit_user_profile_update', 				$plugin_admin, 'save_extra_profile_fields' );
-		$this->loader->add_filter( 		'manage_edit-volunteer_opp_columns',		$plugin_admin, 'manage_opp_columns' );
-		$this->loader->add_filter( 		'manage_edit-volunteer_opp_sortable_columns', $plugin_admin, 'sort_opp_columns' );
-		$this->loader->add_action( 		'manage_volunteer_opp_posts_custom_column', $plugin_admin, 'show_opp_columns', 10, 2 );
-		$this->loader->add_filter( 		'parse_query',								$plugin_admin, 'edit_opps_query' );
-		$this->loader->add_action( 		'views_edit-volunteer_opp',					$plugin_admin, 'set_opp_views' );
-		$this->loader->add_action( 		'load-edit.php',							$plugin_admin, 'load_opp_sort' );
-		$this->loader->add_action( 		'wp_ajax_wivm_remove_rsvp',					$plugin_admin, 'remove_user_opp_rsvp' );
-		$this->loader->add_action( 		'save_post',								$plugin_admin, 'schedule_auto_email_reminder', 99, 2 );
-		$this->loader->add_action( 		'send_auto_email_reminders',				$plugin_admin, 'send_email_reminder' );
-		$this->loader->add_action( 		'delete_user', 								$plugin_admin, 'delete_volunteer_rsvps', 10, 2 );
-		$this->loader->add_action( 		'admin_notices', 							$plugin_admin, 'show_getting_started_notice' );
-		$this->loader->add_action( 		'wp_ajax_wivm_hide_notice', 				$plugin_admin, 'hide_notice' );
+		$this->loader->add_action(   'plugins_loaded',                             $plugin_admin, 'do_upgrades' );
+		$this->loader->add_action(   'admin_enqueue_scripts',                      $plugin_admin, 'enqueue_styles' );
+		$this->loader->add_action(   'admin_enqueue_scripts',                      $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action(   'admin_menu',                                 $plugin_admin, 'register_settings_page' );
+		$this->loader->add_action(   'admin_init',                                 $plugin_admin, 'register_settings' );
+		$this->loader->add_action(   'edit_form_after_editor',                     $plugin_admin, 'show_opp_editor_description' );
+		$this->loader->add_action(   'add_meta_boxes',                             $plugin_admin, 'add_meta_boxes' );
+		$this->loader->add_action(   'save_post',                                  $plugin_admin, 'save_volunteer_opp_meta', 10, 2 );
+		$this->loader->add_action(   'show_user_profile',                          $plugin_admin, 'show_extra_profile_fields' );
+		$this->loader->add_action(   'edit_user_profile',                          $plugin_admin, 'show_extra_profile_fields' );
+		$this->loader->add_action(   'personal_options_update',                    $plugin_admin, 'save_extra_profile_fields' );
+		$this->loader->add_action(   'edit_user_profile_update',                   $plugin_admin, 'save_extra_profile_fields' );
+		$this->loader->add_filter(   'manage_edit-volunteer_opp_columns',          $plugin_admin, 'manage_opp_columns' );
+		$this->loader->add_filter(   'manage_edit-volunteer_opp_sortable_columns', $plugin_admin, 'sort_opp_columns' );
+		$this->loader->add_action(   'manage_volunteer_opp_posts_custom_column',   $plugin_admin, 'show_opp_columns', 10, 2 );
+		$this->loader->add_filter(   'parse_query',                                $plugin_admin, 'edit_opps_query' );
+		$this->loader->add_action(   'views_edit-volunteer_opp',                   $plugin_admin, 'set_opp_views' );
+		$this->loader->add_action(   'load-edit.php',                              $plugin_admin, 'load_opp_sort' );
+		$this->loader->add_action(   'wp_ajax_wivm_remove_rsvp',                   $plugin_admin, 'remove_user_opp_rsvp' );
+		$this->loader->add_action(   'save_post',                                  $plugin_admin, 'schedule_auto_email_reminder', 99, 2 );
+		$this->loader->add_action(   'send_auto_email_reminders',                  $plugin_admin, 'send_email_reminder' );
+		$this->loader->add_action(   'delete_user',                                $plugin_admin, 'delete_volunteer_rsvps', 10, 2 );
+		$this->loader->add_action(   'admin_notices',                              $plugin_admin, 'show_getting_started_notice' );
+		$this->loader->add_action(   'wp_ajax_wivm_hide_notice',                   $plugin_admin, 'hide_notice' );
+		$this->loader->add_action(   'wp_ajax_wivm_process_email',                 $plugin_admin, 'process_custom_volunteer_email' );
 
 	}
 
@@ -220,16 +230,16 @@ class WI_Volunteer_Management {
 
 		$plugin_public = new WI_Volunteer_Management_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 		'wp_enqueue_scripts', 			$plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 		'wp_enqueue_scripts', 			$plugin_public, 'enqueue_scripts' );
-		$this->loader->add_action( 		'init', 						$plugin_public, 'register_post_types' );
-		$this->loader->add_shortcode( 	'one_time_volunteer_opps', 		$plugin_public, 'display_one_time_volunteer_opps' );
-		$this->loader->add_shortcode( 	'flexible_volunteer_opps', 		$plugin_public, 'display_flexible_volunteer_opps' );
-		$this->loader->add_filter( 		'wp_trim_words', 				$plugin_public, 'always_show_read_more' );
-		$this->loader->add_filter( 		'excerpt_more', 				$plugin_public, 'hide_default_read_more', 11 );
-		$this->loader->add_filter( 		'the_content', 					$plugin_public, 'show_meta_form_single' );
-		$this->loader->add_action( 		'wp_ajax_wivm_sign_up', 		$plugin_public, 'process_volunteer_sign_up' );
- 		$this->loader->add_action( 		'wp_ajax_nopriv_wivm_sign_up', 	$plugin_public, 'process_volunteer_sign_up' );
+		$this->loader->add_action(      'wp_enqueue_scripts',            $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action(      'wp_enqueue_scripts',            $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action(      'init',                          $plugin_public, 'register_post_types' );
+		$this->loader->add_shortcode(   'one_time_volunteer_opps',       $plugin_public, 'display_one_time_volunteer_opps' );
+		$this->loader->add_shortcode(   'flexible_volunteer_opps',       $plugin_public, 'display_flexible_volunteer_opps' );
+		$this->loader->add_filter(      'wp_trim_words',                 $plugin_public, 'always_show_read_more' );
+		$this->loader->add_filter(      'excerpt_more',                  $plugin_public, 'hide_default_read_more', 11 );
+		$this->loader->add_filter(      'the_content',                   $plugin_public, 'show_meta_form_single' );
+		$this->loader->add_action(      'wp_ajax_wivm_sign_up',          $plugin_public, 'process_volunteer_sign_up' );
+		$this->loader->add_action(      'wp_ajax_nopriv_wivm_sign_up',   $plugin_public, 'process_volunteer_sign_up' );
 	}
 
 	/**
@@ -271,5 +281,5 @@ class WI_Volunteer_Management {
 	public function get_version() {
 		return $this->version;
 	}
-	
+
 } //class WI_Volunteer_Management

@@ -326,6 +326,8 @@ class WI_Volunteer_Management_Public {
 			//If the person hadn't already RSVPed then send out the signup emails.
 			if( $rsvp->rsvped == true ){
 				$email 	= new WI_Volunteer_Management_Email( $opp, $user );
+
+
 				$email->send_volunteer_signup_email();
 				$email->send_admin_signup_email();
 				$result = 'rsvped';
@@ -339,7 +341,7 @@ class WI_Volunteer_Management_Public {
 		else {
 			$result = 'rsvp_closed';
 		}
-		
+
 		//Return a message which tells us what messages to show on the frontend
  		echo $result; 
  		

@@ -55,6 +55,85 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
+	 * Upgrade the database when needed for volunteer management.
+	 */
+	public function do_upgrades() {
+
+		// For new installs add both the RSVP and emails tables.
+		if ( get_option( 'wivm_version' ) == false && get_option( 'volunteer_opp_rsvp_db_version' ) == false ) {
+
+			$this->create_rsvp_db_table();
+			$this->create_volunteer_email_table();
+
+		}
+
+		// Upgrade existing installs which have the RSVP table, but not the email table.
+		if ( get_option( 'volunteer_opp_rsvp_db_version' ) && get_option( 'wivm_version' ) == false ) {
+
+			delete_option( 'volunteer_opp_rsvp_db_version' );
+			$this->create_volunteer_email_table();
+
+		}
+
+		update_option( 'wivm_version', $this->version );
+	}
+
+	/*
+     * Create the database table that will hold our volunteer opportunity RSVP information.
+     * 
+     * We create a database table that will hold our volunteer opportunity RSVP information.
+     * We check first to make sure the table doesn't exist by seeing if the
+     * version exists in the options table.
+     */
+	public function create_rsvp_db_table(){
+		//Only create table if it doesn't exist.
+		if ( get_option( 'wivm_version' ) == false ) {
+			global $wpdb;
+
+			$table_name =  $wpdb->prefix . 'volunteer_rsvps';
+
+			$sql = "CREATE TABLE $table_name (
+				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				user_id bigint(20) NOT NULL,
+				post_id bigint(20) NOT NULL,
+				rsvp tinyint(2) NOT NULL,
+				time datetime NOT NULL,
+				PRIMARY  KEY  (id),
+				UNIQUE KEY (user_id, post_id)
+			);";
+
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			dbDelta( $sql );
+		}
+	}
+
+	/**
+     * Create the database table that will hold the sent volunteer emails for each opportunity.
+     *
+     * We check first to make sure the table doesn't exist by seeing if the
+     * version exists in the options table.
+     */
+	public function create_volunteer_email_table(){
+		//Only create table if it doesn't exist.
+		if ( get_option( 'wivm_version' ) == false ) {
+			global $wpdb;
+
+			$table_name =  $wpdb->prefix . 'volunteer_emails';
+
+			$sql = "CREATE TABLE $table_name (
+				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				user_id bigint(20) NOT NULL,
+				post_id bigint(20) NOT NULL,
+				time datetime NOT NULL,
+				PRIMARY  KEY  (id)
+			);";
+
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			dbDelta( $sql );
+		}
+	}
+
+	/**
 	 * Register the stylesheets for the admin area.
 	 */
 	public function enqueue_styles() {
@@ -87,12 +166,14 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function get_localized_js_data(){
 		$data = array(
-			'remove_rsvp_pointer_text' 	=> '<h3>' . __( 'Are You Sure?', 'wired-impact-volunteer-management' ) . '</h3><p>' . __( 'Are you sure you want to remove their RSVP for this opportunity?', 'wired-impact-volunteer-management' ) . '</p>',
-			'remove_rsvp_cancel_text' 	=> __( 'Cancel', 'wired-impact-volunteer-management' ),
-			'remove_rsvp_confirm_text' 	=> __( 'Remove RSVP', 'wired-impact-volunteer-management' ),
-			'remove_rsvp_error_text' 	=> __( 'Error, try again later.', 'wired-impact-volunteer-management' ),
-			'remove_user_rsvp_nonce' 	=> wp_create_nonce( 'remove_user_rsvp_nonce' ),
-			'hide_notice_nonce'			=> wp_create_nonce( 'hide_notice_nonce' ),
+			'remove_rsvp_pointer_text'     => '<h3>' . __( 'Are You Sure?', 'wired-impact-volunteer-management' ) . '</h3><p>' . __( 'Are you sure you want to remove their RSVP for this opportunity?', 'wired-impact-volunteer-management' ) . '</p>',
+			'remove_rsvp_cancel_text'      => __( 'Cancel', 'wired-impact-volunteer-management' ),
+			'remove_rsvp_confirm_text'     => __( 'Remove RSVP', 'wired-impact-volunteer-management' ),
+			'remove_rsvp_error_text'       => __( 'Error, try again later.', 'wired-impact-volunteer-management' ),
+			'volunteer_email_error_text'   => __( 'Error, try again later.', 'wired-impact-volunteer-management' ),
+			'remove_user_rsvp_nonce'       => wp_create_nonce( 'remove_user_rsvp_nonce' ),
+			'hide_notice_nonce'            => wp_create_nonce( 'hide_notice_nonce' ),
+			'volunteer_email_nonce'        => wp_create_nonce( 'volunteer_email_nonce' )
 		);
 
 		return $data;
@@ -234,21 +315,39 @@ class WI_Volunteer_Management_Admin {
 	public function add_meta_boxes(){
 		//Opportunity details such as location and time
 		add_meta_box(
-            'volunteer-opportunity-details',						// Unique ID
-            __( 'Volunteer Opportunity Details', 'wired-impact-volunteer-management' ),			// Box title
-            array( $this, 'display_opportunity_details_meta_box' ),	// Content callback
-            'volunteer_opp',                						// Post type
-            'normal'												// Location
-        );
+			'volunteer-opportunity-details',                                            // Unique ID
+			__( 'Volunteer Opportunity Details', 'wired-impact-volunteer-management' ), // Box title
+			array( $this, 'display_opportunity_details_meta_box' ),                     // Content callback
+			'volunteer_opp',                                                            // Post type
+			'normal'                                                                    // Location
+		);
 
-        //Opportunity RSVP details such as who signed up
+		//Opportunity RSVP details such as who signed up
 		add_meta_box(
-            'volunteer-opportunity-rsvps',							// Unique ID
-            __( 'Volunteer Opportunity RSVPs', 'wired-impact-volunteer-management' ),			// Box title
-            array( $this, 'display_opportunity_rsvps_meta_box' ),	// Content callback
-            'volunteer_opp',                						// Post type
-            'normal'												// Location
-        );
+			'volunteer-opportunity-rsvps',                                            // Unique ID
+			__( 'Volunteer Opportunity RSVPs', 'wired-impact-volunteer-management' ), // Box title
+			array( $this, 'display_opportunity_rsvps_meta_box' ),                     // Content callback
+			'volunteer_opp',                                                          // Post type
+			'normal'                                                                  // Location
+		);
+
+		//Volunteer custom email form
+		add_meta_box(
+			'volunteer-opportunity-email-form',                                 // Unique ID
+			__( 'Email Your Volunteers', 'wired-impact-volunteer-management' ), // Box title
+			array( $this, 'display_opportunity_email_form_meta_box' ),          // Content callback
+			'volunteer_opp',                                                    // Post type
+			'normal'                                                            // Location
+		);
+
+		//List of sent custom volunteer emails
+		add_meta_box(
+			'volunteer-opportunity-email-list',                                // Unique ID
+			__( 'Emails to Volunteers', 'wired-impact-volunteer-management' ), // Box title
+			array( $this, 'display_opportunity_email_list_meta_box' ),         // Content callback
+			'volunteer_opp',                                                   // Post type
+			'side'                                                             // Location
+		);
 	}
 
 	/**
@@ -322,8 +421,8 @@ class WI_Volunteer_Management_Admin {
 		  <tr>
 		    <td><?php _e( 'One-Time Opportunity?', 'wired-impact-volunteer-management' ); ?></td>
 		    <td>
-		    		<input type="checkbox" id="one-time-opportunity" name="one-time-opportunity" tabindex="90" value="1" <?php checked( 1, $volunteer_opp->opp_meta['one_time_opp'] ); ?> />
-		    		<label for="one-time-opportunity"><?php _e( 'This is a one-time opportunity at a fixed date and time.', 'wired-impact-volunteer-management' ); ?></label>
+		    	<input type="checkbox" id="one-time-opportunity" name="one-time-opportunity" tabindex="90" value="1" <?php checked( 1, $volunteer_opp->opp_meta['one_time_opp'] ); ?> />
+		    	<label for="one-time-opportunity"><?php _e( 'This is a one-time opportunity at a fixed date and time.', 'wired-impact-volunteer-management' ); ?></label>
 		    </td>
 		  </tr>
 
@@ -353,8 +452,8 @@ class WI_Volunteer_Management_Admin {
 		  <tr>
 		    <td><?php _e( 'Is There a Volunteer Limit?', 'wired-impact-volunteer-management' ); ?></td>
 		    <td>
-		    		<input type="checkbox" id="has-volunteer-limit" name="has-volunteer-limit" tabindex="130" value="1" <?php checked( 1, $volunteer_opp->opp_meta['has_volunteer_limit'] ); ?> />
-		    		<label for="has-volunteer-limit"><?php _e( 'Only a fixed number of people can participate in this volunteer opportunity.', 'wired-impact-volunteer-management' ); ?></label>
+		    	<input type="checkbox" id="has-volunteer-limit" name="has-volunteer-limit" tabindex="130" value="1" <?php checked( 1, $volunteer_opp->opp_meta['has_volunteer_limit'] ); ?> />
+		    	<label for="has-volunteer-limit"><?php _e( 'Only a fixed number of people can participate in this volunteer opportunity.', 'wired-impact-volunteer-management' ); ?></label>
 		    </td>
 		  </tr>
 
@@ -486,48 +585,192 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function display_opportunity_rsvps_meta_box( $post ){
 
-		$volunteer_opp 	= new WI_Volunteer_Management_Opportunity( $post->ID );
-		$num_rsvped 	= $volunteer_opp->get_number_rsvps();
-		$open_spots 	= $volunteer_opp->get_open_volunteer_spots();
-		$volunteers 	= $volunteer_opp->get_all_rsvped_volunteers();
+		$volunteer_opp  = new WI_Volunteer_Management_Opportunity( $post->ID );
+		$num_rsvped     = $volunteer_opp->get_number_rsvps();
+		$open_spots     = $volunteer_opp->get_open_volunteer_spots();
+		$volunteers     = $volunteer_opp->get_all_rsvped_volunteers();
+
 		?>
 
-		<span class="num">| <?php echo __( 'Number of Open Spots:', 'wired-impact-volunteer-management' ) . ' ' . $open_spots; ?></span>
-		<span class="num"><?php echo __( 'Number RSVPed:', 'wired-impact-volunteer-management' ) . ' ' . $num_rsvped; ?></span>
-		<table class="wp-list-table widefat fixed striped users">
-			<thead>
-				<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
-				<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
-				<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
-				<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
-			</thead>
+		<span class="num">| <?php printf( __( 'Number of Open Spots: %s', 'wired-impact-volunteer-management' ), $open_spots ); ?></span>
+		<span class="num"><?php printf( __( 'Number RSVPed: %d', 'wired-impact-volunteer-management' ), $num_rsvped ); ?></span>
 
-			<?php if( !empty( $volunteers ) ): foreach( $volunteers as $volunteer ): ?>
+		<div class="rsvp-list-table clear">
+			<table class="wp-list-table widefat fixed striped users">
+				<thead>
+					<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
+					<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
+					<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
+					<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
+				</thead>
 
-				<tr>
-					<td><a href="<?php echo $volunteer->get_admin_url(); ?>"><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></a></td>
-					<td><?php echo $volunteer->meta['email']; ?></td>
-					<td><?php echo $volunteer->meta['phone']; ?></td>
-					<td><a href="#remove-rsvp" class="button remove-rsvp" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo $volunteer->ID; ?>"><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></a></td>
-				</tr>
+				<?php if( !empty( $volunteers ) ): foreach( $volunteers as $volunteer ): ?>
 
-			<?php endforeach; else: ?>
+					<tr>
+						<td data-colname="<?php _e( 'Name', 'wired-impact-volunteer-management' ); ?>"><a href="<?php echo $volunteer->get_admin_url(); ?>"><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></a></td>
+						<td data-colname="<?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?>"><?php echo $volunteer->meta['email']; ?></td>
+						<td data-colname="<?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?>"><?php echo $volunteer->meta['phone']; ?></td>
+						<td data-colname="<?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?>" class="remove-rsvp-column"><a href="#remove-rsvp" class="button remove-rsvp" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo $volunteer->ID; ?>"><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></a></td>
+					</tr>
 
-				<tr>
-					<td colspan="4"><?php _e( 'No one has signed up for this opportunity yet.', 'wired-impact-volunteer-management' ); ?></td>
-				</tr>
+				<?php endforeach; else: ?>
 
-			<?php endif; ?>
+					<tr>
+						<td colspan="4"><?php _e( 'No one has signed up for this opportunity yet.', 'wired-impact-volunteer-management' ); ?></td>
+					</tr>
 
-			<tfoot>
-				<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
-				<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
-				<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
-				<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
-			</tfoot>
-		</table>
+				<?php endif; ?>
+
+				<tfoot>
+					<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
+					<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
+					<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
+					<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
+				</tfoot>
+			</table>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Displays the meta box for sending custom emails to the signed up volunteers.
+	 * 
+	 * @param  object $opp The volunteer opportunity object.
+	 */
+	public function display_opportunity_email_form_meta_box( $opp ){
+
+		// Set the editor ID
+		$editor_id      = 'volunteer-email-editor';
+		$content        = get_option( $editor_id );
+
+		// Set the editor options array
+		$editor_options = array(
+			'media_buttons' => false,
+			'textarea_name' => $editor_id,
+			'editor_height' => 150,
+		);
+
+		?>
+
+		<div class="volunteer-email-editor clear">
+			<div class="volunteer-email-success volunteer-email-response-message clear">
+				<p><strong><?php _e( 'Your email has been sent to the volunteers!', 'wired-impact-volunteer-management' ); ?></strong></p>
+			</div>
+			<div class="volunteer-email-failure volunteer-email-response-message clear">
+				<p><strong><?php _e( 'Error sending the email. Try again later.', 'wired-impact-volunteer-management' ); ?></strong></p>
+			</div>
+			<p class="helper-text"><?php _e( "Below you can send a custom email to all volunteers who signed up for this Opportunity. This is sent to the admins with the volunteers BCC'ed, so you know that the email was sent successfully. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent.", 'wired-impact-volunteer-management' ) ?></p>
+			<div class="volunteer-email-subject-field">
+				<label for="volunteer-email-subject">Email Subject</label>
+				<div class="field">
+					<input type="text" name="volunteer-email-subject" id="volunteer-email-subject" class="regular-text" />
+				</div>
+			</div>
+			<?php wp_editor( $content, $editor_id, $editor_options ); ?>
+			<div class="volunteer-email-footer clear">
+				<button type="button" class="button button-primary button-large wivm-send-email" data-post-id="<?php echo $opp->ID; ?>" data-user-id="<?php echo get_current_user_id(); ?>"><?php _e( 'Send Email', 'wired-impact-volunteer-management' ); ?></button>
+			</div>
+		</div>
 
 		<?php
+	}
+
+	/**
+	 * Process the AJAX request to send out the custom volunteer email.
+	 */
+	public function process_custom_volunteer_email() {
+
+		$nonce    = $_POST['data']['nonce'];
+		$post_id  = absint( $_POST['data']['post_id'] );
+		$user_id  = absint( $_POST['data']['user_id'] );
+		$subject  = stripslashes_deep( $_POST['data']['subject'] );
+		$message  = stripslashes_deep( $_POST['data']['message'] );
+
+		$data_array = array(
+			'post_id' => $post_id,
+			'user_id' => $user_id,
+			'subject' => $subject,
+			'message' => $message
+		);
+
+		// Verify our nonce
+		if ( ! wp_verify_nonce( $nonce, 'volunteer_email_nonce' ) ) {
+			_e( 'Security Check.', 'wired-impact-volunteer-management' );
+			die();
+		}
+
+		// Get the opportunity data
+		$opp    = new WI_Volunteer_Management_Opportunity( $post_id );
+		$email  = new WI_Volunteer_Management_Email( $opp );
+		$result = $email->send_custom_volunteer_email( $data_array );
+		
+		// Return success if the email processed, failure if not
+		if ( $result ) {
+			// Store the email data in the "volunteer_emails" table
+			$email->store_volunteer_email( $data_array );
+			echo 'success';
+		} else {
+			echo 'failure';
+		}
+
+		die();
+	}
+
+
+	/**
+	 * Display the meta box to output the list of volunteer emails for this opportunity.
+	 *
+	 * @param object $opp The volunteer opportunity object.
+	 */
+	public function display_opportunity_email_list_meta_box( $opp ) {
+		$opp            = new WI_Volunteer_Management_Opportunity( $opp->ID );
+		$emails         = $opp->get_rsvp_emails();
+		$email_count    = count( $emails );
+
+		// If this opportunity has any sent emails
+		if ( ! empty( $emails ) ) {
+			printf( _nx( '<p>1 email has been sent.</p>', '<p>%d emails have been sent.</p>', $email_count, 'email count', 'wired-impact-volunteer-management' ), $email_count );
+
+			?>
+			<div class="sent-emails-table">
+				<table class="wp-list-table widefat fixed striped sent-emails">
+					<thead>
+						<tr>
+							<th><?php _e( 'When', 'wired-impact-volunteer-management' ); ?></th>
+							<th><?php _e( 'Sender', 'wired-impact-volunteer-management' ); ?></th>
+						</tr>
+					</thead>
+					<?php
+
+					foreach ( $emails as $email ) {
+
+						if ( '0' === $email->user_id ) {
+							// If the 
+							$user_output = sprintf( '<em>%s</em>', __( 'Automated Reminder Email', 'wired-impact-volunteer-management' ) );
+						} else {
+							$user_data = get_userdata( $email->user_id );
+							$user_output = $user_data->display_name;
+						}
+
+						$time_stamp = mysql2date( __( 'D, M j, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $email->time );
+
+						echo '<tr>';
+
+						// Output each email notice
+						printf( '<td>%s</td>', $time_stamp );
+						printf( '<td>%s</td>', $user_output );
+
+						echo '</tr>';
+					}
+
+					?>
+				</table>
+			</div>
+			<?php
+			echo '</table>';
+		} else {
+			printf( '<p>%s</p>', __( 'No emails have been sent yet. We\'ll list them here when we send automated reminders and when you send custom emails to volunteers.', 'wired-impact-volunteer-management' ) );
+		}
 	}
 
 	/**
@@ -568,11 +811,11 @@ class WI_Volunteer_Management_Admin {
 	    if ( !current_user_can( 'edit_user', $user_id ) ){
 	        return false;
 	    }
-	 	
+
 	 	//Phone Number
-	    update_usermeta( absint( $user_id ), 'phone', preg_replace( "/[^0-9,.]/", "", $_POST['phone'] ) );
+	    update_user_meta( absint( $user_id ), 'phone', preg_replace( "/[^0-9,.]/", "", $_POST['phone'] ) );
 	    //Notes
-	    update_usermeta( absint( $user_id ), 'notes', implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST['notes'] ) ) ) );
+	    update_user_meta( absint( $user_id ), 'notes', implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST['notes'] ) ) ) );
 
 	}
 
@@ -820,12 +1063,12 @@ class WI_Volunteer_Management_Admin {
 		//Gather cron info.  We have to convert everything to GMT since WP Cron sends based on GMT.
 		$cron_hook = 'send_auto_email_reminders';
 		$cron_args = array( $opp_id );
-		if( $opp->opp_meta['one_time_opp'] == 1 && $opp->opp_meta['start_date_time'] != '' ){
-		  $start_date_time_gmt = strtotime( get_gmt_from_date( date( 'Y-m-d H:i:s', $opp->opp_meta['start_date_time'] ) ) . ' GMT' );
+		if ( $opp->opp_meta['one_time_opp'] == 1 && $opp->opp_meta['start_date_time'] != '' ){
+			$start_date_time_gmt = strtotime( get_gmt_from_date( date( 'Y-m-d H:i:s', $opp->opp_meta['start_date_time'] ) ) . ' GMT' );
 
-		  $options = new WI_Volunteer_Management_Options();
-		  $days_prior_reminder = $options->get_option( 'days_prior_reminder' );
-		  $new_reminder_time = $start_date_time_gmt - ( $days_prior_reminder * 86400 ); //86400 is one day in seconds
+			$options = new WI_Volunteer_Management_Options();
+			$days_prior_reminder = $options->get_option( 'days_prior_reminder' );
+			$new_reminder_time = $start_date_time_gmt - ( $days_prior_reminder * 86400 ); //86400 is one day in seconds
 		}
 		$current_time = current_time( 'timestamp', 1 );
 
@@ -833,13 +1076,13 @@ class WI_Volunteer_Management_Admin {
 		wp_clear_scheduled_hook( $cron_hook, $cron_args );
 
 		//Don't schedule the reminder under certain circumstances
-		if( 
-		  $post->post_status != 'publish' || //If opportunity isn't published
-		  $opp->opp_meta['one_time_opp'] == 0 || //If opportunity is not at a specific date and time
-		  $opp->opp_meta['start_date_time'] == '' || //If there is no start date for the opportunity
-		  $current_time > $new_reminder_time //If the current time is passed the new reminder time
-		  ){
-		  return false;
+		if (
+			$post->post_status != 'publish' || //If opportunity isn't published
+			$opp->opp_meta['one_time_opp'] == 0 || //If opportunity is not at a specific date and time
+			$opp->opp_meta['start_date_time'] == '' || //If there is no start date for the opportunity
+ 			$current_time > $new_reminder_time //If the current time is passed the new reminder time
+		) {
+			return false;
 		}
 
 		//If we passed all the conditions then schedule the auto reminder
@@ -848,7 +1091,7 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
-	 * Send volunteer reminder email.
+	 * Send volunteer reminder email and store it in the database.
 	 *
 	 * This method is called using cron and is never called in any other way.
 	 * 
@@ -856,9 +1099,15 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function send_email_reminder( $opp_id ){
 
+		$data_array = array(
+			'post_id' => $opp_id,
+			'user_id' => 0,
+		);
+
 		$opp 	= new WI_Volunteer_Management_Opportunity( $opp_id );
 		$email 	= new WI_Volunteer_Management_Email( $opp );
 		$email->send_volunteer_reminder_email();
+		$email->store_volunteer_email( $data_array );
 
 	}
 
