@@ -7,11 +7,11 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A free, easy way to manage your nonprofit’s volunteers.
+A free, easy way to manage your nonprofits volunteers.
 
 == Description ==
 
-A simple, free way to keep track of your nonprofit’s volunteers and opportunities.
+A simple, free way to keep track of your nonprofits volunteers and opportunities.
 
 **How can the Wired Impact Volunteer Management plugin help your nonprofit?**
 
@@ -82,7 +82,7 @@ If a volunteer is no longer able to help out at a specific opportunity, you can 
 1.	Click “Opportunities” from the Volunteer Management menu
 1.	Find the opportunity you need to remove the volunteer from 
 1.	Click the opportunity to edit 
-1.	Scroll down to the RSVP list, find the volunteer’s name and click “Remove RSVP”
+1.	Scroll down to the RSVP list, find the volunteers name and click “Remove RSVP”
 1.	Confirm their removal by clicking the blue “Remove RSVP” button
 
 = How do I create a recurring opportunity? =
@@ -100,6 +100,11 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. View Volunteer Profiles
 
 == Changelog ==
+
+= 0.5.0 =
+* Added ability to send custom emails to volunteers registered for an opportunity.
+* Added new meta box to display the list of custom email sent to volunteers.
+* Bugfix: Replace deprecated update_usermeta function with update_user_meta.
 
 = 0.4.2 =
 * Updated plugin to allow for translation
