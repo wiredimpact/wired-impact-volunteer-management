@@ -229,15 +229,18 @@
                 event.preventDefault();
 
                 var $this = $( this ),
-                    button_text = $this.text(),
                     is_valid = true,
-                    editor_value,
-                    email_button = $this,
-                    post_id = email_button.data( 'post-id' ),
-                    user_id = email_button.data( 'user-id' );
+                    button_text = $this.text(),
+                    post_id = $this.data( 'post-id' ),
+                    user_id = $this.data( 'user-id' );
 
                 var subject_field = $( '#volunteer-email-subject' ),
-                    subject_value = subject_field.val();
+                    subject_value = subject_field.val(),
+                    subject_error = wivm_ajax.volunteer_email_subject_error,
+                    editor_value;
+
+                // Check that the subject field is valid/not null
+                validate_fields( subject_value, subject_field );
 
                 // Get content if visual editor is selected, otherwise fall back to textarea
                 if ( $( '#wp-volunteer-email-editor-wrap' ).is( '.tmce-active' ) ) {
@@ -246,19 +249,29 @@
                     editor_value = $( '#volunteer-email-editor' ).val();
                 }
 
-                // Check that the subject field is valid/not null
-                check_valid( subject_field );
+                function validate_fields( field_value, field_id ) {
 
-                function check_valid( field ) {
-                    $( field ).keyup( function() {
-                        $this.removeClass( 'has-error' );
+                    var error_message;
+
+                    $( field_id ).keyup( function() {
+                       $( this ).removeClass( 'has-error' );
                     });
 
-                    if ( '' == field.val() ) {
-                        field.addClass( 'has-error' );
+                    if ( '' == field_value ) {
                         is_valid = false;
+                        $( field_id ).addClass( 'has-error' );
+                        error_message = '<p>' + wivm_ajax.volunteer_email_subject_error + '</p>';
                     } else {
                         is_valid = true;
+                    }
+
+                    if ( ! is_valid ) {
+                        // Display the subject error
+                        $( '.volunteer-email-failure' )
+                            .html( error_message )
+                            .show()
+                            .fadeTo( 300, 1 )
+                            .addClass( 'is-open' );
                     }
                 }
 
@@ -288,11 +301,19 @@
                             }
 
                             if ( response == 'success' ) {
-                                $( '.volunteer-email-success' ).show().fadeTo( 300, 1 ).addClass( 'is-open' );
+                                $( '.volunteer-email-success' )
+                                    .html( '<p>' + wivm_ajax.volunteer_email_success_text + '</p>' )
+                                    .show()
+                                    .fadeTo( 300, 1 )
+                                    .addClass( 'is-open' );
                             }
                             // Failure
                             else {
-                                $( '.volunteer-email-failure' ).show().fadeTo( 300, 1 ).addClass( 'is-open' );
+                                $( '.volunteer-email-failure' )
+                                    .html( '<p>' + wivm_ajax.volunteer_email_error_text + '</p>' )
+                                    .show()
+                                    .fadeTo( 300, 1 )
+                                    .addClass( 'is-open' );
                             }
                         }
                     );

@@ -166,14 +166,17 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function get_localized_js_data(){
 		$data = array(
-			'remove_rsvp_pointer_text'     => '<h3>' . __( 'Are You Sure?', 'wired-impact-volunteer-management' ) . '</h3><p>' . __( 'Are you sure you want to remove their RSVP for this opportunity?', 'wired-impact-volunteer-management' ) . '</p>',
-			'remove_rsvp_cancel_text'      => __( 'Cancel', 'wired-impact-volunteer-management' ),
-			'remove_rsvp_confirm_text'     => __( 'Remove RSVP', 'wired-impact-volunteer-management' ),
-			'remove_rsvp_error_text'       => __( 'Error, try again later.', 'wired-impact-volunteer-management' ),
-			'volunteer_email_error_text'   => __( 'Error, try again later.', 'wired-impact-volunteer-management' ),
-			'remove_user_rsvp_nonce'       => wp_create_nonce( 'remove_user_rsvp_nonce' ),
-			'hide_notice_nonce'            => wp_create_nonce( 'hide_notice_nonce' ),
-			'volunteer_email_nonce'        => wp_create_nonce( 'volunteer_email_nonce' )
+			'remove_rsvp_pointer_text'      => '<h3>' . __( 'Are You Sure?', 'wired-impact-volunteer-management' ) . '</h3><p>' . __( 'Are you sure you want to remove their RSVP for this opportunity?', 'wired-impact-volunteer-management' ) . '</p>',
+			'remove_rsvp_cancel_text'       => __( 'Cancel', 'wired-impact-volunteer-management' ),
+			'remove_rsvp_confirm_text'      => __( 'Remove RSVP', 'wired-impact-volunteer-management' ),
+			'remove_rsvp_error_text'        => __( 'Error, try again later.', 'wired-impact-volunteer-management' ),
+			'volunteer_email_error_text'    => __( 'Error sending the email. Try again later.', 'wired-impact-volunteer-management' ),
+			'volunteer_email_subject_error' => __( 'Please fill out the email subject.', 'wired-impact-volunteer-management' ),
+			'volunteer_email_editor_error'  => __( 'Please fill out the email content.', 'wired-impact-volunteer-management' ),
+			'volunteer_email_success_text'  => __( 'Your email has been sent to the volunteers!', 'wired-impact-volunteer-management' ),
+			'remove_user_rsvp_nonce'        => wp_create_nonce( 'remove_user_rsvp_nonce' ),
+			'hide_notice_nonce'             => wp_create_nonce( 'hide_notice_nonce' ),
+			'volunteer_email_nonce'         => wp_create_nonce( 'volunteer_email_nonce' )
 		);
 
 		return $data;
@@ -653,12 +656,8 @@ class WI_Volunteer_Management_Admin {
 		?>
 
 		<div class="volunteer-email-editor clear">
-			<div class="volunteer-email-success volunteer-email-response-message clear">
-				<p><strong><?php _e( 'Your email has been sent to the volunteers!', 'wired-impact-volunteer-management' ); ?></strong></p>
-			</div>
-			<div class="volunteer-email-failure volunteer-email-response-message clear">
-				<p><strong><?php _e( 'Error sending the email. Try again later.', 'wired-impact-volunteer-management' ); ?></strong></p>
-			</div>
+			<div class="volunteer-email-success volunteer-email-response-message clear"></div>
+			<div class="volunteer-email-failure volunteer-email-response-message clear"></div>
 			<p class="helper-text"><?php _e( "Below you can send a custom email to all volunteers who signed up for this Opportunity. This is sent to the admins with the volunteers BCC'ed, so you know that the email was sent successfully. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent.", 'wired-impact-volunteer-management' ) ?></p>
 			<div class="volunteer-email-subject-field">
 				<label for="volunteer-email-subject">Email Subject</label>
