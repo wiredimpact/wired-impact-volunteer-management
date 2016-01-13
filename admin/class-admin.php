@@ -642,6 +642,9 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function display_opportunity_email_form_meta_box( $opp ){
 
+		$volunteer_opp  = new WI_Volunteer_Management_Opportunity( $opp->ID );
+		$num_rsvped     = $volunteer_opp->get_number_rsvps();
+
 		// Set the editor ID
 		$editor_id      = 'volunteer-email-editor';
 		$content        = get_option( $editor_id );
@@ -653,25 +656,30 @@ class WI_Volunteer_Management_Admin {
 			'editor_height' => 150,
 		);
 
-		?>
+		if ( $num_rsvped < 1 ) {
+			printf( '<p>%s</p>', __( 'No one has signed up for this opportunity yet. Something about needing volunteers before sending an email.', 'wired-impact-volunteer-management' ) );
+		} else {
 
-		<div class="volunteer-email-editor clear">
-			<div class="volunteer-email-success volunteer-email-response-message clear"></div>
-			<div class="volunteer-email-failure volunteer-email-response-message clear"></div>
-			<p class="helper-text"><?php _e( "Below you can send a custom email to all volunteers who signed up for this Opportunity. This is sent to the admins with the volunteers BCC'ed, so you know that the email was sent successfully. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent.", 'wired-impact-volunteer-management' ) ?></p>
-			<div class="volunteer-email-subject-field">
-				<label for="volunteer-email-subject">Email Subject</label>
-				<div class="field">
-					<input type="text" name="volunteer-email-subject" id="volunteer-email-subject" class="regular-text" />
+			?>
+
+			<div class="volunteer-email-editor clear">
+				<div class="volunteer-email-success volunteer-email-response-message clear"></div>
+				<div class="volunteer-email-failure volunteer-email-response-message clear"></div>
+				<p class="helper-text"><?php _e( "Below you can send a custom email to all volunteers who signed up for this Opportunity. This is sent to the admins with the volunteers BCC'ed, so you know that the email was sent successfully. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent.", 'wired-impact-volunteer-management' ) ?></p>
+				<div class="volunteer-email-subject-field">
+					<label for="volunteer-email-subject"><?php _e( 'Email Subject', 'wired-impact-volunteer-management' ); ?></label>
+					<div class="field">
+						<input type="text" name="volunteer-email-subject" id="volunteer-email-subject" class="regular-text" />
+					</div>
+				</div>
+				<?php wp_editor( $content, $editor_id, $editor_options ); ?>
+				<div class="volunteer-email-footer clear">
+					<button type="button" class="button button-primary button-large wivm-send-email" data-post-id="<?php echo $opp->ID; ?>" data-user-id="<?php echo get_current_user_id(); ?>"><?php _e( 'Send Email', 'wired-impact-volunteer-management' ); ?></button>
 				</div>
 			</div>
-			<?php wp_editor( $content, $editor_id, $editor_options ); ?>
-			<div class="volunteer-email-footer clear">
-				<button type="button" class="button button-primary button-large wivm-send-email" data-post-id="<?php echo $opp->ID; ?>" data-user-id="<?php echo get_current_user_id(); ?>"><?php _e( 'Send Email', 'wired-impact-volunteer-management' ); ?></button>
-			</div>
-		</div>
 
-		<?php
+			<?php
+		}
 	}
 
 	/**
@@ -722,6 +730,7 @@ class WI_Volunteer_Management_Admin {
 	 * @param object $opp The volunteer opportunity object.
 	 */
 	public function display_opportunity_email_list_meta_box( $opp ) {
+
 		$opp            = new WI_Volunteer_Management_Opportunity( $opp->ID );
 		$emails         = $opp->get_rsvp_emails();
 		$email_count    = count( $emails );
