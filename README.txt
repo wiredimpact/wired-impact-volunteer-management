@@ -7,11 +7,11 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A free, easy way to manage your nonprofits volunteers.
+A free, easy way to manage your nonprofit's volunteers.
 
 == Description ==
 
-A simple, free way to keep track of your nonprofits volunteers and opportunities.
+A simple, free way to keep track of your nonprofit's volunteers and opportunities.
 
 **How can the Wired Impact Volunteer Management plugin help your nonprofit?**
 
