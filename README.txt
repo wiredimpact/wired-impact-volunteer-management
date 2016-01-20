@@ -103,7 +103,7 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 = 0.5.0 =
 * Added ability to send custom emails to volunteers registered for an opportunity.
-* Added new meta box to display the list of custom email sent to volunteers.
+* Added new meta box to display the list of all emails sent to volunteers.
 * Bugfix: Replace deprecated update_usermeta function with update_user_meta.
 
 = 0.4.2 =

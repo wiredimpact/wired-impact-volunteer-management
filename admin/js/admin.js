@@ -220,7 +220,16 @@
 
         });
 
-        // Set the var for the email editor container
+
+        /**
+         * Send custom email to volunteers using AJAX
+         *
+         * Logic to show messages and send email must cover four cases:
+         * 1. subject is valid/message is not
+         * 2. message is valid/subject is not
+         * 3. subject and message are both not valid
+         * 4. subject and message are both valid
+         */
         var email_editor = $( '.volunteer-email-editor' );
 
         if ( $( email_editor ).exists() ) {
@@ -237,46 +246,55 @@
                 var subject_field = $( '#volunteer-email-subject' ),
                     subject_value = subject_field.val(),
                     subject_error = wivm_ajax.volunteer_email_subject_error,
+                    subject_valid,
+                    editor_valid,
                     editor_value;
 
-                // Check that the subject field is valid/not null
-                validate_fields( subject_value, subject_field );
+                //Hide any previous messages that were shown
+                $( '.volunteer-email-response-message' ).hide().removeClass( 'is-open' );
 
+                // Check that the subject field is not empty
+                subject_valid = validate_fields( subject_value, wivm_ajax.volunteer_email_subject_error, subject_field );
+
+                // Check that the wysiwyg content is not empty
                 // Get content if visual editor is selected, otherwise fall back to textarea
-                if ( $( '#wp-volunteer-email-editor-wrap' ).is( '.tmce-active' ) ) {
-                    editor_value = tinyMCE.activeEditor.getContent();
-                } else {
-                    editor_value = $( '#volunteer-email-editor' ).val();
-                }
+                editor_value = $( '#wp-volunteer-email-editor-wrap' ).is( '.tmce-active' ) ? tinyMCE.activeEditor.getContent() : $( '#volunteer-email-editor' ).val(); 
+                editor_valid = validate_fields( editor_value, wivm_ajax.volunteer_email_editor_error, null );
 
-                function validate_fields( field_value, field_id ) {
+                function validate_fields( field_value, error_text, field_id ) {
 
-                    var error_message;
+                    var error_html;
 
-                    $( field_id ).keyup( function() {
-                       $( this ).removeClass( 'has-error' );
-                    });
+                    if( field_id != null ){
+                        $( field_id ).keyup( function() {
+                           $( this ).removeClass( 'has-error' );
+                        });
+                    }
 
                     if ( '' == field_value ) {
                         is_valid = false;
-                        $( field_id ).addClass( 'has-error' );
-                        error_message = '<p>' + wivm_ajax.volunteer_email_subject_error + '</p>';
+                        if( field_id != null ){
+                            $( field_id ).addClass( 'has-error' );
+                        }
+                        error_html = '<p>' + error_text + '</p>';
                     } else {
                         is_valid = true;
                     }
 
                     if ( ! is_valid ) {
-                        // Display the subject error
+                        // Display the error
                         $( '.volunteer-email-failure' )
-                            .html( error_message )
+                            .html( error_html )
                             .show()
                             .fadeTo( 300, 1 )
                             .addClass( 'is-open' );
                     }
+
+                    return is_valid;
                 }
 
-                // Process the email if the subject is valid
-                if ( is_valid ) {
+                // Process and send the email if the subject and editor values are valid
+                if ( subject_valid && editor_valid ) {
 
                     $this.prop( 'disabled', true ).text( 'Sending...' );
 
@@ -297,7 +315,7 @@
 
                             // Hide any previously open response messages
                             if ( $( '.volunteer-email-response-message' ).is( '.is-open' ) ) {
-                                $( '.volunteer-email-response-message' ).hide().removeClass( 'is-open' )
+                                $( '.volunteer-email-response-message' ).hide().removeClass( 'is-open' );
                             }
 
                             if ( response == 'success' ) {

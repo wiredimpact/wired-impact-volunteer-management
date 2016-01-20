@@ -645,20 +645,20 @@ class WI_Volunteer_Management_Admin {
 		$volunteer_opp  = new WI_Volunteer_Management_Opportunity( $opp->ID );
 		$num_rsvped     = $volunteer_opp->get_number_rsvps();
 
-		// Set the editor ID
-		$editor_id      = 'volunteer-email-editor';
-		$content        = get_option( $editor_id );
-
-		// Set the editor options array
-		$editor_options = array(
-			'media_buttons' => false,
-			'textarea_name' => $editor_id,
-			'editor_height' => 150,
-		);
-
 		if ( $num_rsvped < 1 ) {
-			printf( '<p>%s</p>', __( 'No one has signed up for this opportunity yet. Something about needing volunteers before sending an email.', 'wired-impact-volunteer-management' ) );
+			printf( '<p>%s</p>', __( 'No one has signed up for this opportunity, so you can\'t send any emails yet.', 'wired-impact-volunteer-management' ) );
 		} else {
+
+			// Set the editor ID
+			$editor_id      = 'volunteer-email-editor';
+			$content        = get_option( $editor_id );
+
+			// Set the editor options array
+			$editor_options = array(
+				'media_buttons' => false,
+				'textarea_name' => $editor_id,
+				'editor_height' => 150,
+			);
 
 			?>
 
