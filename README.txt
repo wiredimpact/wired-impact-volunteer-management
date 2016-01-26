@@ -18,7 +18,7 @@ A simple, free way to keep track of your nonprofit's volunteers and opportunitie
 * **Post one-time and flexible volunteer opportunities on your website –** Promote volunteer opportunities on any page of your website using a simple shortcode.
 * **Volunteers can sign up directly on your website –** Make volunteering even easier for your supporters by giving them the option to sign up for an opportunity directly on your website. A confirmation email will be sent to you and the volunteer once they sign up. 
 * **Control the number of sign-ups available for opportunities –** Only need 10 people to help out at an event? Set a cap on the number of people who can sign up. Want as many volunteers as you can get? No problem. You don’t have to set a cap.
-* **Customizable reminder emails for one-time opportunities –** Make sure your volunteers get all the information they need before showing up to help. You control when they get the email and what information it includes.
+* **Send reminder emails anytime –** Schedule an automated reminder email three days in advance or send even hours before the opportunity for last-minute details.
 * **Volunteer profiles that track participation and more –** Keep track of all of your volunteers’ involvement. See what they’ve helped out with, how long they’ve been helping and add notes that will help you stay organized.
 
 *Thanks to [Habitat for Humanity East Bay/Silicon Valley](http://www.habitatebsv.org/) for being an awesome client and letting us use the photo above.*
@@ -103,7 +103,7 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 = 0.5.0 =
 * Added ability to send custom emails to volunteers registered for an opportunity.
-* Added new meta box to display the list of custom email sent to volunteers.
+* Added new meta box to display the list of all emails sent to volunteers.
 * Bugfix: Replace deprecated update_usermeta function with update_user_meta.
 
 = 0.4.2 =
