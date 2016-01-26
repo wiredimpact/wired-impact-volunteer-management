@@ -258,13 +258,13 @@
                     editor_id    = '#volunteer-email-editor';
                 }
 
-                // Check if the subject is valid
+                // Check that the subject field is not empty
                 if ( ! subject_value ) {
                     is_valid = false;
                     errors.push( 'subject-error' );
                 }
 
-                // Check if the editor is valid
+                // Check that the editor field is not empty
                 if ( editor_value == '' ) {
                     is_valid = false;
                     errors.push( 'editor-error' );
@@ -276,6 +276,7 @@
                     var error_count   = errors.length,
                         error_message = '';
 
+                    // Clear the error class on keyup
                     $( subject_id ).keyup( function() {
                        $( this ).removeClass( 'has-error' );
                     });
