@@ -220,7 +220,6 @@
 
         });
 
-
         /**
          * Send custom email to volunteers using AJAX
          *
@@ -238,63 +237,70 @@
                 event.preventDefault();
 
                 var $this = $( this ),
-                    is_valid = true,
+                    errors      = [],
+                    is_valid    = true,
                     button_text = $this.text(),
-                    post_id = $this.data( 'post-id' ),
-                    user_id = $this.data( 'user-id' );
+                    post_id     = $this.data( 'post-id' ),
+                    user_id     = $this.data( 'user-id' );
 
-                var subject_field = $( '#volunteer-email-subject' ),
-                    subject_value = subject_field.val(),
+                var subject_id    = $( '#volunteer-email-subject' ),
+                    subject_value = subject_id.val(),
                     subject_error = wivm_ajax.volunteer_email_subject_error,
-                    subject_valid,
-                    editor_valid,
+                    editor_id     = '',
                     editor_value;
 
-                //Hide any previous messages that were shown
-                $( '.volunteer-email-response-message' ).hide().removeClass( 'is-open' );
-
-                // Check that the subject field is not empty
-                subject_valid = validate_fields( subject_value, wivm_ajax.volunteer_email_subject_error, subject_field );
-
-                // Check that the wysiwyg content is not empty
                 // Get content if visual editor is selected, otherwise fall back to textarea
-                editor_value = $( '#wp-volunteer-email-editor-wrap' ).is( '.tmce-active' ) ? tinyMCE.activeEditor.getContent() : $( '#volunteer-email-editor' ).val(); 
-                editor_valid = validate_fields( editor_value, wivm_ajax.volunteer_email_editor_error, null );
+                if ( $( '#wp-volunteer-email-editor-wrap' ).is( '.tmce-active' ) ) {
+                    editor_value = tinyMCE.activeEditor.getContent();
+                    editor_id    = '#wp-volunteer-email-editor-wrap';
+                } else {
+                    editor_value = $( '#volunteer-email-editor' ).val();
+                    editor_id    = '#volunteer-email-editor';
+                }
 
-                function validate_fields( field_value, error_text, field_id ) {
+                // Check if the subject is valid
+                if ( ! subject_value ) {
+                    is_valid = false;
+                    errors.push( 'subject-error' );
+                }
 
-                    var error_html;
+                // Check if the editor is valid
+                if ( editor_value == '' ) {
+                    is_valid = false;
+                    errors.push( 'editor-error' );
+                }
 
-                    if( field_id != null ){
-                        $( field_id ).keyup( function() {
-                           $( this ).removeClass( 'has-error' );
-                        });
+                if ( ! is_valid ) {
+                    event.preventDefault();
+
+                    var error_count   = errors.length,
+                        error_message = '';
+
+                    $( subject_id ).keyup( function() {
+                       $( this ).removeClass( 'has-error' );
+                    });
+
+                    // Set the subject error output
+                    if ( $.inArray( 'subject-error', errors ) !== -1 ) {
+                        error_message += '<p>' + wivm_ajax.volunteer_email_subject_error + '</p>';
+                        $( subject_id ).addClass( 'has-error' );
                     }
 
-                    if ( '' == field_value ) {
-                        is_valid = false;
-                        if( field_id != null ){
-                            $( field_id ).addClass( 'has-error' );
-                        }
-                        error_html = '<p>' + error_text + '</p>';
-                    } else {
-                        is_valid = true;
+                    // Set the editor error output
+                    if ( $.inArray( 'editor-error', errors ) !== -1 ) {
+                        error_message += '<p>' + wivm_ajax.volunteer_email_editor_error + '</p>';
                     }
 
-                    if ( ! is_valid ) {
-                        // Display the error
-                        $( '.volunteer-email-failure' )
-                            .html( error_html )
-                            .show()
-                            .fadeTo( 300, 1 )
-                            .addClass( 'is-open' );
-                    }
-
-                    return is_valid;
+                    // Display the error message(s)
+                    $( '.volunteer-email-failure' )
+                        .html( error_message )
+                        .show()
+                        .fadeTo( 300, 1 )
+                        .addClass( 'is-open' );
                 }
 
                 // Process and send the email if the subject and editor values are valid
-                if ( subject_valid && editor_valid ) {
+                if ( is_valid ) {
 
                     $this.prop( 'disabled', true ).text( 'Sending...' );
 
