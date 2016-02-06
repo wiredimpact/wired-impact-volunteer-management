@@ -101,6 +101,10 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 == Changelog ==
 
+= 0.5.1 =
+* Improved subject and body error messages for sending custom emails.
+* Separated opportunity styling and form messages from certain classes, increasing compatibility with themes.
+
 = 0.5.0 =
 * Added ability to send custom emails to volunteers registered for an opportunity.
 * Added new meta box to display the list of all emails sent to volunteers.

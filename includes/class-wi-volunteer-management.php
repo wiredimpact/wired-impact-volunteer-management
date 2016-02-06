@@ -69,7 +69,7 @@ class WI_Volunteer_Management {
 	public function __construct() {
 
 		$this->plugin_name = 'wired-impact-volunteer-management';
-		$this->version = '0.5.0';
+		$this->version = '0.5.1';
 
 		$this->load_dependencies();
 		$this->set_locale();
