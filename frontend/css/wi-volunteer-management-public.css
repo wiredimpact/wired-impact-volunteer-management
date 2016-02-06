@@ -4,10 +4,10 @@
  */
 
 /* General Volunteer Opp Styles */
-.volunteer_opp .volunteer-opp-info {
+.volunteer-opp-info {
 	padding: 0 0 1em;
 }
-.volunteer_opp .volunteer-opp-info span {
+.volunteer-opp-info span {
 	display: block;
 	padding: 2px 0;
 }
@@ -42,11 +42,6 @@
 	padding-top: 1em;
 }
 
-/* Single Volunteer Opp Styles */
-.single .volunteer_opp .entry-header {
-	padding-top: 8.3333%;
-}
-
 /* Sign Up Form Styles */
 #wivm-sign-up-form label {
 	margin-top: .5em;
@@ -67,19 +62,19 @@
 	float: right;
 }
 
-.volunteer_opp .message {
+.volunteer-opp-message {
 	display: none;
 	font-size: .9em;
 	font-style: italic;
 }
 
-.volunteer_opp .error,
-.volunteer_opp .already-rsvped,
-.volunteer_opp .rsvp-closed {
+.volunteer-opp-message.error,
+.volunteer-opp-message.already-rsvped,
+.volunteer-opp-message.rsvp-closed {
 	color: #990000;
 }
 
-.volunteer_opp .success {
+.volunteer-opp-message.success {
 	color: #21732a;
 }
 

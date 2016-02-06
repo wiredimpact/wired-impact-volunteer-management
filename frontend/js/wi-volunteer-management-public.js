@@ -47,12 +47,12 @@
 
 		//If not valid return false.
         if( has_errors === true ){
-        	$( '.volunteer_opp .loading, .volunteer_opp .success' ).slideUp();
-        	$( '.volunteer_opp .error' ).slideDown();
+        	$( '.volunteer-opp-message.loading, .volunteer-opp-message.success' ).slideUp();
+        	$( '.volunteer-opp-message.error' ).slideDown();
         	return false;
         }
         else {
-        	$( '.volunteer_opp .message' ).slideUp();
+        	$( '.volunteer-opp-message' ).slideUp();
         	return true;
         }
 	}
@@ -79,8 +79,8 @@
 	 */
 	function submit_sign_up_form( submit_button ){
 		//Show messages to user
-		$( '.volunteer_opp .error' ).slideUp();
-		$( '.volunteer_opp .loading' ).slideDown();
+		$( '.volunteer-opp-message.error' ).slideUp();
+		$( '.volunteer-opp-message.loading' ).slideDown();
 
 		jQuery.post( wivm_ajax.ajaxurl,
 			{
@@ -89,21 +89,21 @@
 			},
 			function( response ){
 
-				$( '.volunteer_opp .loading' ).slideUp();
+				$( '.volunteer-opp-message.loading' ).slideUp();
 				
 				//If submitter was RSVPed successfully
 				if( response === 'rsvped' ){
-					$( '.volunteer_opp .success' ).slideDown();
+					$( '.volunteer-opp-message.success' ).slideDown();
 					submit_button.prop( "disabled", false );
 				}
 				//If submitter had already RSVPed
 				else if( response === 'already_rsvped'){
-					$( '.volunteer_opp .already-rsvped' ).slideDown();
+					$( '.volunteer-opp-message.already-rsvped' ).slideDown();
 					submit_button.prop( "disabled", false );
 				}
 				//If submitter tried to sign up, but there are no spots left.
 				else if( response === 'rsvp_closed' ){
-					$( '.volunteer_opp .rsvp-closed' ).slideDown();
+					$( '.volunteer-opp-message.rsvp-closed' ).slideDown();
 					$( '#wivm-sign-up-form' ).slideUp();
 				}
 			}
