@@ -101,6 +101,10 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 == Changelog ==
 
+= 1.0 =
+* Tested and confirmed as stable version 1.0 release.
+* Set up Google Analytics event tracking when someone RSVPs for a volunteer opportunity.
+
 = 0.5.1 =
 * Improved subject and body error messages for sending custom emails.
 * Separated opportunity styling and form messages from certain classes, increasing compatibility with themes.
