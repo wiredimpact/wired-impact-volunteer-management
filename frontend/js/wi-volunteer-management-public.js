@@ -95,19 +95,43 @@
 				if( response === 'rsvped' ){
 					$( '.volunteer-opp-message.success' ).slideDown();
 					submit_button.prop( "disabled", false );
+					track_google_analytics( 'RSVP Success' );
 				}
 				//If submitter had already RSVPed
 				else if( response === 'already_rsvped'){
 					$( '.volunteer-opp-message.already-rsvped' ).slideDown();
 					submit_button.prop( "disabled", false );
+					track_google_analytics( 'RSVP Failure: Already RSVPed' );
 				}
 				//If submitter tried to sign up, but there are no spots left.
 				else if( response === 'rsvp_closed' ){
 					$( '.volunteer-opp-message.rsvp-closed' ).slideDown();
 					$( '#wivm-sign-up-form' ).slideUp();
+					track_google_analytics( 'RSVP Failure: No More Open Spots' );
 				}
 			}
 		);
 	}
+
+	/**
+	 * Track volunteer opportunity action as an event within Google Analytics.
+	 *
+	 * This only works in Universal Analytics, and does not in Classic Analytics.
+	 *
+	 * @param {string} action The action that was completed (i.e. "Successful RSVP")
+	 */
+	function track_google_analytics( action ){
+		//Determine global analytics object name
+		var ga = window[window['GoogleAnalyticsObject'] || 'ga'];
+		if( typeof ga == 'function' ){
+			//Track as an event
+			ga( 'send', {
+				hitType: 		'event',
+				eventCategory: 	'Volunteer Opportunity',
+				eventAction: 	action
+			});
+		}
+	}
+
 
 })( jQuery );
