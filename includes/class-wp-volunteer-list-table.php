@@ -58,19 +58,30 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 
 		$usersearch = isset( $_REQUEST['s'] ) ? wp_unslash( trim( $_REQUEST['s'] ) ) : '';
 
-		$role = 'volunteer';
-
 		$per_page = 'users_per_page';
 		$users_per_page = $this->get_items_per_page( $per_page );
 
 		$paged = $this->get_pagenum();
 
+		//Get the IDs of all users who have RSVPed for a volunteer opportunity
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'volunteer_rsvps';
+		$query = "
+				SELECT DISTINCT user_id
+				FROM $table_name
+				";
+		$results = $wpdb->get_results( $query );
+		$volunteer_ids = array();
+		foreach( $results as $result ){
+			$volunteer_ids[] = $result->user_id;
+		}
+
 		$args = array(
-			'number' => $users_per_page,
-			'offset' => ( $paged-1 ) * $users_per_page,
-			'role' => $role,
-			'search' => $usersearch,
-			'fields' => 'all_with_meta'
+			'number' 	=> $users_per_page,
+			'offset' 	=> ( $paged-1 ) * $users_per_page,
+			'include'	=> $volunteer_ids,
+			'search' 	=> $usersearch,
+			'fields' 	=> 'all_with_meta'
 		);
 
 		if ( '' !== $args['search'] )

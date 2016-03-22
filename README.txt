@@ -101,6 +101,9 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 == Changelog ==
 
+= 1.0.2 =
+* Fixed bug where some users were not being included in the volunteers list view when they should be.
+
 = 1.0.1 =
 * Fixed issue where template override directory was changed to match text domain.
 
