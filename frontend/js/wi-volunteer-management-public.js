@@ -47,7 +47,7 @@
 
 		//If not valid return false.
         if( has_errors === true ){
-        	$( '.volunteer-opp-message.loading, .volunteer-opp-message.success' ).slideUp();
+        	$( '.volunteer-opp-message.loading, .volunteer-opp-message.rsvp-success' ).slideUp();
         	$( '.volunteer-opp-message.error' ).slideDown();
         	return false;
         }
@@ -59,7 +59,7 @@
 
 	/**
 	 * Validates a provided email address.
-	 * 
+	 *
 	 * @param  {string} email The provided email address.
 	 * @return {bool}   	  Whether the provided email address is valid.
 	 */
@@ -90,10 +90,10 @@
 			function( response ){
 
 				$( '.volunteer-opp-message.loading' ).slideUp();
-				
+
 				//If submitter was RSVPed successfully
 				if( response === 'rsvped' ){
-					$( '.volunteer-opp-message.success' ).slideDown();
+					$( '.volunteer-opp-message.rsvp-success' ).slideDown();
 					submit_button.prop( "disabled", false );
 					track_google_analytics( 'RSVP Success' );
 				}
