@@ -14,18 +14,18 @@
  * Send emails associated with signups and reminders.
  *
  * Send all emails associated with volunteer sign ups as well as reminders to volunteers.
- * 
+ *
  * @since      0.1
  * @package    WI_Volunteer_Management
  * @subpackage WI_Volunteer_Management/Includes
  * @author     Wired Impact <info@wiredimpact.com>
  */
-class WI_Volunteer_Management_Email { 
+class WI_Volunteer_Management_Email {
 
 	/**
 	 * Volunteer object with included meta data.
 	 *
-	 * @since 0.1 
+	 * @since 0.1
 	 * @var   object
 	 */
 	public $user;
@@ -33,7 +33,7 @@ class WI_Volunteer_Management_Email {
 	/**
 	 * Opportunity object with included meta data.
 	 *
-	 * @since 0.1 
+	 * @since 0.1
 	 * @var object
 	 */
 	public $opp;
@@ -41,7 +41,7 @@ class WI_Volunteer_Management_Email {
 	/**
 	 * All the options set within the plugin settings.
 	 *
-	 * @since 0.1 
+	 * @since 0.1
 	 * @var array
 	 */
 	public $options;
@@ -49,7 +49,7 @@ class WI_Volunteer_Management_Email {
 	/**
 	 * List of variables that will be replaced in emails.
 	 *
-	 * @since 0.1 
+	 * @since 0.1
 	 * @var array
 	 */
 	public $search_text = array();
@@ -57,14 +57,14 @@ class WI_Volunteer_Management_Email {
 	/**
 	 * List of text used to replace the search text within emails.
 	 *
-	 * @since 0.1 
+	 * @since 0.1
 	 * @var array
 	 */
 	public $replace_text = array();
 
 	/**
 	 * Grab all our options and the search and replace text to use for each email.
-	 * 
+	 *
 	 * @param object $opp  Opportunity object with all the meta data.
 	 * @param object $user Volunteer object with all the meta data. This is not used for reminder emails.
 	 */
@@ -124,7 +124,7 @@ class WI_Volunteer_Management_Email {
 		/**
 		 * Send reminder email to volunteers that signed up.
 		 *
-		 * We send the email "to" the admins, but BCC those that have signed up to volunteer. This allows us to send 
+		 * We send the email "to" the admins, but BCC those that have signed up to volunteer. This allows us to send
 		 * only one email instead of sending a ton of them.
 		 *
 		 * @see https://codex.wordpress.org/Function_Reference/wp_mail
@@ -146,7 +146,7 @@ class WI_Volunteer_Management_Email {
 		/**
 		 * Send custom email to volunteers RSVP for a specific opportunity.
 		 *
-		 * We send the email "to" the admins, but BCC those that have signed up to volunteer. This allows us to send 
+		 * We send the email "to" the admins, but BCC those that have signed up to volunteer. This allows us to send
 		 * only one email instead of sending multiples.
 		 *
 		 * @see https://codex.wordpress.org/Function_Reference/wp_mail
@@ -201,7 +201,7 @@ class WI_Volunteer_Management_Email {
 		 * Get the From email header which includes the from email address and name.
 		 *
 		 * We use the from email address and name if they're available. If not, we use the WordPress admin email and the website name.
-		 * 
+		 *
 		 * @return string The from header to use in the email.
 		 */
 		public function get_from_header(){
@@ -213,7 +213,7 @@ class WI_Volunteer_Management_Email {
 
 		/**
 		 * Create an array representing the 'to' field for admins when someone signs up.
-		 * 
+		 *
 		 * @return array Email addresses separated by commas or an empty string if none exist.
 		 */
 		public function get_opp_admin_email_addresses(){
@@ -231,7 +231,7 @@ class WI_Volunteer_Management_Email {
 
 		/**
 		 * Create a string of email addresses to BCC for the volunteer reminder email including everyone that signed up.
-		 * 	
+		 *
 		 * @return string String of volunteer email addresses for this opportunity to BCC.
 		 */
 		public function get_volunteer_email_addresses(){
@@ -247,7 +247,7 @@ class WI_Volunteer_Management_Email {
 
 		/**
 		 * Take a string and replace all variables with the values to be used in the email.
-		 * 		
+		 *
 		 * @param  string $string_to_replace String to have variables replaced. Usually an email body.
 		 * @return string                    String with variables replaced.
 		 */
@@ -272,7 +272,7 @@ class WI_Volunteer_Management_Email {
 				'{contact_email}'           => $this->opp->opp_meta['contact_email'],
 			);
 
-			$search_and_replace_text  = apply_filters( 'wivm_search_and_replace_text', $search_and_replace_text );
+			$search_and_replace_text  = apply_filters( 'wivm_search_and_replace_text', $search_and_replace_text, $this->user->ID );
 
 			foreach( $search_and_replace_text as $key => $value ){
 				$this->search_text[]  = $key;
