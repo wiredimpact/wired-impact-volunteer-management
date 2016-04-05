@@ -76,6 +76,11 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 			$volunteer_ids[] = $result->user_id;
 		}
 
+		//If no RSVPs yet then add the User ID 0 to the array to find no users instead of all users
+		if( empty( $volunteer_ids ) ){
+			$volunteer_ids[] = 0;
+		}
+
 		$args = array(
 			'number' 	=> $users_per_page,
 			'offset' 	=> ( $paged-1 ) * $users_per_page,
