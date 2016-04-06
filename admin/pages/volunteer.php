@@ -12,7 +12,7 @@
  * @subpackage WI_Volunteer_Management/Admin
  */
 
-if ( !current_user_can( 'list_users' ) || !isset( $_REQUEST['user_id'] ) ){
+if ( !current_user_can( 'edit_others_posts' ) || !isset( $_REQUEST['user_id'] ) ){
 	wp_die( __( 'Cheatin&#8217; uh?', 'wired-impact-volunteer-management' ), 403 );
 }
 
@@ -45,9 +45,11 @@ $volunteer = new WI_Volunteer_Management_Volunteer( $volunteer_id );
 		</div>
 
 		<div class="contact-footer clear">
+			<?php if( current_user_can( 'edit_users' ) ): ?>
 			<a href="<?php echo admin_url( 'user-edit.php?user_id=' . $volunteer_id ); ?>" class="button edit-volunteer">
 				<?php _e( 'Edit Volunteer Info', 'wired-impact-volunteer-management' ); ?>
 			</a>
+			<?php endif; ?>
 		</div>
 	
 	</div><!-- .volunteer-info -->
