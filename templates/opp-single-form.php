@@ -9,10 +9,10 @@ $opp = new WI_Volunteer_Management_Opportunity( $post->ID ); //Get volunteer opp
 ?>
 
 <h3><?php ( $opp->opp_meta['one_time_opp'] == 1 ) ? _e( 'Sign Up to Volunteer', 'wired-impact-volunteer-management' ) : _e( 'Express Interest in Volunteering', 'wired-impact-volunteer-management' ) ; ?></h3>
-					
+
 <?php if( $opp->should_allow_rvsps() ): ?>
 <div class="loading volunteer-opp-message"><?php _e( 'Please wait...', 'wired-impact-volunteer-management' ); ?></div>
-<div class="success volunteer-opp-message"><?php _e( 'Thanks for signing up. You\'ll receive a confirmation email shortly.', 'wired-impact-volunteer-management' ); ?></div>
+<div class="rsvp-success volunteer-opp-message"><?php _e( 'Thanks for signing up. You\'ll receive a confirmation email shortly.', 'wired-impact-volunteer-management' ); ?></div>
 <div class="already-rsvped volunteer-opp-message"><?php _e( 'It looks like you already signed up for this opportunity.', 'wired-impact-volunteer-management' ); ?></div>
 <div class="rsvp-closed volunteer-opp-message"><?php _e( 'We\'re sorry, but we weren\'t able to sign you up. We have no more open spots.', 'wired-impact-volunteer-management' ); ?></div>
 <div class="error volunteer-opp-message"><?php _e( 'Please fill in every field and make sure you entered a valid email address.', 'wired-impact-volunteer-management' ); ?></div>
