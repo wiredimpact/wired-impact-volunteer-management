@@ -2,7 +2,7 @@
 Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
-Tested up to: 4.4
+Tested up to: 4.5
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,6 +100,11 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. View Volunteer Profiles
 
 == Changelog ==
+
+= 1.0.3 =
+* Fixed bug where all users were shown in the volunteer list if no RSVPs had taken place.
+* Adjusted plugin permissions for clearer and easier editing for different WordPress user roles.
+* Tested up to WordPress 4.5.
 
 = 1.0.2 =
 * Fixed bug where some users were not being included in the volunteers list view when they should be.
