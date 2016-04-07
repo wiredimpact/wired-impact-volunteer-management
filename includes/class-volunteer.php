@@ -85,7 +85,7 @@ class WI_Volunteer_Management_Volunteer {
 	 * Format a phone number that's provided only in integers.
 	 *
 	 * @todo   Remove duplicates of this method that exist in other classes
-	 * 
+	 *
 	 * @param  int $unformmated_number Phone number in only integers
 	 * @return string Phone number formatted to look nice.
 	 */
@@ -93,7 +93,7 @@ class WI_Volunteer_Management_Volunteer {
 		$formatted_number = '';
 
 		if( $unformatted_number != '' ){
-			$formatted_number = '(' . substr( $unformatted_number, 0, 3 ) . ') '. substr( $unformatted_number, 3, 3 ) . '-' . substr( $unformatted_number, 6 );	
+			$formatted_number = '(' . substr( $unformatted_number, 0, 3 ) . ') '. substr( $unformatted_number, 3, 3 ) . '-' . substr( $unformatted_number, 6 );
 		}
 
 		return apply_filters( 'wivm_formatted_phone', $formatted_number, $unformatted_number );
@@ -101,7 +101,7 @@ class WI_Volunteer_Management_Volunteer {
 
 	/**
 	 * Get the number of volunteer opportunities this volunteer has signed up for.
-	 * 
+	 *
 	 * @return int Number of volunteer opportunities signed up for
 	 */
 	public function get_num_volunteer_opps(){
@@ -124,7 +124,7 @@ class WI_Volunteer_Management_Volunteer {
 	 *
 	 * This is used to display the year the person started volunteering within the admin. It's worth
 	 * noting that this isn't the time of the opportunity, but rather when they RSVPed.
-	 * 
+	 *
 	 * @return string The date and time of the first volunteer RSVP.
 	 */
 	public function get_first_volunteer_opp_time(){
@@ -145,7 +145,7 @@ class WI_Volunteer_Management_Volunteer {
 	/**
 	 * Get an array with all of the volunteer opportunities this person has signed up for.
 	 *
-	 * First we pull only the IDs of the posts that have been signed up for with the most recent one they signed 
+	 * First we pull only the IDs of the posts that have been signed up for with the most recent one they signed
 	 * up for first. Then we create a new WI_Volunteer_Management_Opportunity object for each and return it.
 	 *
 	 * @todo  Fix order so it pulls them by volunteer opp date, not the date they signed up.
@@ -168,7 +168,7 @@ class WI_Volunteer_Management_Volunteer {
 				        ";
 
 				$query_values = array( $this->ID, 1 );
-				        
+
 				break;
 
 			//One-Time Volunteer Opportunities
@@ -218,22 +218,22 @@ class WI_Volunteer_Management_Volunteer {
 
 	/**
 	 * Remove an RSVP for a user for a specific volunteer opportunity. This is usually done through AJAX.
-	 * 
+	 *
 	 * @param  int $post_id ID of the volunteer opportunity to have its RSVP removed
 	 * @return int|bool The number of rows updated or false if error
 	 */
 	public function remove_rsvp_user_opp( $post_id ){
 		global $wpdb;
 
-		$status = $wpdb->update( 
-			$wpdb->prefix  . 'volunteer_rsvps', 
+		$status = $wpdb->update(
+			$wpdb->prefix  . 'volunteer_rsvps',
 			array( //Data to update
 				'rsvp' => 0
-			), 
+			),
 			array( //Where
 				'user_id' => $this->ID,
 			 	'post_id' => $post_id
-			), 
+			),
 			array( '%d'	), //Data formats
 			array( '%d', '%d' ) //Where formats
 		);
@@ -244,26 +244,26 @@ class WI_Volunteer_Management_Volunteer {
 	/**
 	 * Get the admin link to look at this specific volunteer.
 	 *
-	 * This is not a link to the typical user edit screen. This page includes a lot of information on the 
+	 * This is not a link to the typical user edit screen. This page includes a lot of information on the
 	 * volunteer including the contact info, notes on them and which volunteer opportunities they signed up for.
-	 * 
+	 *
 	 * @param  int $user_id The volunteer's ID
 	 * @return string       The URL needed to view this volunteer's information.
 	 */
 	public function get_admin_url(){
 
-		return get_admin_url( null, 'admin.php?page=wi-volunteer-management-volunteer&user_id=' . $this->ID );		
+		return get_admin_url( null, 'admin.php?page=wi-volunteer-management-volunteer&user_id=' . $this->ID );
 	}
 
 	/**
 	 * Create a new volunteer user or update one if the email address is already used.
-	 * 
+	 *
 	 * @param  array $form_fields The submitted volunteer opportunity form info
 	 * @return int   The user id of the new or updated WordPress user
 	 */
 	public function create_update_user( $form_fields ){
 		//Prepare userdata to be added for a new user or updated for an existing user.
-		$userdata = array( 
+		$userdata = array(
 			'first_name' 	=> sanitize_text_field( $form_fields['wivm_first_name'] ),
 			'last_name'  	=> sanitize_text_field( $form_fields['wivm_last_name'] ),
 		);
@@ -291,14 +291,14 @@ class WI_Volunteer_Management_Volunteer {
 
 		$this->ID = $user_id;
 
-		do_action( 'wivm_create_update_user', $this->ID );
+		do_action( 'wivm_create_update_user', $this->ID, $form_fields );
 	}
 
 	/**
 	 * Delete RSVPs for this user.
 	 *
 	 * This is typically done right before the user is deleted from WordPress entirely.
-	 * 
+	 *
 	 * @return int|bool Int for number of rows updated of false on error
 	 */
 	public function delete_rsvps(){
