@@ -194,7 +194,7 @@ class WI_Volunteer_Management {
 		$this->loader->add_action(   'plugins_loaded',                             $plugin_admin, 'do_upgrades' );
 		$this->loader->add_action(   'admin_enqueue_scripts',                      $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action(   'admin_enqueue_scripts',                      $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action(   'admin_menu',                                 $plugin_admin, 'register_settings_page' );
+		$this->loader->add_action(   'admin_menu',                                 $plugin_admin, 'do_menu_changes' );
 		$this->loader->add_action(   'admin_init',                                 $plugin_admin, 'register_settings' );
 		$this->loader->add_action(   'edit_form_after_editor',                     $plugin_admin, 'show_opp_editor_description' );
 		$this->loader->add_action(   'add_meta_boxes',                             $plugin_admin, 'add_meta_boxes' );

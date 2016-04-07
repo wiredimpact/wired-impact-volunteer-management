@@ -12,7 +12,7 @@
  * @subpackage WI_Volunteer_Management/Admin
  */
 
-if ( !current_user_can( 'list_users' ) ){
+if ( !current_user_can( 'edit_others_posts' ) ){
 	wp_die( __( 'Cheatin&#8217; uh?', 'wired-impact-volunteer-management' ), 403 );
 }
 

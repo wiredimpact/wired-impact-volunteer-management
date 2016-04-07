@@ -21,9 +21,11 @@ $wi_form->admin_header();
 	
 	<h2 class="nav-tab-wrapper" id="wivm-tabs">
 		<a class="nav-tab" id="help-tab" href="#top#help"><span class="dashicons dashicons-editor-help"></span> <?php _e( 'Help', 'wired-impact-volunteer-management' ); ?></a>
+		<?php if( current_user_can( 'manage_options' ) ): ?>
 		<a class="nav-tab" id="general-tab" href="#top#general"><span class="dashicons dashicons-admin-tools"></span> <?php _e( 'General', 'wired-impact-volunteer-management' ); ?></a>
 		<a class="nav-tab" id="defaults-tab" href="#top#defaults"><span class="dashicons dashicons-admin-generic"></span> <?php _e( 'Opportunity Defaults', 'wired-impact-volunteer-management' ); ?></a>
 		<a class="nav-tab" id="email-tab" href="#top#email"><span class="dashicons dashicons-email-alt"></span> <?php _e( 'Email', 'wired-impact-volunteer-management' ); ?></a>
+		<?php endif; ?>
 	</h2>
 
 	<?php
@@ -44,6 +46,7 @@ $wi_form->admin_header();
 	$wi_form->form_table_end();
 
 	//Display General settings tab
+	if( current_user_can( 'manage_options' ) ):
 	$wi_form->form_table_start( 'general' );
 
 		$wi_form->radio( 'use_css', array( 1 => __( 'Yes, please provide basic styling.', 'wired-impact-volunteer-management' ), 0 => __( 'No, I\'ll code my own styling.', 'wired-impact-volunteer-management' ) ), 'Load Plugin CSS?' );
@@ -89,5 +92,6 @@ $wi_form->admin_header();
     	do_action( 'wivm_display_email_settings', $wi_form );
 
 	$wi_form->form_table_end();
+	endif;
 
 $wi_form->admin_footer();

@@ -183,11 +183,14 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
-	 * Register our menu and its sub menu's.
+	 * Register our menu and its sub menu pages.
+	 *
+	 * We also use this to make other menu changes such as changing the first submenu item name
+	 * and hiding the top level Volunteer Mgmt menu from roles without permission to use it.
 	 *
 	 * @global array $submenu used to change the label on the first item.
 	 */
-	public function register_settings_page() {
+	public function do_menu_changes() {
 
 		// Base 64 encoded SVG image
 		$icon_svg = 'dashicons-groups';
@@ -196,7 +199,7 @@ class WI_Volunteer_Management_Admin {
 		$admin_page = add_menu_page(
 			__( 'Wired Impact Volunteer Management: ', 'wired-impact-volunteer-management' ) . ' ' . __( 'Help & Settings', 'wired-impact-volunteer-management' ),
 			__( 'Volunteer Mgmt', 'wired-impact-volunteer-management' ),
-			'manage_options',
+			'edit_others_posts',
 			'wi-volunteer-management',
 			array( $this, 'load_page' ),
 			$icon_svg,
@@ -209,7 +212,7 @@ class WI_Volunteer_Management_Admin {
 				'wi-volunteer-management',
 				'',
 				__( 'Volunteers', 'wired-impact-volunteer-management' ),
-				'manage_options',
+				'edit_others_posts',
 				'wi-volunteer-management-volunteers',
 				array( $this, 'load_page' ),
 			),
@@ -217,7 +220,7 @@ class WI_Volunteer_Management_Admin {
 				'wi-volunteer-management',
 				'',
 				__( 'Help & Settings', 'wired-impact-volunteer-management' ),
-				'manage_options',
+				'edit_others_posts',
 				'wi-volunteer-management-help-settings',
 				array( $this, 'load_page' ),
 			),
@@ -225,7 +228,7 @@ class WI_Volunteer_Management_Admin {
 				NULL, //Not in menu
 				'',
 				__( 'Volunteer', 'wired-impact-volunteer-management' ),
-				'manage_options',
+				'edit_others_posts',
 				'wi-volunteer-management-volunteer',
 				array( $this, 'load_page' ),
 			),
@@ -244,8 +247,13 @@ class WI_Volunteer_Management_Admin {
 
 		//Change the submenu name for the 1st item
 		global $submenu;
-		if ( isset( $submenu['wi-volunteer-management'] ) && current_user_can( 'manage_options' ) ) {
+		if ( isset( $submenu['wi-volunteer-management'] ) && current_user_can( 'edit_others_posts' ) ) {
 			$submenu['wi-volunteer-management'][0][0] = __( 'Opportunities', 'wired-impact-volunteer-management' );
+		}
+
+		//Hide the Volunteer Mgmt menu from anyone without edit_others_posts permission
+		if( !current_user_can( 'edit_others_posts' ) ){
+			remove_menu_page( 'wi-volunteer-management' );
 		}
 	}
 
@@ -1061,7 +1069,7 @@ class WI_Volunteer_Management_Admin {
 		if( $post->post_type != 'volunteer_opp' ){
 		  return false;
 		}
-		if( !current_user_can( 'manage_options' ) ){
+		if( !current_user_can( 'edit_others_posts' ) ){
 		  return false;
 		}
 
