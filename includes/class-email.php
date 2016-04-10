@@ -272,7 +272,7 @@ class WI_Volunteer_Management_Email {
 				'{contact_email}'           => $this->opp->opp_meta['contact_email'],
 			);
 
-			$search_and_replace_text  = apply_filters( 'wivm_search_and_replace_text', $search_and_replace_text );
+			$search_and_replace_text  = apply_filters( 'wivm_search_and_replace_text', $search_and_replace_text, $this->user->ID );
 
 			foreach( $search_and_replace_text as $key => $value ){
 				$this->search_text[]  = $key;
