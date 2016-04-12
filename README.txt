@@ -101,6 +101,9 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 == Changelog ==
 
+= 1.0.4 =
+* Added additional arguments to one hook and one filter for further custom development flexibility.
+
 = 1.0.3 =
 * Fixed bug where all users were shown in the volunteer list if no RSVPs had taken place.
 * Adjusted plugin permissions for clearer and easier editing for different WordPress user roles.
