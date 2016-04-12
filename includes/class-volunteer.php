@@ -291,7 +291,7 @@ class WI_Volunteer_Management_Volunteer {
 
 		$this->ID = $user_id;
 
-		do_action( 'wivm_create_update_user', $this->ID );
+		do_action( 'wivm_create_update_user', $this->ID, $form_fields );
 	}
 
 	/**
