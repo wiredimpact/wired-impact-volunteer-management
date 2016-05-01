@@ -34,35 +34,19 @@ function __construct() {
 public function widget( $args, $instance ) {
 
    global $wp_query;
+
+   // Global variables to  be used in templates/opps-list-widget.php
+   global $display_opp_when;
+   global $display_opp_where;
+   global $display_opp_spots;
+   
    $temp = $wp_query;
 
-   // Check if excerpt box if set
-   if ( isset( $instance['opp_info_excerpt'] )  ) {
-      $opp_info_excerpt = true;
-   } else {
-      $opp_info_excerpt = false;
-   }
+   isset( $instance['opp_info_when'] ) ? $display_opp_when = true : $display_opp_when = false;
 
-   // Check if when box if set
-   if ( isset( $instance['opp_info_when'] )  ) {
-      $opp_info_when = true;
-   } else {
-      $opp_info_when = false;
-   }
+   isset( $instance['opp_info_where'] ) ? $display_opp_where = true : $display_opp_where = false;
 
-   // Check if where box if set
-   if ( isset( $instance['opp_info_where'] )  ) {
-      $opp_info_where = true;
-   } else {
-      $opp_info_where = false;
-   }
-
-   // Check if spots box if set
-   if ( isset( $instance['opp_info_spots'] )  ) {
-      $opp_info_spots = true;
-   } else {
-      $opp_info_spots = false;
-   }
+   isset( $instance['opp_info_spots'] ) ? $display_opp_spots = true: $display_opp_spots = false;
 
    // Store number of opps to show in $num_of_opps
    if ( isset( $instance['number_of_opps_input'] ) ) {
@@ -163,36 +147,7 @@ public function form( $instance ) {
       $num_of_opps = esc_attr( $instance['number_of_opps_input'] );
    } else {
       $num_of_opps = 1;
-   }
-
-   // Check excerpt box if set
-   if ( isset( $instance['opp_info_excerpt'] )  ) {
-      $opp_info_excerpt = true;
-   } else {
-      $opp_info_excerpt = false;
-   }
-
-   // Check when box if set
-   if ( isset( $instance['opp_info_when'] )  ) {
-      $opp_info_when = true;
-   } else {
-      $opp_info_when = false;
-   }
-
-   // Check where box if set
-   if ( isset( $instance['opp_info_where'] )  ) {
-      $opp_info_where = true;
-   } else {
-      $opp_info_where = false;
-   }
-
-   // Check spots box if set
-   if ( isset( $instance['opp_info_spots'] )  ) {
-      $opp_info_spots = true;
-   } else {
-      $opp_info_spots = false;
-   }
-   
+   }   
 
    ?>
 
@@ -210,14 +165,13 @@ public function form( $instance ) {
    </p>
    <p>
       <label><?php _e( 'Information to show for each opportunity (in addition to title):', 'wired-impact-volunteer-management'); ?></label></br>
-      <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_excerpt' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_excerpt' ) ); ?>" type="checkbox" value="excerpt" <?php if( $opp_info_excerpt ) { echo 'checked'; }; ?>/>
       <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_excerpt' ) ); ?>"><?php _e( 'Excerpt', 'wired-impact-volunteer-management' ); ?></label></br>
-      <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_when' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_when' ) ); ?>" type="checkbox" value="when" <?php if( $opp_info_when ) { echo 'checked'; }; ?>/>
+      <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_when' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_when' ) ); ?>" type="checkbox" value="when" <?php if( isset( $instance['opp_info_when'] ) ) { echo 'checked'; }; ?>/>
       <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_when' ) ); ?>"><?php _e( 'When', 'wired-impact-volunteer-management' ); ?></label></br>
-      <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_where' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_where' ) ); ?>" type="checkbox" value="where" <?php if( $opp_info_where ) { echo 'checked'; }; ?>/>
+      <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_where' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_where' ) ); ?>" type="checkbox" value="where" <?php if( isset( $instance['opp_info_where'] ) ) { echo 'checked'; }; ?>/>
       <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_where' ) ); ?>"><?php _e( 'Where', 'wired-impact-volunteer-management' ); ?></label></br>
-      <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_spots' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_spots' ) ); ?>" type="checkbox" value="spots" <?php if( $opp_info_spots ) { echo 'checked'; }; ?>/>
-      <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_spots' ) ); ?>"><?php _e( 'Volunteer Spots', 'wired-impact-volunteer-management' ); ?></label></br>
+      <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_spots' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_spots' ) ); ?>" type="checkbox" value="spots" <?php if( isset( $instance['opp_info_spots'] ) ) { echo 'checked'; }; ?>/>
+      <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_spots' ) ); ?>"><?php _e( 'Open Volunteer Spots', 'wired-impact-volunteer-management' ); ?></label></br>
 
    </p>
 
@@ -245,7 +199,6 @@ public function update( $new_instance, $old_instance ) {
    $instance['number_of_opps_input'] = ( ! empty( $new_instance['number_of_opps_input'] ) ) ? floor(abs(strip_tags( $new_instance['number_of_opps_input'] ))) : '';
 
    // Update info to show for each opp
-   $instance['opp_info_excerpt'] = ( ! empty( $new_instance['opp_info_excerpt'] ) ) ? strip_tags( $new_instance['opp_info_excerpt'] ) : null;
    $instance['opp_info_when'] = ( ! empty( $new_instance['opp_info_when'] ) ) ? strip_tags( $new_instance['opp_info_when'] ) : null;
    $instance['opp_info_where'] = ( ! empty( $new_instance['opp_info_where'] ) ) ? strip_tags( $new_instance['opp_info_where'] ) : null;
    $instance['opp_info_spots'] = ( ! empty( $new_instance['opp_info_spots'] ) ) ? strip_tags( $new_instance['opp_info_spots'] ) : null;
