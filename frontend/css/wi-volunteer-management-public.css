@@ -81,3 +81,32 @@
 #wivm-sign-up-form .field-error {
 	border: 2px solid #990000;
 }
+
+/* Widget Styles */
+.widget-volunteer-opp-info {
+   max-height: 150px;
+   overflow-y: hidden;
+}
+
+.widget-volunteer-opp-info:hover {
+   overflow-y: auto;
+}
+
+/*
+* Show scrollbar on hover without having to start scrolling so user can tell there are more opportunities
+*
+* http://stackoverflow.com/questions/7855590/how-can-i-prevent-scroll-bars-from-being-hidden-for-os-x-trackpad-users-in-webki 
+*/
+.widget-volunteer-opp-info::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.widget-volunteer-opp-info::-webkit-scrollbar:vertical {
+    width: 11px;
+}
+
+.widget-volunteer-opp-info::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white; /* should match background, can't be transparent */
+    background-color: rgba(0, 0, 0, .5);
+}

@@ -101,7 +101,7 @@ public function widget( $args, $instance ) {
 
    $template_loader = new WI_Volunteer_Management_Template_Loader(); ?>
 
-   <aside id="opportunities" class="widget widget_links">
+   <aside id="opportunities" class="widget widget_links volunteer-opp-info">
 
       <!-- If page slug widget option is filled out - link the opportunities title to list of all opportunities -->
       <?php isset( $instance['opps_page_slug'] ) ? _e( '<a href="' . $instance['opps_page_slug'] . '">' ) : null; ?>
@@ -109,15 +109,16 @@ public function widget( $args, $instance ) {
       <?php isset( $instance['opps_page_slug'] ) ? _e( '</a>' ) : null; ?>
 
    <?php if ( $wp_query->have_posts() ) { ?>
+      <div class="widget-volunteer-opp-info">
+         <ul>
 
-      <ul>
+      <?php while( $wp_query->have_posts() ) {
+         $wp_query->the_post();
+         $template_loader->get_template_part( 'opps-list', 'widget' );
+      } ?>
 
-   <?php while( $wp_query->have_posts() ) {
-      $wp_query->the_post();
-      $template_loader->get_template_part( 'opps-list', 'widget' );
-   } ?>
-
-      </ul>
+         </ul>
+      </div>
 
    <?php } else { ?>
 
@@ -155,7 +156,7 @@ public function form( $instance ) {
 
    <!-- Markup for widget options in admin -->
    <p>
-      <label><?php _e( 'Opportunity type to show:', 'wired-impact-volunteer-management'); ?></label></br>
+      <label class="wi-widget-block-label"><?php _e( 'Opportunity type to show:', 'wired-impact-volunteer-management'); ?></label>
       <input id="<?php echo esc_attr( $this->get_field_id( 'list_type_radio_btn_1' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'list_type_radio_btn' ) ); ?>" type="radio" value="flexible" <?php if( $list_type === 'flexible' ) { echo 'checked'; }; ?>/>
       <label for="<?php echo esc_attr( $this->get_field_id( 'list_type_radio_btn_1' ) ); ?>"><?php _e( 'Flexible', 'wired-impact-volunteer-management' ); ?></label>
       <input id="<?php echo esc_attr( $this->get_field_id( 'list_type_radio_btn_2' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'list_type_radio_btn' ) ); ?>" type="radio" value="one-time" <?php if( $list_type === 'one-time' ) { echo 'checked'; } ; ?>/>
@@ -163,22 +164,22 @@ public function form( $instance ) {
    </p>
 
    <p>
-      <label><?php _e( 'Number of opportunites to show:', 'wired-impact-volunteer-management'); ?></label></br>
+      <label class="wi-widget-block-label"><?php _e( 'Number of opportunites to show:', 'wired-impact-volunteer-management'); ?></label>
       <input id="<?php echo esc_attr( $this->get_field_id( 'number_of_opps_input_1' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'number_of_opps_input' ) ); ?>" type="number" value="<?php echo $num_of_opps; ?>"/>
    </p>
 
    <p>
-      <label><?php _e( 'Information to show for each opportunity (in addition to title):', 'wired-impact-volunteer-management'); ?></label></br>
+      <label class="wi-widget-block-label"><?php _e( 'Information to show for each opportunity (in addition to title):', 'wired-impact-volunteer-management'); ?></label>
       <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_when' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_when' ) ); ?>" type="checkbox" value="when" <?php if( isset( $instance['opp_info_when'] ) ) { echo 'checked'; }; ?>/>
-      <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_when' ) ); ?>"><?php _e( 'When', 'wired-impact-volunteer-management' ); ?></label></br>
+      <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_when' ) ); ?>" class="wi-widget-block-label"><?php _e( 'When', 'wired-impact-volunteer-management' ); ?></label>
       <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_where' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_where' ) ); ?>" type="checkbox" value="where" <?php if( isset( $instance['opp_info_where'] ) ) { echo 'checked'; }; ?>/>
-      <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_where' ) ); ?>"><?php _e( 'Where', 'wired-impact-volunteer-management' ); ?></label></br>
+      <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_where' ) ); ?>" class="wi-widget-block-label"><?php _e( 'Where', 'wired-impact-volunteer-management' ); ?></label>
       <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_spots' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_spots' ) ); ?>" type="checkbox" value="spots" <?php if( isset( $instance['opp_info_spots'] ) ) { echo 'checked'; }; ?>/>
-      <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_spots' ) ); ?>"><?php _e( 'Open Volunteer Spots', 'wired-impact-volunteer-management' ); ?></label></br>
+      <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_spots' ) ); ?>" class="wi-widget-block-label"><?php _e( 'Open Volunteer Spots', 'wired-impact-volunteer-management' ); ?></label>
    </p>
 
    <p>
-      <label><?php _e( 'Provide page slug to link to all opportunities of chosen type:', 'wired-impact-volunteer-management'); ?></label></br>
+      <label class="wi-widget-block-label"><?php _e( 'Provide page slug to link to all opportunities of chosen type:', 'wired-impact-volunteer-management'); ?></label>
       <input id="<?php echo esc_attr( $this->get_field_id( 'opps_page_slug' ) ); ?>" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'opps_page_slug' ) ); ?>" type="text" value="<?php isset( $instance['opps_page_slug'] ) ? _e( $instance['opps_page_slug'] ) : null; ?>"/>
    </p>
 
