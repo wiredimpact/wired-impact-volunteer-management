@@ -33,14 +33,10 @@ function __construct() {
 */
 public function widget( $args, $instance ) {
 
-   global $wp_query;
-
    // Global variables to  be used in templates/opps-list-widget.php
    global $display_opp_when;
    global $display_opp_where;
    global $display_opp_spots;
-   
-   $temp = $wp_query;
 
    isset( $instance['opp_info_when'] ) ? $display_opp_when = true : $display_opp_when = false;
    isset( $instance['opp_info_where'] ) ? $display_opp_where = true : $display_opp_where = false;
@@ -97,7 +93,7 @@ public function widget( $args, $instance ) {
 
    }
 
-   $wp_query = new WP_Query( $posts_args );
+   $opps_query = new WP_Query( $posts_args );
 
    $template_loader = new WI_Volunteer_Management_Template_Loader(); ?>
 
@@ -108,12 +104,12 @@ public function widget( $args, $instance ) {
          <h2 class="widget-title"><?php _e( $list_type . ' volunteer opportunities', 'wired-impact-volunteer-management'); ?></h2>
       <?php isset( $instance['opps_page_slug'] ) ? _e( '</a>' ) : null; ?>
 
-   <?php if ( $wp_query->have_posts() ) { ?>
+   <?php if ( $opps_query->have_posts() ) { ?>
       <div class="widget-volunteer-opp-info">
          <ul>
 
-      <?php while( $wp_query->have_posts() ) {
-         $wp_query->the_post();
+      <?php while( $opps_query->have_posts() ) {
+         $opps_query->the_post();
          $template_loader->get_template_part( 'opps-list', 'widget' );
       } ?>
 
@@ -126,7 +122,17 @@ public function widget( $args, $instance ) {
 
    <?php } ?>
 
-   </aside> <?php
+   </aside> 
+
+   <?php
+
+   /* Restore original Post Data 
+    * NB: Because we are using new WP_Query we aren't stomping on the 
+    * original $wp_query and it does not need to be reset with 
+    * wp_reset_query(). We just need to set the post data back up with
+    * wp_reset_postdata().
+    */
+   wp_reset_postdata();
 }
 
 /**
