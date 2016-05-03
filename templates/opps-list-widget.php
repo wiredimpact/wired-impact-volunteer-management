@@ -1,6 +1,6 @@
 <?php
 /**
- * This template is used to display the list of flexible volunteer opportunities
+ * This template is used to display the list of flexible OR one-time volunteer opportunities
  * for the widget.
  *
  * To adjust this template copy it into your current theme within a folder called "wivm".
