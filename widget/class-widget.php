@@ -17,8 +17,8 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       // WP_Widget constructor accepts Base ID (string), Name (string), Widget Options (array), Control Options (array)
       parent::__construct(
          'WI_Volunteer_Management_Widget', // Base ID
-         __('Volunteer Management Widget', 'text_domain'), // Name
-         array( 'description' => __( 'A list of volunteer opportunities.', 'text_domain' ), ) // Widget Options
+         __('Volunteer Management Opportunities', 'wired-impact-volunteer-management'), // Name
+         array( 'description' => __( 'A list of volunteer opportunities.', 'wired-impact-volunteer-management' ), ) // Widget Options
       );
 
    }
