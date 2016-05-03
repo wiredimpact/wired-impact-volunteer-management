@@ -97,7 +97,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
       $template_loader = new WI_Volunteer_Management_Template_Loader(); ?>
 
-      <aside id="opportunities" class="widget widget_links volunteer-opp-info">
+      <aside id="wivm-opportunities" class="widget widget_links volunteer-opp-info">
 
          <!-- If page slug widget option is filled out - link the opportunities title to list of all opportunities -->
          <?php isset( $instance['opps_page_slug'] ) ? _e( '<a href="' . $instance['opps_page_slug'] . '">' ) : null; ?>
