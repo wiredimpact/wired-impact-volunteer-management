@@ -222,8 +222,4 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       return $instance;
    }
 
-   public static function register_widget() {
-      register_widget( 'WI_Volunteer_Management_Widget' );
-   }
-
 } // class WI_Volunteer_Management_Widgets

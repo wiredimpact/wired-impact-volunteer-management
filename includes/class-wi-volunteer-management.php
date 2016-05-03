@@ -81,7 +81,6 @@ class WI_Volunteer_Management {
 
 		// Load the public hooks
 		$this->define_public_hooks();
-      $this->define_widget_hooks();
 
 	}
 
@@ -246,20 +245,8 @@ class WI_Volunteer_Management {
 		$this->loader->add_filter(      'the_content',                   $plugin_public, 'show_meta_form_single' );
 		$this->loader->add_action(      'wp_ajax_wivm_sign_up',          $plugin_public, 'process_volunteer_sign_up' );
 		$this->loader->add_action(      'wp_ajax_nopriv_wivm_sign_up',   $plugin_public, 'process_volunteer_sign_up' );
+      $this->loader->add_action(      'widgets_init',                  $plugin_public, 'register_widget' );
 	}
-
-   /**
-   * Register the hook for the widget portion of the plugin.
-   *
-   * @since    0.1
-   * @access   private
-   */
-   private function define_widget_hooks() {
-
-      $plugin_widget = new WI_Volunteer_Management_Widget( $this->get_plugin_name(), $this->get_version() );
-
-      $this->loader->add_action(      'widgets_init',            $plugin_widget, 'register_widget' );
-   }
 
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.

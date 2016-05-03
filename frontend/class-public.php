@@ -120,6 +120,13 @@ class WI_Volunteer_Management_Public {
 	    register_post_type( 'volunteer_opp', $args );
 	}
 
+   /**
+    * Register our Volunteer Opportunities widget.
+    */
+   public static function register_widget() {
+      register_widget( 'WI_Volunteer_Management_Widget' );
+   }
+
 	/**
 	 * Shortcode for viewing all one-time volunteer opportunities.
 	 */
