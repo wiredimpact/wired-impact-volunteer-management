@@ -97,10 +97,8 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
       <aside id="wivm-opportunities" class="widget widget_links volunteer-opp-info">
 
-         <!-- If page slug widget option is filled out - link the opportunities title to list of all opportunities -->
-         <?php isset( $instance['opps_page_slug'] ) ? _e( '<a href="' . $instance['opps_page_slug'] . '">' ) : null; ?>
-            <h2 class="widget-title"><?php _e( $list_type . ' volunteer opportunities', 'wired-impact-volunteer-management'); ?></h2>
-         <?php isset( $instance['opps_page_slug'] ) ? _e( '</a>' ) : null; ?>
+         <!-- Title of widget on front-end, will show 'flexible' or 'one-time' ($list_type) depending on opportunity type selected in admin -->
+         <h2 class="widget-title"><?php _e( $list_type . ' volunteer opportunities', 'wired-impact-volunteer-management'); ?></h2>
 
       <?php if ( $opps_query->have_posts() ) { ?>
          <div class="widget-volunteer-opp-info">
@@ -182,11 +180,6 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
          <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_spots' ) ); ?>" class="wi-widget-block-label"><?php _e( 'Open Volunteer Spots', 'wired-impact-volunteer-management' ); ?></label>
       </p>
 
-      <p>
-         <label class="wi-widget-block-label"><?php _e( 'Provide page slug to link to all opportunities of chosen type:', 'wired-impact-volunteer-management'); ?></label>
-         <input id="<?php echo esc_attr( $this->get_field_id( 'opps_page_slug' ) ); ?>" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'opps_page_slug' ) ); ?>" type="text" value="<?php isset( $instance['opps_page_slug'] ) ? _e( $instance['opps_page_slug'] ) : null; ?>"/>
-      </p>
-
 
       <?php
    }
@@ -215,7 +208,6 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       $instance['opp_info_when']  = ( ! empty( $new_instance['opp_info_when'] ) ) ? strip_tags( $new_instance['opp_info_when'] ) : null;
       $instance['opp_info_where'] = ( ! empty( $new_instance['opp_info_where'] ) ) ? strip_tags( $new_instance['opp_info_where'] ) : null;
       $instance['opp_info_spots'] = ( ! empty( $new_instance['opp_info_spots'] ) ) ? strip_tags( $new_instance['opp_info_spots'] ) : null;
-      $instance['opps_page_slug'] = ( ! empty( $new_instance['opps_page_slug'] ) ) ? strip_tags( $new_instance['opps_page_slug'] ) : null;
 
       return $instance;
    }
