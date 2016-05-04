@@ -110,3 +110,12 @@
     border: 2px solid white; /* should match background, can't be transparent */
     background-color: rgba(0, 0, 0, .5);
 }
+
+/* Used multiple selectors so that the specificity is greater than the default WordPress style */
+.widget-volunteer-opp-info li h3 {
+   margin-bottom: 0;
+}
+
+.widget-volunteer-opp-info li {
+   margin-bottom: 1em;
+}

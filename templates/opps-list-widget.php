@@ -21,7 +21,7 @@ $opp = new WI_Volunteer_Management_Opportunity( $post->ID ); //Get volunteer opp
  <?php
 
    // Display title of opportunity
-   the_title( sprintf( '<a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a>' );
+   the_title( sprintf( '<h3><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h3>' );
 
    // Display 'When' information IF option to show 'When' is checked in widget settings &&
    // opportunity is a one-time opp OR flexible opp with date filled out
