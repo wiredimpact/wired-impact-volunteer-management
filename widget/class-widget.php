@@ -34,11 +34,10 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
    public function widget( $args, $instance ) {
 
       // Global variables to  be used in templates/opps-list-widget.php
-      global $wivm_opp_options;
-
-      $wivm_opp_options['display_opp_when']  = isset( $instance['opp_info_when'] ) ? true : false;
-      $wivm_opp_options['display_opp_where'] = isset( $instance['opp_info_where'] ) ? true : false;
-      $wivm_opp_options['display_opp_spots'] = isset( $instance['opp_info_spots'] ) ? true : false;
+      $wivm_widget_options = array();
+      $wivm_widget_options['display_opp_when']  = isset( $instance['opp_info_when'] ) ? true : false;
+      $wivm_widget_options['display_opp_where'] = isset( $instance['opp_info_where'] ) ? true : false;
+      $wivm_widget_options['display_opp_spots'] = isset( $instance['opp_info_spots'] ) ? true : false;
 
       // Store number of opps to show in $num_of_opps
       if ( isset( $instance['number_of_opps_input'] ) ) {
@@ -106,7 +105,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
          <?php while( $opps_query->have_posts() ) {
             $opps_query->the_post();
-            $template_loader->get_template_part( 'opps-list', 'widget' );
+            $template_loader->get_template_part( 'opps-list', 'widget', true, $wivm_widget_options );
          } ?>
 
             </ul>
