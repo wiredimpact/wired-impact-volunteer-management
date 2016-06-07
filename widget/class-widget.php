@@ -164,7 +164,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       <p>
          <label class="wi-widget-block-label"><?php _e( 'Opportunity type to show:', 'wired-impact-volunteer-management'); ?></label>
          <input id="<?php echo esc_attr( $this->get_field_id( 'list_type_radio_btn_1' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'list_type_radio_btn' ) ); ?>" type="radio" value="flexible" <?php if( $list_type === 'flexible' ) { echo 'checked'; }; ?>/>
-         <label for="<?php echo esc_attr( $this->get_field_id( 'list_type_radio_btn_1' ) ); ?>"><?php _e( 'Flexible', 'wired-impact-volunteer-management' ); ?></label>
+         <label for="<?php echo esc_attr( $this->get_field_id( 'list_type_radio_btn_1' ) ); ?>" class="wi-widget-block-label"><?php _e( 'Flexible', 'wired-impact-volunteer-management' ); ?></label>
          <input id="<?php echo esc_attr( $this->get_field_id( 'list_type_radio_btn_2' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'list_type_radio_btn' ) ); ?>" type="radio" value="one-time" <?php if( $list_type === 'one-time' ) { echo 'checked'; } ; ?>/>
          <label for="<?php echo esc_attr( $this->get_field_id( 'list_type_radio_btn_2' ) ); ?>"><?php _e( 'One-Time', 'wired-impact-volunteer-management' ); ?></label>
       </p>
