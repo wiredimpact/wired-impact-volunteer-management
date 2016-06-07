@@ -31,11 +31,6 @@ $opp = new WI_Volunteer_Management_Opportunity( $post->ID ); //Get volunteer opp
 
    }
 
-   // Display number of open volunteer spots IF option to show 'Open Volunteer Spots' is checked in widget settings
-   if ( $options['display_opp_spots'] === true ) {
-      $opp->display_meta( $opp->get_open_volunteer_spots(),    __( 'Open Volunteer Spots:', 'wired-impact-volunteer-management' ) );
-   }
-
 ?>
 
 </li>
