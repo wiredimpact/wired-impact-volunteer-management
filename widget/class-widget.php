@@ -175,9 +175,8 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       </p>
 
       <p>
-         <label class="wi-widget-block-label"><?php _e( 'Information to show for each opportunity (in addition to title):', 'wired-impact-volunteer-management'); ?></label>
          <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_when' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_when' ) ); ?>" type="checkbox" value="when" <?php if( isset( $instance['opp_info_when'] ) ) { echo 'checked'; }; ?>/>
-         <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_when' ) ); ?>" class="wi-widget-block-label"><?php _e( 'When', 'wired-impact-volunteer-management' ); ?></label>
+         <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_when' ) ); ?>" class="wi-widget-block-label"><?php _e( 'Show when the opportunity occurs', 'wired-impact-volunteer-management' ); ?></label>
       </p>
 
 
