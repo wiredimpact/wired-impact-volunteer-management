@@ -31,12 +31,6 @@ $opp = new WI_Volunteer_Management_Opportunity( $post->ID ); //Get volunteer opp
 
    }
 
-   // Display 'Where' information IF option to show 'Where' is checked in widget settings &&
-   // any of the Location fields are filled out
-   if ( $options['display_opp_where'] === true && strlen( $opp->format_address() ) > 0 ) {
-      $opp->display_meta( $opp->format_address(),           __( 'Where:', 'wired-impact-volunteer-management' ) );
-   }
-
    // Display number of open volunteer spots IF option to show 'Open Volunteer Spots' is checked in widget settings
    if ( $options['display_opp_spots'] === true ) {
       $opp->display_meta( $opp->get_open_volunteer_spots(),    __( 'Open Volunteer Spots:', 'wired-impact-volunteer-management' ) );

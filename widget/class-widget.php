@@ -36,7 +36,6 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       // Array of widget options to be used in templates/opps-list-widget.php
       $wivm_widget_options = array();
       $wivm_widget_options['display_opp_when']  = isset( $instance['opp_info_when'] ) ? true : false;
-      $wivm_widget_options['display_opp_where'] = isset( $instance['opp_info_where'] ) ? true : false;
       $wivm_widget_options['display_opp_spots'] = isset( $instance['opp_info_spots'] ) ? true : false;
 
       // Store number of opps to show in $num_of_opps
@@ -180,8 +179,6 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
          <label class="wi-widget-block-label"><?php _e( 'Information to show for each opportunity (in addition to title):', 'wired-impact-volunteer-management'); ?></label>
          <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_when' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_when' ) ); ?>" type="checkbox" value="when" <?php if( isset( $instance['opp_info_when'] ) ) { echo 'checked'; }; ?>/>
          <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_when' ) ); ?>" class="wi-widget-block-label"><?php _e( 'When', 'wired-impact-volunteer-management' ); ?></label>
-         <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_where' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_where' ) ); ?>" type="checkbox" value="where" <?php if( isset( $instance['opp_info_where'] ) ) { echo 'checked'; }; ?>/>
-         <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_where' ) ); ?>" class="wi-widget-block-label"><?php _e( 'Where', 'wired-impact-volunteer-management' ); ?></label>
          <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_spots' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_spots' ) ); ?>" type="checkbox" value="spots" <?php if( isset( $instance['opp_info_spots'] ) ) { echo 'checked'; }; ?>/>
          <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_spots' ) ); ?>" class="wi-widget-block-label"><?php _e( 'Open Volunteer Spots', 'wired-impact-volunteer-management' ); ?></label>
       </p>
@@ -215,7 +212,6 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
       // Update info to show for each opp
       $instance['opp_info_when']  = ( ! empty( $new_instance['opp_info_when'] ) ) ? strip_tags( $new_instance['opp_info_when'] ) : null;
-      $instance['opp_info_where'] = ( ! empty( $new_instance['opp_info_where'] ) ) ? strip_tags( $new_instance['opp_info_where'] ) : null;
       $instance['opp_info_spots'] = ( ! empty( $new_instance['opp_info_spots'] ) ) ? strip_tags( $new_instance['opp_info_spots'] ) : null;
 
       return $instance;
