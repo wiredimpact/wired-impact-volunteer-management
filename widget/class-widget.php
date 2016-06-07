@@ -139,6 +139,9 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
    */
    public function form( $instance ) {
 
+      // Title
+      $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'New title', 'wired-impact-volunteer-management' );
+
       // Default radio button to 'flexible' opportunities or set to selection
       if ( isset( $instance[ 'list_type_radio_btn' ] ) ) {
          $list_type = esc_attr( $instance['list_type_radio_btn'] );
@@ -156,6 +159,10 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       ?>
 
       <!-- Markup for widget options in admin -->
+      <p>
+         <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( esc_attr( 'Title:' ) ); ?></label>
+         <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+      </p>
       <p>
          <label class="wi-widget-block-label"><?php _e( 'Opportunity type to show:', 'wired-impact-volunteer-management'); ?></label>
          <input id="<?php echo esc_attr( $this->get_field_id( 'list_type_radio_btn_1' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'list_type_radio_btn' ) ); ?>" type="radio" value="flexible" <?php if( $list_type === 'flexible' ) { echo 'checked'; }; ?>/>
@@ -196,6 +203,9 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
    public function update( $new_instance, $old_instance ) {
 
       $instance = array();
+
+      // Update title
+      $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
 
       // Update list type
       $instance['list_type_radio_btn'] = ( ! empty( $new_instance['list_type_radio_btn'] ) ) ? strip_tags( $new_instance['list_type_radio_btn'] ) : '';
