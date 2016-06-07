@@ -94,32 +94,32 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
       $template_loader = new WI_Volunteer_Management_Template_Loader(); ?>
 
-      <aside id="wivm-opportunities" class="widget widget_links volunteer-opp-info">
+      <!-- Title of widget on front-end is pulled from the title field in the admin -->
+      <?php
 
-         <!-- Title of widget on front-end, will show 'flexible' or 'one-time' ($list_type) depending on opportunity type selected in admin -->
-         <h2 class="widget-title"><?php _e( $list_type . ' volunteer opportunities', 'wired-impact-volunteer-management'); ?></h2>
+      echo $args['before_widget'];
 
-      <?php if ( $opps_query->have_posts() ) { ?>
-         <div class="widget-volunteer-opp-info">
-            <ul>
+      if ( ! empty( $instance['title'] ) ) {
+         echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+      }
+
+      if ( $opps_query->have_posts() ) { ?>
+         <ul>
 
          <?php while( $opps_query->have_posts() ) {
             $opps_query->the_post();
             $template_loader->get_template_part( 'opps-list', 'widget', true, $wivm_widget_options );
          } ?>
 
-            </ul>
-         </div>
+         </ul>
 
       <?php } else { ?>
 
          <p class="no-opps"><?php _e( 'Sorry, there are no ' . $list_type . ' volunteer opportunities available right now.', 'wired-impact-volunteer-management' ); ?></p>
 
-      <?php } ?>
+      <?php }
 
-      </aside> 
-
-      <?php
+      echo $args['after_widget'];
 
       /* Restore original Post Data 
        * NB: Because we are using new WP_Query we aren't stomping on the 
@@ -139,8 +139,8 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
    */
    public function form( $instance ) {
 
-      // Title
-      $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'New title', 'wired-impact-volunteer-management' );
+      // Default title to 'Volunteer Opportunities'
+      $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Volunteer Opportunities', 'wired-impact-volunteer-management' );
 
       // Default radio button to 'flexible' opportunities or set to selection
       if ( isset( $instance[ 'list_type_radio_btn' ] ) ) {
@@ -205,7 +205,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       $instance = array();
 
       // Update title
-      $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+      $instance['title'] = ( ! empty( trim( $new_instance['title'] ) ) ) ? strip_tags( $new_instance['title'] ) : 'Volunteer Opportunities';
 
       // Update list type
       $instance['list_type_radio_btn'] = ( ! empty( $new_instance['list_type_radio_btn'] ) ) ? strip_tags( $new_instance['list_type_radio_btn'] ) : '';
