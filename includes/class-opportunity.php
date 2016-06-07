@@ -171,7 +171,7 @@ class WI_Volunteer_Management_Opportunity {
 
 		//If they want the start date and time only
 		if( $start_only == true ){
-			$opp_time = date( __( 'D, F d, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $start_date_time);
+			$opp_time = date( __( 'D, F j, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $start_date_time);
 		  
 			return apply_filters( 'wivm_opp_time', $opp_time, $start_date_time, $end_date_time, $start_only );
 		}

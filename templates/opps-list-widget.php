@@ -24,7 +24,7 @@ $opp = new WI_Volunteer_Management_Opportunity( $post->ID ); //Get volunteer opp
       // IF one time-opportunity display formatted dates/times
       // ELSE we know it's a flexible opportunity so display flexible frequency
       if( $opp->opp_meta['one_time_opp'] === 1 ) {
-         $opp->display_meta( $opp->format_opp_times(), __( 'When:', 'wired-impact-volunteer-management' ) );
+         $opp->display_meta( $opp->format_opp_times( '', '', true ), __( 'When:', 'wired-impact-volunteer-management' ) );
       } else {
          $opp->display_meta( $opp->opp_meta['flexible_frequency'], __( 'When:', 'wired-impact-volunteer-management' ) );
       }
