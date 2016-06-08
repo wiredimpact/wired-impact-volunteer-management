@@ -81,3 +81,8 @@
 #wivm-sign-up-form .field-error {
 	border: 2px solid #990000;
 }
+
+/* Widget Styles */
+.widget_wi_volunteer_management_widget ul li span {
+	display: block;
+}

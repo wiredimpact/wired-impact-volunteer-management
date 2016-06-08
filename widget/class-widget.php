@@ -31,7 +31,10 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
    * @param array $args     Widget arguments.
    * @param array $instance Saved values from database.
    */
-   public function widget( $args, $instance ) {
+   public function widget( $args, $instance ) {      
+
+      // Declare to use for queries used to grab page links where WIVM plugin shortcodes were added
+      global $wpdb;
 
       // Array of widget options to be used in templates/opps-list-widget.php
       $wivm_widget_options = array();
@@ -61,6 +64,12 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
             )
          );
 
+         // Set default title if empty
+         $instance['title'] = empty( $instance['title'] ) ? 'Flexible Volunteer Opportunities' : $instance['title'];
+
+         // Get URL of page that [flexible_volunteer_opps] shortcode was used
+         $allOppsPageLink = get_permalink( $wpdb->get_results( 'SELECT ID FROM ' . $wpdb->base_prefix . 'posts WHERE post_content = "[flexible_volunteer_opps]" AND post_parent = 0')[0]->ID );
+
       } else {
 
          // Query for one-time volunteer opportunities
@@ -86,6 +95,12 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
             )
          );
 
+         // Set default title if empty
+         $instance['title'] = empty( $instance['title'] ) ? 'One-Time Volunteer Opportunities' : $instance['title'];
+
+         // Get URL of page that [one_time_volunteer_opps] shortcode was used
+         $allOppsPageLink = get_permalink( $wpdb->get_results( 'SELECT ID FROM ' . $wpdb->base_prefix . 'posts WHERE post_content = "[one_time_volunteer_opps]" AND post_parent = 0')[0]->ID );
+
       }
 
       $opps_query = new WP_Query( $posts_args );
@@ -97,8 +112,8 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
       echo $args['before_widget'];
 
-      if ( ! empty( $instance['title'] ) ) {
-         echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+      if ( ! empty( $instance['title'] ) ) { ?>
+         <a href="<?php echo $allOppsPageLink; ?>"><?php echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title']; ?></a> <?php
       }
 
       if ( $opps_query->have_posts() ) { ?>
@@ -110,6 +125,8 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
          } ?>
 
          </ul>
+
+         <p><a href="<?php echo $allOppsPageLink; ?>">View All</a></p>
 
       <?php } else { ?>
 
@@ -126,6 +143,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
        * wp_reset_postdata().
        */
       wp_reset_postdata();
+
    }
 
    /**
@@ -138,7 +156,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
    public function form( $instance ) {
 
       // Default title to 'Volunteer Opportunities'
-      $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Volunteer Opportunities', 'wired-impact-volunteer-management' );
+      $title = ! empty( $instance['title'] ) ? $instance['title'] : __( '', 'wired-impact-volunteer-management' );
 
       // Default radio button to 'flexible' opportunities or set to selection
       if ( isset( $instance[ 'list_type_radio_btn' ] ) ) {
@@ -198,7 +216,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       $instance = array();
 
       // Update title
-      $instance['title'] = ( ! empty( trim( $new_instance['title'] ) ) ) ? strip_tags( $new_instance['title'] ) : 'Volunteer Opportunities';
+      $instance['title'] = ( ! empty( trim( $new_instance['title'] ) ) ) ? strip_tags( $new_instance['title'] ) : '';
 
       // Update list type
       $instance['list_type_radio_btn'] = ( ! empty( $new_instance['list_type_radio_btn'] ) ) ? strip_tags( $new_instance['list_type_radio_btn'] ) : '';
