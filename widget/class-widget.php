@@ -68,7 +68,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
          $instance['title'] = empty( $instance['title'] ) ? 'Flexible Volunteer Opportunities' : $instance['title'];
 
          // Get URL of page that [flexible_volunteer_opps] shortcode was used
-         $allOppsPageLink = get_permalink( $wpdb->get_results( 'SELECT ID FROM ' . $wpdb->base_prefix . 'posts WHERE post_content = "[flexible_volunteer_opps]" AND post_parent = 0')[0]->ID );
+         $all_opps_page_link = get_permalink( $wpdb->get_results( 'SELECT ID FROM ' . $wpdb->base_prefix . 'posts WHERE post_content = "[flexible_volunteer_opps]" AND post_parent = 0')[0]->ID );
 
       } else {
 
@@ -99,7 +99,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
          $instance['title'] = empty( $instance['title'] ) ? 'One-Time Volunteer Opportunities' : $instance['title'];
 
          // Get URL of page that [one_time_volunteer_opps] shortcode was used
-         $allOppsPageLink = get_permalink( $wpdb->get_results( 'SELECT ID FROM ' . $wpdb->base_prefix . 'posts WHERE post_content = "[one_time_volunteer_opps]" AND post_parent = 0')[0]->ID );
+         $all_opps_page_link = get_permalink( $wpdb->get_results( 'SELECT ID FROM ' . $wpdb->base_prefix . 'posts WHERE post_content = "[one_time_volunteer_opps]" AND post_parent = 0')[0]->ID );
 
       }
 
@@ -113,7 +113,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       echo $args['before_widget'];
 
       if ( ! empty( $instance['title'] ) ) { ?>
-         <a href="<?php echo $allOppsPageLink; ?>"><?php echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title']; ?></a> <?php
+         <a href="<?php echo $all_opps_page_link; ?>"><?php echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title']; ?></a> <?php
       }
 
       if ( $opps_query->have_posts() ) { ?>
@@ -126,7 +126,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
          </ul>
 
-         <p><a href="<?php echo $allOppsPageLink; ?>">View All</a></p>
+         <p><a href="<?php echo $all_opps_page_link; ?>">View All</a></p>
 
       <?php } else { ?>
 
