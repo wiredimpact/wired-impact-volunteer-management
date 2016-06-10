@@ -123,9 +123,13 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
          </ul>
 
-         <p><a href="<?php echo $all_opps_page_link; ?>">View All</a></p>
+         <?php if( $all_opps_page_link !== false ) { ?>
 
-      <?php } else { ?>
+            <p><a href="<?php echo $all_opps_page_link; ?>">View All</a></p>
+            
+         <?php } 
+
+      } else { ?>
 
          <p class="no-opps"><?php _e( 'Sorry, there are no ' . $list_type . ' volunteer opportunities available right now.', 'wired-impact-volunteer-management' ); ?></p>
 
@@ -228,8 +232,6 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
    }
 
    public function get_all_opps_link( $shortcode ) {
-
-      // var_dump($shortcode); die();
 
       global $wpdb;
 
