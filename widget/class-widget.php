@@ -109,8 +109,17 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
       echo $args['before_widget'];
 
-      if ( ! empty( $instance['title'] ) ) { ?>
-         <a href="<?php echo $all_opps_page_link; ?>"><?php echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title']; ?></a> <?php
+      if ( ! empty( $instance['title'] ) ) {
+
+         if ( $all_opps_page_link !== false ) { ?>
+            <a href="<?php echo $all_opps_page_link; ?>"> <?php
+         }
+         
+         echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+         
+         if ( $all_opps_page_link ) { ?>
+            </a> <?php
+         }
       }
 
       if ( $opps_query->have_posts() ) { ?>
@@ -126,7 +135,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
          <?php if( $all_opps_page_link !== false ) { ?>
 
             <p><a href="<?php echo $all_opps_page_link; ?>">View All</a></p>
-            
+
          <?php } 
 
       } else { ?>
