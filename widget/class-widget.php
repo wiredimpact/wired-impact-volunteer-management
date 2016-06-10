@@ -31,7 +31,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
    * @param array $args     Widget arguments.
    * @param array $instance Saved values from database.
    */
-   public function widget( $args, $instance ) {      
+   public function widget( $args, $instance ) {
 
       // Array of widget options to be used in templates/opps-list-widget.php
       $wivm_widget_options = array();
@@ -226,7 +226,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       $instance = array();
 
       // Update title
-      $instance['title'] = ( ! empty( trim( $new_instance['title'] ) ) ) ? strip_tags( $new_instance['title'] ) : '';
+      $instance['title'] = ( ! empty( $new_instance['title'] ) && ! ctype_space( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
 
       // Update list type
       $instance['list_type_radio_btn'] = ( ! empty( $new_instance['list_type_radio_btn'] ) ) ? strip_tags( $new_instance['list_type_radio_btn'] ) : '';
