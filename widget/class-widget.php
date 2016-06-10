@@ -33,9 +33,6 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
    */
    public function widget( $args, $instance ) {      
 
-      // Declare to use for queries used to grab page links where WIVM plugin shortcodes were added
-      global $wpdb;
-
       // Array of widget options to be used in templates/opps-list-widget.php
       $wivm_widget_options = array();
       $wivm_widget_options['display_opp_when']  = isset( $instance['opp_info_when'] ) ? true : false;
@@ -68,7 +65,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
          $instance['title'] = empty( $instance['title'] ) ? 'Flexible Volunteer Opportunities' : $instance['title'];
 
          // Get URL of page that [flexible_volunteer_opps] shortcode was used
-         $all_opps_page_link = get_permalink( $wpdb->get_results( 'SELECT ID FROM ' . $wpdb->base_prefix . 'posts WHERE post_content = "[flexible_volunteer_opps]" AND post_parent = 0')[0]->ID );
+         $all_opps_page_link = $this->get_all_opps_link('[flexible_volunteer_opps]');
 
       } else {
 
@@ -99,7 +96,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
          $instance['title'] = empty( $instance['title'] ) ? 'One-Time Volunteer Opportunities' : $instance['title'];
 
          // Get URL of page that [one_time_volunteer_opps] shortcode was used
-         $all_opps_page_link = get_permalink( $wpdb->get_results( 'SELECT ID FROM ' . $wpdb->base_prefix . 'posts WHERE post_content = "[one_time_volunteer_opps]" AND post_parent = 0')[0]->ID );
+         $all_opps_page_link = $this->get_all_opps_link('[one_time_volunteer_opps]');
 
       }
 
@@ -228,6 +225,25 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       $instance['opp_info_when']  = ( ! empty( $new_instance['opp_info_when'] ) ) ? strip_tags( $new_instance['opp_info_when'] ) : null;
 
       return $instance;
+   }
+
+   public function get_all_opps_link( $shortcode ) {
+
+      // var_dump($shortcode); die();
+
+      global $wpdb;
+
+      // Get id of post that shortcode was used
+      $all_opps_post_id = $wpdb->get_var( 'SELECT ID FROM ' . $wpdb->base_prefix . 'posts WHERE post_content LIKE "%' . $shortcode . '%" AND post_status = "publish"');
+
+      // Get page from id
+      if( ! is_null( $all_opps_post_id ) ) {
+         return  get_permalink( $all_opps_post_id );
+      }
+
+      return false;
+
+
    }
 
    /**
