@@ -427,6 +427,14 @@ body.post-type-volunteer_opp .wp-pointer-arrow {
 }
 
 /**
+* Widget styling
+*/
+.wi-widget-block-label:after {
+   content: "\a";
+   white-space: pre;
+}
+
+/**
  * Globals
  */
 .clear:before,

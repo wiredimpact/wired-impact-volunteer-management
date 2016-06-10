@@ -90,10 +90,12 @@ if ( !class_exists( 'WI_Volunteer_Management_Template_Loader' ) )  {
 		 * @param string  $slug
 		 * @param string  $name Optional. Default null.
 		 * @param bool    $load Optional. Default true.
+       * @param array   $options Optional. Default null.
 		 *
 		 * @return string
 		 */
-		public function get_template_part( $slug, $name = null, $load = true ) {
+		public function get_template_part( $slug, $name = null, $load = true, $options = null ) {
+
 			// Execute code for this part
 			do_action( 'get_template_part_' . $slug, $slug, $name );
 
@@ -101,7 +103,7 @@ if ( !class_exists( 'WI_Volunteer_Management_Template_Loader' ) )  {
 			$templates = $this->get_template_file_names( $slug, $name );
 
 			// Return the part that is found
-			return $this->locate_template( $templates, $load, false );
+			return $this->locate_template( $templates, $load, false, $options );
 		}
 
 		/**
@@ -150,11 +152,12 @@ if ( !class_exists( 'WI_Volunteer_Management_Template_Loader' ) )  {
 		 * @param string|array $template_names Template file(s) to search for, in order.
 		 * @param bool         $load           If true the template file will be loaded if it is found.
 		 * @param bool         $require_once   Whether to require_once or require. Default true.
+       * @param array        $options        Optional. Default null.
 		 *   Has no effect if $load is false.
 		 *
 		 * @return string The template filename if one is located.
 		 */
-		public function locate_template( $template_names, $load = false, $require_once = true ) {
+		public function locate_template( $template_names, $load = false, $require_once = true, $options = null ) {
 			// No file found yet
 			$located = false;
 
@@ -177,7 +180,15 @@ if ( !class_exists( 'WI_Volunteer_Management_Template_Loader' ) )  {
 			}
 
 			if ( $load && $located ) {
-				load_template( $located, $require_once );
+
+            /* 
+             * Call this classes load_template function instead of the WordPress core load_template().
+             * This classes load_template function is nearly identical to the WordPress core function 
+             * except it accepts an additional optional parameter which can be used to pass in variables
+             * to the required template which eliminates the need to use global variables in the script
+             * that utilizes the WI_Volunteer_Management_Template_Loader class.
+             */
+				$this->load_template( $located, $require_once, $options );
 			}
 
 			return $located;
@@ -234,5 +245,51 @@ if ( !class_exists( 'WI_Volunteer_Management_Template_Loader' ) )  {
 		protected function get_templates_dir() {
 			return trailingslashit( $this->plugin_directory ) . $this->plugin_template_directory;
 		}
+
+      /**
+       * This is a modification of the core WordPress load_template function. This
+       * modification accepts an additonal array parameter which makes variables from 
+       * the script that called the get_template_part function of the WI_Volunteer_Management_Template_Loader 
+       * class available in the template file that is being required.
+       *
+       * Require the template file with WordPress environment.
+       *
+       * The globals are set up for the template file to ensure that the WordPress
+       * environment is available from within the function. The query variables are
+       * also available.
+       *
+       * @global array      $posts
+       * @global WP_Post    $post
+       * @global bool       $wp_did_header
+       * @global WP_Query   $wp_query
+       * @global WP_Rewrite $wp_rewrite
+       * @global wpdb       $wpdb
+       * @global string     $wp_version
+       * @global WP         $wp
+       * @global int        $id
+       * @global WP_Comment $comment
+       * @global int        $user_ID
+       *
+       * @param string $_template_file Path to template file.
+       * @param bool   $require_once   Whether to require_once or require. Default true.
+       * @param array  $options Optional. Array of key value pairs that can be used in the required template. Default null.
+       */
+      protected function load_template( $_template_file, $require_once = true, $options = null ) {
+         global $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
+
+         if ( is_array( $wp_query->query_vars ) ) {
+            extract( $wp_query->query_vars, EXTR_SKIP );
+         }
+
+         if ( isset( $s ) ) {
+            $s = esc_attr( $s );
+         }
+
+         if ( $require_once ) {
+            require_once( $_template_file );
+         } else {
+            require( $_template_file );
+         }
+      }
 	}
 }
