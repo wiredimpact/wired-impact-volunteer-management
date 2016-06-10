@@ -203,7 +203,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       </p>
 
       <p>
-         <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_when' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_when' ) ); ?>" type="checkbox" value="when" <?php if( isset( $instance['opp_info_when'] ) ) { echo 'checked'; }; ?>/>
+         <input id="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_when' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'opp_info_when' ) ); ?>" type="checkbox" value="when" <?php if( ! isset( $instance['opp_info_when'] ) || $instance['opp_info_when'] === 'when' ) { echo 'checked'; }; ?>/>
          <label for="<?php echo esc_attr( $this->get_field_id( 'opp_info_cbx_when' ) ); ?>" class="wi-widget-block-label"><?php _e( 'Show when the opportunity occurs', 'wired-impact-volunteer-management' ); ?></label>
       </p>
 
@@ -235,7 +235,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       $instance['number_of_opps_input'] = ( ! empty( $new_instance['number_of_opps_input'] ) ) ? floor(abs(strip_tags( $new_instance['number_of_opps_input'] ))) : '';
 
       // Update info to show for each opp
-      $instance['opp_info_when']  = ( ! empty( $new_instance['opp_info_when'] ) ) ? strip_tags( $new_instance['opp_info_when'] ) : null;
+      $instance['opp_info_when']  = ( ! empty( $new_instance['opp_info_when'] ) ) ? strip_tags( $new_instance['opp_info_when'] ) : false;
 
       return $instance;
    }
