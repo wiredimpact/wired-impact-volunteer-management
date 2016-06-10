@@ -37,6 +37,9 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       $wivm_widget_options = array();
       $wivm_widget_options['display_opp_when']  = ( isset( $instance['opp_info_when'] ) && $instance['opp_info_when'] !== false ) ? true : false;
 
+      // Set default title if empty
+      $instance['title'] = empty( $instance['title'] ) ? 'Volunteer Opportunities' : $instance['title'];
+
       // Store number of opps to show in $num_of_opps
       if ( isset( $instance['number_of_opps_input'] ) ) {
          $num_of_opps = (int) esc_attr( $instance['number_of_opps_input'] );
@@ -60,9 +63,6 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
                )
             )
          );
-
-         // Set default title if empty
-         $instance['title'] = empty( $instance['title'] ) ? 'Flexible Volunteer Opportunities' : $instance['title'];
 
          // Get URL of page that [flexible_volunteer_opps] shortcode was used
          $all_opps_page_link = $this->get_all_opps_link('[flexible_volunteer_opps]');
@@ -91,9 +91,6 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
             'relation' => 'AND'
             )
          );
-
-         // Set default title if empty
-         $instance['title'] = empty( $instance['title'] ) ? 'One-Time Volunteer Opportunities' : $instance['title'];
 
          // Get URL of page that [one_time_volunteer_opps] shortcode was used
          $all_opps_page_link = $this->get_all_opps_link('[one_time_volunteer_opps]');
@@ -224,7 +221,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
       $instance = array();
 
-      // Update title
+      // Update title - ctype_space() (boolean) returns true if string is all whitespace
       $instance['title'] = ( ! empty( $new_instance['title'] ) && ! ctype_space( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
 
       // Update list type
