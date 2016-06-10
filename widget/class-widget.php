@@ -104,7 +104,6 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
       $template_loader = new WI_Volunteer_Management_Template_Loader(); ?>
 
-      <!-- Title of widget on front-end is pulled from the title field in the admin -->
       <?php
 
       echo $args['before_widget'];
