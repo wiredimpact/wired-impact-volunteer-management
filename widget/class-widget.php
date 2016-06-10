@@ -35,7 +35,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
       // Array of widget options to be used in templates/opps-list-widget.php
       $wivm_widget_options = array();
-      $wivm_widget_options['display_opp_when']  = isset( $instance['opp_info_when'] ) ? true : false;
+      $wivm_widget_options['display_opp_when']  = ( isset( $instance['opp_info_when'] ) && $instance['opp_info_when'] !== false ) ? true : false;
 
       // Store number of opps to show in $num_of_opps
       if ( isset( $instance['number_of_opps_input'] ) ) {
