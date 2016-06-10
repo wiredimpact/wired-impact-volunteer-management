@@ -65,7 +65,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
          );
 
          // Get URL of page that [flexible_volunteer_opps] shortcode was used
-         $all_opps_page_link = $this->get_all_opps_link('[flexible_volunteer_opps]');
+         $all_opps_page_link = $this->get_all_opps_link( '[flexible_volunteer_opps]' );
 
       } else {
 
@@ -93,7 +93,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
          );
 
          // Get URL of page that [one_time_volunteer_opps] shortcode was used
-         $all_opps_page_link = $this->get_all_opps_link('[one_time_volunteer_opps]');
+         $all_opps_page_link = $this->get_all_opps_link( '[one_time_volunteer_opps]' );
 
       }
 
@@ -113,7 +113,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
          
          echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
          
-         if ( $all_opps_page_link ) { ?>
+         if ( $all_opps_page_link !== false ) { ?>
             </a> <?php
          }
       }
@@ -130,24 +130,18 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
          <?php if( $all_opps_page_link !== false ) { ?>
 
-            <p><a href="<?php echo $all_opps_page_link; ?>">View All</a></p>
+            <p><a href="<?php echo $all_opps_page_link; ?>"><?php _e( 'View All', 'wired-impact-volunteer-management' ); ?></a></p>
 
          <?php } 
 
       } else { ?>
 
-         <p class="no-opps"><?php _e( 'Sorry, there are no ' . $list_type . ' volunteer opportunities available right now.', 'wired-impact-volunteer-management' ); ?></p>
+         <p class="no-opps"><?php printf( __( 'Sorry, there are no %s volunteer opportunities available right now.', 'wired-impact-volunteer-management' ), $list_type ); ?></p>
 
       <?php }
 
       echo $args['after_widget'];
 
-      /* Restore original Post Data 
-       * NB: Because we are using new WP_Query we aren't stomping on the 
-       * original $wp_query and it does not need to be reset with 
-       * wp_reset_query(). We just need to set the post data back up with
-       * wp_reset_postdata().
-       */
       wp_reset_postdata();
 
    }
@@ -161,14 +155,14 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
    */
    public function form( $instance ) {
 
-      // Default title to 'Volunteer Opportunities'
+      // The default title used if empty is 'Volunteer Opportunities'
       $title = ! empty( $instance['title'] ) ? $instance['title'] : __( '', 'wired-impact-volunteer-management' );
 
-      // Default radio button to 'flexible' opportunities or set to selection
+      // Default radio button to 'one-time' opportunities or set to selection
       if ( isset( $instance[ 'list_type_radio_btn' ] ) ) {
          $list_type = esc_attr( $instance['list_type_radio_btn'] );
       } else {
-         $list_type = 'flexible';
+         $list_type = 'one-time';
       }
 
       // Default number input to 1 or set to input
@@ -228,7 +222,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       $instance['list_type_radio_btn'] = ( ! empty( $new_instance['list_type_radio_btn'] ) ) ? strip_tags( $new_instance['list_type_radio_btn'] ) : '';
 
       // Update number of opps to show - abs accounts for negative numbers and floor accounts for decimals
-      $instance['number_of_opps_input'] = ( ! empty( $new_instance['number_of_opps_input'] ) ) ? floor(abs(strip_tags( $new_instance['number_of_opps_input'] ))) : '';
+      $instance['number_of_opps_input'] = ( ! empty( $new_instance['number_of_opps_input'] ) ) ? floor( abs( strip_tags( $new_instance['number_of_opps_input'] ) ) ) : '';
 
       // Update info to show for each opp
       $instance['opp_info_when']  = ( ! empty( $new_instance['opp_info_when'] ) ) ? strip_tags( $new_instance['opp_info_when'] ) : false;
@@ -236,21 +230,35 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       return $instance;
    }
 
+   /**
+    * Get a link to the post where volunteer opportunities are being displayed.
+    *
+    * This is done by finding where the [one_time_volunteer_opps] or the [flexible_volunteer_opps]
+    * shortcode is being used. We do this by querying the post content in the database.
+    * 
+    * @param  string $shortcode The shortcode string we want to search for in the database
+    * @return mixed Permalink string if post found, or false if not
+    */
    public function get_all_opps_link( $shortcode ) {
 
       global $wpdb;
 
       // Get id of post that shortcode was used
-      $all_opps_post_id = $wpdb->get_var( 'SELECT ID FROM ' . $wpdb->base_prefix . 'posts WHERE post_content LIKE "%' . $shortcode . '%" AND post_status = "publish"');
+      $query = '
+               SELECT ID
+               FROM ' . $wpdb->base_prefix . 'posts
+               WHERE post_content LIKE "%' . $shortcode . '%"
+               AND post_status = "publish"
+               ';
 
-      // Get page from id
+      $all_opps_post_id = $wpdb->get_var( $query );
+
+      // Get page or post URL from ID
       if( ! is_null( $all_opps_post_id ) ) {
-         return  get_permalink( $all_opps_post_id );
+         return get_permalink( $all_opps_post_id );
       }
 
       return false;
-
-
    }
 
    /**
