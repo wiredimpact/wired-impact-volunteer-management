@@ -50,6 +50,13 @@ $wi_form->admin_header();
 	$wi_form->form_table_start( 'general' );
 
 		$wi_form->radio( 'use_css', array( 1 => __( 'Yes, please provide basic styling.', 'wired-impact-volunteer-management' ), 0 => __( 'No, I\'ll code my own styling.', 'wired-impact-volunteer-management' ) ), 'Load Plugin CSS?' );
+
+		if( is_plugin_active( 'wired-impact-volunteer-management-forms-add-on/wired-impact-volunteer-management-forms-add-on.php') ) {
+
+			$wi_form->radio( 'use_gf', array( 1 => __( 'Yes, please use a provided gravity form.', 'wired-impact-volunteer-management' ), 0 => __( 'No, please use the default form.', 'wired-impact-volunteer-management' ) ), 'Use Gravity Form?' );
+
+		}
+
 		$wi_form->hidden( 'show_getting_started_notice' );
 
 		do_action( 'wivm_display_general_settings', $wi_form );
