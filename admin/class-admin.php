@@ -1107,27 +1107,6 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
-	 * Send volunteer reminder email and store it in the database.
-	 *
-	 * This method is called using cron and is never called in any other way.
-	 * 
-	 * @param  int $opp_id Volunteer opportunity ID.
-	 */
-	public function send_email_reminder( $opp_id ){
-
-		$data_array = array(
-			'post_id' => $opp_id,
-			'user_id' => 0,
-		);
-
-		$opp 	= new WI_Volunteer_Management_Opportunity( $opp_id );
-		$email 	= new WI_Volunteer_Management_Email( $opp );
-		$email->send_volunteer_reminder_email();
-		$email->store_volunteer_email( $data_array );
-
-	}
-
-	/**
 	 * Loop through all opportunities and create or remove all auto email reminders.
 	 *
 	 * This is run when the number of days prior to send reminder emails changes.

@@ -348,4 +348,27 @@ class WI_Volunteer_Management_Public {
  		die(); //Must use die() when using AJAX
 	}
 
+	/**
+	 * Send volunteer reminder email and store it in the database.
+	 *
+	 * This method is called using cron and is never called in any other way. This
+	 * method must be provided in the public class since the admin class is not
+	 * loaded when cron is run.
+	 * 
+	 * @param  int $opp_id Volunteer opportunity ID.
+	 */
+	public function send_email_reminder( $opp_id ){
+
+		$data_array = array(
+			'post_id' => $opp_id,
+			'user_id' => 0,
+		);
+
+		$opp 	= new WI_Volunteer_Management_Opportunity( $opp_id );
+		$email 	= new WI_Volunteer_Management_Email( $opp );
+		$email->send_volunteer_reminder_email();
+		$email->store_volunteer_email( $data_array );
+
+	}
+
 } //class WI_Volunteer_Management_Public
