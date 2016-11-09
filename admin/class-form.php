@@ -285,6 +285,43 @@ class WI_Volunteer_Management_Form {
 	}
 
 	/**
+	 * Create a Select Box Alternative (index is not used as option value).
+	 *
+	 * @param string $var    The variable within the option to create the select for.
+	 * @param string $label  The label to show for the variable.
+	 * @param array  $values The select options to choose from.
+	 * @param array  $attr   Description for the field
+	 */
+	public function select_alternative( $var, $label, $values, $attr = array() ) {
+		$attr = wp_parse_args( $attr, array(
+			'description' => '',
+		) );
+
+		if ( ! is_array( $values ) || $values === array() ) {
+			return;
+		}
+		$val = $this->wivm_options->get_option( $var );
+
+		echo '<tr>';
+
+			$this->label( $label, array( 'for' => $var, 'class' => 'select' ) );
+			echo '<td>';
+
+				echo '<select class="select" name="', esc_attr( $this->option_name ), '[', esc_attr( $var ), ']" id="', esc_attr( $var ), '">';
+				foreach ( $values as $value ) {
+					if ( ! empty( $value['id'] ) ) {
+						echo '<option value="', esc_attr( $value['id'] ), '"', selected( $val, $value['id'], false ), '>', $value['title'], '</option>';
+					}
+				}
+				echo '</select>';
+				if( $attr['description'] ) echo '<p class="description">' . $attr['description'] . '</p>';
+
+			echo '</td>';
+
+		echo '</tr>';
+	}
+
+	/**
 	 * Create a Radio input field.
 	 *
 	 * @param string $var    The variable within the option to create the file upload field for.

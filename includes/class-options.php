@@ -41,6 +41,8 @@ class WI_Volunteer_Management_Options {
 		//General
 		'use_css'              				=> 1,
 		'show_getting_started_notice'		=> 1,
+		'use_gf'							=> 0,
+		'chosen_gf'							=> 0,
 
 		//Defaults
 		'default_contact_name'				=> '',

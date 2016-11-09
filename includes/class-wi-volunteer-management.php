@@ -234,7 +234,7 @@ class WI_Volunteer_Management {
 	private function define_public_hooks() {
 
 		$plugin_public = new WI_Volunteer_Management_Public( $this->get_plugin_name(), $this->get_version() );
-      $plugin_widget = new WI_Volunteer_Management_Widget( $this->get_plugin_name(), $this->get_version() );
+		$plugin_widget = new WI_Volunteer_Management_Widget( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action(      'wp_enqueue_scripts',            $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action(      'wp_enqueue_scripts',            $plugin_public, 'enqueue_scripts' );
@@ -246,7 +246,7 @@ class WI_Volunteer_Management {
 		$this->loader->add_filter(      'the_content',                   $plugin_public, 'show_meta_form_single' );
 		$this->loader->add_action(      'wp_ajax_wivm_sign_up',          $plugin_public, 'process_volunteer_sign_up' );
 		$this->loader->add_action(      'wp_ajax_nopriv_wivm_sign_up',   $plugin_public, 'process_volunteer_sign_up' );
-      $this->loader->add_action(      'widgets_init',                  $plugin_widget, 'register_widget' );
+		$this->loader->add_action(      'widgets_init',                  $plugin_widget, 'register_widget' );
 	}
 
 	/**
