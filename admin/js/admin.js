@@ -25,7 +25,7 @@
                 var id = $(this).attr('id').replace('-tab', '');
                 $('#' + id).addClass('active');
                 $(this).addClass('nav-tab-active');
-                
+
                 //Hide Save Changes button on Help tab
                 var submit = $( '#wivm-settings-form p.submit' );
                 submit.show();
@@ -71,9 +71,9 @@
     /**
      * For volunteer opportunity edit screen including jQuery Timepicker
      */
-    
+
     $(function() {
-    
+
         //Show and hide one-time volunteer opportunity fields
         $('#one-time-opportunity').change(function() {
             if( this.checked ) {
@@ -83,7 +83,7 @@
             else {
                 $( '.one-time-field' ).hide();
                 $( '.flexible-field' ).show();
-            } 
+            }
         });
 
         //Show and hide fields if there is a limit on the number of volunteers
@@ -93,22 +93,34 @@
             }
             else {
                 $( '.volunteer-limit-field' ).hide();
-            } 
+            }
         });
 
 
-        var start_date_time = jQuery( '#volunteer-opportunity-details #start-date-time' ),
-            end_date_time = jQuery( '#volunteer-opportunity-details #end-date-time' ),
-            end_date_time_error = end_date_time.siblings( '.error' );
+        var start_date_time = jQuery( '#volunteer-opportunity-details #start-date-time-output' ),
+            start_date_time_save = jQuery( '#volunteer-opportunity-details #start-date-time' ),
+            end_date_time = jQuery( '#volunteer-opportunity-details #end-date-time-output' ),
+            end_date_time_save = jQuery( '#volunteer-opportunity-details #end-date-time' ),
+            end_date_time_error = end_date_time.siblings( '.error' ),
+            date_format = 'D, MM dd, yy',
+            time_format = 'h:mm tt',
+            alt_date_format = 'yy-mm-dd',
+            alt_time_format = 'HH:mm:ss',
+            separator_symbol = ' @ ';
+
 
         //Set the end date & time field to match the start date and time if the end is empty.
         //Only do this when focusing out on start time.
         start_date_time.datetimepicker({
             controlType: 'select',
             oneLine: true,
-            dateFormat: "D, MM dd, yy",
-            timeFormat: "h:mm tt",
-            separator: ' @ ',
+            dateFormat: date_format,
+            timeFormat: time_format,
+            separator: separator_symbol,
+            altField: start_date_time_save,
+            altFieldTimeOnly: false,
+            altFormat: alt_date_format,
+            altTimeFormat: alt_time_format,
             stepMinute: 5,
             onClose: function( dateText, inst ) {
                 if ( end_date_time.val() != '' ) {
@@ -122,14 +134,18 @@
                     end_date_time.val( dateText );
                 }
              }
-        }); 
+        });
 
         end_date_time.datetimepicker({
             controlType: 'select',
             oneLine: true,
-            dateFormat: "D, MM dd, yy",
-            timeFormat: "h:mm tt",
-            separator: ' @ ',
+            dateFormat: date_format,
+            timeFormat: time_format,
+            separator: separator_symbol,
+            altField: end_date_time_save,
+            altFieldTimeOnly: false,
+            altFormat: alt_date_format,
+            altTimeFormat: alt_time_format,
             stepMinute: 5,
             onClose: function( dateText, inst ) {
                 if ( start_date_time.val() != '' ) {
@@ -316,8 +332,8 @@
                                 message: editor_value
                             },
                         },
-                        function( response ) {                          
- 
+                        function( response ) {
+
                             $this.prop( 'disabled', false ).text( button_text );
 
                             // Hide any previously open response messages

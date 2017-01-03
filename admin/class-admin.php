@@ -427,7 +427,7 @@ class WI_Volunteer_Management_Admin {
 		  
 		  <tr>
 		    <td colspan="2"><h3><?php _e( 'Date and Time', 'wired-impact-volunteer-management' ); ?></h3></td>
-		  </tr>	
+		  </tr>
 
 		  <tr>
 		    <td><?php _e( 'One-Time Opportunity?', 'wired-impact-volunteer-management' ); ?></td>
@@ -439,15 +439,19 @@ class WI_Volunteer_Management_Admin {
 
 		  <?php $one_time_class = ( $volunteer_opp->opp_meta['one_time_opp'] == 1 ) ? 'one-time' : 'flexible'; ?>
 		  <tr class="one-time-field <?php echo $one_time_class; ?>">
-		    <td><label for="start-date-time"><?php _e( 'Start Date & Time', 'wired-impact-volunteer-management' ); ?></label></td>
-		    <td><input type="text" id="start-date-time" name="start-date-time" tabindex="100" class="regular-text" value="<?php if ( $volunteer_opp->opp_meta['start_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['start_date_time'], '', true ); ?>" /></td>
+		    <td><label for="start-date-time-output"><?php _e( 'Start Date & Time', 'wired-impact-volunteer-management' ); ?></label></td>
+		    <td>
+				<input type="hidden" id="start-date-time" name="start-date-time" value="<?php if ( $volunteer_opp->opp_meta['start_date_time'] != '' ) echo $volunteer_opp->opp_meta['start_date_time']; ?>" />
+				<input type="text" id="start-date-time-output" name="start-date-time-output" tabindex="100" class="regular-text" value="<?php if ( $volunteer_opp->opp_meta['start_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['start_date_time'], '', true ); ?>" />
+		    </td>
 		  </tr>
-		  
+
 		  <tr class="one-time-field <?php echo $one_time_class; ?>">
 		    <td><label for="end-date-time"><?php _e( 'End Date & Time', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td>
-		      <input type="text" id="end-date-time" name="end-date-time" tabindex="110" class="regular-text" value="<?php if( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['end_date_time'], '', true ); ?>" />
-		      <span class="error" style="display: none;"><?php _e( 'Woops, it looks like you set your event to end before it started.', 'wired-impact-volunteer-management' ); ?></span>
+				<input type="hidden" id="end-date-time" name="end-date-time" value="<?php if ( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo $volunteer_opp->opp_meta['end_date_time']; ?>" />
+				<input type="text" id="end-date-time-output" name="end-date-time-output" tabindex="110" class="regular-text" value="<?php if( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['end_date_time'], '', true ); ?>" />
+				<span class="error" style="display: none;"><?php _e( 'Whoops, it looks like you set your event to end before it started.', 'wired-impact-volunteer-management' ); ?></span>
 		    </td>
 		  </tr>
 
