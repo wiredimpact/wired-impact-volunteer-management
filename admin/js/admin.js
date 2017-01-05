@@ -104,10 +104,9 @@
             end_date_time_error = end_date_time.siblings( '.error' ),
             date_format = 'D, MM dd, yy',
             time_format = 'h:mm tt',
+            separator_symbol = ' @ ',
             alt_date_format = 'yy-mm-dd',
-            alt_time_format = 'HH:mm:ss',
-            separator_symbol = ' @ ';
-
+            alt_time_format = 'HH:mm:ss';
 
         //Set the end date & time field to match the start date and time if the end is empty.
         //Only do this when focusing out on start time.
@@ -123,9 +122,15 @@
             altTimeFormat: alt_time_format,
             stepMinute: 5,
             onClose: function( dateText, inst ) {
+                // Get the start date and convert it to a unix timestamp
+                var test_start_date = start_date_time.datetimepicker( 'getDate' ).getTime() / 1000;
+                // Set the hidden field's value with the unix timestamp
+                start_date_time_save.val( test_start_date );
+
                 if ( end_date_time.val() != '' ) {
-                    var test_start_date = start_date_time.datetimepicker( 'getDate' );
-                    var test_end_date = end_date_time.datetimepicker( 'getDate' );
+                    var test_end_date = end_date_time.datetimepicker( 'getDate' ).getTime() / 1000;
+
+                    // Compare the start date with the end date to be sure it doesn't end before it begins
                     if ( test_start_date > test_end_date ){
                         end_date_time.datetimepicker( 'setDate', test_start_date );
                     }
@@ -148,9 +153,15 @@
             altTimeFormat: alt_time_format,
             stepMinute: 5,
             onClose: function( dateText, inst ) {
+                // Get the start date and convert it to a unix timestamp
+                var test_end_date = end_date_time.datetimepicker( 'getDate' ).getTime() / 1000;
+                // Set the hidden field's value with the unix timestamp
+                end_date_time_save.val( test_end_date );
+
                 if ( start_date_time.val() != '' ) {
-                    var test_start_date = start_date_time.datetimepicker( 'getDate' );
-                    var test_end_date = end_date_time.datetimepicker( 'getDate' );
+                    var test_start_date = start_date_time.datetimepicker( 'getDate' ).getTime() / 1000;
+
+                    // Compare the start date with the end date to be sure it doesn't end before it begins
                     if ( test_start_date > test_end_date ){
                         start_date_time.datetimepicker( 'setDate', test_end_date );
                     }
