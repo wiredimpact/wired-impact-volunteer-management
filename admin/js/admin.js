@@ -105,6 +105,7 @@
             date_format = 'D, MM dd, yy',
             time_format = 'h:mm tt',
             separator_symbol = ' @ ',
+            show_second = false,
             alt_date_format = 'yy-mm-dd',
             alt_time_format = 'HH:mm:ss';
 
@@ -116,6 +117,7 @@
             dateFormat: date_format,
             timeFormat: time_format,
             separator: separator_symbol,
+            showSecond: show_second,
             altField: start_date_time_save,
             altFieldTimeOnly: false,
             altFormat: alt_date_format,
@@ -123,20 +125,22 @@
             stepMinute: 5,
             onClose: function( dateText, inst ) {
                 // Get the start date and convert it to a unix timestamp
-                var test_start_date = start_date_time.datetimepicker( 'getDate' ).getTime() / 1000;
+                var start_date_unix = get_datetimepicker_timestamp( start_date_time );
                 // Set the hidden field's value with the unix timestamp
-                start_date_time_save.val( test_start_date );
+                start_date_time_save.val( start_date_unix );
 
                 if ( end_date_time.val() != '' ) {
-                    var test_end_date = end_date_time.datetimepicker( 'getDate' ).getTime() / 1000;
+                    var end_date_unix = get_datetimepicker_timestamp( end_date_time );
 
                     // Compare the start date with the end date to be sure it doesn't end before it begins
-                    if ( test_start_date > test_end_date ){
-                        end_date_time.datetimepicker( 'setDate', test_start_date );
+                    if ( start_date_unix > end_date_unix ){
+                        end_date_time.val( dateText );
+                        end_date_time_save.val( start_date_unix );
                     }
                 }
                 else {
                     end_date_time.val( dateText );
+                    end_date_time_save.val( start_date_unix );
                 }
              }
         });
@@ -147,30 +151,46 @@
             dateFormat: date_format,
             timeFormat: time_format,
             separator: separator_symbol,
+            showSecond: show_second,
             altField: end_date_time_save,
             altFieldTimeOnly: false,
             altFormat: alt_date_format,
             altTimeFormat: alt_time_format,
             stepMinute: 5,
             onClose: function( dateText, inst ) {
-                // Get the start date and convert it to a unix timestamp
-                var test_end_date = end_date_time.datetimepicker( 'getDate' ).getTime() / 1000;
+                // Get the end date and convert it to a unix timestamp
+                var end_date_unix = get_datetimepicker_timestamp( end_date_time );
                 // Set the hidden field's value with the unix timestamp
-                end_date_time_save.val( test_end_date );
+                end_date_time_save.val( end_date_unix );
 
                 if ( start_date_time.val() != '' ) {
-                    var test_start_date = start_date_time.datetimepicker( 'getDate' ).getTime() / 1000;
+                    var start_date_unix = get_datetimepicker_timestamp( start_date_time );
 
                     // Compare the start date with the end date to be sure it doesn't end before it begins
-                    if ( test_start_date > test_end_date ){
-                        start_date_time.datetimepicker( 'setDate', test_end_date );
+                    if ( start_date_unix > end_date_unix ){
+                        start_date_time.val( dateText );
+                        start_date_time_save.val( end_date_unix );
                     }
                 }
                 else {
                     start_date_time.val( dateText );
+                    start_date_time_save.val( end_date_unix );
                 }
              }
         });
+
+        /**
+         * Generate a unix timestamp from the datetime picker's formatted date and time
+         * 
+         * @param  {obj} datetime_field jQuery object for datetime picker
+         * @return {int}                unix timestamp
+         */
+        function get_datetimepicker_timestamp( datetime_field ){
+            var datetime_field_formatted = datetime_field.datetimepicker( 'getDate' );
+            var datetime_unix = datetime_field_formatted.getTime() / 1000 - ( datetime_field_formatted.getTimezoneOffset() * 60 );
+
+            return datetime_unix;
+        }
 
 
         /**

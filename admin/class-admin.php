@@ -557,13 +557,13 @@ class WI_Volunteer_Management_Admin {
 
 		//Start Date & Time stored as UNIX timestamp with timezone offset
 		if( isset($_REQUEST['start-date-time'] ) ) {
-			$start_date_time = intval( $_REQUEST['start-date-time'] ) + ( get_option( 'gmt_offset' ) * 3600 );
+			$start_date_time = intval( $_REQUEST['start-date-time'] );
 			update_post_meta( $volunteer_opp_id, '_start_date_time', $start_date_time );
 		}
 
 		//End Date & Time stored as UNIX timestamp with timezone offset
 		if( isset($_REQUEST['end-date-time'] ) ) {
-			$end_date_time = intval( $_REQUEST['end-date-time'] ) + ( get_option( 'gmt_offset' ) * 3600 );
+			$end_date_time = intval( $_REQUEST['end-date-time'] );
 			update_post_meta( $volunteer_opp_id, '_end_date_time', $end_date_time );
 		}
 
