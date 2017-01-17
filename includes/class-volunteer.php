@@ -287,7 +287,7 @@ class WI_Volunteer_Management_Volunteer {
 		}
 
 		//Update custom user meta for new and existing volunteers.
-		update_user_meta( $user_id, 'phone', preg_replace( "/[^0-9,.]/", "", $form_fields['wivm_phone'] ) );
+		update_user_meta( $user_id, 'phone', preg_replace( "/[^0-9]/", "", $form_fields['wivm_phone'] ) );
 
 		$this->ID = $user_id;
 

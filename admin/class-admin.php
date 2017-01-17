@@ -305,8 +305,7 @@ class WI_Volunteer_Management_Admin {
 		}
 
 		//Strip all extra characters out of the default contact phone number except the numbers
-		$new_options['default_contact_phone'] = preg_replace( "/[^0-9,.]/", "", $new_options['default_contact_phone'] );
-
+		$new_options['default_contact_phone'] = preg_replace( "/[^0-9]/", "", $new_options['default_contact_phone'] );
 
 		return apply_filters( 'wivm_process_settings_group_save', $new_options );
 	}
@@ -513,7 +512,7 @@ class WI_Volunteer_Management_Admin {
 
 		//Phone
 		if( isset($_REQUEST['contact_phone'] ) ) {
-			update_post_meta( $volunteer_opp_id, '_contact_phone', preg_replace( "/[^0-9,.]/", "", $_REQUEST['contact_phone'] ) );
+			update_post_meta( $volunteer_opp_id, '_contact_phone', preg_replace( "/[^0-9]/", "", $_REQUEST['contact_phone'] ) );
 		}
 
 		//Email
@@ -831,7 +830,7 @@ class WI_Volunteer_Management_Admin {
 	    }
 
 	 	//Phone Number
-	    update_user_meta( absint( $user_id ), 'phone', preg_replace( "/[^0-9,.]/", "", $_POST['phone'] ) );
+	    update_user_meta( absint( $user_id ), 'phone', preg_replace( "/[^0-9]/", "", $_POST['phone'] ) );
 	    //Notes
 	    update_user_meta( absint( $user_id ), 'notes', implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST['notes'] ) ) ) );
 
