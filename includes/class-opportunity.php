@@ -163,7 +163,7 @@ class WI_Volunteer_Management_Opportunity {
 		//If left blank then use the saved start and end times.
 		if( $start_date_time == '' && $end_date_time == '' ){
 			$start_date_time = $this->opp_meta['start_date_time'];
-			$end_date_time 	 = $this->opp_meta['end_date_time'];			
+			$end_date_time 	 = $this->opp_meta['end_date_time'];
 		}
 
 		//Return an empty string if the start date time is blank.
@@ -171,24 +171,24 @@ class WI_Volunteer_Management_Opportunity {
 
 		//If they want the start date and time only
 		if( $start_only == true ){
-			$opp_time = date( __( 'D, F j, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $start_date_time);
-		  
+			$opp_time = date_i18n( __( 'D, F j, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $start_date_time);
+
 			return apply_filters( 'wivm_opp_time', $opp_time, $start_date_time, $end_date_time, $start_only );
 		}
 
 		//If dates are the same then only show date on first date, with time on both
 		if( date( 'Ymd', $start_date_time ) == date( 'Ymd', $end_date_time ) ){
-			$opp_time =  date( __( 'D, F j, Y', 'wired-impact-volunteer-management' ), $start_date_time );
+			$opp_time =  date_i18n( __( 'D, F j, Y', 'wired-impact-volunteer-management' ), $start_date_time );
 			$opp_time .= __( ' from ', 'wired-impact-volunteer-management' );
-			$opp_time .= date( __( 'g:i a', 'wired-impact-volunteer-management' ), $start_date_time );
+			$opp_time .= date_i18n( __( 'g:i a', 'wired-impact-volunteer-management' ), $start_date_time );
 			$opp_time .= ' – ';
-			$opp_time .= date( __( 'g:i a', 'wired-impact-volunteer-management' ), $end_date_time );
+			$opp_time .= date_i18n( __( 'g:i a', 'wired-impact-volunteer-management' ), $end_date_time );
 		}
 		//If dates are different then show dates for start and end
 		else{
-			$opp_time = date( __( 'D, F d, Y g:i a', 'wired-impact-volunteer-management' ), $start_date_time);
+			$opp_time = date_i18n( __( 'D, F d, Y g:i a', 'wired-impact-volunteer-management' ), $start_date_time);
 			$opp_time .= ' – ';
-			$opp_time .= date( __( 'D, F d, Y g:i a', 'wired-impact-volunteer-management' ), $end_date_time);
+			$opp_time .= date_i18n( __( 'D, F d, Y g:i a', 'wired-impact-volunteer-management' ), $end_date_time);
 		}
 
 		return apply_filters( 'wivm_opp_time', $opp_time, $start_date_time, $end_date_time, $start_only );
