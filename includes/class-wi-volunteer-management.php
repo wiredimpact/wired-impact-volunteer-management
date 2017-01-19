@@ -236,6 +236,7 @@ class WI_Volunteer_Management {
       $plugin_widget = new WI_Volunteer_Management_Widget( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action(      'wp_enqueue_scripts',            $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action(      'wp_head',            			 $plugin_public, 'enqueue_honeypot_styles' );
 		$this->loader->add_action(      'wp_enqueue_scripts',            $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action(      'init',                          $plugin_public, 'register_post_types' );
 		$this->loader->add_shortcode(   'one_time_volunteer_opps',       $plugin_public, 'display_one_time_volunteer_opps' );

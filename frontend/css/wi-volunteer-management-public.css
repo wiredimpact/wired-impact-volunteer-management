@@ -62,12 +62,6 @@
 	float: right;
 }
 
-.wivm_hp { /* Hide our honeypot field under all circumstances */
-	display: none !important;
-    position: absolute !important;
-    left: -9000px;
-}
-
 .volunteer-opp-message {
 	display: none;
 	font-size: .9em;
