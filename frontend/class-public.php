@@ -314,6 +314,12 @@ class WI_Volunteer_Management_Public {
 			die();
 		}
 
+		//If the honeypot field exists and is filled out then bail 
+		if( isset( $form_fields['wivm_hp'] ) && $form_fields['wivm_hp'] != '' ){
+			_e( 'Security Check.', 'wired-impact-volunteer-management' );
+			die();
+		}
+
 		$opp = new WI_Volunteer_Management_Opportunity( $form_fields['wivm_opportunity_id'] );
 		if( $opp->should_allow_rvsps() == true ){
 

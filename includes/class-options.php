@@ -40,6 +40,7 @@ class WI_Volunteer_Management_Options {
 	public $defaults = array(
 		//General
 		'use_css'              				=> 1,
+		'use_honeypot'						=> 1,
 		'show_getting_started_notice'		=> 1,
 
 		//Defaults
