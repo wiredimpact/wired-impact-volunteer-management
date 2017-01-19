@@ -171,6 +171,7 @@ class WI_Volunteer_Management_Opportunity {
 
 		//If they want the start date and time only
 		if( $start_only == true ){
+			//translators: date and time format for date() function, see http://php.net/manual/en/function.date.php
 			$opp_time = date_i18n( __( 'D, F j, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $start_date_time);
 
 			return apply_filters( 'wivm_opp_time', $opp_time, $start_date_time, $end_date_time, $start_only );
@@ -178,14 +179,17 @@ class WI_Volunteer_Management_Opportunity {
 
 		//If dates are the same then only show date on first date, with time on both
 		if( date( 'Ymd', $start_date_time ) == date( 'Ymd', $end_date_time ) ){
+			//translators: date only format for date() function, see http://php.net/manual/en/function.date.php
 			$opp_time =  date_i18n( __( 'D, F j, Y', 'wired-impact-volunteer-management' ), $start_date_time );
 			$opp_time .= __( ' from ', 'wired-impact-volunteer-management' );
+			//translators: time only format for date() function, see http://php.net/manual/en/function.date.php
 			$opp_time .= date_i18n( __( 'g:i a', 'wired-impact-volunteer-management' ), $start_date_time );
 			$opp_time .= ' – ';
 			$opp_time .= date_i18n( __( 'g:i a', 'wired-impact-volunteer-management' ), $end_date_time );
 		}
 		//If dates are different then show dates for start and end
 		else{
+			//translators: date and time format for date() function, see http://php.net/manual/en/function.date.php
 			$opp_time = date_i18n( __( 'D, F d, Y g:i a', 'wired-impact-volunteer-management' ), $start_date_time);
 			$opp_time .= ' – ';
 			$opp_time .= date_i18n( __( 'D, F d, Y g:i a', 'wired-impact-volunteer-management' ), $end_date_time);

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wired Impact Volunteer Management\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-18 00:12+0000\n"
-"PO-Revision-Date: 2017-01-18 00:12+0000\n"
+"POT-Creation-Date: 2017-01-19 20:13+0000\n"
+"PO-Revision-Date: 2017-01-19 20:13+0000\n"
 "Last-Translator: Wired Impact <info@wiredimpact.com>\n"
 "Language-Team: Wired Impact\n"
 "Language: en\n"
@@ -334,7 +334,7 @@ msgstr ""
 #. phone number pattern for preg_replace(), see http://php.net/manual/en/function.preg-replace.php
 #. phone number pattern for preg_replace(), see http://php.net/manual/en/function.preg-replace.php
 #. phone number pattern for preg_replace(), see http://php.net/manual/en/function.preg-replace.php
-#: admin/class-form.php:356 includes/class-opportunity.php:209
+#: admin/class-form.php:356 includes/class-opportunity.php:213
 #: includes/class-volunteer.php:97
 msgid "/^(\\d{3})(\\d{3})(\\d{4})$/"
 msgstr ""
@@ -342,7 +342,7 @@ msgstr ""
 #. phone number replacement for preg_replace(), see http://php.net/manual/en/function.preg-replace.php
 #. phone number replacement for preg_replace(), see http://php.net/manual/en/function.preg-replace.php
 #. phone number replacement for preg_replace(), see http://php.net/manual/en/function.preg-replace.php
-#: admin/class-form.php:358 includes/class-opportunity.php:211
+#: admin/class-form.php:358 includes/class-opportunity.php:215
 #: includes/class-volunteer.php:99
 msgid "($1) $2-$3"
 msgstr ""
@@ -395,36 +395,40 @@ msgstr ""
 msgid "Sorry, there are no volunteer opportunities available right now."
 msgstr ""
 
-#: includes/class-opportunity.php:174
+#. date and time format for date() function, see http://php.net/manual/en/function.date.php
+#: includes/class-opportunity.php:175
 msgid "D, F j, Y \\&#64; g:i a"
 msgstr ""
 
-#: includes/class-opportunity.php:181
+#. date only format for date() function, see http://php.net/manual/en/function.date.php
+#: includes/class-opportunity.php:183
 msgid "D, F j, Y"
 msgstr ""
 
-#: includes/class-opportunity.php:182
+#: includes/class-opportunity.php:184
 msgid " from "
 msgstr ""
 
-#: includes/class-opportunity.php:183 includes/class-opportunity.php:185
+#. time only format for date() function, see http://php.net/manual/en/function.date.php
+#: includes/class-opportunity.php:186 includes/class-opportunity.php:188
 msgid "g:i a"
 msgstr ""
 
-#: includes/class-opportunity.php:189 includes/class-opportunity.php:191
+#. date and time format for date() function, see http://php.net/manual/en/function.date.php
+#: includes/class-opportunity.php:193 includes/class-opportunity.php:195
 msgid "D, F d, Y g:i a"
 msgstr ""
 
-#: includes/class-opportunity.php:231 includes/class-opportunity.php:237
-#: includes/class-opportunity.php:243
+#: includes/class-opportunity.php:235 includes/class-opportunity.php:241
+#: includes/class-opportunity.php:247
 msgid ", "
 msgstr ""
 
-#: includes/class-opportunity.php:300
+#: includes/class-opportunity.php:304
 msgid "Unlimited"
 msgstr ""
 
-#: includes/class-opportunity.php:304
+#: includes/class-opportunity.php:308
 msgid "Closed"
 msgstr ""
 
