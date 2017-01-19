@@ -102,9 +102,9 @@
             end_date_time = jQuery( '#volunteer-opportunity-details #end-date-time-output' ),
             end_date_time_save = jQuery( '#volunteer-opportunity-details #end-date-time' ),
             end_date_time_error = end_date_time.siblings( '.error' ),
-            date_format = 'D, MM dd, yy',
-            time_format = 'h:mm tt',
-            separator_symbol = ' @ ',
+            date_format = wivm_ajax.datepicker_date_format,
+            time_format = wivm_ajax.datepicker_time_format,
+            separator_symbol = wivm_ajax.datepicker_separator,
             show_second = false,
             alt_date_format = 'yy-mm-dd',
             alt_time_format = 'HH:mm:ss';

@@ -166,6 +166,12 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function get_localized_js_data(){
 		$data = array(
+			//translators: date only format for jQuery UI Datepicker, see http://api.jqueryui.com/datepicker/#utility-formatDate
+			'datepicker_date_format'		=> __( 'D, MM dd, yy', 'wired-impact-volunteer-management' ),
+			//translators: time only format for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker/
+			'datepicker_time_format'		=> __( 'h:mm tt', 'wired-impact-volunteer-management' ),
+			//translators: Separator between date and time for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker/
+			'datepicker_separator'			=> __( ' @ ', 'wired-impact-volunteer-management' ),
 			'remove_rsvp_pointer_text'      => '<h3>' . __( 'Are You Sure?', 'wired-impact-volunteer-management' ) . '</h3><p>' . __( 'Are you sure you want to remove their RSVP for this opportunity?', 'wired-impact-volunteer-management' ) . '</p>',
 			'remove_rsvp_cancel_text'       => __( 'Cancel', 'wired-impact-volunteer-management' ),
 			'remove_rsvp_confirm_text'      => __( 'Remove RSVP', 'wired-impact-volunteer-management' ),
@@ -769,6 +775,7 @@ class WI_Volunteer_Management_Admin {
 							$user_output = $user_data->display_name;
 						}
 
+						//translators: date and time format for mysql2date() function, see http://php.net/manual/en/function.date.php
 						$time_stamp = mysql2date( __( 'D, M j, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $email->time );
 
 						echo '<tr>';
