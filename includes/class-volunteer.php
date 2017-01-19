@@ -93,7 +93,12 @@ class WI_Volunteer_Management_Volunteer {
 		$formatted_number = '';
 
 		if( $unformatted_number != '' ){
-			$formatted_number = '(' . substr( $unformatted_number, 0, 3 ) . ') '. substr( $unformatted_number, 3, 3 ) . '-' . substr( $unformatted_number, 6 );	
+			//translators: phone number pattern for preg_replace(), see http://php.net/manual/en/function.preg-replace.php
+			$pattern = __( '/^(\d{3})(\d{3})(\d{4})$/', 'wired-impact-volunteer-management' );
+			//translators: phone number replacement for preg_replace(), see http://php.net/manual/en/function.preg-replace.php
+			$replacement = __( '($1) $2-$3', 'wired-impact-volunteer-management' );
+
+			$formatted_number = preg_replace( $pattern, $replacement, $unformatted_number );
 		}
 
 		return apply_filters( 'wivm_formatted_phone', $formatted_number, $unformatted_number );
@@ -287,7 +292,7 @@ class WI_Volunteer_Management_Volunteer {
 		}
 
 		//Update custom user meta for new and existing volunteers.
-		update_user_meta( $user_id, 'phone', preg_replace( "/[^0-9,.]/", "", $form_fields['wivm_phone'] ) );
+		update_user_meta( $user_id, 'phone', preg_replace( "/[^0-9]/", "", $form_fields['wivm_phone'] ) );
 
 		$this->ID = $user_id;
 

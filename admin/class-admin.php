@@ -166,6 +166,12 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function get_localized_js_data(){
 		$data = array(
+			//translators: date only format for jQuery UI Datepicker, see http://api.jqueryui.com/datepicker/#utility-formatDate
+			'datepicker_date_format'		=> __( 'D, MM dd, yy', 'wired-impact-volunteer-management' ),
+			//translators: time only format for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker/
+			'datepicker_time_format'		=> __( 'h:mm tt', 'wired-impact-volunteer-management' ),
+			//translators: Separator between date and time for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker/
+			'datepicker_separator'			=> __( ' @ ', 'wired-impact-volunteer-management' ),
 			'remove_rsvp_pointer_text'      => '<h3>' . __( 'Are You Sure?', 'wired-impact-volunteer-management' ) . '</h3><p>' . __( 'Are you sure you want to remove their RSVP for this opportunity?', 'wired-impact-volunteer-management' ) . '</p>',
 			'remove_rsvp_cancel_text'       => __( 'Cancel', 'wired-impact-volunteer-management' ),
 			'remove_rsvp_confirm_text'      => __( 'Remove RSVP', 'wired-impact-volunteer-management' ),
@@ -305,8 +311,7 @@ class WI_Volunteer_Management_Admin {
 		}
 
 		//Strip all extra characters out of the default contact phone number except the numbers
-		$new_options['default_contact_phone'] = preg_replace( "/[^0-9,.]/", "", $new_options['default_contact_phone'] );
-
+		$new_options['default_contact_phone'] = preg_replace( "/[^0-9]/", "", $new_options['default_contact_phone'] );
 
 		return apply_filters( 'wivm_process_settings_group_save', $new_options );
 	}
@@ -427,7 +432,7 @@ class WI_Volunteer_Management_Admin {
 		  
 		  <tr>
 		    <td colspan="2"><h3><?php _e( 'Date and Time', 'wired-impact-volunteer-management' ); ?></h3></td>
-		  </tr>	
+		  </tr>
 
 		  <tr>
 		    <td><?php _e( 'One-Time Opportunity?', 'wired-impact-volunteer-management' ); ?></td>
@@ -439,15 +444,19 @@ class WI_Volunteer_Management_Admin {
 
 		  <?php $one_time_class = ( $volunteer_opp->opp_meta['one_time_opp'] == 1 ) ? 'one-time' : 'flexible'; ?>
 		  <tr class="one-time-field <?php echo $one_time_class; ?>">
-		    <td><label for="start-date-time"><?php _e( 'Start Date & Time', 'wired-impact-volunteer-management' ); ?></label></td>
-		    <td><input type="text" id="start-date-time" name="start-date-time" tabindex="100" class="regular-text" value="<?php if ( $volunteer_opp->opp_meta['start_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['start_date_time'], '', true ); ?>" /></td>
+		    <td><label for="start-date-time-output"><?php _e( 'Start Date & Time', 'wired-impact-volunteer-management' ); ?></label></td>
+		    <td>
+				<input type="hidden" id="start-date-time" name="start-date-time" value="<?php if ( $volunteer_opp->opp_meta['start_date_time'] != '' ) echo $volunteer_opp->opp_meta['start_date_time']; ?>" />
+				<input type="text" id="start-date-time-output" name="start-date-time-output" tabindex="100" class="regular-text" value="<?php if ( $volunteer_opp->opp_meta['start_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['start_date_time'], '', true ); ?>" />
+		    </td>
 		  </tr>
-		  
+
 		  <tr class="one-time-field <?php echo $one_time_class; ?>">
 		    <td><label for="end-date-time"><?php _e( 'End Date & Time', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td>
-		      <input type="text" id="end-date-time" name="end-date-time" tabindex="110" class="regular-text" value="<?php if( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['end_date_time'], '', true ); ?>" />
-		      <span class="error" style="display: none;"><?php _e( 'Woops, it looks like you set your event to end before it started.', 'wired-impact-volunteer-management' ); ?></span>
+				<input type="hidden" id="end-date-time" name="end-date-time" value="<?php if ( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo $volunteer_opp->opp_meta['end_date_time']; ?>" />
+				<input type="text" id="end-date-time-output" name="end-date-time-output" tabindex="110" class="regular-text" value="<?php if( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['end_date_time'], '', true ); ?>" />
+				<span class="error" style="display: none;"><?php _e( 'Whoops, it looks like you set your event to end before it started.', 'wired-impact-volunteer-management' ); ?></span>
 		    </td>
 		  </tr>
 
@@ -509,7 +518,7 @@ class WI_Volunteer_Management_Admin {
 
 		//Phone
 		if( isset($_REQUEST['contact_phone'] ) ) {
-			update_post_meta( $volunteer_opp_id, '_contact_phone', preg_replace( "/[^0-9,.]/", "", $_REQUEST['contact_phone'] ) );
+			update_post_meta( $volunteer_opp_id, '_contact_phone', preg_replace( "/[^0-9]/", "", $_REQUEST['contact_phone'] ) );
 		}
 
 		//Email
@@ -551,17 +560,15 @@ class WI_Volunteer_Management_Admin {
 			update_post_meta( $volunteer_opp_id, '_one_time_opp', 0 );
 		}
 
-		//Start Date & Time stored as UNIX timestamp
+		//Start Date & Time stored as UNIX timestamp with timezone offset
 		if( isset($_REQUEST['start-date-time'] ) ) {
-			$formatted_start = sanitize_text_field( str_replace( '@', '', $_REQUEST['start-date-time'] ) );
-			$start_date_time = strtotime( $formatted_start );
+			$start_date_time = intval( $_REQUEST['start-date-time'] );
 			update_post_meta( $volunteer_opp_id, '_start_date_time', $start_date_time );
 		}
 
-		//End Date & Time stored as UNIX timestamp
+		//End Date & Time stored as UNIX timestamp with timezone offset
 		if( isset($_REQUEST['end-date-time'] ) ) {
-			$formatted_end = sanitize_text_field( str_replace( '@', '', $_REQUEST['end-date-time'] ) );
-			$end_date_time = strtotime( $formatted_end );
+			$end_date_time = intval( $_REQUEST['end-date-time'] );
 			update_post_meta( $volunteer_opp_id, '_end_date_time', $end_date_time );
 		}
 
@@ -768,6 +775,7 @@ class WI_Volunteer_Management_Admin {
 							$user_output = $user_data->display_name;
 						}
 
+						//translators: date and time format for mysql2date() function, see http://php.net/manual/en/function.date.php
 						$time_stamp = mysql2date( __( 'D, M j, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $email->time );
 
 						echo '<tr>';
@@ -829,7 +837,7 @@ class WI_Volunteer_Management_Admin {
 	    }
 
 	 	//Phone Number
-	    update_user_meta( absint( $user_id ), 'phone', preg_replace( "/[^0-9,.]/", "", $_POST['phone'] ) );
+	    update_user_meta( absint( $user_id ), 'phone', preg_replace( "/[^0-9]/", "", $_POST['phone'] ) );
 	    //Notes
 	    update_user_meta( absint( $user_id ), 'notes', implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST['notes'] ) ) ) );
 
