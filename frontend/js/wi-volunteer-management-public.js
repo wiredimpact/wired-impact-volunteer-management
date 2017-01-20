@@ -31,7 +31,15 @@
 	 */
 	function validate_sign_up_form(){
 		var has_errors = false;
-		$( '#wivm-sign-up-form input[type=text], #wivm-sign-up-form input[type=email]' ).each(function() {
+
+		//Show an error and don't submit if the honeypot exists and is filled in
+		var hp = $( '#wivm_hp' );
+		if( hp.length && hp.val() !== '' ){
+			has_errors = true;
+		}
+
+		//Make sure each field is filled in and that email addresses are valid
+		$( '#wivm-sign-up-form input[type=text]:not(#wivm_hp), #wivm-sign-up-form input[type=email]' ).each(function() {
             if( this.value === '' ) {
                 $( this ).addClass( 'field-error' );
                 has_errors = true;

@@ -71,6 +71,29 @@ class WI_Volunteer_Management_Public {
 	}
 
 	/**
+	 * Hide the honeypot field for the volunteer sign up form.
+	 *
+	 * We load this CSS separately to be sure the field is hidden even if the 
+	 * admin has turned off loading the CSS within the settings.
+	 */
+	public function enqueue_honeypot_styles(){
+
+		if( is_singular( 'volunteer_opp' ) ): ?>
+		
+		<style>
+			/* Hide the Wired Impact Volunteer Management honeypot field under all circumstances */
+			.wivm_hp { 
+				display: none !important;
+			    position: absolute !important;
+			    left: -9000px;
+			}
+		</style>
+
+		<?php endif;
+
+	}
+
+	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
 	 * @since    0.1
@@ -310,6 +333,12 @@ class WI_Volunteer_Management_Public {
 
 		//Verify our nonce.
 		if( !wp_verify_nonce( $form_fields['wivm_sign_up_form_nonce_field'], 'wivm_sign_up_form_nonce' ) ) {
+			_e( 'Security Check.', 'wired-impact-volunteer-management' );
+			die();
+		}
+
+		//If the honeypot field exists and is filled out then bail 
+		if( isset( $form_fields['wivm_hp'] ) && $form_fields['wivm_hp'] != '' ){
 			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
