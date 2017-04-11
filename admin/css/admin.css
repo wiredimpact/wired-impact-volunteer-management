@@ -59,11 +59,11 @@ p.editor-help {
 
 /* Shortened version style */
 .ui-timepicker-div.ui-timepicker-oneLine { padding-right: 2px; }
-.ui-timepicker-div.ui-timepicker-oneLine .ui_tpicker_time, 
+.ui-timepicker-div.ui-timepicker-oneLine .ui_tpicker_time,
 .ui-timepicker-div.ui-timepicker-oneLine dt { display: none; }
 .ui-timepicker-div.ui-timepicker-oneLine .ui_tpicker_time_label { display: block; padding-top: 2px; }
 .ui-timepicker-div.ui-timepicker-oneLine dl { text-align: right; }
-.ui-timepicker-div.ui-timepicker-oneLine dl dd, 
+.ui-timepicker-div.ui-timepicker-oneLine dl dd,
 .ui-timepicker-div.ui-timepicker-oneLine dl dd > div { display:inline-block; margin:0; }
 .ui-timepicker-div.ui-timepicker-oneLine dl dd.ui_tpicker_minute:before,
 .ui-timepicker-div.ui-timepicker-oneLine dl dd.ui_tpicker_second:before { content:':'; display:inline-block; }
@@ -190,18 +190,18 @@ p.editor-help {
 
 @media only screen and (max-width: 782px) {
 	.rsvp-list-table thead tr,
-	.rsvp-list-table tfoot tr { 
+	.rsvp-list-table tfoot tr {
 		position: absolute;
 		top: -9999px;
 		left: -9999px;
 	}
 
-	.rsvp-list-table tr { 
+	.rsvp-list-table tr {
 		display: block;
 	}
 
-	.rsvp-list-table td { 
-		padding-left: 35%; 
+	.rsvp-list-table td {
+		padding-left: 35%;
 		border: none;
 		border-bottom: 1px solid #e5e5e5;
 		position: relative;
@@ -384,8 +384,8 @@ body.post-type-volunteer_opp .wp-pointer-arrow {
 	margin: 20px 0;
 	position: relative;
 	text-align: center;
-	z-index: 1;  
-	color: #999;  
+	z-index: 1;
+	color: #999;
 }
 
 .wi-volunteer .today:before {
@@ -413,11 +413,11 @@ body.post-type-volunteer_opp .wp-pointer-arrow {
 }
 
 @media only screen and (max-width: 782px) {
-	.sent-emails-table tr { 
+	.sent-emails-table tr {
 		display: table-row !important;
 	}
 
-	.sent-emails-table td { 
+	.sent-emails-table td {
 		display: table-cell !important;
 	}
 
@@ -446,3 +446,8 @@ body.post-type-volunteer_opp .wp-pointer-arrow {
 .clear:after {
 	clear: both;
 }
+
+
+/*BP: Modifications to always expose the start - end fields*/
+tr.one-time-field.flexible { display: table-row !important; }
+tr.flexible-field.flexible { display: none !important; }
