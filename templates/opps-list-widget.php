@@ -18,7 +18,7 @@ $opp = new WI_Volunteer_Management_Opportunity( $post->ID ); //Get volunteer opp
 
    // Display 'When' information if option to show 'When' is checked in widget settings and
    // opportunity is a one-time opp or flexible opp with date filled out
-   if ( $options['display_opp_when'] === true && ( $opp->opp_meta['one_time_opp'] === 1 || strlen( $opp->opp_meta['flexible_frequency'] ) > 0 ) ) {
+   if ( $options['display_opp_when'] === true ) {
   //  if ( $options['display_opp_when'] === true && ( $opp->opp_meta['one_time_opp'] === 1 || ( $opp->opp_meta['flexible_frequency'] ) === 1 ) ) {
 
       // If one time-opportunity display formatted dates/times

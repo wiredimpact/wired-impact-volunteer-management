@@ -80,7 +80,6 @@
 
         $( '.one-time-field' ).show();
         $( '.flexible-field' ).hide();
-        $('#flexible_frequency').val('Event');
         //     }
         //     else {
         //         $( '.one-time-field' ).hide();
