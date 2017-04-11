@@ -80,7 +80,7 @@ class WI_Volunteer_Management_Admin {
 
 	/*
      * Create the database table that will hold our volunteer opportunity RSVP information.
-     * 
+     *
      * We create a database table that will hold our volunteer opportunity RSVP information.
      * We check first to make sure the table doesn't exist by seeing if the
      * version exists in the options table.
@@ -161,7 +161,7 @@ class WI_Volunteer_Management_Admin {
 	/**
 	 * Get all the JS data we want to display. This allows us to use PHP to include information
 	 * within the JS.
-	 * 
+	 *
 	 * @return array Data to be displayed in the admin page's JS.
 	 */
 	public function get_localized_js_data(){
@@ -288,8 +288,8 @@ class WI_Volunteer_Management_Admin {
 	 * Register our settings with the WordPress Settings API
 	 *
 	 * Our setting is registered here so it will be saved in the database within options.php. We then use
-	 * settings.php to load our settings page and the form fields that we need. 
-	 * 
+	 * settings.php to load our settings page and the form fields that we need.
+	 *
 	 * @see  https://kovshenin.com/2012/the-wordpress-settings-api/ Article on how to use the Settings API
 	 */
 	public function register_settings(){
@@ -298,7 +298,7 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Complete any additional processing that must take place before new settings are saved.
-	 * 
+	 *
 	 * @param  array $new_options Array of new options that are about to be saved.
 	 * @return array              New options that are about to be saved, possibly adjusted.
 	 */
@@ -368,7 +368,7 @@ class WI_Volunteer_Management_Admin {
 
 	/**
      * Display the custom meta fields and values when editing a volunteer opportunity.
-	 * 
+	 *
 	 * @param object $post The post object for the volunteer opportunity.
 	 */
 	public function display_opportunity_details_meta_box( $post ){
@@ -382,38 +382,38 @@ class WI_Volunteer_Management_Admin {
 
 		  <tr>
 		    <td colspan="2"><h3><?php _e( 'Contact Information', 'wired-impact-volunteer-management' ); ?></h3></td>
-		  </tr>	
+		  </tr>
 
 		  <tr>
 		    <td><label for="contact_name"><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="contact_name" name="contact_name" tabindex="10" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_name']; ?>" /></td>
 		  </tr>
-		  
+
 		  <tr>
 		    <td><label for="contact_phone"><?php _e( 'Phone Number', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="contact_phone" name="contact_phone" tabindex="20" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_formatted_phone']; ?>" /></td>
 		  </tr>
-		  
+
 		  <tr>
 		    <td><label for="contact_email"><?php _e( 'Email', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="contact_email" name="contact_email" tabindex="30" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_email']; ?>" /></td>
 		  </tr>
 
-		  
+
 		  <tr>
 		    <td colspan="2"><h3><?php _e( 'Location Information', 'wired-impact-volunteer-management' ); ?></h3></td>
-		  </tr>	
+		  </tr>
 
 		  <tr>
 		    <td><label for="location"><?php _e( 'Location Name', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="location" name="location" tabindex="40" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['location']; ?>" /></td>
 		  </tr>
-		  
+
 		  <tr>
 		    <td><label for="street"><?php _e( 'Street Address', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="street" name="street" tabindex="50" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['street']; ?>" /></td>
 		  </tr>
-		  
+
 		  <tr>
 		    <td><label for="city"><?php _e( 'City', 'wired-impact-volunteer-management' ); ?></label></td>
 		    <td><input type="text" id="city" name="city" tabindex="60" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['city']; ?>" /></td>
@@ -429,16 +429,16 @@ class WI_Volunteer_Management_Admin {
 		    <td><input type="text" id="zip" name="zip" tabindex="80" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['zip']; ?>" /></td>
 		  </tr>
 
-		  
+
 		  <tr>
 		    <td colspan="2"><h3><?php _e( 'Date and Time', 'wired-impact-volunteer-management' ); ?></h3></td>
 		  </tr>
 
 		  <tr>
-		    <td><?php _e( 'One-Time Opportunity?', 'wired-impact-volunteer-management' ); ?></td>
+		    <td><?php _e( 'Practice?', 'wired-impact-volunteer-management' ); ?></td>
 		    <td>
 		    	<input type="checkbox" id="one-time-opportunity" name="one-time-opportunity" tabindex="90" value="1" <?php checked( 1, $volunteer_opp->opp_meta['one_time_opp'] ); ?> />
-		    	<label for="one-time-opportunity"><?php _e( 'This is a one-time opportunity at a fixed date and time.', 'wired-impact-volunteer-management' ); ?></label>
+		    	<label for="one-time-opportunity"><?php _e( 'This event is a practice.', 'wired-impact-volunteer-management' ); ?></label>
 		    </td>
 		  </tr>
 
@@ -467,7 +467,7 @@ class WI_Volunteer_Management_Admin {
 
 		  <tr>
 		    <td colspan="2"><h3><?php _e( 'Volunteer Limit', 'wired-impact-volunteer-management' ); ?></h3></td>
-		  </tr>	
+		  </tr>
 
 		  <tr>
 		    <td><?php _e( 'Is There a Volunteer Limit?', 'wired-impact-volunteer-management' ); ?></td>
@@ -487,7 +487,7 @@ class WI_Volunteer_Management_Admin {
 		</table>
 		<?php
 	}
-	
+
 	/**
 	 * Save the meta fields for volunteer opportunities when saving from the edit screen.
 	 *
@@ -596,9 +596,9 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Display the meta box for each volunteer that's signed up for the specific opportunity being viewed.
-	 * 
+	 *
 	 * @todo   Use WI_Volunteer_Users_List_Table() object to display this information.
-	 * 
+	 *
 	 * @param  object $post The volunteer opportunity object.
 	 */
 	public function display_opportunity_rsvps_meta_box( $post ){
@@ -652,7 +652,7 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Displays the meta box for sending custom emails to the signed up volunteers.
-	 * 
+	 *
 	 * @param  object $opp The volunteer opportunity object.
 	 */
 	public function display_opportunity_email_form_meta_box( $opp ){
@@ -725,7 +725,7 @@ class WI_Volunteer_Management_Admin {
 		$opp    = new WI_Volunteer_Management_Opportunity( $post_id );
 		$email  = new WI_Volunteer_Management_Email( $opp );
 		$result = $email->send_custom_volunteer_email( $data_array );
-		
+
 		// Return success if the email processed, failure if not
 		if ( $result ) {
 			// Store the email data in the "volunteer_emails" table
@@ -768,7 +768,7 @@ class WI_Volunteer_Management_Admin {
 					foreach ( $emails as $email ) {
 
 						if ( '0' === $email->user_id ) {
-							// If the 
+							// If the
 							$user_output = sprintf( '<em>%s</em>', __( 'Automated Reminder Email', 'wired-impact-volunteer-management' ) );
 						} else {
 							$user_data = get_userdata( $email->user_id );
@@ -799,10 +799,10 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Display the additional profile fields we want to include on the user profile edit screen.
-	 * 
+	 *
 	 * @param  object $user The WP_User object for the user who is going to be edited.
 	 */
-	public function show_extra_profile_fields( $user ){ 
+	public function show_extra_profile_fields( $user ){
     	$volunteer = new WI_Volunteer_Management_Volunteer( $user->ID );
     	?>
 	    <table class="form-table">
@@ -827,11 +827,11 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Save any additional user profile information we've added.
-	 * 
+	 *
 	 * @param  int $user_id The user's ID whose profile we're going to edit.
 	 */
 	public function save_extra_profile_fields( $user_id ) {
- 
+
 	    if ( !current_user_can( 'edit_user', $user_id ) ){
 	        return false;
 	    }
@@ -845,7 +845,7 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Add custom columns the volunteer opportunities content type list.
-	 * 
+	 *
 	 * @param array $columns The default columns for volunteer opps admin list view.
 	 * @return array Custom columns we want to use on the opps list.
 	 */
@@ -864,7 +864,7 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Add When column as a sortable field.
-	 * 
+	 *
 	 * @param array $columns List of sortable columns.
 	 * @return array List of sortable columns with date_time included.
 	 */
@@ -880,7 +880,7 @@ class WI_Volunteer_Management_Admin {
 
 	/**
   	 * Display content for each custom column for volunteer opps.
-  	 * 
+  	 *
   	 * @param string $column Column to be displayed.
   	 * @param int $post_id ID of the volunteer opp to be displayed.
   	 */
@@ -918,7 +918,7 @@ class WI_Volunteer_Management_Admin {
 	 *
 	 * This filtering is used for the Opportunities list view within the admin. The views being
 	 * built here are Upcoming One-Time Opportunities, Past One-Time Opportunities and Flexible Opportunities.
-	 * 
+	 *
 	 * @param object $query Post type WP Query
 	 */
 	public function edit_opps_query( $query ) {
@@ -958,7 +958,7 @@ class WI_Volunteer_Management_Admin {
 				 * viewing upcoming opportunities.
 				 */
 				$query->query_vars['order'] 	= 'upcoming_one_time' == $_GET['opportunities'] ? 'asc' : 'desc';
-			} 
+			}
 
 			do_action( 'wivm_after_opps_query', $query );
 		}
@@ -967,7 +967,7 @@ class WI_Volunteer_Management_Admin {
 	/**
 	 * Adds view filters links for Upcoming One-Time Opportunities, Past One-Time opportunities
 	 * and Flexible opportunities.
-	 * 
+	 *
 	 * @param array $views Existing views array
 	 * @return array $views Reordered array
 	 */
@@ -981,22 +981,22 @@ class WI_Volunteer_Management_Admin {
 
 		// All opportunities
 		$class = ( isset( $_GET['opportunities'] ) && 'all' == $_GET['opportunities'] || ! isset( $_GET['opportunities'] ) ) ? 'current' : '';
-		$all_query = esc_url( add_query_arg( 'opportunities', urlencode( 'all' ), $stripped_query_args ) ); 
+		$all_query = esc_url( add_query_arg( 'opportunities', urlencode( 'all' ), $stripped_query_args ) );
 		$new_views['all_opportunities'] = sprintf( '<a href="%s" class="%s">%s</a>', $all_query, $class, __( 'All Opportunities', 'wired-impact-volunteer-management' ) );
 
 		// Upcoming one-time opportunities
 		$class = ( isset( $_GET['opportunities'] ) && 'upcoming_one_time' == $_GET['opportunities'] ) ? 'current' : '';
-		$upcoming_one_time_query = esc_url( add_query_arg( 'opportunities', urlencode( 'upcoming_one_time' ), $stripped_query_args ) );  
+		$upcoming_one_time_query = esc_url( add_query_arg( 'opportunities', urlencode( 'upcoming_one_time' ), $stripped_query_args ) );
 		$new_views['upcoming_one_time'] = sprintf( '<a href="%s" class="%s">%s</a>', $upcoming_one_time_query, $class, __( 'Upcoming One-time Opportunities', 'wired-impact-volunteer-management' ) );
 
 		// Past one-time opportunities
 		$class = ( isset( $_GET['opportunities'] ) && 'past_one_time' == $_GET['opportunities'] ) ? 'current' : '';
-		$past_one_time_query = esc_url( add_query_arg( 'opportunities', urlencode( 'past_one_time' ), $stripped_query_args ) );  
+		$past_one_time_query = esc_url( add_query_arg( 'opportunities', urlencode( 'past_one_time' ), $stripped_query_args ) );
 		$new_views['past_one_time'] = sprintf( '<a href="%s" class="%s">%s</a>', $past_one_time_query, $class, __( 'Past One-time Opportunities', 'wired-impact-volunteer-management' ) );
 
 		// Flexible opportunities
 		$class = ( isset( $_GET['opportunities'] ) && 'flexible' == $_GET['opportunities'] ) ? 'current' : '';
-		$flexible_query = esc_url( add_query_arg( 'opportunities', urlencode( 'flexible' ), $stripped_query_args ) );  
+		$flexible_query = esc_url( add_query_arg( 'opportunities', urlencode( 'flexible' ), $stripped_query_args ) );
 		$new_views['flexible'] = sprintf( '<a href="%s" class="%s">%s</a>', $flexible_query, $class, __( 'Flexible Opportunities', 'wired-impact-volunteer-management' ) );
 
 		// Remove and replace the default views array with the new views array
@@ -1014,7 +1014,7 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Method to handle sorting the "When" column by _start_date_time.
-	 * 
+	 *
 	 * @param array $vars All variables needed to handle sorting.
 	 * @return array $vars Adjusted variables needed to handle sorting.
 	 */
@@ -1035,7 +1035,7 @@ class WI_Volunteer_Management_Admin {
 	/**
 	 * Process the AJAX request from the remove RSVP button on the individual volunteer page.
 	 *
-	 * This turns a volunteer's RSVP for a specific opportunity from 1 to 0 (yes to no) in the 
+	 * This turns a volunteer's RSVP for a specific opportunity from 1 to 0 (yes to no) in the
 	 * volunteer_rsvps table. Much of this functionality happens within admin.js.
 	 *
 	 * @return  post_id|bool The post ID if everything worked, false otherwise
@@ -1057,13 +1057,13 @@ class WI_Volunteer_Management_Admin {
 
 		//Return 1 if it worked, false it not.
  		echo $status;
- 		
+
  		die(); //Must use die() when using AJAX
 	}
 
 	/**
 	 * Set up an auto email reminder for a specific opportunity when that opportunity is saved.
-	 * 
+	 *
 	 * @param int $opp_id Post ID of the volunteer opportunity we're creating a reminder for.
 	 * @param object $post The post object for the volunteer opportunity we're creating a reminder for.
 	 * @return bool Returns false if we aren't going to schedule an opportunity reminder.
@@ -1121,7 +1121,7 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function rebuild_all_reminders(){
 
-		$opps = get_posts( array( 
+		$opps = get_posts( array(
 		    'post_type' => 'volunteer_opp',
 		    'post_status' => array( 'publish', 'pending', 'draft', 'future', 'trash' ),
 		    'numberposts' => -1
@@ -1134,10 +1134,10 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
-	 * Delete volunteer RSVPs. 
+	 * Delete volunteer RSVPs.
 	 *
 	 * This is called during the "delete_user" hook when a user is deleted.
-	 * 
+	 *
 	 * @param int      $user_id  ID of the user who is being deleted.
 	 * @param int|null $reassign ID of the user to reassign posts and links to.
 	 */
@@ -1165,7 +1165,7 @@ class WI_Volunteer_Management_Admin {
 			$message = sprintf( __( 'We\'re excited for you to try Wired Impact Volunteer Management. <a href="%s">Learn how to get started.</a>' ), admin_url( 'admin.php?page=wi-volunteer-management-help-settings' ) );
 
 			echo '<div id="' . $id . '" class="' . $classes . ' "><p>' .  $message . '</p></div>';
-			
+
 		}
 
 	}
@@ -1188,7 +1188,7 @@ class WI_Volunteer_Management_Admin {
 		//Hide the notice so it's never shown again.
 		$options = new WI_Volunteer_Management_Options();
 		$options->set_option( $notice_id, 0 );
- 		
+
  		die(); //Must use die() when using AJAX
 	}
 

@@ -75,16 +75,17 @@
     $(function() {
 
         //Show and hide one-time volunteer opportunity fields
-        $('#one-time-opportunity').change(function() {
-            if( this.checked ) {
-                $( '.one-time-field' ).show();
-                $( '.flexible-field' ).hide();
-            }
-            else {
-                $( '.one-time-field' ).hide();
-                $( '.flexible-field' ).show();
-            }
-        });
+        // $('#one-time-opportunity').change(function() {
+        //     if( this.checked ) {
+
+        $( '.one-time-field' ).show();
+        $( '.flexible-field' ).hide();
+        //     }
+        //     else {
+        //         $( '.one-time-field' ).hide();
+        //         $( '.flexible-field' ).show();
+        //     }
+        // });
 
         //Show and hide fields if there is a limit on the number of volunteers
         $('#has-volunteer-limit').change(function() {
@@ -181,7 +182,7 @@
 
         /**
          * Generate a unix timestamp from the datetime picker's formatted date and time
-         * 
+         *
          * @param  {obj} datetime_field jQuery object for datetime picker
          * @return {int}                unix timestamp
          */

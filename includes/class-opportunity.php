@@ -94,7 +94,7 @@ class WI_Volunteer_Management_Opportunity {
 
 	/**
 	 * Display meta information for this opportunity including a heading.
-	 * 
+	 *
 	 * @param  string $meta_value The meta information to display.
 	 * @param  string $heading    The heading to display in front of the meta information is one exists.
 	 * @return mixed 			  Returns an empty string if no meta value, or it will echo the resulting string.
@@ -121,7 +121,7 @@ class WI_Volunteer_Management_Opportunity {
 	 *
 	 * This is used to load default contact and location information for new opportunities so the admin doesn't
 	 * have to enter the same information every time.
-	 * 
+	 *
 	 * @param  string $key The key for this setting in the options, not the meta box.
 	 * @return string      The value of the default or a blank string if none exists.
 	 */
@@ -139,7 +139,7 @@ class WI_Volunteer_Management_Opportunity {
 
 	/**
 	 * Return a single date and time for an opp, or the frequency if it's not a one-time opportunity.
-	 * 
+	 *
 	 * @return string A string of the date and time, or the frequency of the opportunity.
 	 */
 	public function get_one_date_time(){
@@ -153,7 +153,7 @@ class WI_Volunteer_Management_Opportunity {
 
 	/**
 	 * Format the opportunity times to be displayed.
-	 * 
+	 *
 	 * @param int $start_date_time Timestamp of the start of the opportunity.
 	 * @param int $end_date_time Timestamp of the end of the opportunity.
 	 * @param bool $start_only True if we want only the start of the opportunity.
@@ -172,7 +172,9 @@ class WI_Volunteer_Management_Opportunity {
 		//If they want the start date and time only
 		if( $start_only == true ){
 			//translators: date and time format for date() function, see http://php.net/manual/en/function.date.php
-			$opp_time = date_i18n( __( 'D, F j, Y \&#64; g:i a', 'wired-impact-volunteer-management' ), $start_date_time);
+
+			// BP: changed for homepage widget
+			$opp_time = date_i18n( __( 'F j, Y', 'wired-impact-volunteer-management' ), $start_date_time);
 
 			return apply_filters( 'wivm_opp_time', $opp_time, $start_date_time, $end_date_time, $start_only );
 		}
@@ -222,12 +224,12 @@ class WI_Volunteer_Management_Opportunity {
 
 	/**
   	 * Get the event location with a Google Maps link if possible and requested.
-  	 * 
+  	 *
   	 * @param bool $make_maps_link Whether to include a Google Maps link.
   	 * @return string Formatted location possibly wrapped in Google Maps link.
   	 */
 	public function format_address( $make_maps_link = true ){
-		$location = ''; 
+		$location = '';
 
 		//Add location name and comma only if content will be added after
 		$location .= esc_html( $this->opp_meta['location'] );
@@ -268,7 +270,7 @@ class WI_Volunteer_Management_Opportunity {
 	 * @return  string Formatted address wrapped in Google Maps link.
 	 */
 	protected function add_google_maps_link( $address ){
-		
+
 		$google_maps_string = str_replace( ' ', '+', $this->opp_meta['street'] . ' ' . $this->opp_meta['city'] . ' ' . $this->opp_meta['state'] . ' ' . $this->opp_meta['zip'] );
 		$google_maps_url    = 'https://maps.google.com/maps?q=' . $google_maps_string;
 		$google_maps_html   = '<a href="' . $google_maps_url . '" title="Map this location on Google Maps" target="_blank">';
@@ -278,7 +280,7 @@ class WI_Volunteer_Management_Opportunity {
 
 	/**
 	 * Convert email address to clickable email link.
-	 * 
+	 *
 	 * @param  string $email_address Email address that we want to change into link.
 	 * @return string Email address as clickable mailto link.
 	 */
@@ -315,7 +317,7 @@ class WI_Volunteer_Management_Opportunity {
 
 	/**
 	 * Get the number of RSVPs that have taken place for this opportunity.
-	 * 
+	 *
 	 * @return int The number of RSVPs for this opportunity.
 	 */
 	public function get_number_rsvps(){
@@ -335,7 +337,7 @@ class WI_Volunteer_Management_Opportunity {
 
 	/**
 	 * Get the object array of all emails sent for this opportunity.
-	 * 
+	 *
 	 * @return object The array of email vars for this opportunity.
 	 */
 	public function get_rsvp_emails(){
@@ -355,7 +357,7 @@ class WI_Volunteer_Management_Opportunity {
 
 	/**
 	 * Return whether we should allow people to sign up for this opportunity.
-	 * 
+	 *
 	 * @return bool true if we should allow signups, false if not
 	 */
 	public function should_allow_rvsps(){
@@ -365,13 +367,13 @@ class WI_Volunteer_Management_Opportunity {
 		if( $this->opp_meta['has_volunteer_limit'] == 1 && $num_rsvps >= $this->opp_meta['volunteer_limit'] ){
 			return false;
 		}
-		
+
 		return true;
 	}
 
 	/**
 	 * Get array of all volunteers signed up for a specific volunteer opportunity.
-	 * 
+	 *
 	 * @return array Array of volunteer objects for each person that signed up for this opportunity.
 	 */
 	public function get_all_rsvped_volunteers(){
@@ -393,7 +395,7 @@ class WI_Volunteer_Management_Opportunity {
 			$volunteer = new WI_Volunteer_Management_Volunteer( $volunteer->user_id );
 		}
 
-		return $volunteers;			        
+		return $volunteers;
 	}
 
 } //class WI_Volunteer_Management_Opportunity
