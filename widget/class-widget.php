@@ -108,11 +108,11 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       if ( ! empty( $instance['title'] ) ) {
 
          if ( $all_opps_page_link !== false ) { ?>
-            <a href="<?php echo $all_opps_page_link; ?>"> <?php
+            <a href="<?php echo $all_opps_page_link; ?>"><?php
          }
-         
+
          echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
-         
+
          if ( $all_opps_page_link !== false ) { ?>
             </a> <?php
          }
@@ -132,7 +132,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
             <p><a href="<?php echo $all_opps_page_link; ?>"><?php _e( 'View All', 'wired-impact-volunteer-management' ); ?></a></p>
 
-         <?php } 
+         <?php }
 
       } else { ?>
 
@@ -170,7 +170,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
          $num_of_opps = esc_attr( $instance['number_of_opps_input'] );
       } else {
          $num_of_opps = 1;
-      }   
+      }
 
       ?>
 
@@ -235,7 +235,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
     *
     * This is done by finding where the [one_time_volunteer_opps] or the [flexible_volunteer_opps]
     * shortcode is being used. We do this by querying the post content in the database.
-    * 
+    *
     * @param  string $shortcode The shortcode string we want to search for in the database
     * @return mixed Permalink string if post found, or false if not
     */
@@ -243,10 +243,17 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
       global $wpdb;
 
+      /*
+       * Set the database prefix appropriately if it's a multi-site install
+       * - $wpdb->prefix will get the assigned table prefix for the site
+       * - $wpdb->base_prefix will get the original prefix as defined in wp-config.php
+       */
+      $db_prefix = ( is_multisite() ) ? $wpdb->prefix : $wpdb->base_prefix;
+
       // Get id of post that shortcode was used
       $query = '
                SELECT ID
-               FROM ' . $wpdb->base_prefix . 'posts
+               FROM ' . $db_prefix . 'posts
                WHERE post_content LIKE "%' . $shortcode . '%"
                AND post_status = "publish"
                ';
