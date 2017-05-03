@@ -246,7 +246,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       // Get id of post that shortcode was used
       $query = '
                SELECT ID
-               FROM ' . $wpdb->base_prefix . 'posts
+               FROM ' . $wpdb->prefix . 'posts
                WHERE post_content LIKE "%' . $shortcode . '%"
                AND post_status = "publish"
                ';
