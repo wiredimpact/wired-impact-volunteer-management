@@ -2,7 +2,7 @@
 Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
-Tested up to: 4.7
+Tested up to: 4.8
 Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,6 +100,9 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. View Volunteer Profiles
 
 == Changelog ==
+
+= 1.3.2 =
+* Tested up to WordPress 4.8 and adjusted admin headings for improved accessibility. 
 
 = 1.3.1 =
 * Fixed bug where sidebar widget wasn't linking correctly to pages with opportunities on WordPress multisite installations.
