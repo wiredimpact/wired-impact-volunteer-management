@@ -22,7 +22,7 @@ $volunteer = new WI_Volunteer_Management_Volunteer( $volunteer_id );
 
 <div class="wrap wi-volunteer">
 
-	<h2><?php echo __( 'Volunteer: ', 'wired-impact-volunteer-management' ) . $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></h2>
+	<h1><?php echo __( 'Volunteer: ', 'wired-impact-volunteer-management' ) . $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></h1>
 
 	<div class="volunteer-info">
 		

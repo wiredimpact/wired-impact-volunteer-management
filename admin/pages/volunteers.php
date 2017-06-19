@@ -30,14 +30,14 @@ if ( $pagenum > $total_pages && $total_pages > 0 ) {
 ?>
 
 <div class="wrap">
-	<h2>
+	<h1>
 	<?php _e( 'Wired Impact Volunteer Management: Volunteers', 'wired-impact-volunteer-management' );
 	global $usersearch;
 	if ( $usersearch ){
 		printf( '<span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;', 'wired-impact-volunteer-management' ) . '</span>', esc_html( $usersearch ) );
 	}
 	?>
-	</h2>
+	</h1>
 
 	<form method="get" action="">
 	<input type="hidden" name="page" value="<?php echo ( isset( $_REQUEST['page'] ) ) ? esc_attr( $_REQUEST['page'] ) : ''; ?>" />
