@@ -289,6 +289,11 @@ class WI_Volunteer_Management_Volunteer {
 			$userdata['ID'] = $existing_user;
 
 			$user_id = wp_update_user( $userdata );
+
+			//On multisite we need to add the user to this site if they don't have access
+			if( is_multisite() && !is_user_member_of_blog( $userdata['ID'] ) ){
+				add_user_to_blog( get_current_blog_id(), $userdata['ID'], 'volunteer' );
+			}
 		}
 
 		//Update custom user meta for new and existing volunteers.

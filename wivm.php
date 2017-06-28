@@ -34,13 +34,35 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-activator.php
+ *
+ * @param $network_wide Whether the plugin is being network enabled on multisite
  */
-function activate_wi_volunteer_management() {
+function activate_wi_volunteer_management( $network_wide = false ) {
 	require_once WIVM_DIR . 'includes/class-activator.php';
-	WI_Volunteer_Management_Activator::activate();
+	WI_Volunteer_Management_Activator::activate( $network_wide );
 }
 
 register_activation_hook( __FILE__, 'activate_wi_volunteer_management' );
+
+/**
+ * Run the activation when a new multisite blog is created.
+ *
+ * This function is different than the general activation since it
+ * only runs on the given subsite and only if the plugin is 
+ * already activated network-wide. In this case we need to run 
+ * the activation method since the plugin will never be enabled
+ * through the admin.
+ */
+function multisite_activate_wi_volunteer_management( $blog_id ){
+	if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
+		switch_to_blog( $blog_id );
+		require_once WIVM_DIR . 'includes/class-activator.php';
+		WI_Volunteer_Management_Activator::activate_site();
+		restore_current_blog();
+	}
+}
+
+add_action( 'wpmu_new_blog', 'multisite_activate_wi_volunteer_management' );
 
 /**
  *  Add constant to allow us to easily load files.
