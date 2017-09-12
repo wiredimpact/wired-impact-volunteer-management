@@ -3,7 +3,7 @@ Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
 Tested up to: 4.8
-Stable tag: 1.3.1
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,10 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. View Volunteer Profiles
 
 == Changelog ==
+
+= 1.3.3 =
+* Fixed multisite bug where volunteers weren't displaying on the Volunteers page if they had already signed up through another subsite.
+* Fixed multisite bug where volunteer opportunity URLs were broken if the plugin had been network-activated.
 
 = 1.3.2 =
 * Tested up to WordPress 4.8 and adjusted admin headings for improved accessibility. 
