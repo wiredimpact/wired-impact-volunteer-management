@@ -17,7 +17,7 @@
  * Plugin Name:       Wired Impact Volunteer Management
  * Plugin URI:        http://wiredimpact.com/services-and-pricing/apps-for-nonprofits/volunteer-management/
  * Description:       A simple, free way to keep track of your nonprofit’s volunteers and opportunities.
- * Version:           1.3.2
+ * Version:           1.3.3
  * Author:            Wired Impact
  * Author URI:        http://wiredimpact.com
  * License:           GPL-2.0+
@@ -52,6 +52,8 @@ register_activation_hook( __FILE__, 'activate_wi_volunteer_management' );
  * already activated network-wide. In this case we need to run 
  * the activation method since the plugin will never be enabled
  * through the admin.
+ *
+ * @since  1.3.3
  */
 function multisite_activate_wi_volunteer_management( $blog_id ){
 	if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
