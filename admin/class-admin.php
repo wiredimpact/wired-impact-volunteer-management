@@ -154,7 +154,7 @@ class WI_Volunteer_Management_Admin {
     	wp_enqueue_script(  'jquery-ui-datepicker' );
 
     	// Only enqueue TimePicker if we are creating or editing a Volunteer Management Opportunity
-    	if( in_array( $hook, array('post.php', 'post-new.php') ) ) {
+    	if( in_array( $hook, array( 'post.php', 'post-new.php' ) ) ) {
     		
     		$screen = get_current_screen();
     		if( is_object( $screen ) && 'volunteer_opp' == $screen->post_type ) {

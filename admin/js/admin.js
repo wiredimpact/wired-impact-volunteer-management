@@ -71,7 +71,6 @@
     /**
      * For volunteer opportunity edit screen including jQuery Timepicker
      */
-
     $(function() {
 
         //Only run on WI Volunteer Management Opportunity New and Edit screens.
