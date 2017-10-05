@@ -74,124 +74,128 @@
 
     $(function() {
 
-        //Show and hide one-time volunteer opportunity fields
-        $('#one-time-opportunity').change(function() {
-            if( this.checked ) {
-                $( '.one-time-field' ).show();
-                $( '.flexible-field' ).hide();
-            }
-            else {
-                $( '.one-time-field' ).hide();
-                $( '.flexible-field' ).show();
-            }
-        });
+        //Only run on WI Volunteer Management Opportunity New and Edit screens.
+        if( typeof pagenow != 'undefined' && pagenow == 'volunteer_opp' ) {
+        
+            //Show and hide one-time volunteer opportunity fields
+            $('#one-time-opportunity').change(function() {
+                if( this.checked ) {
+                    $( '.one-time-field' ).show();
+                    $( '.flexible-field' ).hide();
+                }
+                else {
+                    $( '.one-time-field' ).hide();
+                    $( '.flexible-field' ).show();
+                }
+            });
 
-        //Show and hide fields if there is a limit on the number of volunteers
-        $('#has-volunteer-limit').change(function() {
-            if( this.checked ) {
-                $( '.volunteer-limit-field' ).show();
-            }
-            else {
-                $( '.volunteer-limit-field' ).hide();
-            }
-        });
+            //Show and hide fields if there is a limit on the number of volunteers
+            $('#has-volunteer-limit').change(function() {
+                if( this.checked ) {
+                    $( '.volunteer-limit-field' ).show();
+                }
+                else {
+                    $( '.volunteer-limit-field' ).hide();
+                }
+            });
 
 
-        var start_date_time = jQuery( '#volunteer-opportunity-details #start-date-time-output' ),
-            start_date_time_save = jQuery( '#volunteer-opportunity-details #start-date-time' ),
-            end_date_time = jQuery( '#volunteer-opportunity-details #end-date-time-output' ),
-            end_date_time_save = jQuery( '#volunteer-opportunity-details #end-date-time' ),
-            end_date_time_error = end_date_time.siblings( '.error' ),
-            date_format = wivm_ajax.datepicker_date_format,
-            time_format = wivm_ajax.datepicker_time_format,
-            separator_symbol = wivm_ajax.datepicker_separator,
-            show_second = false,
-            alt_date_format = 'yy-mm-dd',
-            alt_time_format = 'HH:mm:ss';
+            var start_date_time = jQuery( '#volunteer-opportunity-details #start-date-time-output' ),
+                start_date_time_save = jQuery( '#volunteer-opportunity-details #start-date-time' ),
+                end_date_time = jQuery( '#volunteer-opportunity-details #end-date-time-output' ),
+                end_date_time_save = jQuery( '#volunteer-opportunity-details #end-date-time' ),
+                end_date_time_error = end_date_time.siblings( '.error' ),
+                date_format = wivm_ajax.datepicker_date_format,
+                time_format = wivm_ajax.datepicker_time_format,
+                separator_symbol = wivm_ajax.datepicker_separator,
+                show_second = false,
+                alt_date_format = 'yy-mm-dd',
+                alt_time_format = 'HH:mm:ss';
 
-        //Set the end date & time field to match the start date and time if the end is empty.
-        //Only do this when focusing out on start time.
-        start_date_time.datetimepicker({
-            controlType: 'select',
-            oneLine: true,
-            dateFormat: date_format,
-            timeFormat: time_format,
-            separator: separator_symbol,
-            showSecond: show_second,
-            altField: start_date_time_save,
-            altFieldTimeOnly: false,
-            altFormat: alt_date_format,
-            altTimeFormat: alt_time_format,
-            stepMinute: 5,
-            onClose: function( dateText, inst ) {
-                // Get the start date and convert it to a unix timestamp
-                var start_date_unix = get_datetimepicker_timestamp( start_date_time );
-                // Set the hidden field's value with the unix timestamp
-                start_date_time_save.val( start_date_unix );
+            //Set the end date & time field to match the start date and time if the end is empty.
+            //Only do this when focusing out on start time.
+            start_date_time.datetimepicker({
+                controlType: 'select',
+                oneLine: true,
+                dateFormat: date_format,
+                timeFormat: time_format,
+                separator: separator_symbol,
+                showSecond: show_second,
+                altField: start_date_time_save,
+                altFieldTimeOnly: false,
+                altFormat: alt_date_format,
+                altTimeFormat: alt_time_format,
+                stepMinute: 5,
+                onClose: function( dateText, inst ) {
+                    // Get the start date and convert it to a unix timestamp
+                    var start_date_unix = get_datetimepicker_timestamp( start_date_time );
+                    // Set the hidden field's value with the unix timestamp
+                    start_date_time_save.val( start_date_unix );
 
-                if ( end_date_time.val() != '' ) {
-                    var end_date_unix = get_datetimepicker_timestamp( end_date_time );
+                    if ( end_date_time.val() != '' ) {
+                        var end_date_unix = get_datetimepicker_timestamp( end_date_time );
 
-                    // Compare the start date with the end date to be sure it doesn't end before it begins
-                    if ( start_date_unix > end_date_unix ){
+                        // Compare the start date with the end date to be sure it doesn't end before it begins
+                        if ( start_date_unix > end_date_unix ){
+                            end_date_time.val( dateText );
+                            end_date_time_save.val( start_date_unix );
+                        }
+                    }
+                    else {
                         end_date_time.val( dateText );
                         end_date_time_save.val( start_date_unix );
                     }
-                }
-                else {
-                    end_date_time.val( dateText );
-                    end_date_time_save.val( start_date_unix );
-                }
-             }
-        });
+                 }
+            });
 
-        end_date_time.datetimepicker({
-            controlType: 'select',
-            oneLine: true,
-            dateFormat: date_format,
-            timeFormat: time_format,
-            separator: separator_symbol,
-            showSecond: show_second,
-            altField: end_date_time_save,
-            altFieldTimeOnly: false,
-            altFormat: alt_date_format,
-            altTimeFormat: alt_time_format,
-            stepMinute: 5,
-            onClose: function( dateText, inst ) {
-                // Get the end date and convert it to a unix timestamp
-                var end_date_unix = get_datetimepicker_timestamp( end_date_time );
-                // Set the hidden field's value with the unix timestamp
-                end_date_time_save.val( end_date_unix );
+            end_date_time.datetimepicker({
+                controlType: 'select',
+                oneLine: true,
+                dateFormat: date_format,
+                timeFormat: time_format,
+                separator: separator_symbol,
+                showSecond: show_second,
+                altField: end_date_time_save,
+                altFieldTimeOnly: false,
+                altFormat: alt_date_format,
+                altTimeFormat: alt_time_format,
+                stepMinute: 5,
+                onClose: function( dateText, inst ) {
+                    // Get the end date and convert it to a unix timestamp
+                    var end_date_unix = get_datetimepicker_timestamp( end_date_time );
+                    // Set the hidden field's value with the unix timestamp
+                    end_date_time_save.val( end_date_unix );
 
-                if ( start_date_time.val() != '' ) {
-                    var start_date_unix = get_datetimepicker_timestamp( start_date_time );
+                    if ( start_date_time.val() != '' ) {
+                        var start_date_unix = get_datetimepicker_timestamp( start_date_time );
 
-                    // Compare the start date with the end date to be sure it doesn't end before it begins
-                    if ( start_date_unix > end_date_unix ){
+                        // Compare the start date with the end date to be sure it doesn't end before it begins
+                        if ( start_date_unix > end_date_unix ){
+                            start_date_time.val( dateText );
+                            start_date_time_save.val( end_date_unix );
+                        }
+                    }
+                    else {
                         start_date_time.val( dateText );
                         start_date_time_save.val( end_date_unix );
                     }
-                }
-                else {
-                    start_date_time.val( dateText );
-                    start_date_time_save.val( end_date_unix );
-                }
-             }
-        });
+                 }
+            });
 
-        /**
-         * Generate a unix timestamp from the datetime picker's formatted date and time
-         * 
-         * @param  {obj} datetime_field jQuery object for datetime picker
-         * @return {int}                unix timestamp
-         */
-        function get_datetimepicker_timestamp( datetime_field ){
-            var datetime_field_formatted = datetime_field.datetimepicker( 'getDate' );
-            var datetime_unix = datetime_field_formatted.getTime() / 1000 - ( datetime_field_formatted.getTimezoneOffset() * 60 );
+            /**
+             * Generate a unix timestamp from the datetime picker's formatted date and time
+             * 
+             * @param  {obj} datetime_field jQuery object for datetime picker
+             * @return {int}                unix timestamp
+             */
+            function get_datetimepicker_timestamp( datetime_field ){
+                var datetime_field_formatted = datetime_field.datetimepicker( 'getDate' );
+                var datetime_unix = datetime_field_formatted.getTime() / 1000 - ( datetime_field_formatted.getTimezoneOffset() * 60 );
 
-            return datetime_unix;
-        }
-
+                return datetime_unix;
+            }
+            
+        } //end if
 
         /**
          * Turn an opportunity RSVP from on to off for an individual volunteer.
