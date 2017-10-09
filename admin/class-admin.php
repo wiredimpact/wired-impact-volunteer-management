@@ -147,12 +147,21 @@ class WI_Volunteer_Management_Admin {
 	/**
 	 * Register the JavaScript for the admin area.
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts( $hook ) {
 
 		wp_enqueue_script(  'wp-pointer' );
 		wp_enqueue_script(  'jquery-ui-slider' );
     	wp_enqueue_script(  'jquery-ui-datepicker' );
-    	wp_enqueue_script(  'jquery-timepicker', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-timepicker.js', array( 'jquery-ui-core', 'jquery-ui-slider', 'jquery-ui-datepicker' ) );
+
+    	// Only enqueue TimePicker if we are creating or editing a Volunteer Management Opportunity
+    	if( in_array( $hook, array( 'post.php', 'post-new.php' ) ) ) {
+    		
+    		$screen = get_current_screen();
+    		if( is_object( $screen ) && 'volunteer_opp' == $screen->post_type ) {
+    			wp_enqueue_script(  'jquery-timepicker', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-timepicker.js', array( 'jquery-ui-core', 'jquery-ui-slider', 'jquery-ui-datepicker' ) );
+    		}
+    	}
+
 		wp_enqueue_script(  'wivm-admin', plugin_dir_url( __FILE__ ) . 'js/admin.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( 'wivm-admin', 'wivm_ajax', $this->get_localized_js_data() );
 
