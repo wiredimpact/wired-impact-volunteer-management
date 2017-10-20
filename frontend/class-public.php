@@ -302,7 +302,7 @@ class WI_Volunteer_Management_Public {
 	 */
 	public function show_meta_form_single( $content ){
 
-		if( is_singular( 'volunteer_opp' ) ){
+		if( is_singular( 'volunteer_opp' ) && in_the_loop() && is_main_query() ){
 
 			$template_loader = new WI_Volunteer_Management_Template_Loader();
 			ob_start();
