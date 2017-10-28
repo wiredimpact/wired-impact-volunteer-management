@@ -13,7 +13,7 @@
     $(function() {
 
         //Only run on WI Volunteer Management settings page.
-        if( typeof pagenow != 'undefined' && pagenow == 'volunteer-mgmt_page_wi-volunteer-management-help-settings' ){
+        if( $( '#wivm-tabs' ).exists() ){
 
             /**
              * Hide and show options tab content on click
