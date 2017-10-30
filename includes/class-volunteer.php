@@ -293,6 +293,7 @@ class WI_Volunteer_Management_Volunteer {
 			//On multisite we need to add the user to this site if they don't have access
 			if( is_multisite() && !is_user_member_of_blog( $userdata['ID'] ) ){
 				add_user_to_blog( get_current_blog_id(), $userdata['ID'], 'volunteer' );
+				update_user_option( $user_id, 'notes', '' );
 			}
 		}
 
