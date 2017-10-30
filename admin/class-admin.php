@@ -818,14 +818,14 @@ class WI_Volunteer_Management_Admin {
 	    	<tr scope="row">
 			    <th><label for="phone"><?php _e( 'Phone Number', 'wired-impact-volunteer-management' ); ?></label></th>
 			    <td>
-			        <input type="text" name="phone" id="phone" value="<?php echo $volunteer->meta['phone']; ?>" class="regular-text" /><br />
+			        <input type="text" name="phone" id="phone" value="<?php echo get_user_option( 'phone', $user->ID ); ?>" class="regular-text" /><br />
 			        <p class="description"><?php _e( 'Please enter your phone number in the format (000) 000-0000.', 'wired-impact-volunteer-management' ); ?></p>
 			    </td>
 			</tr>
 			<tr scope="row">
 			    <th><label for="notes"><?php _e( 'Notes', 'wired-impact-volunteer-management' ); ?></label></th>
 			    <td>
-			        <textarea name="notes" id="notes" rows="5" cols="30"><?php echo $volunteer->meta['notes']; ?></textarea><br />
+			        <textarea name="notes" id="notes" rows="5" cols="30"><?php echo get_user_option( 'notes', $user->ID ); ?></textarea><br />
 			        <p class="description"><?php _e( 'Please enter any notes about this user.', 'wired-impact-volunteer-management' ); ?></p>
 			    </td>
 			</tr>
@@ -846,10 +846,10 @@ class WI_Volunteer_Management_Admin {
 	    }
 
 	 	//Phone Number
-	    update_user_meta( absint( $user_id ), 'phone', preg_replace( "/[^0-9]/", "", $_POST['phone'] ) );
+	    update_user_option( absint( $user_id ), 'phone', preg_replace( "/[^0-9]/", "", $_POST['phone'] ) );
+	   
 	    //Notes
-	    update_user_meta( absint( $user_id ), 'notes', implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST['notes'] ) ) ) );
-
+	    update_user_option( absint( $user_id ), 'notes', implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST['notes'] ) ) ) );
 	}
 
 	/**
