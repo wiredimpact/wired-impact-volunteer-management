@@ -348,7 +348,7 @@ class WI_Volunteer_Management_Opportunity {
 		         ORDER BY time DESC
 		        ";
 
-		$query_values = array( $this->ID, 1 );
+		$query_values = $this->ID;
 
 		return $wpdb->get_results( $wpdb->prepare( $query, $query_values ) );
 	}
