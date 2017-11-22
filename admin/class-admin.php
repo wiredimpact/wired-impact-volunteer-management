@@ -846,10 +846,10 @@ class WI_Volunteer_Management_Admin {
 	    }
 
 	 	//Phone Number
-	    update_user_meta( absint( $user_id ), 'phone', preg_replace( "/[^0-9]/", "", $_POST['phone'] ) );
+	    update_user_option( absint( $user_id ), 'phone', preg_replace( "/[^0-9]/", "", $_POST['phone'] ) );
+	   
 	    //Notes
-	    update_user_meta( absint( $user_id ), 'notes', implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST['notes'] ) ) ) );
-
+	    update_user_option( absint( $user_id ), 'notes', implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $_POST['notes'] ) ) ) );
 	}
 
 	/**

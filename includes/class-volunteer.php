@@ -74,8 +74,8 @@ class WI_Volunteer_Management_Volunteer {
 			'first_name'				=> $user_data->first_name,
 			'last_name'					=> $user_data->last_name,
 			'email'						=> $user_data->user_email,
-			'phone' 					=> $this->format_phone_number( get_user_meta( $this->ID, 'phone', true ) ),
-			'notes'						=> esc_textarea( get_user_meta( $this->ID, 'notes', true ) ),
+			'phone' 					=> $this->format_phone_number( get_user_option( 'phone', $this->ID ) ),
+			'notes'						=> esc_textarea( get_user_option( 'notes', $this->ID ) ),
 			'num_volunteer_opps' 		=> $this->get_num_volunteer_opps(),
 			'first_volunteer_opp_time'	=> $this->get_first_volunteer_opp_time()
 		);
@@ -293,11 +293,12 @@ class WI_Volunteer_Management_Volunteer {
 			//On multisite we need to add the user to this site if they don't have access
 			if( is_multisite() && !is_user_member_of_blog( $userdata['ID'] ) ){
 				add_user_to_blog( get_current_blog_id(), $userdata['ID'], 'volunteer' );
+				update_user_option( $userdata['ID'], 'notes', '' );
 			}
 		}
 
-		//Update custom user meta for new and existing volunteers.
-		update_user_meta( $user_id, 'phone', preg_replace( "/[^0-9]/", "", $form_fields['wivm_phone'] ) );
+		//Update custom user meta for new and existing volunteers
+		update_user_option( $user_id, 'phone', preg_replace( "/[^0-9]/", "", $form_fields['wivm_phone'] ) );
 
 		$this->ID = $user_id;
 
