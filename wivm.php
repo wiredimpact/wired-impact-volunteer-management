@@ -8,18 +8,18 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://wiredimpact.com
+ * @link              https://wiredimpact.com
  * @since             0.1
  * @package           WI_Volunteer_Management
  * @author     		  Wired Impact <info@wiredimpact.com>
  *
  * @wordpress-plugin
  * Plugin Name:       Wired Impact Volunteer Management
- * Plugin URI:        http://wiredimpact.com/services-and-pricing/apps-for-nonprofits/volunteer-management/
+ * Plugin URI:        https://wiredimpact.com/wordpress-plugins-for-nonprofits/volunteer-management/
  * Description:       A simple, free way to keep track of your nonprofit’s volunteers and opportunities.
- * Version:           1.3.4
+ * Version:           1.3.6
  * Author:            Wired Impact
- * Author URI:        http://wiredimpact.com
+ * Author URI:        https://wiredimpact.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       wired-impact-volunteer-management

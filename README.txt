@@ -2,8 +2,8 @@
 Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
-Tested up to: 4.8
-Stable tag: 1.3.4
+Tested up to: 4.9
+Stable tag: 1.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,13 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. View Volunteer Profiles
 
 == Changelog ==
+
+= 1.3.6 =
+* Tested up to WordPress 4.9.
+* Fixed bug where the number of custom emails sent to volunteers for an opportunity might have displayed incorrectly.
+
+= 1.3.5 =
+* Fixed bug where translating "Volunteer Mgmt" would break the Help & Settings admin page.
 
 = 1.3.4 =
 * Fixed bug where date and timepicker conflicted with other plugins in the WordPress admin.
