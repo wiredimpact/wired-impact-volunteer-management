@@ -205,7 +205,7 @@ class WI_Volunteer_Management_Public {
 	 */
 	public function always_show_read_more( $text ){
 
-		if( get_post_type() == 'volunteer_opp' ){
+		if( get_post_type() == 'volunteer_opp' && !is_single() ){
 
 			$more_text = __( 'Find Out More', 'wired-impact-volunteer-management' );
 			$link = sprintf( '<a href="%1$s" class="more-link">%2$s</a>',
@@ -231,7 +231,7 @@ class WI_Volunteer_Management_Public {
 	 */
 	public function hide_default_read_more( $more_text ){
 
-		if( get_post_type() == 'volunteer_opp' ){
+		if( get_post_type() == 'volunteer_opp' && !is_single() ){
 			return '';
 		}
 
