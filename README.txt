@@ -3,7 +3,7 @@ Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 1.3.8
+Stable tag: 1.3.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,9 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. View Volunteer Profiles
 
 == Changelog ==
+
+= 1.3.9 =
+* Fixed rare object caching cron issue which caused the automated reminder email to be sent multiple times to volunteers.
 
 = 1.3.8 =
 * Fixed potential plugin conflict where read more text for volunteer opportunities could appear in the wrong place.

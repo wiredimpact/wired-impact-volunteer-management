@@ -388,16 +388,53 @@ class WI_Volunteer_Management_Public {
 	 */
 	public function send_email_reminder( $opp_id ){
 
+		$opp = new WI_Volunteer_Management_Opportunity( $opp_id );
+
+		$reminder_email_already_sent = $this->has_reminder_email_already_sent( $opp );
+		if( $reminder_email_already_sent === true ){
+			return false;
+		}
+
 		$data_array = array(
 			'post_id' => $opp_id,
 			'user_id' => 0,
 		);
 
-		$opp 	= new WI_Volunteer_Management_Opportunity( $opp_id );
 		$email 	= new WI_Volunteer_Management_Email( $opp );
 		$email->send_volunteer_reminder_email();
 		$email->store_volunteer_email( $data_array );
+	}
 
+	/**
+	 * Check if a reminder email has already been sent by the system within the last 5 hours.
+	 *
+	 * While send_email_reminder() should only run one time through cron, in certain caching
+	 * situations the same cron event was run multiple times, which triggered the automated
+	 * reminder email to send multiple times. Since the get_rsvp_emails() method uses
+	 * $wpdb->get_results() which is not cached, this method should prevent the reminder
+	 * email from being sent multiple times.
+	 * 
+	 * @param  object  $opp The current volunteer opportunity to check.
+	 * @return boolean      Whether an automated reminder email has been sent within the last 5 hours.
+	 */
+	public function has_reminder_email_already_sent( $opp ){
+
+		$current_time 				= current_time( 'timestamp' );
+		$five_hours_in_seconds 		= HOUR_IN_SECONDS * 5; // 18,000 seconds
+		$five_hours_ago_in_seconds 	= $current_time - $five_hours_in_seconds;
+		$emails_sent				= $opp->get_rsvp_emails();
+
+		foreach( $emails_sent as $email ){
+
+			$email_sent_time_in_seconds = strtotime( $email->time );
+
+			// $email->user_id === 0 means this is an automated reminder email
+			if( $email->user_id === '0' && $email_sent_time_in_seconds >= $five_hours_ago_in_seconds ){
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 } //class WI_Volunteer_Management_Public
