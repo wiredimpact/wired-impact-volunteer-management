@@ -14,7 +14,7 @@ $options = new WI_Volunteer_Management_Options();
 $use_honeypot = $options->get_option( 'use_honeypot' );
 ?>
 
-<h3><?php ( $opp->opp_meta['one_time_opp'] == 1 ) ? _e( 'Sign Up to Volunteer', 'wired-impact-volunteer-management' ) : _e( 'Express Interest in Volunteering', 'wired-impact-volunteer-management' ) ; ?></h3>
+<h3 class="wivm-form-heading"><?php ( $opp->opp_meta['one_time_opp'] == 1 ) ? _e( 'Sign Up to Volunteer', 'wired-impact-volunteer-management' ) : _e( 'Express Interest in Volunteering', 'wired-impact-volunteer-management' ) ; ?></h3>
 					
 <?php if( $opp->should_allow_rvsps() ): ?>
 <div class="loading volunteer-opp-message"><?php _e( 'Please wait...', 'wired-impact-volunteer-management' ); ?></div>

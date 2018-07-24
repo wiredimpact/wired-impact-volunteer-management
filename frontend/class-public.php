@@ -272,12 +272,9 @@ class WI_Volunteer_Management_Public {
 
 				<p class="no-opps"><?php _e( 'Sorry, there are no volunteer opportunities available right now.', 'wired-impact-volunteer-management' ); ?></p>
 
-			<?php } ?>
+			<?php }
 
-			<div class="navigation volunteer-opps-navigation">
-        		<div class="alignleft"><?php previous_posts_link('&laquo; Previous Opportunities') ?></div>
-        		<div class="alignright"><?php next_posts_link('More Opportunities &raquo;') ?></div>
-        	</div>
+			echo $this->get_page_navigation(); ?>
 
 		</div><!-- .volunteer-opps -->
 
@@ -288,6 +285,27 @@ class WI_Volunteer_Management_Public {
   		wp_reset_postdata(); 
 
 		return ob_get_clean();
+	}
+
+	/**
+	 * Get the page navigation when displaying a list of volunteer opportunities.
+	 * 
+	 * We provide a filter so custom navigation can be utilized in place of the 
+	 * default WordPress functionality.
+	 *
+	 * @return string The HTML for the page navigation.
+	 */
+	public function get_page_navigation(){
+
+		ob_start(); ?>
+
+		<div class="navigation volunteer-opps-navigation">
+			<div class="alignleft"><?php previous_posts_link( __( '&laquo; Previous Opportunities', 'wired-impact-volunteer-management' ) ); ?></div>
+			<div class="alignright"><?php next_posts_link( __( 'More Opportunities &raquo;', 'wired-impact-volunteer-management' ) ); ?></div>
+		</div>
+
+		<?php 
+		return apply_filters( 'wivm_page_navigation', ob_get_clean() );
 	}
 
 	/**
