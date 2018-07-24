@@ -272,9 +272,9 @@ class WI_Volunteer_Management_Public {
 
 				<p class="no-opps"><?php _e( 'Sorry, there are no volunteer opportunities available right now.', 'wired-impact-volunteer-management' ); ?></p>
 
-			<?php } ?>
+			<?php }
 
-			<?php echo $this->get_page_navigation(); ?>
+			echo $this->get_page_navigation(); ?>
 
 		</div><!-- .volunteer-opps -->
 
