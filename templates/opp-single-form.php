@@ -29,26 +29,26 @@ $use_honeypot = $options->get_option( 'use_honeypot' );
 	<?php do_action( 'wivm_start_sign_up_form_fields', $post ); ?>
 
 	<label for="wivm_first_name"><?php _e( 'First Name:', 'wired-impact-volunteer-management' ); ?></label>
-	<input type="text" tabindex="900" id="wivm_first_name" name="wivm_first_name" value="" />
+	<input type="text" id="wivm_first_name" name="wivm_first_name" value="" />
 
 	<label for="wivm_last_name"><?php _e( 'Last Name:', 'wired-impact-volunteer-management' ); ?></label>
-	<input type="text" tabindex="910" id="wivm_last_name" name="wivm_last_name" value="" />
+	<input type="text" id="wivm_last_name" name="wivm_last_name" value="" />
 
 	<label for="wivm_phone"><?php _e( 'Phone:', 'wired-impact-volunteer-management' ); ?></label>
-	<input type="text" tabindex="920" id="wivm_phone" name="wivm_phone" value="" />
+	<input type="text" id="wivm_phone" name="wivm_phone" value="" />
 
 	<label for="wivm_email"><?php _e( 'Email:', 'wired-impact-volunteer-management' ); ?></label>
-	<input type="email" tabindex="930" id="wivm_email" name="wivm_email" value="" />
+	<input type="email" id="wivm_email" name="wivm_email" value="" />
 
 	<?php if( $use_honeypot == 1 ): ?>
 	<label for="wivm_hp" class="wivm_hp"><?php _e( 'Name:', 'wired-impact-volunteer-management' ); ?></label>
-	<input type="text" tabindex="940" class="wivm_hp" id="wivm_hp" name="wivm_hp" value=""  autocomplete="off" />
+	<input type="text" class="wivm_hp" id="wivm_hp" name="wivm_hp" value=""  autocomplete="off" />
 	<?php endif; ?>
 
 	<?php do_action( 'wivm_end_sign_up_form_fields', $post ); ?>
 
 	<input type="hidden" id="wivm_opportunity_id" name="wivm_opportunity_id" value="<?php echo the_ID(); ?>" />
-	<input type="submit" tabindex="950" value="<?php ( $opp->opp_meta['one_time_opp'] == 1 ) ? _e( 'Sign Up', 'wired-impact-volunteer-management' ) : _e( 'Express Interest', 'wired-impact-volunteer-management' ) ; ?>" />
+	<input type="submit" value="<?php ( $opp->opp_meta['one_time_opp'] == 1 ) ? _e( 'Sign Up', 'wired-impact-volunteer-management' ) : _e( 'Express Interest', 'wired-impact-volunteer-management' ) ; ?>" />
 </form>
 <?php else: ?>
 	<p><?php _e( 'We\'re sorry, but we\'re no longer accepting new volunteers for this opportunity.', 'wired-impact-volunteer-management' ); ?></p>
