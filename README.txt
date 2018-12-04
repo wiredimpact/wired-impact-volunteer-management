@@ -3,7 +3,7 @@ Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
 Tested up to: 5.0
-Stable tag: 1.3.11
+Stable tag: 1.3.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,9 +52,7 @@ Once you’ve downloaded the plugin, you’ll want to adjust the settings to fit
 1.	On the Opportunities page, click “Add Volunteer Opportunity”
 1.	Fill in all of the information fields
 1.	Click the blue “Publish” button
-1.	To display the opportunities on your website, you’ll need to include the following shortcodes in the page content: [one_time_volunteer_opps] (for one-time opportunities), [flexible_volunteer_opps] (for flexible opportunities)
-    1. If you're using WordPress 5.0 or later and the Gutenberg Editor you can use the Shortcode block and paste the shortcode into the block or use the Classic Editor block and paste the shortcode into the editor.
-    1. If you're using a WordPress version less than 5.0 or not using the Gutenberg Editor you can paste the shortcode into the Visual Editor.
+1.	To display the opportunities on your website, you’ll need to include the following shortcodes in the page content either through the Visual Editor (pre-WordPress 5.0) or through the Shortcode block (post-WordPress 5.0): [one_time_volunteer_opps] (for one-time opportunities), [flexible_volunteer_opps] (for flexible opportunities)
 
 It’s important to note, you can’t post both types of opportunities on the same page. Please list only one of the shortcodes on each page.
 
