@@ -137,7 +137,8 @@ class WI_Volunteer_Management_Public {
 	      'menu_icon'         => 'dashicons-groups',
 	      'capability_type'   => 'post',
 	      'supports'          => array( 'title', 'editor', 'thumbnail', 'revisions'  ),
-	      'rewrite'           => array( 'slug' => apply_filters( 'wivm_opp_rewrite', 'volunteer-opportunity' ), 'with_front' => false )
+	      'rewrite'           => array( 'slug' => apply_filters( 'wivm_opp_rewrite', 'volunteer-opportunity' ), 'with_front' => false ),
+	      'show_in_rest'      => true,
 	    ); 
 	    
 	    register_post_type( 'volunteer_opp', $args );
