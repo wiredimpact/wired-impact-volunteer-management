@@ -101,6 +101,10 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 == Changelog ==
 
+= 1.3.12 =
+* Make the Volunteer Opportunity custom post type available via the REST API so it utilizes the new Gutenberg content editor.
+* Tested up to WordPress 5.0.
+
 = 1.3.11 =
 * Improved accessibility by removing all tabindex HTML attributes from the frontend form and the WordPress admin.
 
