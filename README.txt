@@ -3,7 +3,7 @@ Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
 Tested up to: 5.0
-Stable tag: 1.3.12
+Stable tag: 1.3.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,11 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. View Volunteer Profiles
 
 == Changelog ==
+
+= 1.3.13
+* Added the ability to change the 'Help & Settings' subpage name using the 'wivm_help_and_settings_menu_item_name' filter.
+* Added the ability to change the 'Help' tab name using the 'wivm_help_tab_name' filter.
+* Added the ability to hide the 'Help' tab using the 'wivm_show_help_tab' filter. 
 
 = 1.3.12 =
 * Make the Volunteer Opportunity custom post type available via the REST API so it utilizes the new Gutenberg content editor.

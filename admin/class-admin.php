@@ -234,7 +234,7 @@ class WI_Volunteer_Management_Admin {
 			array(
 				'wi-volunteer-management',
 				'',
-				__( 'Help & Settings', 'wired-impact-volunteer-management' ),
+				__( apply_filters( 'wivm_help_and_settings_menu_item_name', 'Help & Settings' ), 'wired-impact-volunteer-management' ),
 				'edit_others_posts',
 				'wi-volunteer-management-help-settings',
 				array( $this, 'load_page' ),
