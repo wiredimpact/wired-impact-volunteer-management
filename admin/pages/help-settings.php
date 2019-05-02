@@ -25,7 +25,7 @@ $wivm_show_help_tab	= apply_filters( 'wivm_show_help_tab', true );
 
 	<h2 class="nav-tab-wrapper" id="wivm-tabs">
 		<?php if( $wivm_show_help_tab === true ) : ?>
-			<a class="nav-tab" id="help-tab" href="#top#help"><span class="dashicons dashicons-editor-help"></span> <?php _e( apply_filters( 'wivm_help_tab_name', 'Help' ), 'wired-impact-volunteer-management' ); ?></a>
+			<a class="nav-tab" id="help-tab" href="#top#help"><span class="dashicons dashicons-editor-help"></span> <?php _e( 'Help', 'wired-impact-volunteer-management' ); ?></a>
 		<?php endif; ?>
 		
 		<?php if( current_user_can( 'manage_options' ) ): ?>

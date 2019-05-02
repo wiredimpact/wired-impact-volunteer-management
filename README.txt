@@ -102,8 +102,7 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 == Changelog ==
 
 = 1.3.13
-* Added the ability to change the 'Help & Settings' subpage name using the 'wivm_help_and_settings_menu_item_name' filter.
-* Added the ability to change the 'Help' tab name using the 'wivm_help_tab_name' filter.
+* Added the ability to change the 'Help & Settings', 'Volunteers', and 'Volunteer' subpage names using the 'wivm_submenu_page_name' filter.
 * Added the ability to hide the 'Help' tab using the 'wivm_show_help_tab' filter. 
 
 = 1.3.12 =
