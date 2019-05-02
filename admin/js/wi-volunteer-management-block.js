@@ -2,7 +2,7 @@
 
 	const { registerBlockType }						= wp.blocks;
 	const { createElement, Fragment } 				= wp.element;
-	const { BlockControls } 						= wp.editor;
+	const { BlockControls } 						= wp.blockEditor;
 	const { Disabled, ServerSideRender, Toolbar } 	= wp.components;
 	const { __ } 									= wp.i18n;
 	const volunteerOppsIcon							= 	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" xmlSpace="preserve">

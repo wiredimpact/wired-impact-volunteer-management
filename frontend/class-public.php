@@ -160,7 +160,7 @@ class WI_Volunteer_Management_Public {
 			array(
 				'wp-blocks',
 				'wp-element',
-				'wp-editor',
+				'wp-block-editor',
 				'wp-components'
 			),
 			$this->version
