@@ -145,6 +145,68 @@ class WI_Volunteer_Management_Public {
 	}
 
 	/**
+	 * Register our volunteer opportunities block.
+	 */
+	public function volunteer_opps_register_block(){
+
+		// Skip block registration if Gutenberg is not enabled
+		if ( ! function_exists( 'register_block_type' ) ) {
+			return;
+		}
+
+		wp_register_script(
+			$this->plugin_name . '-block',
+			plugin_dir_url( dirname( __FILE__ ) ) . 'admin/js/wi_volunteer_management_block.bundle.js',
+			array(
+				'wp-blocks',
+				'wp-element',
+				'wp-block-editor',
+				'wp-components'
+			),
+			$this->version
+		);
+
+		// This is the same CSS we load on the frontend
+		wp_register_style( 
+			$this->plugin_name,
+			plugin_dir_url( __FILE__ ) . 'css/wi-volunteer-management-public.css',
+			array(),
+			$this->version,
+			'all'
+		);
+
+		register_block_type( 'wired-impact-volunteer-management/volunteer-opps', array(
+				'editor_script' 	=> $this->plugin_name . '-block',
+				'editor_style'		=> $this->plugin_name,
+				'render_callback' => array( $this, 'display_volunteer_opps_block' ),
+				'attributes'      => array(
+					'showOneTime'    => array(
+							'type'      => 'boolean',
+							'default'   => true,
+					),
+			),
+		) );
+	}
+
+	/**
+	 * Display our volunteer opportunities block in the admin or 
+	 * on the frontend of the website. AJAX is used to load the
+	 * volunteer opportunities in the admin.
+	 * 
+	 * @see    https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/block-tutorial/creating-dynamic-blocks/
+	 * @param  array 	$attributes	Attributes saved from the block editor to display in the admin or frontend.
+	 * @return string        			The final HTML for our volunteer opportunities.
+	 */
+	public function display_volunteer_opps_block( $attributes ){
+	
+		if( $attributes['showOneTime'] === true ){
+			return $this->display_one_time_volunteer_opps();
+		} 
+		
+		return $this->display_flexible_volunteer_opps();
+	}
+
+	/**
 	 * Shortcode for viewing all one-time volunteer opportunities.
 	 */
 	public function display_one_time_volunteer_opps(){
