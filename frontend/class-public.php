@@ -161,7 +161,9 @@ class WI_Volunteer_Management_Public {
 				'wp-blocks',
 				'wp-element',
 				'wp-block-editor',
-				'wp-components'
+				'wp-components',
+				'wp-dom-ready',
+				'wp-edit-post'
 			),
 			$this->version
 		);

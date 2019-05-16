@@ -146,4 +146,11 @@
 			return null;
 		},
 	} );
+
+	// Hide the volunteer opportunities block when editing a volunteer opportunity post
+	wp.domReady( function() {
+		if( wp.data.select( 'core/editor' ).getCurrentPostType() === 'volunteer_opp' ) {
+			wp.blocks.unregisterBlockType( 'wired-impact-volunteer-management/volunteer-opps' );
+		}
+	} );
 } )( window.wp );
