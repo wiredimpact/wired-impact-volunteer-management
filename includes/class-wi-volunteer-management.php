@@ -69,7 +69,7 @@ class WI_Volunteer_Management {
 	public function __construct() {
 
 		$this->plugin_name = 'wired-impact-volunteer-management';
-		$this->version = '1.3.12';
+		$this->version = '1.4';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -239,6 +239,7 @@ class WI_Volunteer_Management {
 		$this->loader->add_action(      'wp_head',            			 $plugin_public, 'enqueue_honeypot_styles' );
 		$this->loader->add_action(      'wp_enqueue_scripts',            $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action(      'init',                          $plugin_public, 'register_post_types' );
+		$this->loader->add_action(	    'init',							 $plugin_public, 'volunteer_opps_register_block' );
 		$this->loader->add_shortcode(   'one_time_volunteer_opps',       $plugin_public, 'display_one_time_volunteer_opps' );
 		$this->loader->add_shortcode(   'flexible_volunteer_opps',       $plugin_public, 'display_flexible_volunteer_opps' );
 		$this->loader->add_filter(      'wp_trim_words',                 $plugin_public, 'always_show_read_more' );

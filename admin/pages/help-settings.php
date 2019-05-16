@@ -17,14 +17,21 @@ require_once plugin_dir_path( dirname( __FILE__ ) ) . 'class-form.php';
 
 $wi_form = new WI_Volunteer_Management_Form();
 $wi_form->admin_header();
+
+// Filter to allow the Help & Settings menu 'Help' tab to be hidden
+$wivm_show_help_tab	= apply_filters( 'wivm_show_help_tab', true );
+
 ?>
-	
+
 	<h2 class="nav-tab-wrapper" id="wivm-tabs">
-		<a class="nav-tab" id="help-tab" href="#top#help"><span class="dashicons dashicons-editor-help"></span> <?php _e( 'Help', 'wired-impact-volunteer-management' ); ?></a>
+		<?php if( $wivm_show_help_tab === true ) : ?>
+			<a class="nav-tab" id="help-tab" href="#top#help"><span class="dashicons dashicons-editor-help"></span> <?php _e( 'Help', 'wired-impact-volunteer-management' ); ?></a>
+		<?php endif; ?>
+		
 		<?php if( current_user_can( 'manage_options' ) ): ?>
-		<a class="nav-tab" id="general-tab" href="#top#general"><span class="dashicons dashicons-admin-tools"></span> <?php _e( 'General', 'wired-impact-volunteer-management' ); ?></a>
-		<a class="nav-tab" id="defaults-tab" href="#top#defaults"><span class="dashicons dashicons-admin-generic"></span> <?php _e( 'Opportunity Defaults', 'wired-impact-volunteer-management' ); ?></a>
-		<a class="nav-tab" id="email-tab" href="#top#email"><span class="dashicons dashicons-email-alt"></span> <?php _e( 'Email', 'wired-impact-volunteer-management' ); ?></a>
+			<a class="nav-tab" id="general-tab" href="#top#general"><span class="dashicons dashicons-admin-tools"></span> <?php _e( 'General', 'wired-impact-volunteer-management' ); ?></a>
+			<a class="nav-tab" id="defaults-tab" href="#top#defaults"><span class="dashicons dashicons-admin-generic"></span> <?php _e( 'Opportunity Defaults', 'wired-impact-volunteer-management' ); ?></a>
+			<a class="nav-tab" id="email-tab" href="#top#email"><span class="dashicons dashicons-email-alt"></span> <?php _e( 'Email', 'wired-impact-volunteer-management' ); ?></a>
 		<?php endif; ?>
 	</h2>
 
@@ -33,17 +40,19 @@ $wi_form->admin_header();
 	settings_fields( 'wivm-settings-group' );
 
 	//Display a Help tab
-	$wi_form->form_table_start( 'help' ); ?>
+	if( $wivm_show_help_tab === true ) :
+		$wi_form->form_table_start( 'help' ); ?>
 
-		<h2><?php _e( 'FAQs and Get Started', 'wired-impact-volunteer-management' ); ?></h2>
-		<p><?php printf( __( 'Check out the <a target="_blank" href="%s">FAQs on the WordPress plugin repository</a> to get help and learn how to get started.' ), 'https://wordpress.org/plugins/wired-impact-volunteer-management/faq/' ); ?></p>
+			<h2><?php _e( 'FAQs and Get Started', 'wired-impact-volunteer-management' ); ?></h2>
+			<p><?php printf( __( 'Check out the <a target="_blank" href="%s">FAQs on the WordPress plugin repository</a> to get help and learn how to get started.' ), 'https://wordpress.org/plugins/wired-impact-volunteer-management/faq/' ); ?></p>
 
-		<h2><?php _e( 'Need More Help?', 'wired-impact-volunteer-management' ); ?></h2>
-		<p><?php printf( __( 'If the FAQs aren\'t cutting it and you need more help reach out to us on the <a target="_blank" href="%s">WordPress support forums.</a>' ), 'https://wordpress.org/support/plugin/wired-impact-volunteer-management' ); ?></p> 
-	
-	<?php do_action( 'wivm_display_help_settings', $wi_form );
+			<h2><?php _e( 'Need More Help?', 'wired-impact-volunteer-management' ); ?></h2>
+			<p><?php printf( __( 'If the FAQs aren\'t cutting it and you need more help reach out to us on the <a target="_blank" href="%s">WordPress support forums.</a>' ), 'https://wordpress.org/support/plugin/wired-impact-volunteer-management' ); ?></p> 
+		
+		<?php do_action( 'wivm_display_help_settings', $wi_form );
 
-	$wi_form->form_table_end();
+		$wi_form->form_table_end();
+	endif;
 
 	//Display General settings tab
 	if( current_user_can( 'manage_options' ) ):

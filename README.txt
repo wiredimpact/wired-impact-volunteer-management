@@ -2,8 +2,9 @@
 Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
-Tested up to: 5.0
-Stable tag: 1.3.12
+Tested up to: 5.2
+Requires PHP: 5.2.4
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +16,7 @@ A simple, free way to keep track of your nonprofit's volunteers and opportunitie
 
 **How can the Wired Impact Volunteer Management plugin help your nonprofit?**
 
-* **Post one-time and flexible volunteer opportunities on your website –** Promote volunteer opportunities on any page of your website using a simple shortcode.
+* **Post one-time and flexible volunteer opportunities on your website –** Promote volunteer opportunities on any page of your website using a simple block or shortcode.
 * **Volunteers can sign up directly on your website –** Make volunteering even easier for your supporters by giving them the option to sign up for an opportunity directly on your website. A confirmation email will be sent to you and the volunteer once they sign up. 
 * **Control the number of sign-ups available for opportunities –** Only need 10 people to help out at an event? Set a cap on the number of people who can sign up. Want as many volunteers as you can get? No problem. You don’t have to set a cap.
 * **Send reminder emails anytime –** Schedule an automated reminder email three days in advance or send even hours before the opportunity for last-minute details.
@@ -31,7 +32,8 @@ This is the easiest way to install the Wired Impact Volunteer Management plugin:
 
 1.	In the WordPress backend, go to Plugins >> Add New
 1.	Search for “Wired Impact Volunteer Management”
-1.	Click “Install”
+1.	Click “Install Now”
+1.	Click “Activate”
 
 If this doesn’t work, follow these steps:
 
@@ -42,19 +44,24 @@ If this doesn’t work, follow these steps:
 
 == Frequently Asked Questions ==
 
-= How do you get started? =
+= How do I get started? =
 
 Once you’ve downloaded the plugin, you’ll want to adjust the settings to fit your specific needs. You can do this by visiting the Volunteer Management menu and clicking “Help & Settings”. Here, you can choose to include our styles, set a default contact and location for volunteer opportunities, and create a template for your confirmation and reminder emails.
 
-= How do you create a new volunteer opportunity? =
+= How do I create a new volunteer opportunity? =
 
 1.	In the Volunteer Management menu, click “Opportunities” 
 1.	On the Opportunities page, click “Add Volunteer Opportunity”
 1.	Fill in all of the information fields
 1.	Click the blue “Publish” button
-1.	To display the opportunities on your website, you’ll need to include the following shortcodes in the page content either through the Visual Editor (pre-WordPress 5.0) or through the Shortcode block (post-WordPress 5.0): [one_time_volunteer_opps] (for one-time opportunities), [flexible_volunteer_opps] (for flexible opportunities)
 
-It’s important to note, you can’t post both types of opportunities on the same page. Please list only one of the shortcodes on each page.
+= How do I display a list of volunteer opportunities on my website? =
+
+If you’re using the classic editor (WordPress 4.9 or earlier), you can display the opportunities by including the following shortcodes in the page content: [one_time_volunteer_opps] (for one-time opportunities), [flexible_volunteer_opps] (for flexible opportunities)
+
+If you’re using the block editor (WordPress 5.0 or later), you can display the opportunities by adding the Volunteer Opportunities block to your page content. Once added, you can use the block’s toolbar to display one-time or flexible opportunities.
+
+It’s important to note, you can’t display a list of both types of opportunities on the same page. Please list either one-time or flexible opportunities on a page.
 
 = What is the difference between the two types of opportunities? = 
 
@@ -82,7 +89,7 @@ If a volunteer is no longer able to help out at a specific opportunity, you can 
 1.	Click “Opportunities” from the Volunteer Management menu
 1.	Find the opportunity you need to remove the volunteer from 
 1.	Click the opportunity to edit 
-1.	Scroll down to the RSVP list, find the volunteers name and click “Remove RSVP”
+1.	Scroll down to the RSVP list, find the volunteer’s name and click “Remove RSVP”
 1.	Confirm their removal by clicking the blue “Remove RSVP” button
 
 = How do I create a recurring opportunity? =
@@ -98,8 +105,16 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. Control the Number of Volunteers Needed
 1. Send Customized Reminder Emails
 1. View Volunteer Profiles
+1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 1.4 =
+* Added a block to use in WordPress 5.0+ to display volunteer opportunities.
+* Added the ability to change the 'Help & Settings', 'Volunteers', and 'Volunteer' subpage names using the 'wivm_submenu_page_name' filter.
+* Added the ability to hide the 'Help' tab using the 'wivm_show_help_tab' filter. 
+* Modified the CSS styling used for the datepicker to minimize conflicts with other plugins and themes.
+* Tested up to WordPress 5.2.
 
 = 1.3.12 =
 * Make the Volunteer Opportunity custom post type available via the REST API so it utilizes the new Gutenberg content editor.
