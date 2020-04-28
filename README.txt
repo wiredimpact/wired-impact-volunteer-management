@@ -111,6 +111,8 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 = 1.4.2 =
 * Updated the transforms property of the Volunteer Opportunities block.
+* Fixed support of the Additional CSS Class for the Volunteer Opportunities block.
+* Added anchor support for the Volunteer Opportunities block.
 * Tested up to WordPress 5.4.
 
 = 1.4.1 =
