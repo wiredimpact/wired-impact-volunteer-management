@@ -39,12 +39,21 @@
 
 		icon: 			volunteerOppsIcon,
 
-		supports: 		{ html: false },
+		supports: 		{
+							html: false,
+							anchor: true
+						},
 
 		attributes: 	{
 							showOneTime: {
 								type: 'boolean',
 								default: true
+							},
+							anchor: {
+								type: 'string',
+								default: '',
+								attribute: 'id',
+								selector: '.volunteer-opps'
 							},
 						},
 		
