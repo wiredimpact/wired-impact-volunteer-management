@@ -339,10 +339,26 @@ class WI_Volunteer_Management_Public {
 
 		ob_start();
 
-		$class_name = ( $block_attributes['className'] === '' ) ? $list_type : $list_type . ' ' . sanitize_html_class( $block_attributes['className'] );
+		$class_name = $list_type;
+		$anchor     = '';
+
+		if ( is_array( $block_attributes ) ) {
+
+			// If the Additonal CSS class(es) field on the block is used, include it in the container class name.
+			if ( array_key_exists( 'className', $block_attributes ) && $block_attributes['className'] !== '' ) {
+
+				$class_name = $class_name . ' ' . sanitize_html_class( $block_attributes['className'] );
+			}
+
+			// If the HTML anchor field on the block is used, use it for the list's container ID.
+			if ( array_key_exists( 'anchor', $block_attributes ) && $block_attributes['anchor'] !== '' ) {
+
+				$anchor = 'id="' . sanitize_html_class( $block_attributes['anchor'] ) . '"';
+			}
+		}
 		?>
 
-		<div class="volunteer-opps <?php echo $class_name; ?>"<?php echo ( $block_attributes['anchor'] === '' ) ? '' : 'id="' . sanitize_html_class( $block_attributes['anchor'] ) . '"'; ?>>
+		<div class="volunteer-opps <?php echo $class_name; ?>"<?php echo $anchor; ?>>
 
 			<?php 
 			$template_loader = new WI_Volunteer_Management_Template_Loader();
