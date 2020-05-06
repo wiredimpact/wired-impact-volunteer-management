@@ -224,9 +224,9 @@ class WI_Volunteer_Management_Public {
 	/**
 	 * Shortcode for viewing all one-time volunteer opportunities.
 	 *
-	 * @param array $block_attributes  Attributes saved from the block editor to display in the admin or frontend.
+	 * @param array $attributes  Attributes saved from the block editor or passed as shortcode parameters.
 	 */
-	public function display_one_time_volunteer_opps( $block_attributes ) {
+	public function display_one_time_volunteer_opps( $attributes ) {
 		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 		$args  = array(
 			'post_type' => 'volunteer_opp',
@@ -249,15 +249,15 @@ class WI_Volunteer_Management_Public {
 			'paged' => $paged
 		);
 
-		return $this->display_volunteer_opp_list( 'one-time', apply_filters( $this->plugin_name . '_one_time_opp_shortcode_query', $args ), $block_attributes );
+		return $this->display_volunteer_opp_list( 'one-time', apply_filters( $this->plugin_name . '_one_time_opp_shortcode_query', $args ), $attributes );
 	}
 
 	/**
 	 * Shortcode for viewing all flexible volunteer opportunities.
 	 *
-	 * @param array $block_attributes  Attributes saved from the block editor to display in the admin or frontend.
+	 * @param array $attributes  Attributes saved from the block editor or passed as shortcode parameters.
 	 */
-	public function display_flexible_volunteer_opps( $block_attributes ) {
+	public function display_flexible_volunteer_opps( $attributes ) {
 		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 		$args = array(
 			'post_type' => 'volunteer_opp',
@@ -271,7 +271,7 @@ class WI_Volunteer_Management_Public {
 			'paged' => $paged
 		);
 
-		return $this->display_volunteer_opp_list( 'flexible', apply_filters( $this->plugin_name . '_flexible_opp_shortcode_query', $args ), $block_attributes );
+		return $this->display_volunteer_opp_list( 'flexible', apply_filters( $this->plugin_name . '_flexible_opp_shortcode_query', $args ), $attributes );
 	}
 
 
@@ -328,10 +328,10 @@ class WI_Volunteer_Management_Public {
 	 *
 	 * @param  string $list_type One-time or flexible volunteer opportunities.
 	 * @param  array  $query_args The query arguments to be used in WP_Query.
-	 * @param array  $block_attributes  Attributes saved from the block editor to display in the admin or frontend.
+	 * @param array  $attributes  Attributes saved from the block editor or passed as shortcode parameters.
 	 * @return string            HTML code to be output via a shortcode.
 	 */
-	public function display_volunteer_opp_list( $list_type, $query_args, $block_attributes ) {
+	public function display_volunteer_opp_list( $list_type, $query_args, $attributes ) {
 		// We must edit the main query in order to handle pagination.
 		global $wp_query;
 		$temp = $wp_query;
@@ -339,23 +339,17 @@ class WI_Volunteer_Management_Public {
 
 		ob_start();
 
-		$class_name = $list_type;
-		$anchor     = '';
+		/**
+		 * If the Additonal CSS class(es) field on the block is used, or className is passed
+		 * as a shortcode parameter, include it in the container class name.
+		 */
+		$class_name = ( empty( $attributes['className'] ) ) ? $list_type : $list_type . ' ' . sanitize_text_field( $attributes['className'] );
 
-		if ( is_array( $block_attributes ) ) {
-
-			// If the Additonal CSS class(es) field on the block is used, include it in the container class name.
-			if ( array_key_exists( 'className', $block_attributes ) && $block_attributes['className'] !== '' ) {
-
-				$class_name = $class_name . ' ' . sanitize_html_class( $block_attributes['className'] );
-			}
-
-			// If the HTML anchor field on the block is used, use it for the list's container ID.
-			if ( array_key_exists( 'anchor', $block_attributes ) && $block_attributes['anchor'] !== '' ) {
-
-				$anchor = 'id="' . sanitize_html_class( $block_attributes['anchor'] ) . '"';
-			}
-		}
+		/**
+		 * If the HTML anchor field on the block is used, or anchor is passed
+		 * as a shortcode parameter, use it for the list's container ID.
+		 */
+		$anchor = ( empty( $attributes['anchor'] ) ) ? '' : 'id="' . sanitize_html_class( $attributes['anchor'] ) . '"';
 		?>
 
 		<div class="volunteer-opps <?php echo $class_name; ?>"<?php echo $anchor; ?>>
