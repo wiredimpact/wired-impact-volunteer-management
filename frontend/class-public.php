@@ -177,41 +177,56 @@ class WI_Volunteer_Management_Public {
 			'all'
 		);
 
-		register_block_type( 'wired-impact-volunteer-management/volunteer-opps', array(
-				'editor_script' 	=> $this->plugin_name . '-block',
-				'editor_style'		=> $this->plugin_name,
+		register_block_type(
+			'wired-impact-volunteer-management/volunteer-opps',
+			array(
+				'editor_script'   => $this->plugin_name . '-block',
+				'editor_style'    => $this->plugin_name,
 				'render_callback' => array( $this, 'display_volunteer_opps_block' ),
 				'attributes'      => array(
-					'showOneTime'    => array(
-							'type'      => 'boolean',
-							'default'   => true,
+					'showOneTime' => array(
+						'type'    => 'boolean',
+						'default' => true,
 					),
-			),
-		) );
+					'className'   => array(
+						'type'    => 'string',
+						'default' => '',
+					),
+					'anchor'      => array(
+						'type'      => 'string',
+						'default'   => '',
+						'attribute' => 'id',
+						'selector'  => '.volunteer-opps',
+					),
+				),
+			)
+		);
 	}
 
 	/**
-	 * Display our volunteer opportunities block in the admin or 
+	 * Display our volunteer opportunities block in the admin or
 	 * on the frontend of the website. AJAX is used to load the
 	 * volunteer opportunities in the admin.
-	 * 
+	 *
 	 * @see    https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/block-tutorial/creating-dynamic-blocks/
-	 * @param  array 	$attributes	Attributes saved from the block editor to display in the admin or frontend.
-	 * @return string        			The final HTML for our volunteer opportunities.
+	 * @param  array $attributes        Attributes saved from the block editor to display in the admin or frontend.
+	 * @return string                   The final HTML for our volunteer opportunities.
 	 */
-	public function display_volunteer_opps_block( $attributes ){
-	
-		if( $attributes['showOneTime'] === true ){
-			return $this->display_one_time_volunteer_opps();
-		} 
-		
-		return $this->display_flexible_volunteer_opps();
+	public function display_volunteer_opps_block( $attributes ) {
+
+		if ( $attributes['showOneTime'] === true ) {
+			return $this->display_one_time_volunteer_opps( $attributes );
+		}
+
+		return $this->display_flexible_volunteer_opps( $attributes );
 	}
 
 	/**
 	 * Shortcode for viewing all one-time volunteer opportunities.
+	 *
+	 * @param array $attributes  Attributes saved from the block editor or passed as shortcode parameters.
 	 */
-	public function display_one_time_volunteer_opps(){
+	public function display_one_time_volunteer_opps( $attributes ) {
 		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 		$args  = array(
 			'post_type' => 'volunteer_opp',
@@ -234,13 +249,15 @@ class WI_Volunteer_Management_Public {
 			'paged' => $paged
 		);
 
-		return $this->display_volunteer_opp_list( 'one-time', apply_filters( $this->plugin_name . '_one_time_opp_shortcode_query', $args ) );		
+		return $this->display_volunteer_opp_list( 'one-time', apply_filters( $this->plugin_name . '_one_time_opp_shortcode_query', $args ), $attributes );
 	}
 
 	/**
 	 * Shortcode for viewing all flexible volunteer opportunities.
+	 *
+	 * @param array $attributes  Attributes saved from the block editor or passed as shortcode parameters.
 	 */
-	public function display_flexible_volunteer_opps(){
+	public function display_flexible_volunteer_opps( $attributes ) {
 		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 		$args = array(
 			'post_type' => 'volunteer_opp',
@@ -254,7 +271,7 @@ class WI_Volunteer_Management_Public {
 			'paged' => $paged
 		);
 
-		return $this->display_volunteer_opp_list( 'flexible', apply_filters( $this->plugin_name . '_flexible_opp_shortcode_query', $args ) );
+		return $this->display_volunteer_opp_list( 'flexible', apply_filters( $this->plugin_name . '_flexible_opp_shortcode_query', $args ), $attributes );
 	}
 
 
@@ -308,20 +325,34 @@ class WI_Volunteer_Management_Public {
 	 *
 	 * Displays the volunteer opportunities lists for both the one-time and flexible
 	 * opportunities. It also calls template files to output the majority of the HTML.
-	 * 
-	 * @param  string $list_type One-time or flexible volunteer opportunities
-	 * @param  array $query_args The query arguments to be used in WP_Query 
+	 *
+	 * @param  string $list_type One-time or flexible volunteer opportunities.
+	 * @param  array  $query_args The query arguments to be used in WP_Query.
+	 * @param array  $attributes  Attributes saved from the block editor or passed as shortcode parameters.
 	 * @return string            HTML code to be output via a shortcode.
 	 */
-	public function display_volunteer_opp_list( $list_type, $query_args ){
-		//We must edit the main query in order to handle pagination.
+	public function display_volunteer_opp_list( $list_type, $query_args, $attributes ) {
+		// We must edit the main query in order to handle pagination.
 		global $wp_query;
 		$temp = $wp_query;
 		$wp_query = new WP_Query( $query_args );
 
-		ob_start(); ?>
-		
-		<div class="volunteer-opps <?php echo $list_type; ?>">
+		ob_start();
+
+		/**
+		 * If the Additonal CSS class(es) field on the block is used, or className is passed
+		 * as a shortcode parameter, include it in the container class name.
+		 */
+		$class_name = ( empty( $attributes['className'] ) ) ? $list_type : $list_type . ' ' . sanitize_text_field( $attributes['className'] );
+
+		/**
+		 * If the HTML anchor field on the block is used, or anchor is passed
+		 * as a shortcode parameter, use it for the list's container ID.
+		 */
+		$anchor = ( empty( $attributes['anchor'] ) ) ? '' : 'id="' . sanitize_html_class( $attributes['anchor'] ) . '"';
+		?>
+
+		<div class="volunteer-opps <?php echo $class_name; ?>"<?php echo $anchor; ?>>
 
 			<?php 
 			$template_loader = new WI_Volunteer_Management_Template_Loader();
@@ -331,7 +362,7 @@ class WI_Volunteer_Management_Public {
 					$wp_query->the_post();
 					$template_loader->get_template_part( 'opps-list', $list_type );
 				}
-				
+
 			} 
 			else { ?>
 

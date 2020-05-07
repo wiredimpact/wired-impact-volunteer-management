@@ -39,51 +39,29 @@
 
 		icon: 			volunteerOppsIcon,
 
-		supports: 		{ html: false },
+		supports: 		{
+							html: false,
+							anchor: true
+						},
 
 		attributes: 	{
 							showOneTime: {
 								type: 'boolean',
 								default: true
 							},
+							anchor: {
+								type: 'string',
+								default: '',
+								attribute: 'id',
+								selector: '.volunteer-opps'
+							},
 						},
 		
 		transforms: 	{
 							from: [
-								/*{
-									/**
-									 * @todo 	We should be able to use this transform and remove
-									 * 			the other two at some point in the near future.
-									 * 			I posted about a bug where including two shortcodes
-									 * 			in the "tag" property doesn't appear to be working.
-									 * 			You can see the issue at https://github.com/WordPress/gutenberg/issues/14476.
-									 */ /*
+								{
 									type: 'shortcode',
 									tag: [ 'one_time_volunteer_opps', 'flexible_volunteer_opps' ],
-									attributes: {
-										showOneTime: {
-											type: 'boolean',
-											shortcode: ( attributes, { shortcode } ) => {
-												return shortcode.tag === 'one_time_volunteer_opps' ? true : false;
-											},
-										}
-									},
-								}, */
-								{
-									type: 'shortcode',
-									tag: 'one_time_volunteer_opps',
-									attributes: {
-										showOneTime: {
-											type: 'boolean',
-											shortcode: ( attributes, { shortcode } ) => {
-												return shortcode.tag === 'one_time_volunteer_opps' ? true : false;
-											},
-										}
-									},
-								},
-								{
-									type: 'shortcode',
-									tag: 'flexible_volunteer_opps',
 									attributes: {
 										showOneTime: {
 											type: 'boolean',
