@@ -24,6 +24,6 @@
     "webpack-fix-style-only-entries": "^0.2.0"
   },
   "dependencies": {
-    "npm": "^6.14.5"
+    "npm": "^6.14.6"
   }
 }
