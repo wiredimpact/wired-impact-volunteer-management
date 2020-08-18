@@ -100,7 +100,7 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 
 		// Order by phone number if necessary.
 		if ( isset( $_REQUEST['orderby'] ) && $_REQUEST['orderby'] === 'phone' ) {
-			$args['meta_key'] = 'wp_phone';
+			$args['meta_key'] = $wpdb->prefix . 'phone';
 			$args['orderby']  = 'meta_value_num';
 		}
 
