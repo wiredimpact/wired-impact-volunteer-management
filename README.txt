@@ -2,9 +2,9 @@
 Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
-Tested up to: 5.4
+Tested up to: 5.5
 Requires PHP: 5.2.4
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,12 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 1.4.3 =
+* Fixed issue when sorting volunteers by phone number.
+* Updated NPM packages for improved security.
+* Updated ServerSideRender block component to load directly from 'wp' global.
+* Tested up to WordPress 5.5.
 
 = 1.4.2 =
 * Updated the transforms property of the Volunteer Opportunities block.

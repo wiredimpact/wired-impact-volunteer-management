@@ -98,9 +98,10 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 		if ( isset( $_REQUEST['order'] ) )
 			$args['order'] = $_REQUEST['order'];
 
-		//Order by phone number if necessary
-		if( isset( $_REQUEST['orderby'] ) && $_REQUEST['orderby'] == 'phone' ){
-			$args['meta_key'] = 'phone';
+		// Order by phone number if necessary.
+		if ( isset( $_REQUEST['orderby'] ) && $_REQUEST['orderby'] === 'phone' ) {
+			$args['meta_key'] = $wpdb->prefix . 'phone';
+			$args['orderby']  = 'meta_value_num';
 		}
 
 		// Query the user IDs for this page
