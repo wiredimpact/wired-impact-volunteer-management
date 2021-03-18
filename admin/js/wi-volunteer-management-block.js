@@ -3,7 +3,7 @@
 	const { registerBlockType }                  = wp.blocks;
 	const { createElement, Fragment }            = wp.element;
 	const { BlockControls }                      = wp.blockEditor;
-	const { Disabled, Toolbar }                  = wp.components;
+	const { Disabled, Toolbar, ToolbarButton }                  = wp.components;
 	const { serverSideRender: ServerSideRender } = wp;
 	const { __ }                                 = wp.i18n;
 	const volunteerOppsIcon                      = 	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" xmlSpace="preserve">
@@ -91,22 +91,20 @@
 				<Fragment>
 
 					<BlockControls>
-						<Toolbar controls={
-							[
-								{
-									icon: oneTimeOppsIcon,
-									title: __( 'Show One-Time Opportunities', 'wired-impact-volunteer-management' ),
-									onClick: () => setAttributes( { showOneTime: true } ),
-									isActive: showOneTime === true,
-								},
-								{
-									icon: flexibleOppsIcon,
-									title: __( 'Show Flexible Opportunities', 'wired-impact-volunteer-management' ),
-									onClick: () => setAttributes( { showOneTime: false } ),
-									isActive: showOneTime !== true,
-								},
-							]
-						} />
+						<Toolbar label="Opportunity Type Controls">
+								<ToolbarButton
+									icon={ oneTimeOppsIcon }
+									label={ __( 'Show One-Time Opportunities', 'wired-impact-volunteer-management' ) }
+									onClick={ () => setAttributes( { showOneTime: true } ) }
+									isPressed={ showOneTime === true}
+								/>
+								<ToolbarButton
+									icon={ flexibleOppsIcon }
+									title={ __( 'Show Flexible Opportunities', 'wired-impact-volunteer-management' ) }
+									onClick={ () => setAttributes( { showOneTime: false } ) }
+									isPressed={ showOneTime !== true }
+								/>
+						</Toolbar>
 					</BlockControls>
 
 					<Disabled>
