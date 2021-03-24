@@ -677,11 +677,19 @@ class WI_Volunteer_Management_Admin {
 			$editor_id      = 'volunteer-email-editor';
 			$content        = get_option( $editor_id );
 
-			// Set the editor options array
+			/**
+			 * Set the editor options array.
+			 *
+			 * Due to a bug in WordPress 5.6+, the wp_editor instance has to be
+			 * output with the 'Text' tab selected by default.
+			 *
+			 * Once this bug is fixed we can remove the 'default_editor' option.
+			 */
 			$editor_options = array(
 				'media_buttons' => false,
 				'textarea_name' => $editor_id,
 				'editor_height' => 150,
+				'default_editor' => 'html',
 			);
 
 			?>

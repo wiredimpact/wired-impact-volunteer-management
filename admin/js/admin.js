@@ -283,6 +283,17 @@
 
         if ( $( email_editor ).exists() ) {
 
+			/**
+			 * Due to a bug in WordPress 5.6+, the wp_editor instance has to be
+			 * output with the 'Text' tab selected by default.
+			 *
+			 * This code clicks the 'Visual' tab to switch to the TinyMCE editor,
+			 * which is what most users will want to use.
+			 */
+			setTimeout( function() {
+				$( '#volunteer-email-editor-tmce' ).click();
+			}, 1000 );
+
             $( '.wivm-send-email' ).on( 'click', function( event ) {
                 event.preventDefault();
 
