@@ -3,7 +3,7 @@
 	const { registerBlockType }                  = wp.blocks;
 	const { createElement, Fragment }            = wp.element;
 	const { BlockControls }                      = wp.blockEditor;
-	const { Disabled, Toolbar, ToolbarButton }                  = wp.components;
+	const { Disabled, Toolbar, ToolbarButton }   = wp.components;
 	const { serverSideRender: ServerSideRender } = wp;
 	const { __ }                                 = wp.i18n;
 	const volunteerOppsIcon                      = 	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" xmlSpace="preserve">
@@ -91,7 +91,7 @@
 				<Fragment>
 
 					<BlockControls>
-						<Toolbar label="Opportunity Type Controls">
+						<Toolbar label={ __( 'Opportunity Type Controls', 'wired-impact-volunteer-management' ) }>
 								<ToolbarButton
 									icon={ oneTimeOppsIcon }
 									label={ __( 'Show One-Time Opportunities', 'wired-impact-volunteer-management' ) }

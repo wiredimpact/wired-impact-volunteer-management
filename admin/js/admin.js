@@ -289,6 +289,8 @@
 			 *
 			 * This code clicks the 'Visual' tab to switch to the TinyMCE editor,
 			 * which is what most users will want to use.
+			 * 
+			 * Issue Trac Ticket: https://core.trac.wordpress.org/ticket/52050
 			 */
 			setTimeout( function() {
 				$( '#volunteer-email-editor-tmce' ).click();

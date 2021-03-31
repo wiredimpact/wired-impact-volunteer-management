@@ -110,7 +110,7 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 == Changelog ==
 
 = 1.4.5 =
-* Updated the Toolbar component of the Volunteer Opportunities block.
+* Updated the Toolbar component of the Volunteer Opportunities block to adhere to the WordPress development guidelines for the component, and to fix a deprecation in which a Toolbar component requires a label prop.
 * Added a fix for using the 'Visual' tab of the editor used to email volunteers.
 * Tested up to WordPress 5.7.
 

@@ -684,6 +684,8 @@ class WI_Volunteer_Management_Admin {
 			 * output with the 'Text' tab selected by default.
 			 *
 			 * Once this bug is fixed we can remove the 'default_editor' option.
+			 *
+			 * @link https://core.trac.wordpress.org/ticket/52050
 			 */
 			$editor_options = array(
 				'media_buttons' => false,
