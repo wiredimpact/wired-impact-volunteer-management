@@ -76,7 +76,7 @@ p.editor-help {
 	float: right;
 	display: inline-block;
 	margin: 2px 2px 0 0;
-	color: #555;
+	color: #50575e;
 	font-size: 12px;
 	font-style: italic;
 	line-height: 2.5;
@@ -136,7 +136,7 @@ p.editor-help {
 }
 
 .volunteer-email-editor .has-error {
-	border-color: #fb3048;
+	border-color: #d63638;
 }
 
 .volunteer-email-editor .volunteer-email-footer .button {
@@ -153,11 +153,11 @@ p.editor-help {
 }
 
 .volunteer-email-success {
-	border-left: 4px solid #46b450;
+	border-left: 4px solid #00a32a;
 }
 
 .volunteer-email-failure {
-	border-left: 4px solid #dc3232;
+	border-left: 4px solid #d63638;
 }
 
 #volunteer-opportunity-emails th {
@@ -203,7 +203,7 @@ p.editor-help {
 	.rsvp-list-table td { 
 		padding-left: 35%; 
 		border: none;
-		border-bottom: 1px solid #e5e5e5;
+		border-bottom: 1px solid #dcdcde;
 		position: relative;
 	}
 
@@ -298,7 +298,7 @@ p.editor-help {
 }
 
 .wi-volunteer .volunteer-opps-wrapper h1 span {
-	color: #999; /* TO DO: Update with color from design */
+	color: #8c8f94; /* TO DO: Update with color from design */
 }
 
 .wi-volunteer .opps {
@@ -344,13 +344,13 @@ p.editor-help {
 	width: 6px;
 	height: 6px;
 	margin: -3px 0 0 -3px;
-	background-color: #0073aa;
+	background-color: #2271b1;
 	border-radius: 50%;
 	transition: all .75s;
 }
 
 .wi-volunteer .opp:hover .circle:before {
-	background-color: #00a0d2;
+	background-color: #135e96;
 }
 
 .wi-volunteer .opp h3 {
@@ -375,8 +375,8 @@ body.post-type-volunteer_opp .wp-pointer-arrow {
 }
 
 .admin_page_wi-volunteer-management-volunteer .wp-pointer .button-primary.error {
-	background: red;
-	border: 1px solid red;
+	background: #d63638;
+	border: 1px solid #d63638;
 }
 
 .wi-volunteer .today {
@@ -385,11 +385,11 @@ body.post-type-volunteer_opp .wp-pointer-arrow {
 	position: relative;
 	text-align: center;
 	z-index: 1;  
-	color: #999;  
+	color: #8c8f94;  
 }
 
 .wi-volunteer .today:before {
-	border-top: 1px solid #999;
+	border-top: 1px solid #8c8f94;
 	content:"";
 	margin: 0 auto;
 	position: absolute;
