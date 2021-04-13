@@ -2,7 +2,7 @@
 Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
-Tested up to: 5.6
+Tested up to: 5.7
 Requires PHP: 5.2.4
 Stable tag: 1.4.5
 License: GPLv2 or later
