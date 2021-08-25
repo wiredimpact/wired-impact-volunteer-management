@@ -2,9 +2,9 @@
 Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 5.2.4
-Stable tag: 1.4.5
+Stable tag: 1.4.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,11 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 1.4.6 =
+* Adjust how the Volunteer Opportunities block is registered to prevent it from being registered on Volunteer Opportunity posts, the Widgets admin page, and the Widgets area in the customizer.
+* Fixed PHP notices that were being caused by variables being undefined when a new instance of the Volunteer Management Opportunities widget was created.
+* Tested up to WordPress 5.8.
 
 = 1.4.5 =
 * Updated the Toolbar component of the Volunteer Opportunities block to adhere to the WordPress development guidelines for the component, and to fix a deprecation in which a Toolbar component requires a label prop.
