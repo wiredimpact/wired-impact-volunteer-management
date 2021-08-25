@@ -6,6 +6,7 @@
 	const { Disabled, Toolbar, ToolbarButton }   = wp.components;
 	const { serverSideRender: ServerSideRender } = wp;
 	const { __ }                                 = wp.i18n;
+	
 	const volunteerOppsIcon                      = 	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" xmlSpace="preserve">
 															<path d="M17.2,3c-0.2,0-0.3,0-0.5,0V2.8c0-1.2-1-2.1-2.3-2.1c-0.3,0-0.6,0-0.9,0.1C13.2,0.4,12.6,0,11.8,0c-1.2,0-2.2,0.9-2.3,1.9
 															c-0.2,0-0.3,0-0.5,0C7.8,1.9,6.8,2.8,6.8,4v8L4.9,9.9C4.3,9.6,3.9,10,3.3,10.5l-1.6,1.3L7.3,19c0.3,0.3,0.6,0.5,0.9,0.6V24h1.8v-4
@@ -28,7 +29,9 @@
 															<path d="M19.8,3h-0.6V0.9h-2.3V3H7.2V0.9H4.9V3H4.2C3,3,2.1,4,2.1,5.1v15.4c0,1.2,0.9,2.1,2.1,2.1h15.7c1.2,0,2.1-0.9,2.1-2.1V5.1 C21.9,4,21,3,19.8,3z M19.8,20.5H4.2V7.3h15.7V20.5z"/>
 														</svg>
 
-	registerBlockType( 'wired-impact-volunteer-management/volunteer-opps', {
+	let isVolunteerManagementBlockRegistered = false;
+
+	let registerVolunteerManagementBlock = () => registerBlockType( 'wired-impact-volunteer-management/volunteer-opps', {
 
 		title: 			__( 'Volunteer Opportunities', 'wired-impact-volunteer-management' ),
 
@@ -124,15 +127,24 @@
 		},
 	} );
 
-	// Hide the volunteer opportunities block when editing a volunteer opportunity post
-	wp.domReady( function() {
+	// We have to subscribe to changes because on domReady the block editor isn't initialized yet.
+	wp.data.subscribe( function() {
 
-		// Grab the current post type. When in the customizer, this returns null.
-		let currentPostType = wp.data.select( 'core/editor' ).getCurrentPostType();
+		// Only check if we should register the block if it isn't already registered.
+		if ( isVolunteerManagementBlockRegistered === false ) {
 
-		// Unregister the block type when on a Volunteer Opportunity post or the post type is null (which is the case in the customizer).
-		if( currentPostType === 'volunteer_opp' || currentPostType === null ) {
-			wp.blocks.unregisterBlockType( 'wired-impact-volunteer-management/volunteer-opps' );
+			// Grab the registered blocks.
+			let registeredBlocks                     = wp.data.select( 'core/blocks' ).getBlockTypes();
+			let isVolunteerManagementBlockRegistered = registeredBlocks.some( block => block.name === 'wired-impact-volunteer-management/volunteer-opps' );
+
+			// Grab the current post type. On domReady, this returns null.
+			let currentPostType = wp.data.select( 'core/editor' ).getCurrentPostType();
+
+			// // Only register the block if the post type is set, the post isn't a Volunteer Opportunity, and the block isn't already registered.
+			if( currentPostType !== null && currentPostType !== 'volunteer_opp' && isVolunteerManagementBlockRegistered === false  ) {
+				isVolunteerManagementBlockRegistered = true;
+				registerVolunteerManagementBlock();
+			}
 		}
 	} );
 } )( window.wp );
