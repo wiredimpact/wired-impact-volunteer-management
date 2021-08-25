@@ -126,7 +126,12 @@
 
 	// Hide the volunteer opportunities block when editing a volunteer opportunity post
 	wp.domReady( function() {
-		if( wp.data.select( 'core/editor' ).getCurrentPostType() === 'volunteer_opp' ) {
+
+		// Grab the current post type. When in the customizer, this returns null.
+		let currentPostType = wp.data.select( 'core/editor' ).getCurrentPostType();
+
+		// Unregister the block type when on a Volunteer Opportunity post or the post type is null (which is the case in the customizer).
+		if( currentPostType === 'volunteer_opp' || currentPostType === null ) {
 			wp.blocks.unregisterBlockType( 'wired-impact-volunteer-management/volunteer-opps' );
 		}
 	} );
