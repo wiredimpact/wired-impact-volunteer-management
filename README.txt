@@ -110,8 +110,8 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 == Changelog ==
 
 = 1.4.6 =
-* Adjust how the Volunteer Opportunities block is registered to prevent it from being registered on Volunteer Opportunity posts, the Widgets admin page, and the Widgets area in the customizer.
-* Fixed PHP notices that were being caused by variables being undefined when a new instance of the Volunteer Management Opportunities widget was created.
+* Adjusted the Volunteer Opportunities block registration so it can't be added to Volunteer Opportunities, or as a widget on the Widgets admin page or in the customizer.
+* Fixed PHP notices caused by undefined variables when a new instance of the Volunteer Management Opportunities widget was created.
 * Tested up to WordPress 5.8.
 
 = 1.4.5 =
