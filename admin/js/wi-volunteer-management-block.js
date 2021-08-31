@@ -131,15 +131,11 @@
 		// Only check if we should register the block if it isn't already registered.
 		if ( isVolunteerManagementBlockRegistered === false ) {
 
-			// Grab the registered blocks.
-			let registeredBlocks                     = wp.data.select( 'core/blocks' ).getBlockTypes();
-			let isVolunteerManagementBlockRegistered = registeredBlocks.some( block => block.name === 'wired-impact-volunteer-management/volunteer-opps' );
-
 			// Grab the current post type. On domReady, this returns null.
 			let currentPostType = wp.data.select( 'core/editor' ).getCurrentPostType();
 
-			// // Only register the block if the post type is set, the post isn't a Volunteer Opportunity, and the block isn't already registered.
-			if( currentPostType !== null && currentPostType !== 'volunteer_opp' && isVolunteerManagementBlockRegistered === false  ) {
+			// Only register the block if the post type is set and the post isn't a Volunteer Opportunity.
+			if ( currentPostType !== null && currentPostType !== 'volunteer_opp' ) {
 				isVolunteerManagementBlockRegistered = true;
 				registerVolunteerManagementBlock();
 			}
