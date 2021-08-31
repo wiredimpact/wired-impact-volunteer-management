@@ -149,8 +149,10 @@ class WI_Volunteer_Management_Public {
 	 */
 	public function volunteer_opps_register_block(){
 
-		// Skip block registration if Gutenberg is not enabled
-		if ( ! function_exists( 'register_block_type' ) ) {
+		global $pagenow;
+
+		// Skip block registration if Gutenberg is not enabled or the user is on the Widgets.php admin page.
+		if ( ! function_exists( 'register_block_type' ) || $pagenow === 'widgets.php' ) {
 			return;
 		}
 

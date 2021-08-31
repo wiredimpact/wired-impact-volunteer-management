@@ -43,9 +43,15 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
       // Store number of opps to show in $num_of_opps
       if ( isset( $instance['number_of_opps_input'] ) ) {
          $num_of_opps = (int) esc_attr( $instance['number_of_opps_input'] );
-      }
+      } else {
+		  $num_of_opps = 1;
+	  }
 
-      $list_type = $instance['list_type_radio_btn'];
+	  if ( isset( $instance['list_type_radio_btn'] ) ) {
+     	 $list_type = $instance['list_type_radio_btn'];
+	  } else {
+		  $list_type = 'flexible';
+	  }
 
       // If list type is flexible query for flexible opps else query for one-time opps
       if( $list_type === 'flexible' ) {

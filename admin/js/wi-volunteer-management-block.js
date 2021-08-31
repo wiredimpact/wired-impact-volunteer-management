@@ -27,8 +27,9 @@
 															<rect x="5.5" y="8.4" width="3.3" height="3.5"/>
 															<path d="M19.8,3h-0.6V0.9h-2.3V3H7.2V0.9H4.9V3H4.2C3,3,2.1,4,2.1,5.1v15.4c0,1.2,0.9,2.1,2.1,2.1h15.7c1.2,0,2.1-0.9,2.1-2.1V5.1 C21.9,4,21,3,19.8,3z M19.8,20.5H4.2V7.3h15.7V20.5z"/>
 														</svg>
+	let isVolunteerManagementBlockRegistered     = false;
 
-	registerBlockType( 'wired-impact-volunteer-management/volunteer-opps', {
+	let registerVolunteerManagementBlock = () => registerBlockType( 'wired-impact-volunteer-management/volunteer-opps', {
 
 		title: 			__( 'Volunteer Opportunities', 'wired-impact-volunteer-management' ),
 
@@ -124,10 +125,20 @@
 		},
 	} );
 
-	// Hide the volunteer opportunities block when editing a volunteer opportunity post
-	wp.domReady( function() {
-		if( wp.data.select( 'core/editor' ).getCurrentPostType() === 'volunteer_opp' ) {
-			wp.blocks.unregisterBlockType( 'wired-impact-volunteer-management/volunteer-opps' );
+	// We have to subscribe to changes because on domReady the block editor isn't initialized yet.
+	wp.data.subscribe( function() {
+
+		// Only check if we should register the block if it isn't already registered.
+		if ( isVolunteerManagementBlockRegistered === false ) {
+
+			// Grab the current post type. On domReady, this returns null.
+			let currentPostType = wp.data.select( 'core/editor' ).getCurrentPostType();
+
+			// Only register the block if the post type is set and the post isn't a Volunteer Opportunity.
+			if ( currentPostType !== null && currentPostType !== 'volunteer_opp' ) {
+				isVolunteerManagementBlockRegistered = true;
+				registerVolunteerManagementBlock();
+			}
 		}
 	} );
 } )( window.wp );
