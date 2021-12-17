@@ -109,6 +109,9 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 == Changelog ==
 
+= 1.4.7 =
+* Fixed bug where users without the capability to edit other users were seeing instructions to edit volunteer notes.
+
 = 1.4.6 =
 * Adjusted the Volunteer Opportunities block registration so it can't be added to Volunteer Opportunities, or as a widget on the Widgets admin page or in the customizer.
 * Fixed PHP notices caused by undefined variables when a new instance of the Volunteer Management Opportunities widget was created.
