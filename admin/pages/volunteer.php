@@ -54,7 +54,7 @@ $volunteer = new WI_Volunteer_Management_Volunteer( $volunteer_id );
 		</div>
 
 		<div class="contact-footer clear">
-			<?php if( current_user_can( 'edit_user', $volunteer_id ) ): ?>
+			<?php if ( current_user_can( 'edit_user', $volunteer_id ) ) : ?>
 			<a href="<?php echo admin_url( 'user-edit.php?user_id=' . $volunteer_id ); ?>" class="button edit-volunteer">
 				<?php _e( 'Edit Volunteer Info', 'wired-impact-volunteer-management' ); ?>
 			</a>
