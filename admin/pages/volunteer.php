@@ -38,14 +38,23 @@ $volunteer = new WI_Volunteer_Management_Volunteer( $volunteer_id );
 		<div class="volunteer-notes">
 			<h3><?php _e( 'Notes', 'wired-impact-volunteer-management' ); ?></h3>
 			<?php
-			$default_volunteer_note = '<p><em>' . __( 'There aren\'t any notes for this volunteer. You can add some by clicking the Edit Volunteer Info button and filling out the Notes field.', 'wired-impact-volunteer-management' ) . '</em></p>';
-			$volunteer_notes = ( $volunteer->meta['notes'] != '' ) ? $volunteer->meta['notes'] : $default_volunteer_note;
+			$default_volunteer_note = __( 'There aren\'t any notes for this volunteer. You can add some by clicking the Edit Volunteer Info button and filling out the Notes field.', 'wired-impact-volunteer-management' );
+
+			// On multisite, only super admins can edit users by default.
+			if ( ! current_user_can( 'edit_user', $volunteer_id ) ) {
+
+				$default_note_required_role = ( is_multisite() ) ? __( 'Super Admin', 'wired-impact-volunteer-management' ) : __( 'Administrator', 'wired-impact-volunteer-management' );
+				$default_volunteer_note     = sprintf( __( 'There aren\'t any notes for this volunteer. Unfortunately, you can\'t edit the notes. Only users with the %s role can edit volunteer notes.', 'wired-impact-volunteer-management' ), $default_note_required_role );
+			}
+
+			$default_volunteer_note_html = '<p><em>' . $default_volunteer_note . '</em></p>';
+			$volunteer_notes = ( $volunteer->meta['notes'] != '' ) ? $volunteer->meta['notes'] : $default_volunteer_note_html;
 			echo apply_filters( 'the_content', $volunteer_notes );
 			?>
 		</div>
 
 		<div class="contact-footer clear">
-			<?php if( current_user_can( 'edit_users' ) ): ?>
+			<?php if ( current_user_can( 'edit_user', $volunteer_id ) ) : ?>
 			<a href="<?php echo admin_url( 'user-edit.php?user_id=' . $volunteer_id ); ?>" class="button edit-volunteer">
 				<?php _e( 'Edit Volunteer Info', 'wired-impact-volunteer-management' ); ?>
 			</a>

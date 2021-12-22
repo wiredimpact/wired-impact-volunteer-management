@@ -4,7 +4,7 @@ Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
 Tested up to: 5.8
 Requires PHP: 5.2.4
-Stable tag: 1.4.6
+Stable tag: 1.4.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,9 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 1.4.7 =
+* Fixed bug where users without the capability to edit other users were seeing instructions to edit volunteer notes.
 
 = 1.4.6 =
 * Adjusted the Volunteer Opportunities block registration so it can't be added to Volunteer Opportunities, or as a widget on the Widgets admin page or in the customizer.
