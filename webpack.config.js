@@ -7,10 +7,9 @@
  * @see https://wordpress.org/gutenberg/handbook/designers-developers/developers/tutorials/javascript/js-build-setup/
  */
 
-const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries"); 
+const path                     = require('path');
+const MiniCssExtractPlugin     = require('mini-css-extract-plugin');
+const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 
 module.exports = {
   	entry: {
@@ -22,15 +21,19 @@ module.exports = {
 	},
 	mode: 'production',
 	watch: true, // Causes webpack to keep watching for changes to bundle
-	optimization: {
-		minimize: true
-	},
+	target: [ 'web', 'es5' ],
 	module: {
 		rules: [
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-				loader: "babel-loader",
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['@wordpress/babel-preset-default'],
+						cacheDirectory: true,
+					}
+				}
 			},
 			{
 				test: /\.scss$/,
@@ -46,18 +49,6 @@ module.exports = {
 		new MiniCssExtractPlugin({
 			filename: '../css/[name].bundle.css', // The name of the CSS file to output instead of putting CSS in the JS files
 		}),
-		new OptimizeCssAssetsPlugin({
-			cssProcessorOptions: { // options passed to cssnano
-				autoprefixer: {
-					discardComments: { removeAll: true },
-					safe: true,
-					autoprefixer: {
-						add: true,
-						browsers: [ 'last 10 versions' ]     
-					} 
-				}
-			}
-		}), // Optimize and minify CSS
-		new FixStyleOnlyEntriesPlugin(), // Removes extra JS files created when .scss files are used as input
+		new RemoveEmptyScriptsPlugin(), // Removes extra JS files created when .scss files are used as input
 	]
 };
