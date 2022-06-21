@@ -2,9 +2,9 @@
 Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
-Tested up to: 5.8
+Tested up to: 6.0
 Requires PHP: 5.2.4
-Stable tag: 1.4.7
+Stable tag: 1.4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,11 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 1.4.8 =
+* Fixed strange formatting in the Volunteer Opportunities block toolbar.
+* Upgraded build tools to use Webpack 5.
+* Tested up to WordPress 6.0.
 
 = 1.4.7 =
 * Fixed bug where users without the capability to edit other users were seeing instructions to edit volunteer notes.
