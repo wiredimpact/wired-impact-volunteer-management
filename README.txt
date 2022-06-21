@@ -109,6 +109,11 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 == Changelog ==
 
+= 1.4.8 =
+* Fixed strange formatting in the Volunteer Opportunities block toolbar.
+* Upgraded build tools to use Webpack 5.
+* Tested up to WordPress 6.0.
+
 = 1.4.7 =
 * Fixed bug where users without the capability to edit other users were seeing instructions to edit volunteer notes.
 
