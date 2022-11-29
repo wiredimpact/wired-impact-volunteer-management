@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Bootstrap file
  *
@@ -11,19 +10,19 @@
  * @link              https://wiredimpact.com
  * @since             0.1
  * @package           WI_Volunteer_Management
- * @author     		  Wired Impact <info@wiredimpact.com>
+ * @author            Wired Impact <info@wiredimpact.com>
  *
  * @wordpress-plugin
  * Plugin Name:       Wired Impact Volunteer Management
  * Plugin URI:        https://wiredimpact.com/wordpress-plugins-for-nonprofits/volunteer-management/
  * Description:       A simple, free way to keep track of your nonprofit’s volunteers and opportunities.
- * Version:           1.4.8
+ * Version:           1.4.9
  * Author:            Wired Impact
  * Author URI:        https://wiredimpact.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       wired-impact-volunteer-management
- * Domain Path: 	  /languages
+ * Domain Path:       /languages
  */
 
 // If this file is called directly, abort.
@@ -35,7 +34,7 @@ if ( ! defined( 'WPINC' ) ) {
  * The code that runs during plugin activation.
  * This action is documented in includes/class-activator.php
  *
- * @param $network_wide Whether the plugin is being network enabled on multisite
+ * @param bool $network_wide Whether the plugin is being network enabled on multisite.
  */
 function activate_wi_volunteer_management( $network_wide = false ) {
 	require_once WIVM_DIR . 'includes/class-activator.php';
@@ -48,14 +47,15 @@ register_activation_hook( __FILE__, 'activate_wi_volunteer_management' );
  * Run the activation when a new multisite blog is created.
  *
  * This function is different than the general activation since it
- * only runs on the given subsite and only if the plugin is 
- * already activated network-wide. In this case we need to run 
+ * only runs on the given subsite and only if the plugin is
+ * already activated network-wide. In this case we need to run
  * the activation method since the plugin will never be enabled
  * through the admin.
  *
+ * @param int $blog_id The ID of the new website.
  * @since  1.3.3
  */
-function multisite_activate_wi_volunteer_management( $blog_id ){
+function multisite_activate_wi_volunteer_management( $blog_id ) {
 	if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
 		switch_to_blog( $blog_id );
 		require_once WIVM_DIR . 'includes/class-activator.php';
