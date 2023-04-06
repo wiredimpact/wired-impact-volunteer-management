@@ -4,7 +4,7 @@ Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
 Tested up to: 6.1
 Requires PHP: 5.2.4
-Stable tag: 1.4.9
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,9 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 1.5 =
+* Upgraded Google Analytics tracking to work with Google Analytics 4.
 
 = 1.4.9 =
 * Tested up to WordPress 6.1.
