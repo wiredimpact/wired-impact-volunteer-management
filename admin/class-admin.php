@@ -376,8 +376,8 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/**
-     * Display the custom meta fields and values when editing a volunteer opportunity.
-	 * 
+	 * Display the custom meta fields and values when editing a volunteer opportunity.
+	 *
 	 * @param object $post The post object for the volunteer opportunity.
 	 */
 	public function display_opportunity_details_meta_box( $post ){
