@@ -50,8 +50,7 @@ class WI_Volunteer_Management_Public {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-
+		$this->version     = $version;
 	}
 
 	/**
@@ -73,24 +72,24 @@ class WI_Volunteer_Management_Public {
 	/**
 	 * Hide the honeypot field for the volunteer sign up form.
 	 *
-	 * We load this CSS separately to be sure the field is hidden even if the 
+	 * We load this CSS separately to be sure the field is hidden even if the
 	 * admin has turned off loading the CSS within the settings.
 	 */
 	public function enqueue_honeypot_styles(){
 
-		if( is_singular( 'volunteer_opp' ) ): ?>
+		if ( is_singular( 'volunteer_opp' ) ) : ?>
 		
-		<style>
-			/* Hide the Wired Impact Volunteer Management honeypot field under all circumstances */
-			.wivm_hp { 
-				display: none !important;
-			    position: absolute !important;
-			    left: -9000px;
-			}
-		</style>
+			<style>
+				/* Hide the Wired Impact Volunteer Management honeypot field under all circumstances */
+				.wivm_hp { 
+					display: none !important;
+					position: absolute !important;
+					left: -9000px;
+				}
+			</style>
 
-		<?php endif;
-
+			<?php
+		endif;
 	}
 
 	/**
@@ -418,60 +417,58 @@ class WI_Volunteer_Management_Public {
 	 */
 	public function show_meta_form_single( $content ){
 
-		if( is_singular( 'volunteer_opp' ) && in_the_loop() && is_main_query() ){
+		if ( is_singular( 'volunteer_opp' ) && in_the_loop() && is_main_query() ) {
 
 			$template_loader = new WI_Volunteer_Management_Template_Loader();
 			ob_start();
 
 			$template_loader->get_template_part( 'opp-single', 'meta' );
+
 			echo $content;
+
 			$template_loader->get_template_part( 'opp-single', 'form' );
 
 			return ob_get_clean();
 
-		}
-		else {
+		} else {
 
 			return $content;
-
 		}
-
 	}
 
 	/**
 	 * Process the AJAX request from the volunteer opportunity sign up form.
 	 *
-	 * @return  int|bool The user ID if everything worked, false otherwise
+	 * @return int|bool The user ID if everything worked, false otherwise
 	 */
 	public function process_volunteer_sign_up(){
 		$form_fields = array();
 		parse_str( $_POST['data'], $form_fields );
 
-		//Verify our nonce.
+		// Verify our nonce.
 		if( !wp_verify_nonce( $form_fields['wivm_sign_up_form_nonce_field'], 'wivm_sign_up_form_nonce' ) ) {
 			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
 
-		//If the honeypot field exists and is filled out then bail 
+		// If the honeypot field exists and is filled out then bail.
 		if( isset( $form_fields['wivm_hp'] ) && $form_fields['wivm_hp'] != '' ){
 			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
 
 		$opp = new WI_Volunteer_Management_Opportunity( $form_fields['wivm_opportunity_id'] );
-		if( $opp->should_allow_rvsps() == true ){
+		if ( $opp->should_allow_rvsps() == true ) {
 
-			//Add or update the new volunteer user
+			// Add or update the new volunteer user.
 			$user = new WI_Volunteer_Management_Volunteer( null, $form_fields );
 
-			//RSVP this volunteer for the opportunity
+			// RSVP this volunteer for the opportunity.
 			$rsvp = new WI_Volunteer_Management_RSVP( $user->ID, $form_fields['wivm_opportunity_id'] );
 
-			//If the person hadn't already RSVPed then send out the signup emails.
-			if( $rsvp->rsvped == true ){
-				$email 	= new WI_Volunteer_Management_Email( $opp, $user );
-
+			// If the person hadn't already RSVPed then send out the signup emails.
+			if ( $rsvp->rsvped == true ) {
+				$email = new WI_Volunteer_Management_Email( $opp, $user );
 
 				$email->send_volunteer_signup_email();
 				$email->send_admin_signup_email();
@@ -482,15 +479,15 @@ class WI_Volunteer_Management_Public {
 			}
 
 		}
-		//If RSVPs have been closed
+		// If RSVPs have been closed.
 		else {
 			$result = 'rsvp_closed';
 		}
 
-		//Return a message which tells us what messages to show on the frontend
- 		echo $result; 
- 		
- 		die(); //Must use die() when using AJAX
+		// Return a message which tells us what messages to show on the frontend.
+		echo $result;
+
+		die(); // Must use die() when using AJAX.
 	}
 
 	/**
@@ -499,7 +496,7 @@ class WI_Volunteer_Management_Public {
 	 * This method is called using cron and is never called in any other way. This
 	 * method must be provided in the public class since the admin class is not
 	 * loaded when cron is run.
-	 * 
+	 *
 	 * @param  int $opp_id Volunteer opportunity ID.
 	 */
 	public function send_email_reminder( $opp_id ){
@@ -529,7 +526,7 @@ class WI_Volunteer_Management_Public {
 	 * reminder email to send multiple times. Since the get_rsvp_emails() method uses
 	 * $wpdb->get_results() which is not cached, this method should prevent the reminder
 	 * email from being sent multiple times.
-	 * 
+	 *
 	 * @param  object  $opp The current volunteer opportunity to check.
 	 * @return boolean      Whether an automated reminder email has been sent within the last 5 hours.
 	 */
@@ -552,5 +549,4 @@ class WI_Volunteer_Management_Public {
 
 		return false;
 	}
-
 } //class WI_Volunteer_Management_Public

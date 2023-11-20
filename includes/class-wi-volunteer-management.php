@@ -80,7 +80,6 @@ class WI_Volunteer_Management {
 
 		// Load the public hooks.
 		$this->define_public_hooks();
-
 	}
 
 	/**
@@ -163,7 +162,6 @@ class WI_Volunteer_Management {
 		require_once WIVM_DIR . 'widget/class-widget.php';
 
 		$this->loader = new WI_Volunteer_Management_Loader();
-
 	}
 
 	/**
@@ -181,7 +179,6 @@ class WI_Volunteer_Management {
 		$plugin_i18n->set_domain( $this->get_plugin_name() );
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -219,7 +216,6 @@ class WI_Volunteer_Management {
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'show_getting_started_notice' );
 		$this->loader->add_action( 'wp_ajax_wivm_hide_notice', $plugin_admin, 'hide_notice' );
 		$this->loader->add_action( 'wp_ajax_wivm_process_email', $plugin_admin, 'process_custom_volunteer_email' );
-
 	}
 
 	/**
@@ -289,5 +285,4 @@ class WI_Volunteer_Management {
 	public function get_version() {
 		return $this->version;
 	}
-
 } // class WI_Volunteer_Management
