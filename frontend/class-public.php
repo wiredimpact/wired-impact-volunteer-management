@@ -63,10 +63,10 @@ class WI_Volunteer_Management_Public {
 	public function enqueue_styles() {
 
 		$options = new WI_Volunteer_Management_Options();
-		if( $options->get_option( 'use_css' ) == 1 ){
+
+		if ( $options->get_option( 'use_css' ) == 1 ) {
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wi-volunteer-management-public.css', array(), $this->version, 'all' );
 		}
-
 	}
 
 	/**
@@ -406,33 +406,60 @@ class WI_Volunteer_Management_Public {
 	}
 
 	/**
-	 * Show the meta info and the sign up form before and after the content on a single volunteer opp.
+	 * Output the meta before the content and the form after the content
+	 * on a single volunteer opp.
 	 *
-	 * We show this info using a filter for the_content to ensures the templates will work
-	 * on a number of different themes. opp-single-meta.php and opp-single-form.php templates
-	 * are both used within this function.
+	 * Display this info using a filter for the_content to ensure the templates will work
+	 * on a number of different themes. The opp-single-meta.php and opp-single-form.php
+	 * templates are used within this function.
 	 *
 	 * @param  string $content The content for the given post.
-	 * @return string If volunteer opp then we wrap the meta and form around the post's content.
+	 * @return string If volunteer opp then output the meta before and the form after the post's content.
 	 */
-	public function show_meta_form_single( $content ){
+	public function show_meta_form_single( $content ) {
 
-		if ( is_singular( 'volunteer_opp' ) && in_the_loop() && is_main_query() ) {
+		if ( ! is_singular( 'volunteer_opp' ) || ! in_the_loop() || ! is_main_query() ) {
 
-			$template_loader = new WI_Volunteer_Management_Template_Loader();
-			ob_start();
+			return $content;
+		}
 
-			$template_loader->get_template_part( 'opp-single', 'meta' );
+		$template_loader = new WI_Volunteer_Management_Template_Loader();
+		ob_start();
 
-			echo $content;
+		$template_loader->get_template_part( 'opp-single', 'meta' );
+
+		echo $content;
+
+		$this->show_volunteer_sign_up_form( $template_loader );
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Output the volunteer sign up form based on the chosen settings.
+	 *
+	 * This may require showing the default sign up form, no form at all,
+	 * or a form from a third-party tool. For third-party tools, they can
+	 * display their own form using the provided hook.
+	 *
+	 * @param object $template_loader The template loader object.
+	 */
+	private function show_volunteer_sign_up_form( $template_loader ) {
+
+		$options           = new WI_Volunteer_Management_Options();
+		$form_display_mode = $options->get_option( 'form_display_mode' );
+
+		if ( $form_display_mode === 'built_in_form' ) {
 
 			$template_loader->get_template_part( 'opp-single', 'form' );
 
-			return ob_get_clean();
+		} elseif ( $form_display_mode === 'no_form' ) {
+
+			// Output nothing since the admin has chosen to not show the form.
 
 		} else {
 
-			return $content;
+			do_action( 'wivm_show_volunteer_sign_up_form', $form_display_mode );
 		}
 	}
 
