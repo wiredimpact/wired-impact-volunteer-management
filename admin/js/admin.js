@@ -73,10 +73,10 @@
      */
     $(function() {
 
-        //Only run on WI Volunteer Management Opportunity New and Edit screens.
+        // Only run on WI Volunteer Management Opportunity New and Edit screens.
         if( typeof pagenow != 'undefined' && pagenow == 'volunteer_opp' ) {
         
-            //Show and hide one-time volunteer opportunity fields
+            // Show and hide one-time volunteer opportunity fields
             $('#one-time-opportunity').change(function() {
                 if( this.checked ) {
                     $( '.one-time-field' ).show();
@@ -88,7 +88,7 @@
                 }
             });
 
-            //Show and hide fields if there is a limit on the number of volunteers
+            // Show and hide fields if there is a limit on the number of volunteers
             $('#has-volunteer-limit').change(function() {
                 if( this.checked ) {
                     $( '.volunteer-limit-field' ).show();
@@ -98,6 +98,15 @@
                 }
             });
 
+            // Show and hide the form selection field based on whether the user wants to show a Gravity Forms form
+            $( '#form_type' ).change( function() {
+                if ( $( this ).val() == 'gravity_forms' ) {
+                    $( '.select-form-field' ).show();
+                }
+                else {
+                    $( '.select-form-field' ).hide();
+                }
+            });
 
             var start_date_time = jQuery( '#volunteer-opportunity-details #start-date-time-output' ),
                 start_date_time_save = jQuery( '#volunteer-opportunity-details #start-date-time' ),

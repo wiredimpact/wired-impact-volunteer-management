@@ -68,7 +68,7 @@ class WI_Volunteer_Management {
 	public function __construct() {
 
 		$this->plugin_name = 'wired-impact-volunteer-management';
-		$this->version     = '1.5';
+		$this->version     = '2.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -161,6 +161,11 @@ class WI_Volunteer_Management {
 		 */
 		require_once WIVM_DIR . 'widget/class-widget.php';
 
+		/**
+		 * The class responsible for the Gravity Forms integration.
+		 */
+		require_once WIVM_DIR . 'includes/class-gravity-forms.php';
+
 		$this->loader = new WI_Volunteer_Management_Loader();
 	}
 
@@ -244,6 +249,18 @@ class WI_Volunteer_Management {
 		$this->loader->add_action( 'wp_ajax_nopriv_wivm_sign_up', $plugin_public, 'process_volunteer_sign_up' );
 		$this->loader->add_action( 'send_auto_email_reminders', $plugin_public, 'send_email_reminder' );
 		$this->loader->add_action( 'widgets_init', $plugin_widget, 'register_widget' );
+
+		// Only load the Gravity Forms integration if Gravity Forms is active.
+		if ( class_exists( 'GFForms' ) ) {
+
+			$gravity_forms = new WI_Volunteer_Management_Gravity_Forms_Integration();
+
+			$this->loader->add_filter( 'wivm_form_type_setting_options', $gravity_forms, 'add_gravity_forms_form_type_option' );
+			$this->loader->add_action( 'wivm_after_opportunity_detail_meta_fields', $gravity_forms, 'show_opportunity_select_form_meta_field' );
+			$this->loader->add_action( 'wivm_save_volunteer_opp_meta', $gravity_forms, 'save_opportunity_select_form_meta_field', 10, 2 );
+			$this->loader->add_filter( 'wivm_volunteer_opp_meta', $gravity_forms, 'get_selected_form_for_opp_meta', 10, 2 );
+			$this->loader->add_action( 'wivm_show_volunteer_sign_up_form', $gravity_forms, 'show_volunteer_sign_up_form' );
+		}
 	}
 
 	/**

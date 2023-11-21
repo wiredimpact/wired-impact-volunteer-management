@@ -35,10 +35,15 @@ p.editor-help {
 	width: 195px;
 }
 
+#volunteer-opportunity-details select {
+	width: 25em;
+}
+
 /* Hide admin fields if not needed */
 .one-time-field.flexible,
 .flexible-field.one-time,
-.volunteer-limit-field.no-volunteer-limit {
+.volunteer-limit-field.no-volunteer-limit,
+.select-form-field.not-gravity-forms {
 	display: none;
 }
 
@@ -298,7 +303,7 @@ p.editor-help {
 }
 
 .wi-volunteer .volunteer-opps-wrapper h1 span {
-	color: #8c8f94; /* TO DO: Update with color from design */
+	color: #8c8f94;
 }
 
 .wi-volunteer .opps {

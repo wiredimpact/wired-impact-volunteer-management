@@ -438,7 +438,7 @@ class WI_Volunteer_Management_Public {
 	/**
 	 * Output the volunteer sign up form based on the chosen settings.
 	 *
-	 * This may require showing the default sign up form, no form at all,
+	 * This may require showing the built-in sign up form, no form at all,
 	 * or a form from a third-party tool. For third-party tools, they can
 	 * display their own form using the provided hook.
 	 *
@@ -446,20 +446,19 @@ class WI_Volunteer_Management_Public {
 	 */
 	private function show_volunteer_sign_up_form( $template_loader ) {
 
-		$options           = new WI_Volunteer_Management_Options();
-		$form_display_mode = $options->get_option( 'form_display_mode' );
+		$volunteer_opp = new WI_Volunteer_Management_Opportunity( get_the_ID() );
 
-		if ( $form_display_mode === 'built_in_form' ) {
+		if ( $volunteer_opp->opp_meta['form_type'] === 'built_in_form' ) {
 
 			$template_loader->get_template_part( 'opp-single', 'form' );
 
-		} elseif ( $form_display_mode === 'no_form' ) {
+		} elseif ( $volunteer_opp->opp_meta['form_type'] === 'no_form' ) {
 
 			// Output nothing since the admin has chosen to not show the form.
 
 		} else {
 
-			do_action( 'wivm_show_volunteer_sign_up_form', $form_display_mode );
+			do_action( 'wivm_show_volunteer_sign_up_form', $volunteer_opp );
 		}
 	}
 

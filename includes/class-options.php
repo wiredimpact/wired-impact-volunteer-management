@@ -41,7 +41,6 @@ class WI_Volunteer_Management_Options {
 		'use_css'                          => 1,
 		'use_honeypot'                     => 1,
 		'show_getting_started_notice'      => 1,
-		'form_display_mode'                => 'built_in_form',
 
 		// Defaults.
 		'default_contact_name'             => '',
