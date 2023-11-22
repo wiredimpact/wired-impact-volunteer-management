@@ -25,6 +25,10 @@
 	width: 240px;
 }
 
+.wivmtab select {
+	width: 25em;
+}
+
 /* Volunteer Opportunity Edit Screen and Meta Boxes */
 p.editor-help {
 	margin-top: .5em;

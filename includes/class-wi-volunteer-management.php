@@ -256,6 +256,7 @@ class WI_Volunteer_Management {
 			$gravity_forms = new WI_Volunteer_Management_Gravity_Forms_Integration();
 
 			$this->loader->add_filter( 'wivm_form_type_setting_options', $gravity_forms, 'add_gravity_forms_form_type_option' );
+			$this->loader->add_action( 'wivm_display_defaults_settings', $gravity_forms, 'show_opportunity_default_select_form_meta_field' );
 			$this->loader->add_action( 'wivm_after_opportunity_detail_meta_fields', $gravity_forms, 'show_opportunity_select_form_meta_field' );
 			$this->loader->add_action( 'wivm_save_volunteer_opp_meta', $gravity_forms, 'save_opportunity_select_form_meta_field', 10, 2 );
 			$this->loader->add_filter( 'wivm_volunteer_opp_meta', $gravity_forms, 'get_selected_form_for_opp_meta', 10, 2 );

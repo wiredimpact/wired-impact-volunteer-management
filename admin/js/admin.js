@@ -10,9 +10,11 @@
         return $(this).length > 0;
     };
 
+    /**
+     * For the volunteer management Help & Settings page.
+     */
     $(function() {
 
-        //Only run on WI Volunteer Management settings page.
         if( $( '#wivm-tabs' ).exists() ){
 
             /**
@@ -55,6 +57,16 @@
              */
             $(document).on('ready', wivm_set_tab_hash);
 
+            // Show and hide the default form selection field based on whether the user wants to show a Gravity Forms form
+            $( '#default_form_type' ).change( function() {
+                if ( $( this ).val() == 'gravity_forms' ) {
+                    $( '.select-form-field' ).show();
+                }
+                else {
+                    $( '.select-form-field' ).hide();
+                }
+            });
+
         } //end if
 
         function wivm_set_tab_hash() {
@@ -67,9 +79,8 @@
 
     }); //document.ready()
 
-
     /**
-     * For volunteer opportunity edit screen including jQuery Timepicker
+     * For volunteer opportunity edit screen including jQuery Timepicker.
      */
     $(function() {
 

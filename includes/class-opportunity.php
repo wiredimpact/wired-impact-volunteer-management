@@ -90,7 +90,7 @@ class WI_Volunteer_Management_Opportunity {
 		$volunteer_opp_meta['volunteer_limit']     = ( isset( $volunteer_opp_meta_raw['_volunteer_limit'] ) ) ? (int) $volunteer_opp_meta_raw['_volunteer_limit'][0] : 0;
 
 		// Form Information.
-		$volunteer_opp_meta['form_type'] = ( isset( $volunteer_opp_meta_raw['_form_type'] ) ) ? esc_attr( $volunteer_opp_meta_raw['_form_type'][0] ) : 'built_in_form';
+		$volunteer_opp_meta['form_type'] = ( isset( $volunteer_opp_meta_raw['_form_type'] ) ) ? esc_attr( $volunteer_opp_meta_raw['_form_type'][0] ) : $this->get_default_meta( 'default_form_type' );
 
 		return apply_filters( 'wivm_volunteer_opp_meta', $volunteer_opp_meta, $volunteer_opp_id );
 	}

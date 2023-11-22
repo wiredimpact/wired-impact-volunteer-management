@@ -81,6 +81,19 @@ $wivm_show_help_tab	= apply_filters( 'wivm_show_help_tab', true );
 		$wi_form->textinput( 'default_state', 		__( 'Default State', 'wired-impact-volunteer-management' ) );
 		$wi_form->textinput( 'default_zip', 		__( 'Default Zip', 'wired-impact-volunteer-management' ) );
 
+		$wi_form->section_heading( __( 'Default Volunteer Signup Form', 'wired-impact-volunteer-management' ), __( 'This form will be loaded by default for all new volunteer opportunities, but you can customize each opportunity individually.', 'wired-impact-volunteer-management' ) );
+		$wi_form->select(
+			'default_form_type',
+			__( 'Default Form Type', 'wired-impact-volunteer-management' ),
+			apply_filters(
+				'wivm_form_type_setting_options',
+				array(
+					'no_form'       => __( 'No Form', 'wired-impact-volunteer-management' ),
+					'built_in_form' => __( 'Built-In Signup Form', 'wired-impact-volunteer-management' ),
+				)
+			),
+		);
+
 		do_action( 'wivm_display_defaults_settings', $wi_form );
 
 	$wi_form->form_table_end();

@@ -256,16 +256,20 @@ class WI_Volunteer_Management_Form {
 	 * @param array  $attr   Description for the field
 	 */
 	public function select( $var, $label, $values, $attr = array() ) {
-		$attr = wp_parse_args( $attr, array(
-			'description' => '',
-		) );
+		$attr = wp_parse_args(
+			$attr,
+			array(
+				'description' => '',
+				'class'       => '',
+			)
+		);
 
 		if ( ! is_array( $values ) || $values === array() ) {
 			return;
 		}
 		$val = $this->wivm_options->get_option( $var );
 
-		echo '<tr>';
+		echo '<tr class="' . $attr['class'] . '">';
 
 			$this->label( $label, array( 'for' => $var, 'class' => 'select' ) );
 			echo '<td>';

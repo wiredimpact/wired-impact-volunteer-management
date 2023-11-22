@@ -50,8 +50,7 @@ class WI_Volunteer_Management_Admin {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-
+		$this->version     = $version;
 	}
 
 	/**
@@ -79,12 +78,12 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/*
-     * Create the database table that will hold our volunteer opportunity RSVP information.
-     * 
-     * We create a database table that will hold our volunteer opportunity RSVP information.
-     * We check first to make sure the table doesn't exist by seeing if the
-     * version exists in the options table.
-     */
+	 * Create the database table that will hold our volunteer opportunity RSVP information.
+	 *
+	 * We create a database table that will hold our volunteer opportunity RSVP information.
+	 * We check first to make sure the table doesn't exist by seeing if the
+	 * version exists in the options table.
+	 */
 	public function create_rsvp_db_table(){
 		//Only create table if it doesn't exist.
 		if ( get_option( 'wivm_version' ) == false ) {
@@ -495,7 +494,7 @@ class WI_Volunteer_Management_Admin {
 			</tr>
 
 			<tr>
-				<td colspan="2"><h3><?php _e( 'Form Information', 'wired-impact-volunteer-management' ); ?></h3></td>
+				<td colspan="2"><h3><?php _e( 'Volunteer Signup Form', 'wired-impact-volunteer-management' ); ?></h3></td>
 			</tr>
 
 			<tr>
@@ -528,7 +527,7 @@ class WI_Volunteer_Management_Admin {
 
 		$form_type_options = array(
 			'no_form'       => __( 'No Form', 'wired-impact-volunteer-management' ),
-			'built_in_form' => __( 'Built-In Form', 'wired-impact-volunteer-management' ),
+			'built_in_form' => __( 'Built-In Signup Form', 'wired-impact-volunteer-management' ),
 		);
 
 		return apply_filters( 'wivm_form_type_setting_options', $form_type_options );

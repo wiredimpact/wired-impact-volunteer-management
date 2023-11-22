@@ -53,6 +53,9 @@ class WI_Volunteer_Management_Options {
 		'default_state'                    => '',
 		'default_zip'                      => '',
 
+		'default_form_type'                => 'built_in_form',
+		'default_form_id'                  => 0,
+
 		// Email.
 		'from_email_address'               => '',
 		'from_email_name'                  => '',

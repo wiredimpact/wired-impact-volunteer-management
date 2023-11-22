@@ -24,6 +24,30 @@
 class WI_Volunteer_Management_Gravity_Forms_Integration {
 
 	/**
+	 * The form type setting value stored in the database when the volunteer
+	 * opportunity should show a Gravity Forms form.
+	 *
+	 * @var string
+	 */
+	const FORM_TYPE_SETTING_GF_VALUE = 'gravity_forms';
+
+	/**
+	 * The setting key used to store the Gravity Forms form ID to display for
+	 * a specific volunteer opportunity.
+	 *
+	 * @var string
+	 */
+	const FORM_ID_META_SETTING_KEY = '_form_id';
+
+	/**
+	 * The setting key used to store the Gravity Forms form ID to be used by
+	 * default for all new volunteer opportunities.
+	 *
+	 * @var string
+	 */
+	const FORM_ID_DEFAULT_SETTING_KEY = 'default_form_id';
+
+	/**
 	 * Add Gravity Forms as an option for the type of form to display for a volunteer opportunity.
 	 *
 	 * @param array $form_type_options The current options for the type of form to display.
@@ -31,9 +55,30 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 	 */
 	public function add_gravity_forms_form_type_option( $form_type_options ) {
 
-		$form_type_options['gravity_forms'] = __( 'Gravity Forms', 'wired-impact-volunteer-management' );
+		$form_type_options[ self::FORM_TYPE_SETTING_GF_VALUE ] = __( 'Custom Form', 'wired-impact-volunteer-management' );
 
 		return $form_type_options;
+	}
+
+	/**
+	 * Show the field to select a Gravity Forms form to be used by default
+	 * for all new volunteer opportunities.
+	 *
+	 * @param object $wi_form Instance of the WI_Volunteer_Management_Form class used to manage plugin settings fields.
+	 */
+	public function show_opportunity_default_select_form_meta_field( $wi_form ) {
+
+		$default_form_type = $wi_form->wivm_options->get_option( 'default_form_type' );
+		$row_class         = ( $default_form_type !== self::FORM_TYPE_SETTING_GF_VALUE ) ? 'not-gravity-forms' : '';
+
+		$wi_form->select(
+			self::FORM_ID_DEFAULT_SETTING_KEY,
+			__( 'Select a Default Form', 'wired-impact-volunteer-management' ),
+			$this->get_all_forms(),
+			array(
+				'class' => 'select-form-field ' . $row_class,
+			)
+		);
 	}
 
 	/**
@@ -44,7 +89,7 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 	public function show_opportunity_select_form_meta_field( $volunteer_opp ) {
 
 		$form_options = $this->get_all_forms();
-		$row_class    = ( $volunteer_opp->opp_meta['form_type'] !== 'gravity_forms' ) ? 'not-gravity-forms' : '';
+		$row_class    = ( $volunteer_opp->opp_meta['form_type'] !== self::FORM_TYPE_SETTING_GF_VALUE ) ? 'not-gravity-forms' : '';
 		?>
 		<tr class="select-form-field <?php echo $row_class; ?>">
 			<td><label for="form_id"><?php _e( 'Select a Form', 'wired-impact-volunteer-management' ); ?></label></td>
@@ -111,7 +156,17 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 	 */
 	public function get_selected_form_for_opp_meta( $volunteer_opp_meta, $volunteer_opp_id ) {
 
-		$volunteer_opp_meta['form_id'] = absint( get_post_meta( $volunteer_opp_id, '_form_id', true ) );
+		$form_id = absint( get_post_meta( $volunteer_opp_id, '_form_id', true ) );
+
+		if ( $form_id > 0 ) {
+
+			$volunteer_opp_meta['form_id'] = $form_id;
+
+		} else {
+
+			$options                       = new WI_Volunteer_Management_Options();
+			$volunteer_opp_meta['form_id'] = $options->get_option( self::FORM_ID_DEFAULT_SETTING_KEY );
+		}
 
 		return $volunteer_opp_meta;
 	}
@@ -126,7 +181,7 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 	 */
 	public function show_volunteer_sign_up_form( $volunteer_opp ) {
 
-		if ( $volunteer_opp->opp_meta['form_type'] === 'gravity_forms' && is_int( $volunteer_opp->opp_meta['form_id'] ) ) {
+		if ( $volunteer_opp->opp_meta['form_type'] === self::FORM_TYPE_SETTING_GF_VALUE && is_int( $volunteer_opp->opp_meta['form_id'] ) ) {
 
 			gravity_form( $volunteer_opp->opp_meta['form_id'], false, false, false, false, true );
 		}
