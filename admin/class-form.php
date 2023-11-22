@@ -256,17 +256,20 @@ class WI_Volunteer_Management_Form {
 	 * @param array  $attr   Description for the field
 	 */
 	public function select( $var, $label, $values, $attr = array() ) {
+
 		$attr = wp_parse_args(
 			$attr,
 			array(
-				'description' => '',
-				'class'       => '',
+				'description'       => '',
+				'class'             => '',
+				'no_values_message' => '',
 			)
 		);
 
-		if ( ! is_array( $values ) || $values === array() ) {
+		if ( ! is_array( $values ) ) {
 			return;
 		}
+
 		$val = $this->wivm_options->get_option( $var );
 
 		echo '<tr class="' . $attr['class'] . '">';
@@ -274,14 +277,21 @@ class WI_Volunteer_Management_Form {
 			$this->label( $label, array( 'for' => $var, 'class' => 'select' ) );
 			echo '<td>';
 
-				echo '<select class="select" name="', esc_attr( $this->option_name ), '[', esc_attr( $var ), ']" id="', esc_attr( $var ), '">';
-				foreach ( $values as $value => $label ) {
-					if ( ! empty( $label ) ) {
-						echo '<option value="', esc_attr( $value ), '"', selected( $val, $value, false ), '>', $label, '</option>';
-					}
+				if ( ! empty( $values ) ) {
+
+					echo '<select class="select" name="', esc_attr( $this->option_name ), '[', esc_attr( $var ), ']" id="', esc_attr( $var ), '">';
+						foreach ( $values as $value => $label ) {
+							if ( ! empty( $label ) ) {
+								echo '<option value="', esc_attr( $value ), '"', selected( $val, $value, false ), '>', $label, '</option>';
+							}
+						}
+					echo '</select>';
+					if( $attr['description'] ) echo '<p class="description">' . $attr['description'] . '</p>';
+
+				} else {
+
+					echo '<p class="error">' . $attr['no_values_message'] . '</p>';
 				}
-				echo '</select>';
-				if( $attr['description'] ) echo '<p class="description">' . $attr['description'] . '</p>';
 
 			echo '</td>';
 

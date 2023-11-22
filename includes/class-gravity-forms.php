@@ -76,7 +76,8 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 			__( 'Select a Default Form', 'wired-impact-volunteer-management' ),
 			$this->get_all_forms(),
 			array(
-				'class' => 'select-form-field ' . $row_class,
+				'class'             => 'select-form-field ' . $row_class,
+				'no_values_message' => $this->get_no_forms_found_message(),
 			)
 		);
 	}
@@ -94,15 +95,23 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 		<tr class="select-form-field <?php echo $row_class; ?>">
 			<td><label for="form_id"><?php _e( 'Select a Form', 'wired-impact-volunteer-management' ); ?></label></td>
 			<td>
-				<select id="form_id" name="form_id">
-					<?php
-					foreach ( $form_options as $form_id => $form_name ) {
-						?>
-						<option value="<?php echo $form_id; ?>" <?php selected( $volunteer_opp->opp_meta['form_id'], $form_id ); ?>><?php echo $form_name; ?></option>
+				<?php if ( ! empty( $form_options ) ) : ?>
+
+					<select id="form_id" name="form_id">
 						<?php
-					}
-					?>
-				</select>
+						foreach ( $form_options as $form_id => $form_name ) {
+							?>
+							<option value="<?php echo $form_id; ?>" <?php selected( $volunteer_opp->opp_meta['form_id'], $form_id ); ?>><?php echo $form_name; ?></option>
+							<?php
+						}
+						?>
+					</select>
+
+				<?php else : ?>
+
+					<p class="error"><?php echo $this->get_no_forms_found_message(); ?></p>
+
+				<?php endif; ?>
 			</td>
 		</tr>
 		<?php
@@ -130,6 +139,17 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 		}
 
 		return $form_options;
+	}
+
+	/**
+	 * Get the message to display when no forms are found while trying
+	 * to build a list of select element options.
+	 *
+	 * @return string The message to display.
+	 */
+	private function get_no_forms_found_message() {
+
+		return __( 'No forms found. Once you build some in Gravity Forms they\'ll show up here.', 'wired-impact-volunteer-management' );
 	}
 
 	/**
