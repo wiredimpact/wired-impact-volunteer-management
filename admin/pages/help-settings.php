@@ -59,7 +59,7 @@ $wivm_show_help_tab	= apply_filters( 'wivm_show_help_tab', true );
 	$wi_form->form_table_start( 'general' );
 
 		$wi_form->radio( 'use_css', array( 1 => __( 'Yes, please provide basic styling.', 'wired-impact-volunteer-management' ), 0 => __( 'No, I\'ll code my own styling.', 'wired-impact-volunteer-management' ) ), 'Load Plugin CSS?' );
-		$wi_form->radio( 'use_honeypot', array( 1 => __( 'Yes, please use a honeypot to prevent spam.', 'wired-impact-volunteer-management' ), 0 => __( 'No, I\'ll handle spam in my own way.', 'wired-impact-volunteer-management' ) ), 'Enable Honeypot?' );
+		$wi_form->radio( 'use_honeypot', array( 1 => __( 'Yes, please use a honeypot to prevent spam.', 'wired-impact-volunteer-management' ), 0 => __( 'No, I\'ll handle spam in my own way.', 'wired-impact-volunteer-management' ) ), 'Enable Honeypot for Built-In Form?' );
 		$wi_form->hidden( 'show_getting_started_notice' );
 
 		do_action( 'wivm_display_general_settings', $wi_form );

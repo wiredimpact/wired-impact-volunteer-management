@@ -21,6 +21,10 @@
 	font-weight: normal;
 }
 
+.wivmtab#general .form-table th {
+	width: 240px;
+}
+
 /* Volunteer Opportunity Edit Screen and Meta Boxes */
 p.editor-help {
 	margin-top: .5em;
