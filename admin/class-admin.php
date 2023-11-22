@@ -462,7 +462,7 @@ class WI_Volunteer_Management_Admin {
 			</tr>
 
 			<tr class="one-time-field <?php echo $one_time_class; ?>">
-				<td><label for="end-date-time"><?php _e( 'End Date & Time', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td><label for="end-date-time-output"><?php _e( 'End Date & Time', 'wired-impact-volunteer-management' ); ?></label></td>
 				<td>
 					<input type="hidden" id="end-date-time" name="end-date-time" value="<?php if ( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo $volunteer_opp->opp_meta['end_date_time']; ?>" />
 					<input type="text" id="end-date-time-output" name="end-date-time-output" class="regular-text" value="<?php if( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['end_date_time'], '', true ); ?>" />
