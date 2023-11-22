@@ -666,10 +666,12 @@ class WI_Volunteer_Management_Admin {
 		<div class="rsvp-list-table clear">
 			<table class="wp-list-table widefat fixed striped users">
 				<thead>
-					<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
-					<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
-					<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
-					<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
+					<tr>
+						<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
+					</tr>
 				</thead>
 
 				<?php if( !empty( $volunteers ) ): foreach( $volunteers as $volunteer ): ?>
@@ -690,10 +692,12 @@ class WI_Volunteer_Management_Admin {
 				<?php endif; ?>
 
 				<tfoot>
-					<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
-					<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
-					<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
-					<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
+					<tr>
+						<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
+					</tr>
 				</tfoot>
 			</table>
 		</div>
