@@ -36,7 +36,7 @@
                 }
             });
 
-            var wivm_active_tab = window.location.hash.replace('#top#', '');
+            var wivm_active_tab = window.location.hash.replace('#top-', '');
 
             if (wivm_active_tab == '' || wivm_active_tab == '#_=_') {
                 wivm_active_tab = $('.wivmtab').attr('id');

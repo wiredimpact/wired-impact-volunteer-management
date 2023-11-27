@@ -17,8 +17,12 @@
 	display: block;
 }
 
-.wivmtab th p {
-	font-weight: normal;
+.wivmtab .section-heading td {
+	padding: 20px 0;
+}
+
+.wivmtab tbody .section-heading:first-child h3 {
+	margin-top: 0;
 }
 
 .wivmtab#general .form-table th {
