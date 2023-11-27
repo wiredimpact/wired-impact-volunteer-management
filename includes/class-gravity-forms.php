@@ -203,6 +203,10 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 
 		if ( $volunteer_opp->opp_meta['form_type'] === self::FORM_TYPE_SETTING_GF_VALUE && is_int( $volunteer_opp->opp_meta['form_id'] ) ) {
 
+			$form_heading_text = ( $volunteer_opp->opp_meta['one_time_opp'] === 1 ) ? __( 'Sign Up to Volunteer', 'wired-impact-volunteer-management' ) : __( 'Express Interest in Volunteering', 'wired-impact-volunteer-management' );
+
+			echo apply_filters( 'wivm_sign_up_form_heading', '<h3 class="wivm-form-heading">' . $form_heading_text . '</h3>', $volunteer_opp );
+
 			gravity_form( $volunteer_opp->opp_meta['form_id'], false, false, false, false, true );
 		}
 	}
