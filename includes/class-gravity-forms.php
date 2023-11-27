@@ -206,4 +206,24 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 			gravity_form( $volunteer_opp->opp_meta['form_id'], false, false, false, false, true );
 		}
 	}
+
+	/**
+	 * Enqueue the necessary styles and scripts for the Gravity Forms form loading on the page.
+	 *
+	 * @see https://docs.gravityforms.com/gravity_form_enqueue_scripts/
+	 */
+	public function enqueue_scripts() {
+
+		if ( ! is_singular( 'volunteer_opp' ) ) {
+
+			return;
+		}
+
+		$volunteer_opp = new WI_Volunteer_Management_Opportunity( get_the_ID() );
+
+		if ( $volunteer_opp->opp_meta['form_type'] === self::FORM_TYPE_SETTING_GF_VALUE && is_int( $volunteer_opp->opp_meta['form_id'] ) ) {
+
+			gravity_form_enqueue_scripts( $volunteer_opp->opp_meta['form_id'], true );
+		}
+	}
 }

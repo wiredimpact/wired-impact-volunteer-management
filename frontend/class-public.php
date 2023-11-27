@@ -44,8 +44,8 @@ class WI_Volunteer_Management_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since      0.1
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name The name of the plugin.
+	 * @param      string $version     The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
@@ -93,7 +93,7 @@ class WI_Volunteer_Management_Public {
 	}
 
 	/**
-	 * Register the stylesheets for the public-facing side of the site.
+	 * Register the scripts for the public-facing side of the site.
 	 *
 	 * @since    0.1
 	 */
@@ -101,13 +101,12 @@ class WI_Volunteer_Management_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wi-volunteer-management-public.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( $this->plugin_name, 'wivm_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-
 	}
 
 	/**
 	 * Register our Volunteer Opportunities post type.
 	 *
-	 * Register our Volunteer Opportunities post type and set the method to static so that 
+	 * Register our Volunteer Opportunities post type and set the method to static so that
 	 * it can be called during activation when we need to refresh the rewrite rules.
 	 */
 	public static function register_post_types(){
