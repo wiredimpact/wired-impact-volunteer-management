@@ -497,6 +497,10 @@ class WI_Volunteer_Management_Admin {
 				<td colspan="2"><h3><?php _e( 'Volunteer Signup Form', 'wired-impact-volunteer-management' ); ?></h3></td>
 			</tr>
 
+			<tr class="signup-form-description">
+				<td colspan="2"><p><?php _e( 'The built-in signup form includes name, email and phone number fields. It can\'t be modified.', 'wired-impact-volunteer-management' ); ?></p></td>
+			</tr>
+
 			<tr>
 				<td><label for="form_type"><?php _e( 'Form Type', 'wired-impact-volunteer-management' ); ?></label></td>
 				<td>

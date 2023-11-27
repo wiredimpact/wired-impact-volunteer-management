@@ -47,6 +47,10 @@ p.editor-help {
 	width: 195px;
 }
 
+#volunteer-opportunity-details .signup-form-description p {
+	margin: -1em 0 1.9em;
+}
+
 #volunteer-opportunity-details select {
 	width: 25em;
 }
