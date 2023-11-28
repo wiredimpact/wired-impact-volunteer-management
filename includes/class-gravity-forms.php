@@ -185,7 +185,7 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 		} else {
 
 			$options                       = new WI_Volunteer_Management_Options();
-			$volunteer_opp_meta['form_id'] = $options->get_option( self::FORM_ID_DEFAULT_SETTING_KEY );
+			$volunteer_opp_meta['form_id'] = absint( $options->get_option( self::FORM_ID_DEFAULT_SETTING_KEY ) );
 		}
 
 		return $volunteer_opp_meta;
