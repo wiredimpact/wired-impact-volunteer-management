@@ -2,9 +2,9 @@
 Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
-Tested up to: 6.1
+Tested up to: 6.4
 Requires PHP: 5.2.4
-Stable tag: 1.5
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,16 @@ If you have a recurring opportunity where different people will sign up each tim
 
 If the recurring opportunity will have the same volunteers each time, we’d recommend you create one flexible volunteer opportunity.
 
+= How can I adjust the built-in volunteer signup form? =
+
+There are three options for handling volunteer sign-ups within the plugin:
+
+1. Use the built-in volunteer signup form which includes name, email and phone number fields. This form can be modified, but only through code using the PHP template files included inside the plugin.
+1. Choose the plugin's option not to show a form, then manually embed a third-party form within the content of each volunteer opportunity.
+1. If you're utilizing the [Gravity Forms](https://www.gravityforms.com/) plugin, you can use the settings to show a form you've built within your volunteer opportunities.
+
+You'll find default settings outlining how to handle forms within the Help & Settings page. You can also modify how forms are handled when editing each individual volunteer opportunity.
+
 == Screenshots ==
 
 1. Advertise Volunteer Opportunities More Easily
@@ -108,6 +118,12 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 2.0 =
+* Included the ability for admins to remove the built-in signup form from volunteer opportunities.
+* Integrated with the Gravity Forms plugin to allow admins to replace the built-in signup form with a Gravity Forms form.
+* Added Cypress end-to-end test coverage for some of the plugin's functionality.
+* Tested up to WordPress 6.4.
 
 = 1.5 =
 * Upgraded Google Analytics tracking to work with Google Analytics 4.
