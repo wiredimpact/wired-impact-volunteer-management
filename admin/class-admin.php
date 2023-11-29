@@ -367,10 +367,10 @@ class WI_Volunteer_Management_Admin {
 		//List of sent custom volunteer emails
 		add_meta_box(
 			'volunteer-opportunity-email-list',                                // Unique ID
-			__( 'Emails to Volunteers', 'wired-impact-volunteer-management' ), // Box title
+			__( 'Emails Sent to Volunteers', 'wired-impact-volunteer-management' ), // Box title
 			array( $this, 'display_opportunity_email_list_meta_box' ),         // Content callback
 			'volunteer_opp',                                                   // Post type
-			'side'                                                             // Location
+			'normal'                                                           // Location
 		);
 	}
 
