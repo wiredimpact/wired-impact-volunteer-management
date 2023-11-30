@@ -149,7 +149,7 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 	 */
 	private function get_no_forms_found_message() {
 
-		return __( 'No forms found. Once you build some in Gravity Forms they\'ll show up here.', 'wired-impact-volunteer-management' );
+		return __( 'No forms found. Forms will appear here as soon as you create one in Gravity Forms.', 'wired-impact-volunteer-management' );
 	}
 
 	/**
