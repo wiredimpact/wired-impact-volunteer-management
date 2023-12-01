@@ -162,7 +162,7 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 
 		if ( isset( $_REQUEST['form_id'] ) ) {
 
-			update_post_meta( $volunteer_opp_id, '_form_id', absint( $_REQUEST['form_id'] ) );
+			update_post_meta( $volunteer_opp_id, self::FORM_ID_META_SETTING_KEY, absint( $_REQUEST['form_id'] ) );
 		}
 	}
 
@@ -176,7 +176,7 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 	 */
 	public function get_selected_form_for_opp_meta( $volunteer_opp_meta, $volunteer_opp_id ) {
 
-		$form_id = absint( get_post_meta( $volunteer_opp_id, '_form_id', true ) );
+		$form_id = absint( get_post_meta( $volunteer_opp_id, self::FORM_ID_META_SETTING_KEY, true ) );
 
 		if ( $form_id > 0 ) {
 
