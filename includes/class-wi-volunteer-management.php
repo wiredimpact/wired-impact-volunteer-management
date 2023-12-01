@@ -68,7 +68,7 @@ class WI_Volunteer_Management {
 	public function __construct() {
 
 		$this->plugin_name = 'wired-impact-volunteer-management';
-		$this->version     = '1.5';
+		$this->version     = '2.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -80,7 +80,6 @@ class WI_Volunteer_Management {
 
 		// Load the public hooks.
 		$this->define_public_hooks();
-
 	}
 
 	/**
@@ -162,8 +161,12 @@ class WI_Volunteer_Management {
 		 */
 		require_once WIVM_DIR . 'widget/class-widget.php';
 
-		$this->loader = new WI_Volunteer_Management_Loader();
+		/**
+		 * The class responsible for the Gravity Forms integration.
+		 */
+		require_once WIVM_DIR . 'includes/class-gravity-forms.php';
 
+		$this->loader = new WI_Volunteer_Management_Loader();
 	}
 
 	/**
@@ -181,7 +184,6 @@ class WI_Volunteer_Management {
 		$plugin_i18n->set_domain( $this->get_plugin_name() );
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -219,7 +221,6 @@ class WI_Volunteer_Management {
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'show_getting_started_notice' );
 		$this->loader->add_action( 'wp_ajax_wivm_hide_notice', $plugin_admin, 'hide_notice' );
 		$this->loader->add_action( 'wp_ajax_wivm_process_email', $plugin_admin, 'process_custom_volunteer_email' );
-
 	}
 
 	/**
@@ -248,6 +249,20 @@ class WI_Volunteer_Management {
 		$this->loader->add_action( 'wp_ajax_nopriv_wivm_sign_up', $plugin_public, 'process_volunteer_sign_up' );
 		$this->loader->add_action( 'send_auto_email_reminders', $plugin_public, 'send_email_reminder' );
 		$this->loader->add_action( 'widgets_init', $plugin_widget, 'register_widget' );
+
+		// Only load the Gravity Forms integration if Gravity Forms is active.
+		if ( class_exists( 'GFForms' ) ) {
+
+			$gravity_forms = new WI_Volunteer_Management_Gravity_Forms_Integration();
+
+			$this->loader->add_filter( 'wivm_form_type_setting_options', $gravity_forms, 'add_gravity_forms_form_type_option' );
+			$this->loader->add_action( 'wivm_display_defaults_settings', $gravity_forms, 'show_opportunity_default_select_form_meta_field' );
+			$this->loader->add_action( 'wivm_after_opportunity_detail_meta_fields', $gravity_forms, 'show_opportunity_select_form_meta_field' );
+			$this->loader->add_action( 'wivm_save_volunteer_opp_meta', $gravity_forms, 'save_opportunity_select_form_meta_field', 10, 2 );
+			$this->loader->add_filter( 'wivm_volunteer_opp_meta', $gravity_forms, 'get_selected_form_for_opp_meta', 10, 2 );
+			$this->loader->add_action( 'wivm_show_volunteer_sign_up_form', $gravity_forms, 'show_volunteer_sign_up_form' );
+			$this->loader->add_action( 'wp_enqueue_scripts', $gravity_forms, 'enqueue_scripts' );
+		}
 	}
 
 	/**
@@ -289,5 +304,4 @@ class WI_Volunteer_Management {
 	public function get_version() {
 		return $this->version;
 	}
-
 } // class WI_Volunteer_Management

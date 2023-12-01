@@ -44,14 +44,13 @@ class WI_Volunteer_Management_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since      0.1
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name The name of the plugin.
+	 * @param      string $version     The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-
+		$this->version     = $version;
 	}
 
 	/**
@@ -64,37 +63,37 @@ class WI_Volunteer_Management_Public {
 	public function enqueue_styles() {
 
 		$options = new WI_Volunteer_Management_Options();
-		if( $options->get_option( 'use_css' ) == 1 ){
+
+		if ( $options->get_option( 'use_css' ) == 1 ) {
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wi-volunteer-management-public.css', array(), $this->version, 'all' );
 		}
-
 	}
 
 	/**
 	 * Hide the honeypot field for the volunteer sign up form.
 	 *
-	 * We load this CSS separately to be sure the field is hidden even if the 
+	 * We load this CSS separately to be sure the field is hidden even if the
 	 * admin has turned off loading the CSS within the settings.
 	 */
 	public function enqueue_honeypot_styles(){
 
-		if( is_singular( 'volunteer_opp' ) ): ?>
+		if ( is_singular( 'volunteer_opp' ) ) : ?>
 		
-		<style>
-			/* Hide the Wired Impact Volunteer Management honeypot field under all circumstances */
-			.wivm_hp { 
-				display: none !important;
-			    position: absolute !important;
-			    left: -9000px;
-			}
-		</style>
+			<style>
+				/* Hide the Wired Impact Volunteer Management honeypot field under all circumstances */
+				.wivm_hp { 
+					display: none !important;
+					position: absolute !important;
+					left: -9000px;
+				}
+			</style>
 
-		<?php endif;
-
+			<?php
+		endif;
 	}
 
 	/**
-	 * Register the stylesheets for the public-facing side of the site.
+	 * Register the scripts for the public-facing side of the site.
 	 *
 	 * @since    0.1
 	 */
@@ -102,13 +101,12 @@ class WI_Volunteer_Management_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wi-volunteer-management-public.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( $this->plugin_name, 'wivm_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-
 	}
 
 	/**
 	 * Register our Volunteer Opportunities post type.
 	 *
-	 * Register our Volunteer Opportunities post type and set the method to static so that 
+	 * Register our Volunteer Opportunities post type and set the method to static so that
 	 * it can be called during activation when we need to refresh the rewrite rules.
 	 */
 	public static function register_post_types(){
@@ -407,71 +405,95 @@ class WI_Volunteer_Management_Public {
 	}
 
 	/**
-	 * Show the meta info and the sign up form before and after the content on a single volunteer opp.
+	 * Output the meta before the content and the form after the content
+	 * on a single volunteer opp.
 	 *
-	 * We show this info using a filter for the_content to ensures the templates will work
-	 * on a number of different themes. opp-single-meta.php and opp-single-form.php templates
-	 * are both used within this function.
+	 * Display this info using a filter for the_content to ensure the templates will work
+	 * on a number of different themes. The opp-single-meta.php and opp-single-form.php
+	 * templates are used within this function.
 	 *
 	 * @param  string $content The content for the given post.
-	 * @return string If volunteer opp then we wrap the meta and form around the post's content.
+	 * @return string If volunteer opp then output the meta before and the form after the post's content.
 	 */
-	public function show_meta_form_single( $content ){
+	public function show_meta_form_single( $content ) {
 
-		if( is_singular( 'volunteer_opp' ) && in_the_loop() && is_main_query() ){
-
-			$template_loader = new WI_Volunteer_Management_Template_Loader();
-			ob_start();
-
-			$template_loader->get_template_part( 'opp-single', 'meta' );
-			echo $content;
-			$template_loader->get_template_part( 'opp-single', 'form' );
-
-			return ob_get_clean();
-
-		}
-		else {
+		if ( ! is_singular( 'volunteer_opp' ) || ! in_the_loop() || ! is_main_query() ) {
 
 			return $content;
-
 		}
 
+		$template_loader = new WI_Volunteer_Management_Template_Loader();
+		ob_start();
+
+		$template_loader->get_template_part( 'opp-single', 'meta' );
+
+		echo $content;
+
+		$this->show_volunteer_sign_up_form( $template_loader );
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Output the volunteer sign up form based on the chosen settings.
+	 *
+	 * This may require showing the built-in sign up form, no form at all,
+	 * or a form from a third-party tool. For third-party tools, they can
+	 * display their own form using the provided hook.
+	 *
+	 * @param object $template_loader The template loader object.
+	 */
+	private function show_volunteer_sign_up_form( $template_loader ) {
+
+		$volunteer_opp = new WI_Volunteer_Management_Opportunity( get_the_ID() );
+
+		if ( $volunteer_opp->opp_meta['form_type'] === 'built_in_form' ) {
+
+			$template_loader->get_template_part( 'opp-single', 'form' );
+
+		} elseif ( $volunteer_opp->opp_meta['form_type'] === 'no_form' ) {
+
+			// Output nothing since the admin has chosen to not show the form.
+
+		} else {
+
+			do_action( 'wivm_show_volunteer_sign_up_form', $volunteer_opp );
+		}
 	}
 
 	/**
 	 * Process the AJAX request from the volunteer opportunity sign up form.
 	 *
-	 * @return  int|bool The user ID if everything worked, false otherwise
+	 * @return int|bool The user ID if everything worked, false otherwise
 	 */
 	public function process_volunteer_sign_up(){
 		$form_fields = array();
 		parse_str( $_POST['data'], $form_fields );
 
-		//Verify our nonce.
+		// Verify our nonce.
 		if( !wp_verify_nonce( $form_fields['wivm_sign_up_form_nonce_field'], 'wivm_sign_up_form_nonce' ) ) {
 			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
 
-		//If the honeypot field exists and is filled out then bail 
+		// If the honeypot field exists and is filled out then bail.
 		if( isset( $form_fields['wivm_hp'] ) && $form_fields['wivm_hp'] != '' ){
 			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
 
 		$opp = new WI_Volunteer_Management_Opportunity( $form_fields['wivm_opportunity_id'] );
-		if( $opp->should_allow_rvsps() == true ){
+		if ( $opp->should_allow_rvsps() == true ) {
 
-			//Add or update the new volunteer user
+			// Add or update the new volunteer user.
 			$user = new WI_Volunteer_Management_Volunteer( null, $form_fields );
 
-			//RSVP this volunteer for the opportunity
+			// RSVP this volunteer for the opportunity.
 			$rsvp = new WI_Volunteer_Management_RSVP( $user->ID, $form_fields['wivm_opportunity_id'] );
 
-			//If the person hadn't already RSVPed then send out the signup emails.
-			if( $rsvp->rsvped == true ){
-				$email 	= new WI_Volunteer_Management_Email( $opp, $user );
-
+			// If the person hadn't already RSVPed then send out the signup emails.
+			if ( $rsvp->rsvped == true ) {
+				$email = new WI_Volunteer_Management_Email( $opp, $user );
 
 				$email->send_volunteer_signup_email();
 				$email->send_admin_signup_email();
@@ -482,15 +504,15 @@ class WI_Volunteer_Management_Public {
 			}
 
 		}
-		//If RSVPs have been closed
+		// If RSVPs have been closed.
 		else {
 			$result = 'rsvp_closed';
 		}
 
-		//Return a message which tells us what messages to show on the frontend
- 		echo $result; 
- 		
- 		die(); //Must use die() when using AJAX
+		// Return a message which tells us what messages to show on the frontend.
+		echo $result;
+
+		die(); // Must use die() when using AJAX.
 	}
 
 	/**
@@ -499,7 +521,7 @@ class WI_Volunteer_Management_Public {
 	 * This method is called using cron and is never called in any other way. This
 	 * method must be provided in the public class since the admin class is not
 	 * loaded when cron is run.
-	 * 
+	 *
 	 * @param  int $opp_id Volunteer opportunity ID.
 	 */
 	public function send_email_reminder( $opp_id ){
@@ -529,7 +551,7 @@ class WI_Volunteer_Management_Public {
 	 * reminder email to send multiple times. Since the get_rsvp_emails() method uses
 	 * $wpdb->get_results() which is not cached, this method should prevent the reminder
 	 * email from being sent multiple times.
-	 * 
+	 *
 	 * @param  object  $opp The current volunteer opportunity to check.
 	 * @return boolean      Whether an automated reminder email has been sent within the last 5 hours.
 	 */
@@ -552,5 +574,4 @@ class WI_Volunteer_Management_Public {
 
 		return false;
 	}
-
 } //class WI_Volunteer_Management_Public

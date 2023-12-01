@@ -10,9 +10,11 @@
         return $(this).length > 0;
     };
 
+    /**
+     * For the volunteer management Help & Settings page.
+     */
     $(function() {
 
-        //Only run on WI Volunteer Management settings page.
         if( $( '#wivm-tabs' ).exists() ){
 
             /**
@@ -34,7 +36,7 @@
                 }
             });
 
-            var wivm_active_tab = window.location.hash.replace('#top#', '');
+            var wivm_active_tab = window.location.hash.replace('#top-', '');
 
             if (wivm_active_tab == '' || wivm_active_tab == '#_=_') {
                 wivm_active_tab = $('.wivmtab').attr('id');
@@ -55,6 +57,16 @@
              */
             $(document).on('ready', wivm_set_tab_hash);
 
+            // Show and hide the default form selection field based on whether the user wants to show a Gravity Forms form
+            $( '#default_form_type' ).change( function() {
+                if ( $( this ).val() == 'gravity_forms' ) {
+                    $( '.select-form-field' ).show();
+                }
+                else {
+                    $( '.select-form-field' ).hide();
+                }
+            });
+
         } //end if
 
         function wivm_set_tab_hash() {
@@ -67,16 +79,15 @@
 
     }); //document.ready()
 
-
     /**
-     * For volunteer opportunity edit screen including jQuery Timepicker
+     * For volunteer opportunity edit screen including jQuery Timepicker.
      */
     $(function() {
 
-        //Only run on WI Volunteer Management Opportunity New and Edit screens.
+        // Only run on WI Volunteer Management Opportunity New and Edit screens.
         if( typeof pagenow != 'undefined' && pagenow == 'volunteer_opp' ) {
         
-            //Show and hide one-time volunteer opportunity fields
+            // Show and hide one-time volunteer opportunity fields
             $('#one-time-opportunity').change(function() {
                 if( this.checked ) {
                     $( '.one-time-field' ).show();
@@ -88,7 +99,7 @@
                 }
             });
 
-            //Show and hide fields if there is a limit on the number of volunteers
+            // Show and hide fields if there is a limit on the number of volunteers
             $('#has-volunteer-limit').change(function() {
                 if( this.checked ) {
                     $( '.volunteer-limit-field' ).show();
@@ -98,6 +109,15 @@
                 }
             });
 
+            // Show and hide the form selection field based on whether the user wants to show a Gravity Forms form
+            $( '#form_type' ).change( function() {
+                if ( $( this ).val() == 'gravity_forms' ) {
+                    $( '.select-form-field' ).show();
+                }
+                else {
+                    $( '.select-form-field' ).hide();
+                }
+            });
 
             var start_date_time = jQuery( '#volunteer-opportunity-details #start-date-time-output' ),
                 start_date_time_save = jQuery( '#volunteer-opportunity-details #start-date-time' ),

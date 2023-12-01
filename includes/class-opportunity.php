@@ -50,9 +50,8 @@ class WI_Volunteer_Management_Opportunity {
 	 */
 	public function __construct( $volunteer_opp_id ) {
 
-		$this->ID = $volunteer_opp_id;
+		$this->ID       = $volunteer_opp_id;
 		$this->opp_meta = $this->retrieve_volunteer_opp_meta( $volunteer_opp_id );
-
 	}
 
 	/**
@@ -62,32 +61,36 @@ class WI_Volunteer_Management_Opportunity {
 	 * @param int $volunteer_opp_id The ID of the volunteer opportunity we're referencing.
 	 * @return array Associative array of all meta data for the board event.
 	 */
-	public function retrieve_volunteer_opp_meta( $volunteer_opp_id ){
+	public function retrieve_volunteer_opp_meta( $volunteer_opp_id ) {
+
 		$volunteer_opp_meta_raw = get_post_custom( $volunteer_opp_id );
-		$volunteer_opp_meta = array();
+		$volunteer_opp_meta     = array();
 
-		//Contact Information
-		$volunteer_opp_meta['contact_name'] 			= ( isset( $volunteer_opp_meta_raw['_contact_name'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_contact_name'][0] ) : $this->get_default_meta( 'default_contact_name' );
-		$volunteer_opp_meta['contact_phone']			= ( isset( $volunteer_opp_meta_raw['_contact_phone'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_contact_phone'][0] ) : $this->get_default_meta( 'default_contact_phone' );
-		$volunteer_opp_meta['contact_formatted_phone']	= $this->format_phone_number( $volunteer_opp_meta['contact_phone'] );
-		$volunteer_opp_meta['contact_email']			= ( isset( $volunteer_opp_meta_raw['_contact_email'] ) ) ? sanitize_email( $volunteer_opp_meta_raw['_contact_email'][0] ) : $this->get_default_meta( 'default_contact_email' );
+		// Contact Information.
+		$volunteer_opp_meta['contact_name']            = ( isset( $volunteer_opp_meta_raw['_contact_name'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_contact_name'][0] ) : $this->get_default_meta( 'default_contact_name' );
+		$volunteer_opp_meta['contact_phone']           = ( isset( $volunteer_opp_meta_raw['_contact_phone'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_contact_phone'][0] ) : $this->get_default_meta( 'default_contact_phone' );
+		$volunteer_opp_meta['contact_formatted_phone'] = $this->format_phone_number( $volunteer_opp_meta['contact_phone'] );
+		$volunteer_opp_meta['contact_email']           = ( isset( $volunteer_opp_meta_raw['_contact_email'] ) ) ? sanitize_email( $volunteer_opp_meta_raw['_contact_email'][0] ) : $this->get_default_meta( 'default_contact_email' );
 
-		//Location Information
-		$volunteer_opp_meta['location'] 				= ( isset( $volunteer_opp_meta_raw['_location'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_location'][0] ) : $this->get_default_meta( 'default_location' );
-		$volunteer_opp_meta['street'] 					= ( isset( $volunteer_opp_meta_raw['_street'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_street'][0] ) : $this->get_default_meta( 'default_street' );
-		$volunteer_opp_meta['city'] 					= ( isset( $volunteer_opp_meta_raw['_city'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_city'][0] ) : $this->get_default_meta( 'default_city' );
-		$volunteer_opp_meta['state'] 					= ( isset( $volunteer_opp_meta_raw['_state'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_state'][0] ) : $this->get_default_meta( 'default_state' );
-		$volunteer_opp_meta['zip'] 						= ( isset( $volunteer_opp_meta_raw['_zip'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_zip'][0] ) : $this->get_default_meta( 'default_zip' );
+		// Location Information.
+		$volunteer_opp_meta['location'] = ( isset( $volunteer_opp_meta_raw['_location'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_location'][0] ) : $this->get_default_meta( 'default_location' );
+		$volunteer_opp_meta['street']   = ( isset( $volunteer_opp_meta_raw['_street'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_street'][0] ) : $this->get_default_meta( 'default_street' );
+		$volunteer_opp_meta['city']     = ( isset( $volunteer_opp_meta_raw['_city'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_city'][0] ) : $this->get_default_meta( 'default_city' );
+		$volunteer_opp_meta['state']    = ( isset( $volunteer_opp_meta_raw['_state'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_state'][0] ) : $this->get_default_meta( 'default_state' );
+		$volunteer_opp_meta['zip']      = ( isset( $volunteer_opp_meta_raw['_zip'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_zip'][0] ) : $this->get_default_meta( 'default_zip' );
 
-		//Date and Time Information
-		$volunteer_opp_meta['one_time_opp'] 			= ( isset( $volunteer_opp_meta_raw['_one_time_opp'] ) ) ? (int)$volunteer_opp_meta_raw['_one_time_opp'][0] : 0;
-		$volunteer_opp_meta['start_date_time'] 			= ( isset( $volunteer_opp_meta_raw['_start_date_time'] ) && $volunteer_opp_meta_raw['_start_date_time'][0] != '' ) ? (int)$volunteer_opp_meta_raw['_start_date_time'][0] : '';
-		$volunteer_opp_meta['end_date_time'] 			= ( isset( $volunteer_opp_meta_raw['_end_date_time']  ) && $volunteer_opp_meta_raw['_end_date_time'][0] != '' ) ? (int)$volunteer_opp_meta_raw['_end_date_time'][0] : '';
-		$volunteer_opp_meta['flexible_frequency']		= ( isset( $volunteer_opp_meta_raw['_flexible_frequency'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_flexible_frequency'][0] ) : '';
+		// Date and Time Information.
+		$volunteer_opp_meta['one_time_opp']       = ( isset( $volunteer_opp_meta_raw['_one_time_opp'] ) ) ? (int) $volunteer_opp_meta_raw['_one_time_opp'][0] : 0;
+		$volunteer_opp_meta['start_date_time']    = ( isset( $volunteer_opp_meta_raw['_start_date_time'] ) && $volunteer_opp_meta_raw['_start_date_time'][0] != '' ) ? (int) $volunteer_opp_meta_raw['_start_date_time'][0] : '';
+		$volunteer_opp_meta['end_date_time']      = ( isset( $volunteer_opp_meta_raw['_end_date_time']  ) && $volunteer_opp_meta_raw['_end_date_time'][0] != '' ) ? (int) $volunteer_opp_meta_raw['_end_date_time'][0] : '';
+		$volunteer_opp_meta['flexible_frequency'] = ( isset( $volunteer_opp_meta_raw['_flexible_frequency'] ) ) ? sanitize_text_field( $volunteer_opp_meta_raw['_flexible_frequency'][0] ) : '';
 
-		//Volunteer Limit Information
-		$volunteer_opp_meta['has_volunteer_limit'] 		= ( isset( $volunteer_opp_meta_raw['_has_volunteer_limit'] ) ) ? (int)$volunteer_opp_meta_raw['_has_volunteer_limit'][0] : 0;
-		$volunteer_opp_meta['volunteer_limit']			= ( isset( $volunteer_opp_meta_raw['_volunteer_limit'] ) ) ? (int)$volunteer_opp_meta_raw['_volunteer_limit'][0] : 0;
+		// Volunteer Limit Information.
+		$volunteer_opp_meta['has_volunteer_limit'] = ( isset( $volunteer_opp_meta_raw['_has_volunteer_limit'] ) ) ? (int) $volunteer_opp_meta_raw['_has_volunteer_limit'][0] : 0;
+		$volunteer_opp_meta['volunteer_limit']     = ( isset( $volunteer_opp_meta_raw['_volunteer_limit'] ) ) ? (int) $volunteer_opp_meta_raw['_volunteer_limit'][0] : 0;
+
+		// Form Information.
+		$volunteer_opp_meta['form_type'] = ( isset( $volunteer_opp_meta_raw['_form_type'] ) ) ? esc_attr( $volunteer_opp_meta_raw['_form_type'][0] ) : $this->get_default_meta( 'default_form_type' );
 
 		return apply_filters( 'wivm_volunteer_opp_meta', $volunteer_opp_meta, $volunteer_opp_id );
 	}
@@ -393,7 +396,6 @@ class WI_Volunteer_Management_Opportunity {
 			$volunteer = new WI_Volunteer_Management_Volunteer( $volunteer->user_id );
 		}
 
-		return $volunteers;			        
+		return $volunteers;
 	}
-
 } //class WI_Volunteer_Management_Opportunity

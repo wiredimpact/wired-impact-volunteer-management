@@ -50,8 +50,7 @@ class WI_Volunteer_Management_Admin {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-
+		$this->version     = $version;
 	}
 
 	/**
@@ -79,12 +78,12 @@ class WI_Volunteer_Management_Admin {
 	}
 
 	/*
-     * Create the database table that will hold our volunteer opportunity RSVP information.
-     * 
-     * We create a database table that will hold our volunteer opportunity RSVP information.
-     * We check first to make sure the table doesn't exist by seeing if the
-     * version exists in the options table.
-     */
+	 * Create the database table that will hold our volunteer opportunity RSVP information.
+	 *
+	 * We create a database table that will hold our volunteer opportunity RSVP information.
+	 * We check first to make sure the table doesn't exist by seeing if the
+	 * version exists in the options table.
+	 */
 	public function create_rsvp_db_table(){
 		//Only create table if it doesn't exist.
 		if ( get_option( 'wivm_version' ) == false ) {
@@ -368,144 +367,185 @@ class WI_Volunteer_Management_Admin {
 		//List of sent custom volunteer emails
 		add_meta_box(
 			'volunteer-opportunity-email-list',                                // Unique ID
-			__( 'Emails to Volunteers', 'wired-impact-volunteer-management' ), // Box title
+			__( 'Emails Sent to Volunteers', 'wired-impact-volunteer-management' ), // Box title
 			array( $this, 'display_opportunity_email_list_meta_box' ),         // Content callback
 			'volunteer_opp',                                                   // Post type
-			'side'                                                             // Location
+			'normal'                                                           // Location
 		);
 	}
 
 	/**
-     * Display the custom meta fields and values when editing a volunteer opportunity.
-	 * 
+	 * Display the custom meta fields and values when editing a volunteer opportunity.
+	 *
 	 * @param object $post The post object for the volunteer opportunity.
 	 */
-	public function display_opportunity_details_meta_box( $post ){
-		//Get all the meta data
+	public function display_opportunity_details_meta_box( $post ) {
+
+		// Get all the meta data.
 		$volunteer_opp = new WI_Volunteer_Management_Opportunity( $post->ID );
-		$nonce = wp_create_nonce( 'volunteer_opp_details_nonce' );
+		$nonce         = wp_create_nonce( 'volunteer_opp_details_nonce' );
 		?>
-		<input type="hidden" id="_volunteer_opp_details_nonce" name="_volunteer_opp_details_nonce" value="<?php echo $nonce ?>" />
+
+		<input type="hidden" id="_volunteer_opp_details_nonce" name="_volunteer_opp_details_nonce" value="<?php echo $nonce; ?>" />
 		<table class="volunteer-opp-details-meta">
-		  <?php do_action( 'wivm_before_opportunity_detail_meta_fields', $post ); ?>
+			<?php do_action( 'wivm_before_opportunity_detail_meta_fields', $volunteer_opp ); ?>
 
-		  <tr>
-		    <td colspan="2"><h3><?php _e( 'Contact Information', 'wired-impact-volunteer-management' ); ?></h3></td>
-		  </tr>	
+			<tr>
+				<td colspan="2"><h3><?php _e( 'Contact Information', 'wired-impact-volunteer-management' ); ?></h3></td>
+			</tr>	
 
-		  <tr>
-		    <td><label for="contact_name"><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></label></td>
-		    <td><input type="text" id="contact_name" name="contact_name" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_name']; ?>" /></td>
-		  </tr>
+			<tr>
+				<td><label for="contact_name"><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td><input type="text" id="contact_name" name="contact_name" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_name']; ?>" /></td>
+			</tr>
 		  
-		  <tr>
-		    <td><label for="contact_phone"><?php _e( 'Phone Number', 'wired-impact-volunteer-management' ); ?></label></td>
-		    <td><input type="text" id="contact_phone" name="contact_phone" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_formatted_phone']; ?>" /></td>
-		  </tr>
+			<tr>
+				<td><label for="contact_phone"><?php _e( 'Phone Number', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td><input type="text" id="contact_phone" name="contact_phone" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_formatted_phone']; ?>" /></td>
+			</tr>
 		  
-		  <tr>
-		    <td><label for="contact_email"><?php _e( 'Email', 'wired-impact-volunteer-management' ); ?></label></td>
-		    <td><input type="text" id="contact_email" name="contact_email" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_email']; ?>" /></td>
-		  </tr>
-
-		  
-		  <tr>
-		    <td colspan="2"><h3><?php _e( 'Location Information', 'wired-impact-volunteer-management' ); ?></h3></td>
-		  </tr>	
-
-		  <tr>
-		    <td><label for="location"><?php _e( 'Location Name', 'wired-impact-volunteer-management' ); ?></label></td>
-		    <td><input type="text" id="location" name="location" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['location']; ?>" /></td>
-		  </tr>
-		  
-		  <tr>
-		    <td><label for="street"><?php _e( 'Street Address', 'wired-impact-volunteer-management' ); ?></label></td>
-		    <td><input type="text" id="street" name="street" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['street']; ?>" /></td>
-		  </tr>
-		  
-		  <tr>
-		    <td><label for="city"><?php _e( 'City', 'wired-impact-volunteer-management' ); ?></label></td>
-		    <td><input type="text" id="city" name="city" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['city']; ?>" /></td>
-		  </tr>
-
-		  <tr>
-		    <td><label for="state"><?php _e( 'State', 'wired-impact-volunteer-management' ); ?></label></td>
-		    <td><input type="text" id="state" name="state" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['state']; ?>" /></td>
-		  </tr>
-
-		  <tr>
-		    <td><label for="zip"><?php _e( 'Zip', 'wired-impact-volunteer-management' ); ?></label></td>
-		    <td><input type="text" id="zip" name="zip" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['zip']; ?>" /></td>
-		  </tr>
+			<tr>
+				<td><label for="contact_email"><?php _e( 'Email', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td><input type="text" id="contact_email" name="contact_email" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_email']; ?>" /></td>
+			</tr>
 
 		  
-		  <tr>
-		    <td colspan="2"><h3><?php _e( 'Date and Time', 'wired-impact-volunteer-management' ); ?></h3></td>
-		  </tr>
+			<tr>
+				<td colspan="2"><h3><?php _e( 'Location Information', 'wired-impact-volunteer-management' ); ?></h3></td>
+			</tr>	
 
-		  <tr>
-		    <td><?php _e( 'One-Time Opportunity?', 'wired-impact-volunteer-management' ); ?></td>
-		    <td>
-		    	<input type="checkbox" id="one-time-opportunity" name="one-time-opportunity" value="1" <?php checked( 1, $volunteer_opp->opp_meta['one_time_opp'] ); ?> />
-		    	<label for="one-time-opportunity"><?php _e( 'This is a one-time opportunity at a fixed date and time.', 'wired-impact-volunteer-management' ); ?></label>
-		    </td>
-		  </tr>
+			<tr>
+				<td><label for="location"><?php _e( 'Location Name', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td><input type="text" id="location" name="location" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['location']; ?>" /></td>
+			</tr>
+			
+			<tr>
+				<td><label for="street"><?php _e( 'Street Address', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td><input type="text" id="street" name="street" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['street']; ?>" /></td>
+			</tr>
+			
+			<tr>
+				<td><label for="city"><?php _e( 'City', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td><input type="text" id="city" name="city" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['city']; ?>" /></td>
+			</tr>
 
-		  <?php $one_time_class = ( $volunteer_opp->opp_meta['one_time_opp'] == 1 ) ? 'one-time' : 'flexible'; ?>
-		  <tr class="one-time-field <?php echo $one_time_class; ?>">
-		    <td><label for="start-date-time-output"><?php _e( 'Start Date & Time', 'wired-impact-volunteer-management' ); ?></label></td>
-		    <td>
-				<input type="hidden" id="start-date-time" name="start-date-time" value="<?php if ( $volunteer_opp->opp_meta['start_date_time'] != '' ) echo $volunteer_opp->opp_meta['start_date_time']; ?>" />
-				<input type="text" id="start-date-time-output" name="start-date-time-output" class="regular-text" value="<?php if ( $volunteer_opp->opp_meta['start_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['start_date_time'], '', true ); ?>" />
-		    </td>
-		  </tr>
+			<tr>
+				<td><label for="state"><?php _e( 'State', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td><input type="text" id="state" name="state" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['state']; ?>" /></td>
+			</tr>
 
-		  <tr class="one-time-field <?php echo $one_time_class; ?>">
-		    <td><label for="end-date-time"><?php _e( 'End Date & Time', 'wired-impact-volunteer-management' ); ?></label></td>
-		    <td>
-				<input type="hidden" id="end-date-time" name="end-date-time" value="<?php if ( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo $volunteer_opp->opp_meta['end_date_time']; ?>" />
-				<input type="text" id="end-date-time-output" name="end-date-time-output" class="regular-text" value="<?php if( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['end_date_time'], '', true ); ?>" />
-				<span class="error" style="display: none;"><?php _e( 'Whoops, it looks like you set your event to end before it started.', 'wired-impact-volunteer-management' ); ?></span>
-		    </td>
-		  </tr>
+			<tr>
+				<td><label for="zip"><?php _e( 'Zip', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td><input type="text" id="zip" name="zip" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['zip']; ?>" /></td>
+			</tr>
 
-		  <tr class="flexible-field <?php echo $one_time_class; ?>">
-		    <td><label for="flexible_frequency"><?php _e( 'When Will This Event Happen?', 'wired-impact-volunteer-management' ); ?></label></td>
-		    <td><input type="text" id="flexible_frequency" name="flexible_frequency" class="regular-text" placeholder="<?php _e( 'On your own time, All summer, etc.', 'wired-impact-volunteer-management' ); ?>" value="<?php echo $volunteer_opp->opp_meta['flexible_frequency']; ?>" /></td>
-		  </tr>
+			
+			<tr>
+				<td colspan="2"><h3><?php _e( 'Date and Time', 'wired-impact-volunteer-management' ); ?></h3></td>
+			</tr>
 
-		  <tr>
-		    <td colspan="2"><h3><?php _e( 'Volunteer Limit', 'wired-impact-volunteer-management' ); ?></h3></td>
-		  </tr>	
+			<tr>
+				<td><?php _e( 'One-Time Opportunity?', 'wired-impact-volunteer-management' ); ?></td>
+				<td>
+					<input type="checkbox" id="one-time-opportunity" name="one-time-opportunity" value="1" <?php checked( 1, $volunteer_opp->opp_meta['one_time_opp'] ); ?> />
+					<label for="one-time-opportunity"><?php _e( 'This is a one-time opportunity at a fixed date and time.', 'wired-impact-volunteer-management' ); ?></label>
+				</td>
+			</tr>
 
-		  <tr>
-		    <td><?php _e( 'Is There a Volunteer Limit?', 'wired-impact-volunteer-management' ); ?></td>
-		    <td>
-		    	<input type="checkbox" id="has-volunteer-limit" name="has-volunteer-limit" value="1" <?php checked( 1, $volunteer_opp->opp_meta['has_volunteer_limit'] ); ?> />
-		    	<label for="has-volunteer-limit"><?php _e( 'Only a fixed number of people can participate in this volunteer opportunity.', 'wired-impact-volunteer-management' ); ?></label>
-		    </td>
-		  </tr>
+			<?php $one_time_class = ( $volunteer_opp->opp_meta['one_time_opp'] == 1 ) ? 'one-time' : 'flexible'; ?>
+			<tr class="one-time-field <?php echo $one_time_class; ?>">
+				<td><label for="start-date-time-output"><?php _e( 'Start Date & Time', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td>
+					<input type="hidden" id="start-date-time" name="start-date-time" value="<?php if ( $volunteer_opp->opp_meta['start_date_time'] != '' ) echo $volunteer_opp->opp_meta['start_date_time']; ?>" />
+					<input type="text" id="start-date-time-output" name="start-date-time-output" class="regular-text" value="<?php if ( $volunteer_opp->opp_meta['start_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['start_date_time'], '', true ); ?>" />
+				</td>
+			</tr>
 
-		  <?php $volunteer_limit_class = ( $volunteer_opp->opp_meta['has_volunteer_limit'] == 1 ) ? 'has-volunteer-limit' : 'no-volunteer-limit'; ?>
-		  <tr class="volunteer-limit-field <?php echo $volunteer_limit_class; ?>">
-		    <td><label for="volunteer-limit"><?php _e( 'Max Number of Volunteers', 'wired-impact-volunteer-management' ); ?></label></td>
-		    <td><input type="text" id="volunteer-limit" name="volunteer-limit" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['volunteer_limit']; ?>" /></td>
-		  </tr>
+			<tr class="one-time-field <?php echo $one_time_class; ?>">
+				<td><label for="end-date-time-output"><?php _e( 'End Date & Time', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td>
+					<input type="hidden" id="end-date-time" name="end-date-time" value="<?php if ( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo $volunteer_opp->opp_meta['end_date_time']; ?>" />
+					<input type="text" id="end-date-time-output" name="end-date-time-output" class="regular-text" value="<?php if( $volunteer_opp->opp_meta['end_date_time'] != '' ) echo $volunteer_opp->format_opp_times( $volunteer_opp->opp_meta['end_date_time'], '', true ); ?>" />
+					<span class="error" style="display: none;"><?php _e( 'Whoops, it looks like you set your event to end before it started.', 'wired-impact-volunteer-management' ); ?></span>
+				</td>
+			</tr>
 
-		  <?php do_action( 'wivm_after_opportunity_detail_meta_fields', $volunteer_opp ); ?>
+			<tr class="flexible-field <?php echo $one_time_class; ?>">
+				<td><label for="flexible_frequency"><?php _e( 'When Will This Event Happen?', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td><input type="text" id="flexible_frequency" name="flexible_frequency" class="regular-text" placeholder="<?php _e( 'On your own time, All summer, etc.', 'wired-impact-volunteer-management' ); ?>" value="<?php echo $volunteer_opp->opp_meta['flexible_frequency']; ?>" /></td>
+			</tr>
+
+			<tr>
+				<td colspan="2"><h3><?php _e( 'Volunteer Limit', 'wired-impact-volunteer-management' ); ?></h3></td>
+			</tr>	
+
+			<tr>
+				<td><?php _e( 'Is There a Volunteer Limit?', 'wired-impact-volunteer-management' ); ?></td>
+				<td>
+					<input type="checkbox" id="has-volunteer-limit" name="has-volunteer-limit" value="1" <?php checked( 1, $volunteer_opp->opp_meta['has_volunteer_limit'] ); ?> />
+					<label for="has-volunteer-limit"><?php _e( 'Only a fixed number of people can participate in this volunteer opportunity.', 'wired-impact-volunteer-management' ); ?></label>
+				</td>
+			</tr>
+
+			<?php $volunteer_limit_class = ( $volunteer_opp->opp_meta['has_volunteer_limit'] == 1 ) ? 'has-volunteer-limit' : 'no-volunteer-limit'; ?>
+			<tr class="volunteer-limit-field <?php echo $volunteer_limit_class; ?>">
+				<td><label for="volunteer-limit"><?php _e( 'Max Number of Volunteers', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td><input type="text" id="volunteer-limit" name="volunteer-limit" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['volunteer_limit']; ?>" /></td>
+			</tr>
+
+			<tr>
+				<td colspan="2"><h3><?php _e( 'Volunteer Signup Form', 'wired-impact-volunteer-management' ); ?></h3></td>
+			</tr>
+
+			<tr class="signup-form-description">
+				<td colspan="2"><p><?php _e( 'The built-in signup form includes name, email and phone number fields. It can\'t be modified.', 'wired-impact-volunteer-management' ); ?></p></td>
+			</tr>
+
+			<tr>
+				<td><label for="form_type"><?php _e( 'Form Type', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td>
+					<?php $form_type_options = $this->get_form_type_options(); ?>
+					<select id="form_type" name="form_type">
+						<?php
+						foreach ( $form_type_options as $form_type => $form_type_label ) {
+							?>
+							<option value="<?php echo $form_type; ?>" <?php selected( $volunteer_opp->opp_meta['form_type'], $form_type ); ?>><?php echo $form_type_label; ?></option>
+							<?php
+						}
+						?>
+					</select>
+				</td>
+			</tr>
+
+			<?php do_action( 'wivm_after_opportunity_detail_meta_fields', $volunteer_opp ); ?>
 		</table>
 		<?php
 	}
-	
+
+	/**
+	 * Get the different select element options for the form type setting.
+	 *
+	 * @return array Array of form type options with the array key as the select value and the array value as the select label.
+	 */
+	private function get_form_type_options() {
+
+		$form_type_options = array(
+			'no_form'       => __( 'No Form', 'wired-impact-volunteer-management' ),
+			'built_in_form' => __( 'Built-In Signup Form', 'wired-impact-volunteer-management' ),
+		);
+
+		return apply_filters( 'wivm_form_type_setting_options', $form_type_options );
+	}
+
 	/**
 	 * Save the meta fields for volunteer opportunities when saving from the edit screen.
 	 *
-	 * @param int $volunteer_opp_id ID of this post.
+	 * @param int    $volunteer_opp_id ID of this post.
 	 * @param object $volunteer_opp The $post object for the volunteer opportunity.
 	 */
-	public function save_volunteer_opp_meta( $volunteer_opp_id, $volunteer_opp ){
+	public function save_volunteer_opp_meta( $volunteer_opp_id, $volunteer_opp ) {
 
-		//Check autosave, post type, user caps, nonce
+		// Check autosave, post type, user caps, nonce.
 		if( wp_is_post_autosave( $volunteer_opp_id ) || wp_is_post_revision( $volunteer_opp_id ) ) {
 			return false;
 		}
@@ -519,49 +559,49 @@ class WI_Volunteer_Management_Admin {
 			return false;
 		}
 
-		//Save all of our fields
-		//Contact Name
+		// Save all of our fields.
+		// Contact Name.
 		if( isset($_REQUEST['contact_name'] ) ) {
 			update_post_meta( $volunteer_opp_id, '_contact_name', sanitize_text_field( $_REQUEST['contact_name'] ) );
 		}
 
-		//Phone
+		// Phone.
 		if( isset($_REQUEST['contact_phone'] ) ) {
 			update_post_meta( $volunteer_opp_id, '_contact_phone', preg_replace( "/[^0-9]/", "", $_REQUEST['contact_phone'] ) );
 		}
 
-		//Email
+		// Email.
 		if( isset($_REQUEST['contact_email'] ) ) {
 			update_post_meta( $volunteer_opp_id, '_contact_email', sanitize_email( $_REQUEST['contact_email'] ) );
 		}
 
-		//Location Name
+		// Location Name.
 		if( isset($_REQUEST['location'] ) ) {
 			update_post_meta( $volunteer_opp_id, '_location', sanitize_text_field( $_REQUEST['location'] ) );
 		}
 
-		//Street
+		// Street.
 		if( isset($_REQUEST['street'] ) ) {
 			update_post_meta( $volunteer_opp_id, '_street', sanitize_text_field( $_REQUEST['street'] ) );
 		}
 
-		//City
+		// City.
 		if( isset($_REQUEST['city'] ) ) {
 			update_post_meta( $volunteer_opp_id, '_city', sanitize_text_field( $_REQUEST['city'] ) );
 		}
 
-		//State
+		// State.
 		if( isset($_REQUEST['state'] ) ) {
 			update_post_meta( $volunteer_opp_id, '_state', sanitize_text_field( $_REQUEST['state'] ) );
 		}
 
-		//Zip
+		// Zip.
 		if( isset($_REQUEST['zip'] ) ) {
 			update_post_meta( $volunteer_opp_id, '_zip', sanitize_text_field( $_REQUEST['zip'] ) );
 		}
 
-		//One-Time Opportunity?
-		//If checkbox is checked then the opp is one time and is set to 1, otherwise set to 0.
+		// One-Time Opportunity?
+		// If checkbox is checked then the opp is one time and is set to 1, otherwise set to 0.
 		if( isset($_REQUEST['one-time-opportunity'] ) ) {
 			update_post_meta( $volunteer_opp_id, '_one_time_opp', 1 );
 		}
@@ -569,25 +609,25 @@ class WI_Volunteer_Management_Admin {
 			update_post_meta( $volunteer_opp_id, '_one_time_opp', 0 );
 		}
 
-		//Start Date & Time stored as UNIX timestamp with timezone offset
+		// Start Date & Time stored as UNIX timestamp with timezone offset.
 		if( isset($_REQUEST['start-date-time'] ) ) {
 			$start_date_time = intval( $_REQUEST['start-date-time'] );
 			update_post_meta( $volunteer_opp_id, '_start_date_time', $start_date_time );
 		}
 
-		//End Date & Time stored as UNIX timestamp with timezone offset
+		// End Date & Time stored as UNIX timestamp with timezone offset.
 		if( isset($_REQUEST['end-date-time'] ) ) {
 			$end_date_time = intval( $_REQUEST['end-date-time'] );
 			update_post_meta( $volunteer_opp_id, '_end_date_time', $end_date_time );
 		}
 
-		//Flexible Event Frequency (When will this event happen?)
+		// Flexible Event Frequency (When will this event happen?).
 		if( isset($_REQUEST['flexible_frequency'] ) ) {
 			update_post_meta( $volunteer_opp_id, '_flexible_frequency', sanitize_text_field( $_REQUEST['flexible_frequency'] ) );
 		}
 
-		//Volunteer Limit
-		//If checkbox is checked then the opp has a volunteer limit and is set to 1, otherwise set to 0.
+		// Volunteer Limit.
+		// If checkbox is checked then the opp has a volunteer limit and is set to 1, otherwise set to 0.
 		if( isset($_REQUEST['has-volunteer-limit'] ) ) {
 			update_post_meta( $volunteer_opp_id, '_has_volunteer_limit', 1 );
 		}
@@ -595,9 +635,14 @@ class WI_Volunteer_Management_Admin {
 			update_post_meta( $volunteer_opp_id, '_has_volunteer_limit', 0 );
 		}
 
-		//Max Number of Volunteers Allowed
+		// Max Number of Volunteers Allowed.
 		if( isset($_REQUEST['volunteer-limit'] ) ) {
 			update_post_meta( $volunteer_opp_id, '_volunteer_limit', absint( $_REQUEST['volunteer-limit'] ) );
+		}
+
+		// Form Type.
+		if ( isset( $_REQUEST['form_type'] ) ) {
+			update_post_meta( $volunteer_opp_id, '_form_type', sanitize_text_field( $_REQUEST['form_type'] ) );
 		}
 
 		do_action( 'wivm_save_volunteer_opp_meta', $volunteer_opp_id, $volunteer_opp );
@@ -625,10 +670,12 @@ class WI_Volunteer_Management_Admin {
 		<div class="rsvp-list-table clear">
 			<table class="wp-list-table widefat fixed striped users">
 				<thead>
-					<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
-					<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
-					<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
-					<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
+					<tr>
+						<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
+					</tr>
 				</thead>
 
 				<?php if( !empty( $volunteers ) ): foreach( $volunteers as $volunteer ): ?>
@@ -649,10 +696,12 @@ class WI_Volunteer_Management_Admin {
 				<?php endif; ?>
 
 				<tfoot>
-					<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
-					<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
-					<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
-					<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
+					<tr>
+						<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
+					</tr>
 				</tfoot>
 			</table>
 		</div>

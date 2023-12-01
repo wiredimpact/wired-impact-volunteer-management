@@ -79,10 +79,10 @@ class WI_Volunteer_Management_Form {
 	/**
 	 * Display the beginning of a form table for a settings form to match the style of other settings pages.
 	 * Usually this is the beginning of one tab's content.
-	 * 
+	 *
 	 * @param  string $tab_id
 	 */
-	public function form_table_start( $tab_id ){
+	public function form_table_start( $tab_id ) {
 		?>
 		<div id="<?php echo $tab_id; ?>" class="wivmtab">
 		<table class="form-table">
@@ -94,25 +94,30 @@ class WI_Volunteer_Management_Form {
 	 * Display the end of a form table for a settings form to match the style of other settings pages.
 	 * Usually this is the end of one tab's content.
 	 */
-	public function form_table_end(){
+	public function form_table_end() {
 		?>
 				</tbody>
-    		</table>
+			</table>
 		</div>
 		<?php
 	}
 
 	/**
 	 * Output a heading to break up the options within a tab.
-	 * 
-	 * @param  string $text The text to be used for the heading.
+	 *
+	 * @param  string $heading The text to be used for the heading.
 	 * @param  string $description Paragraph text to describe the group of settings.
+	 * @param  int    $colspan The number of columns the heading should span.
 	 */
-	public function section_heading( $heading, $description ){
-		echo '<tr><th colspan="2">';
-			echo '<h3>' . $heading . '</h3>';
-			echo '<p>' . $description . '</p>';
-		echo '</th></tr>';
+	public function section_heading( $heading, $description, $colspan = 2 ) {
+		?>
+		<tr class="section-heading">
+			<td colspan="<?php echo $colspan; ?>">
+				<h3><?php echo $heading; ?></h3>
+				<p><?php echo $description; ?></p>
+			</td>
+		</tr>
+		<?php
 	}
 
 	/**
@@ -256,28 +261,42 @@ class WI_Volunteer_Management_Form {
 	 * @param array  $attr   Description for the field
 	 */
 	public function select( $var, $label, $values, $attr = array() ) {
-		$attr = wp_parse_args( $attr, array(
-			'description' => '',
-		) );
 
-		if ( ! is_array( $values ) || $values === array() ) {
+		$attr = wp_parse_args(
+			$attr,
+			array(
+				'description'       => '',
+				'class'             => '',
+				'no_values_message' => '',
+			)
+		);
+
+		if ( ! is_array( $values ) ) {
 			return;
 		}
+
 		$val = $this->wivm_options->get_option( $var );
 
-		echo '<tr>';
+		echo '<tr class="' . $attr['class'] . '">';
 
 			$this->label( $label, array( 'for' => $var, 'class' => 'select' ) );
 			echo '<td>';
 
-				echo '<select class="select" name="', esc_attr( $this->option_name ), '[', esc_attr( $var ), ']" id="', esc_attr( $var ), '">';
-				foreach ( $values as $value => $label ) {
-					if ( ! empty( $label ) ) {
-						echo '<option value="', esc_attr( $value ), '"', selected( $val, $value, false ), '>', $label, '</option>';
-					}
+				if ( ! empty( $values ) ) {
+
+					echo '<select class="select" name="', esc_attr( $this->option_name ), '[', esc_attr( $var ), ']" id="', esc_attr( $var ), '">';
+						foreach ( $values as $value => $label ) {
+							if ( ! empty( $label ) ) {
+								echo '<option value="', esc_attr( $value ), '"', selected( $val, $value, false ), '>', $label, '</option>';
+							}
+						}
+					echo '</select>';
+					if( $attr['description'] ) echo '<p class="description">' . $attr['description'] . '</p>';
+
+				} else {
+
+					echo '<p class="error">' . $attr['no_values_message'] . '</p>';
 				}
-				echo '</select>';
-				if( $attr['description'] ) echo '<p class="description">' . $attr['description'] . '</p>';
 
 			echo '</td>';
 
@@ -300,7 +319,7 @@ class WI_Volunteer_Management_Form {
 
 		echo '<tr>';
 
-			$this->label( $label, array() );
+			$this->label( $label, array( 'text_only' => true ) );
 
 			echo '<td><fieldset>';
 

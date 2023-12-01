@@ -9,14 +9,15 @@
  * hidden via CSS when the form is displayed. Only spambots can see this and when they fill it out
  * the form won't submit. You can turn on or off the honeypot within the plugin settings.
  */
-$opp = new WI_Volunteer_Management_Opportunity( $post->ID ); //Get volunteer opportunity information
-$options = new WI_Volunteer_Management_Options();
-$use_honeypot = $options->get_option( 'use_honeypot' );
+$opp               = new WI_Volunteer_Management_Opportunity( $post->ID ); //Get volunteer opportunity information
+$options           = new WI_Volunteer_Management_Options();
+$use_honeypot      = $options->get_option( 'use_honeypot' );
+$form_heading_text = ( $opp->opp_meta['one_time_opp'] === 1 ) ? __( 'Sign Up to Volunteer', 'wired-impact-volunteer-management' ) : __( 'Express Interest in Volunteering', 'wired-impact-volunteer-management' );
 ?>
 
-<h3 class="wivm-form-heading"><?php ( $opp->opp_meta['one_time_opp'] == 1 ) ? _e( 'Sign Up to Volunteer', 'wired-impact-volunteer-management' ) : _e( 'Express Interest in Volunteering', 'wired-impact-volunteer-management' ) ; ?></h3>
+<?php echo apply_filters( 'wivm_sign_up_form_heading', '<h3 class="wivm-form-heading">' . $form_heading_text . '</h3>', $opp ); ?>
 					
-<?php if( $opp->should_allow_rvsps() ): ?>
+<?php if ( $opp->should_allow_rvsps() ) : ?>
 <div class="loading volunteer-opp-message"><?php _e( 'Please wait...', 'wired-impact-volunteer-management' ); ?></div>
 <div class="success volunteer-opp-message"><?php _e( 'Thanks for signing up. You\'ll receive a confirmation email shortly.', 'wired-impact-volunteer-management' ); ?></div>
 <div class="already-rsvped volunteer-opp-message"><?php _e( 'It looks like you already signed up for this opportunity.', 'wired-impact-volunteer-management' ); ?></div>
@@ -40,7 +41,7 @@ $use_honeypot = $options->get_option( 'use_honeypot' );
 	<label for="wivm_email"><?php _e( 'Email:', 'wired-impact-volunteer-management' ); ?></label>
 	<input type="email" id="wivm_email" name="wivm_email" value="" />
 
-	<?php if( $use_honeypot == 1 ): ?>
+	<?php if ( $use_honeypot == 1 ) : ?>
 	<label for="wivm_hp" class="wivm_hp"><?php _e( 'Name:', 'wired-impact-volunteer-management' ); ?></label>
 	<input type="text" class="wivm_hp" id="wivm_hp" name="wivm_hp" value=""  autocomplete="off" />
 	<?php endif; ?>
@@ -50,6 +51,6 @@ $use_honeypot = $options->get_option( 'use_honeypot' );
 	<input type="hidden" id="wivm_opportunity_id" name="wivm_opportunity_id" value="<?php echo the_ID(); ?>" />
 	<input type="submit" value="<?php ( $opp->opp_meta['one_time_opp'] == 1 ) ? _e( 'Sign Up', 'wired-impact-volunteer-management' ) : _e( 'Express Interest', 'wired-impact-volunteer-management' ) ; ?>" />
 </form>
-<?php else: ?>
+<?php else : ?>
 	<p><?php _e( 'We\'re sorry, but we\'re no longer accepting new volunteers for this opportunity.', 'wired-impact-volunteer-management' ); ?></p>
 <?php endif; ?>

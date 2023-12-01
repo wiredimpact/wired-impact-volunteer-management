@@ -26,7 +26,7 @@
  * @version    1.1.0
  */
 
-if ( !class_exists( 'WI_Volunteer_Management_Template_Loader' ) )  {
+if ( ! class_exists( 'WI_Volunteer_Management_Template_Loader' ) ) {
 	/**
 	 * Template loader.
 	 *
@@ -90,7 +90,7 @@ if ( !class_exists( 'WI_Volunteer_Management_Template_Loader' ) )  {
 		 * @param string  $slug
 		 * @param string  $name Optional. Default null.
 		 * @param bool    $load Optional. Default true.
-       * @param array   $options Optional. Default null.
+		 * @param array   $options Optional. Default null.
 		 *
 		 * @return string
 		 */
@@ -152,7 +152,7 @@ if ( !class_exists( 'WI_Volunteer_Management_Template_Loader' ) )  {
 		 * @param string|array $template_names Template file(s) to search for, in order.
 		 * @param bool         $load           If true the template file will be loaded if it is found.
 		 * @param bool         $require_once   Whether to require_once or require. Default true.
-       * @param array        $options        Optional. Default null.
+		 * @param array        $options        Optional. Default null.
 		 *   Has no effect if $load is false.
 		 *
 		 * @return string The template filename if one is located.
@@ -181,13 +181,13 @@ if ( !class_exists( 'WI_Volunteer_Management_Template_Loader' ) )  {
 
 			if ( $load && $located ) {
 
-            /* 
-             * Call this classes load_template function instead of the WordPress core load_template().
-             * This classes load_template function is nearly identical to the WordPress core function 
-             * except it accepts an additional optional parameter which can be used to pass in variables
-             * to the required template which eliminates the need to use global variables in the script
-             * that utilizes the WI_Volunteer_Management_Template_Loader class.
-             */
+				/**
+				 * Call this classes load_template function instead of the WordPress core load_template().
+				 * This classes load_template function is nearly identical to the WordPress core function
+				 * except it accepts an additional optional parameter which can be used to pass in variables
+				 * to the required template which eliminates the need to use global variables in the script
+				 * that utilizes the WI_Volunteer_Management_Template_Loader class.
+				 */
 				$this->load_template( $located, $require_once, $options );
 			}
 

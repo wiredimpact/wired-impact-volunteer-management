@@ -17,8 +17,24 @@
 	display: block;
 }
 
-.wivmtab th p {
-	font-weight: normal;
+.wivmtab .section-heading td {
+	padding: 20px 0;
+}
+
+.wivmtab tbody .section-heading:first-child h3 {
+	margin-top: 0;
+}
+
+.wivmtab#general .form-table th {
+	width: 240px;
+}
+
+.wivmtab select {
+	width: 25em;
+}
+
+.wivmtab td p.error {
+	margin-top: 0;
 }
 
 /* Volunteer Opportunity Edit Screen and Meta Boxes */
@@ -35,10 +51,19 @@ p.editor-help {
 	width: 195px;
 }
 
+#volunteer-opportunity-details .signup-form-description p {
+	margin: -1em 0 1.9em;
+}
+
+#volunteer-opportunity-details select {
+	width: 25em;
+}
+
 /* Hide admin fields if not needed */
 .one-time-field.flexible,
 .flexible-field.one-time,
-.volunteer-limit-field.no-volunteer-limit {
+.volunteer-limit-field.no-volunteer-limit,
+.select-form-field.not-gravity-forms {
 	display: none;
 }
 
@@ -298,7 +323,7 @@ p.editor-help {
 }
 
 .wi-volunteer .volunteer-opps-wrapper h1 span {
-	color: #8c8f94; /* TO DO: Update with color from design */
+	color: #8c8f94;
 }
 
 .wi-volunteer .opps {

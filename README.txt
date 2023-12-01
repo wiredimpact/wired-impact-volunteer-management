@@ -2,9 +2,9 @@
 Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
-Tested up to: 6.1
+Tested up to: 6.4
 Requires PHP: 5.2.4
-Stable tag: 1.5
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,7 +18,7 @@ A simple, free way to keep track of your nonprofit's volunteers and opportunitie
 
 * **Post one-time and flexible volunteer opportunities on your website –** Promote volunteer opportunities on any page of your website using a simple block or shortcode.
 * **Volunteers can sign up directly on your website –** Make volunteering even easier for your supporters by giving them the option to sign up for an opportunity directly on your website. A confirmation email will be sent to you and the volunteer once they sign up. 
-* **Control the number of sign-ups available for opportunities –** Only need 10 people to help out at an event? Set a cap on the number of people who can sign up. Want as many volunteers as you can get? No problem. You don’t have to set a cap.
+* **Control the number of signups available for opportunities –** Only need 10 people to help out at an event? Set a cap on the number of people who can sign up. Want as many volunteers as you can get? No problem. You don’t have to set a cap.
 * **Send reminder emails anytime –** Schedule an automated reminder email three days in advance or send even hours before the opportunity for last-minute details.
 * **Volunteer profiles that track participation and more –** Keep track of all of your volunteers’ involvement. See what they’ve helped out with, how long they’ve been helping and add notes that will help you stay organized.
 
@@ -30,7 +30,7 @@ A simple, free way to keep track of your nonprofit's volunteers and opportunitie
 
 This is the easiest way to install the Wired Impact Volunteer Management plugin:
 
-1.	In the WordPress backend, go to Plugins >> Add New
+1.	In the WordPress backend, go to Plugins >> Add New Plugin
 1.	Search for “Wired Impact Volunteer Management”
 1.	Click “Install Now”
 1.	Click “Activate”
@@ -46,7 +46,7 @@ If this doesn’t work, follow these steps:
 
 = How do I get started? =
 
-Once you’ve downloaded the plugin, you’ll want to adjust the settings to fit your specific needs. You can do this by visiting the Volunteer Management menu and clicking “Help & Settings”. Here, you can choose to include our styles, set a default contact and location for volunteer opportunities, and create a template for your confirmation and reminder emails.
+Once you’ve downloaded the plugin, you’ll want to adjust the settings to fit your specific needs. You can do this by visiting the Volunteer Management menu and clicking “Help & Settings”. Here, you can choose to include our styles, set a default contact and location for volunteer opportunities, pick your default form settings and create a template for your confirmation and reminder emails.
 
 = How do I create a new volunteer opportunity? =
 
@@ -84,7 +84,7 @@ You can’t manually add a volunteer to the database. Volunteers appear in the d
 
 = How do I remove a volunteer from a specific opportunity? =
 
-If a volunteer is no longer able to help out at a specific opportunity, you can remove them from the sign up list. 
+If a volunteer is no longer able to help out at a specific opportunity, you can remove them from the signup list. 
 
 1.	Click “Opportunities” from the Volunteer Management menu
 1.	Find the opportunity you need to remove the volunteer from 
@@ -98,6 +98,16 @@ If you have a recurring opportunity where different people will sign up each tim
 
 If the recurring opportunity will have the same volunteers each time, we’d recommend you create one flexible volunteer opportunity.
 
+= How can I adjust the built-in volunteer signup form? =
+
+There are three options for handling volunteer signups within the plugin:
+
+1. Use the built-in volunteer signup form which includes name, email and phone number fields. This form can be modified, but only through code using the PHP template files included inside the plugin.
+1. Choose the option not to show a form, then manually embed a third-party form within the content of each volunteer opportunity.
+1. If you're utilizing the [Gravity Forms](https://www.gravityforms.com/) plugin, you can show a form you've built within your volunteer opportunities.
+
+You'll find default settings outlining how to handle forms within the Help & Settings page. You can also modify how forms are handled when editing each individual volunteer opportunity.
+
 == Screenshots ==
 
 1. Advertise Volunteer Opportunities More Easily
@@ -108,6 +118,12 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 2.0 =
+* Included the ability for admins to remove the built-in signup form from volunteer opportunities.
+* Integrated with the Gravity Forms plugin to allow admins to replace the built-in signup form with a Gravity Forms form.
+* Added Cypress end-to-end test coverage for some of the plugin's functionality.
+* Tested up to WordPress 6.4.
 
 = 1.5 =
 * Upgraded Google Analytics tracking to work with Google Analytics 4.
@@ -167,7 +183,7 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 = 1.3.10 =
 * Added ability to overwrite the default WordPress page navigation using a WordPress filter.
-* Added a class to the sign up form heading so it's easier to style.
+* Added a class to the signup form heading so it's easier to style.
 
 = 1.3.9 =
 * Fixed rare object caching cron issue which caused the automated reminder email to be sent multiple times to volunteers.
@@ -177,7 +193,7 @@ If the recurring opportunity will have the same volunteers each time, we’d rec
 
 = 1.3.7 =
 * Fixed bug so the volunteer phone numbers and notes are no longer shared between subsites on a multisite setup.
-* Further prevented the volunteer sign up form from showing multiple times on a page if another plugin uses the_content() code in other places.
+* Further prevented the volunteer signup form from showing multiple times on a page if another plugin uses the_content() code in other places.
 
 = 1.3.6 =
 * Tested up to WordPress 4.9.
