@@ -464,26 +464,29 @@ class WI_Volunteer_Management_Public {
 	/**
 	 * Process the AJAX request from the volunteer opportunity sign up form.
 	 *
-	 * @return int|bool The user ID if everything worked, false otherwise
+	 * @return int|bool The user ID if everything worked, false otherwise.
 	 */
-	public function process_volunteer_sign_up(){
+	public function process_volunteer_sign_up() {
+
 		$form_fields = array();
 		parse_str( $_POST['data'], $form_fields );
 
 		// Verify our nonce.
-		if( !wp_verify_nonce( $form_fields['wivm_sign_up_form_nonce_field'], 'wivm_sign_up_form_nonce' ) ) {
+		if ( ! wp_verify_nonce( $form_fields['wivm_sign_up_form_nonce_field'], 'wivm_sign_up_form_nonce' ) ) {
+
 			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
 
 		// If the honeypot field exists and is filled out then bail.
-		if( isset( $form_fields['wivm_hp'] ) && $form_fields['wivm_hp'] != '' ){
+		if ( isset( $form_fields['wivm_hp'] ) && $form_fields['wivm_hp'] != '' ) {
+
 			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
 
 		$opp = new WI_Volunteer_Management_Opportunity( $form_fields['wivm_opportunity_id'] );
-		if ( $opp->should_allow_rvsps() == true ) {
+		if ( $opp->should_allow_rvsps() === true ) {
 
 			// Add or update the new volunteer user.
 			$user = new WI_Volunteer_Management_Volunteer( null, $form_fields );
@@ -492,20 +495,20 @@ class WI_Volunteer_Management_Public {
 			$rsvp = new WI_Volunteer_Management_RSVP( $user->ID, $form_fields['wivm_opportunity_id'] );
 
 			// If the person hadn't already RSVPed then send out the signup emails.
-			if ( $rsvp->rsvped == true ) {
+			if ( $rsvp->rsvped === true ) {
+
 				$email = new WI_Volunteer_Management_Email( $opp, $user );
 
 				$email->send_volunteer_signup_email();
 				$email->send_admin_signup_email();
 				$result = 'rsvped';
-			}
-			else {
+
+			} else {
+
 				$result = 'already_rsvped';
 			}
+		} else { // If RSVPs have been closed.
 
-		}
-		// If RSVPs have been closed.
-		else {
 			$result = 'rsvp_closed';
 		}
 
