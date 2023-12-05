@@ -262,43 +262,46 @@ class WI_Volunteer_Management_Volunteer {
 
 	/**
 	 * Create a new volunteer user or update one if the email address is already used.
-	 * 
-	 * @param  array $form_fields The submitted volunteer opportunity form info
-	 * @return int   The user id of the new or updated WordPress user
+	 *
+	 * @param array $form_fields The submitted volunteer opportunity form info.
 	 */
-	public function create_update_user( $form_fields ){
-		//Prepare userdata to be added for a new user or updated for an existing user.
-		$userdata = array( 
-			'first_name' 	=> sanitize_text_field( $form_fields['wivm_first_name'] ),
-			'last_name'  	=> sanitize_text_field( $form_fields['wivm_last_name'] ),
+	public function create_update_user( $form_fields ) {
+
+		// Prepare userdata to be added for a new user or updated for an existing user.
+		$userdata = array(
+			'first_name' => sanitize_text_field( $form_fields['wivm_first_name'] ),
+			'last_name'  => sanitize_text_field( $form_fields['wivm_last_name'] ),
 		);
 
-		//Check if the email address is already in use and if not, create a new user.
-		$wivm_email = sanitize_email( $form_fields['wivm_email'] );
+		// Check if the email address is already in use and if not, create a new user.
+		$wivm_email    = sanitize_email( $form_fields['wivm_email'] );
 		$existing_user = email_exists( $wivm_email );
-		if( !$existing_user ){
-			$userdata['user_login'] 	= $wivm_email;
-			$userdata['user_email']		= $wivm_email;
-			$userdata['user_pass'] 		= wp_generate_password();
-			$userdata['role']			= 'volunteer';
+
+		if ( ! $existing_user ) {
+
+			$userdata['user_login'] = $wivm_email;
+			$userdata['user_email'] = $wivm_email;
+			$userdata['user_pass']  = wp_generate_password();
+			$userdata['role']       = 'volunteer';
 
 			$user_id = wp_insert_user( $userdata );
-		}
-		//If the user already exists, update the user based on their email address
-		else {
+
+		} else { // If the user already exists, update the user based on their email address.
+
 			$userdata['ID'] = $existing_user;
 
 			$user_id = wp_update_user( $userdata );
 
-			//On multisite we need to add the user to this site if they don't have access
-			if( is_multisite() && !is_user_member_of_blog( $userdata['ID'] ) ){
+			// On multisite we need to add the user to this site if they don't have access.
+			if ( is_multisite() && ! is_user_member_of_blog( $userdata['ID'] ) ) {
+
 				add_user_to_blog( get_current_blog_id(), $userdata['ID'], 'volunteer' );
 				update_user_option( $userdata['ID'], 'notes', '' );
 			}
 		}
 
-		//Update custom user meta for new and existing volunteers
-		update_user_option( $user_id, 'phone', preg_replace( "/[^0-9]/", "", $form_fields['wivm_phone'] ) );
+		// Update custom user meta for new and existing volunteers.
+		update_user_option( $user_id, 'phone', preg_replace( '/[^0-9]/', '', $form_fields['wivm_phone'] ) );
 
 		$this->ID = $user_id;
 
