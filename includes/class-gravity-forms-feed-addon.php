@@ -71,7 +71,7 @@ class WI_Volunteer_Management_Gravity_Forms_Feed_AddOn extends GFFeedAddOn {
 	 */
 	public static function get_instance() {
 
-		if ( self::$_instance == null ) {
+		if ( self::$_instance === null ) {
 
 			self::$_instance = new self();
 		}
@@ -172,7 +172,75 @@ class WI_Volunteer_Management_Gravity_Forms_Feed_AddOn extends GFFeedAddOn {
 	 */
 	public function process_feed( $feed, $entry, $form ) {
 
-		error_log( 'Feed processed!' );
+		$wivm_data = array(
+			'first_name' => $this->get_mapped_field_value( 'field_map_first_name', $form, $entry, $feed['meta'] ),
+			'last_name'  => $this->get_mapped_field_value( 'field_map_last_name', $form, $entry, $feed['meta'] ),
+			'phone'      => $this->get_mapped_field_value( 'field_map_phone', $form, $entry, $feed['meta'] ),
+			'email'      => $this->get_mapped_field_value( 'field_map_email', $form, $entry, $feed['meta'] ),
+			'post_id'    => get_the_ID(),
+		);
+
+		if ( $this->is_volunteer_data_valid( $wivm_data, $entry ) === false ) {
+
+			return false;
+		}
+
+		$this->add_note(
+			$entry['id'],
+			__( 'Data passed successfully to the volunteer management system.', 'wired-impact-volunteer-management' ),
+			'success'
+		);
+
+		return true;
+	}
+
+	/**
+	 * Check whether the volunteer data from the form is valid.
+	 *
+	 * @param array $wivm_data The name, phone and email data from the form.
+	 * @param array $entry The form entry object currently being processed.
+	 * @return boolean Whether the volunteer data is valid.
+	 */
+	private function is_volunteer_data_valid( $wivm_data, $entry ) {
+
+		// If some volunteer data is missing.
+		if ( empty( $wivm_data['first_name'] ) || empty( $wivm_data['last_name'] ) || empty( $wivm_data['phone'] ) || empty( $wivm_data['email'] ) ) {
+
+			$this->add_note(
+				$entry['id'],
+				__( 'Error Sending Data to the Volunteer Management System: The name, phone number or email address is missing.', 'wired-impact-volunteer-management' ),
+				'error'
+			);
+			$this->log_debug( __METHOD__ . '(): Error Sending Data to the Volunteer Management System: The name, phone number or email address is missing.' );
+
+			return false;
+		}
+
+		// If the provided email address isn't formatted correctly.
+		if ( ! is_email( $wivm_data['email'] ) ) {
+
+			$this->add_note(
+				$entry['id'],
+				__( 'Error Sending Data to the Volunteer Management System: The provided email address is invalid.', 'wired-impact-volunteer-management' ),
+				'error'
+			);
+			$this->log_debug( __METHOD__ . '(): Error Sending Data to the Volunteer Management System: The provided email address is invalid.' );
+
+			return false;
+		}
+
+		// If the post ID isn't a volunteer opportunity.
+		if ( get_post_type( $wivm_data['post_id'] ) !== 'volunteer_opp' ) {
+
+			$this->add_note(
+				$entry['id'],
+				__( 'Error Sending Data to the Volunteer Management System: The volunteer opportunity\'s ID was not provided correctly.', 'wired-impact-volunteer-management' ),
+				'error'
+			);
+			$this->log_debug( __METHOD__ . '(): Error Sending Data to the Volunteer Management System: The volunteer opportunity\'s ID was not provided correctly.' );
+
+			return false;
+		}
 
 		return true;
 	}
@@ -180,7 +248,7 @@ class WI_Volunteer_Management_Gravity_Forms_Feed_AddOn extends GFFeedAddOn {
 	/**
 	 * Return the add-on's icon for the form settings menu.
 	 *
-	 * The "groups" dashicon matches what's used for the main 
+	 * The "groups" dashicon matches what's used for the main
 	 * volunteer management plugin's menu item.
 	 *
 	 * @return string The WordPress dashicon for the form settings menu.
