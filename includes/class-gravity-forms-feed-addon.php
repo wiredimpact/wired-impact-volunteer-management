@@ -172,18 +172,21 @@ class WI_Volunteer_Management_Gravity_Forms_Feed_AddOn extends GFFeedAddOn {
 	 */
 	public function process_feed( $feed, $entry, $form ) {
 
-		$wivm_data = array(
-			'first_name' => $this->get_mapped_field_value( 'field_map_first_name', $form, $entry, $feed['meta'] ),
-			'last_name'  => $this->get_mapped_field_value( 'field_map_last_name', $form, $entry, $feed['meta'] ),
-			'phone'      => $this->get_mapped_field_value( 'field_map_phone', $form, $entry, $feed['meta'] ),
-			'email'      => $this->get_mapped_field_value( 'field_map_email', $form, $entry, $feed['meta'] ),
-			'post_id'    => get_the_ID(),
+		$form_data = array(
+			'wivm_first_name'     => $this->get_mapped_field_value( 'field_map_first_name', $form, $entry, $feed['meta'] ),
+			'wivm_last_name'      => $this->get_mapped_field_value( 'field_map_last_name', $form, $entry, $feed['meta'] ),
+			'wivm_phone'          => $this->get_mapped_field_value( 'field_map_phone', $form, $entry, $feed['meta'] ),
+			'wivm_email'          => $this->get_mapped_field_value( 'field_map_email', $form, $entry, $feed['meta'] ),
+			'wivm_opportunity_id' => get_the_ID(),
 		);
 
-		if ( $this->is_volunteer_data_valid( $wivm_data, $entry ) === false ) {
+		if ( $this->is_volunteer_data_valid( $form_data, $entry ) === false ) {
 
 			return false;
 		}
+
+		// Send the data to the volunteer management system.
+		$result = WI_Volunteer_Management_Public::process_volunteer_sign_up( $form_data );
 
 		$this->add_note(
 			$entry['id'],
@@ -197,14 +200,19 @@ class WI_Volunteer_Management_Gravity_Forms_Feed_AddOn extends GFFeedAddOn {
 	/**
 	 * Check whether the volunteer data from the form is valid.
 	 *
-	 * @param array $wivm_data The name, phone and email data from the form.
+	 * @param array $form_data The name, phone, email and post ID data from the form.
 	 * @param array $entry The form entry object currently being processed.
 	 * @return boolean Whether the volunteer data is valid.
 	 */
-	private function is_volunteer_data_valid( $wivm_data, $entry ) {
+	private function is_volunteer_data_valid( $form_data, $entry ) {
 
 		// If some volunteer data is missing.
-		if ( empty( $wivm_data['first_name'] ) || empty( $wivm_data['last_name'] ) || empty( $wivm_data['phone'] ) || empty( $wivm_data['email'] ) ) {
+		if (
+			empty( $form_data['wivm_first_name'] ) ||
+			empty( $form_data['wivm_last_name'] ) ||
+			empty( $form_data['wivm_phone'] ) ||
+			empty( $form_data['wivm_email'] )
+		) {
 
 			$this->add_note(
 				$entry['id'],
@@ -217,7 +225,7 @@ class WI_Volunteer_Management_Gravity_Forms_Feed_AddOn extends GFFeedAddOn {
 		}
 
 		// If the provided email address isn't formatted correctly.
-		if ( ! is_email( $wivm_data['email'] ) ) {
+		if ( ! is_email( $form_data['wivm_email'] ) ) {
 
 			$this->add_note(
 				$entry['id'],
@@ -230,7 +238,7 @@ class WI_Volunteer_Management_Gravity_Forms_Feed_AddOn extends GFFeedAddOn {
 		}
 
 		// If the post ID isn't a volunteer opportunity.
-		if ( get_post_type( $wivm_data['post_id'] ) !== 'volunteer_opp' ) {
+		if ( get_post_type( $form_data['wivm_opportunity_id'] ) !== 'volunteer_opp' ) {
 
 			$this->add_note(
 				$entry['id'],

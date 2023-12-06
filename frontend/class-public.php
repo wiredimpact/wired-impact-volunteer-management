@@ -469,24 +469,24 @@ class WI_Volunteer_Management_Public {
 	 */
 	public function process_builtin_form_volunteer_sign_up() {
 
-		$form_fields = array();
-		parse_str( $_POST['data'], $form_fields );
+		$form_data = array();
+		parse_str( $_POST['data'], $form_data );
 
 		// Verify our nonce.
-		if ( ! wp_verify_nonce( $form_fields['wivm_sign_up_form_nonce_field'], 'wivm_sign_up_form_nonce' ) ) {
+		if ( ! wp_verify_nonce( $form_data['wivm_sign_up_form_nonce_field'], 'wivm_sign_up_form_nonce' ) ) {
 
 			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
 
 		// If the honeypot field exists and is filled out then bail.
-		if ( isset( $form_fields['wivm_hp'] ) && $form_fields['wivm_hp'] != '' ) {
+		if ( isset( $form_data['wivm_hp'] ) && $form_data['wivm_hp'] != '' ) {
 
 			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
 
-		$result = $this->process_volunteer_sign_up( $form_fields );
+		$result = self::process_volunteer_sign_up( $form_data );
 
 		echo $result;
 
@@ -499,21 +499,24 @@ class WI_Volunteer_Management_Public {
 	 * This includes updating the volunteer's information and RSVPing
 	 * them for the opportunity.
 	 *
-	 * @param array $form_fields The form fields submitted by the volunteer.
+	 * This is called both when a volunteer signs up using the built-in form
+	 * and when a volunteer signs up using a third-party form.
+	 *
+	 * @param array $form_data The form fields data submitted by the volunteer.
 	 * @return string The coded result of the signup process.
 	 */
-	public function process_volunteer_sign_up( $form_fields ) {
+	public static function process_volunteer_sign_up( $form_data ) {
 
-		$opp = new WI_Volunteer_Management_Opportunity( $form_fields['wivm_opportunity_id'] );
+		$opp = new WI_Volunteer_Management_Opportunity( $form_data['wivm_opportunity_id'] );
 
 		// If the opportunity is allowing RSVPs.
 		if ( $opp->should_allow_rvsps() === true ) {
 
 			// Add or update the new volunteer user.
-			$user = new WI_Volunteer_Management_Volunteer( null, $form_fields );
+			$user = new WI_Volunteer_Management_Volunteer( null, $form_data );
 
 			// RSVP this volunteer for the opportunity.
-			$rsvp = new WI_Volunteer_Management_RSVP( $user->ID, $form_fields['wivm_opportunity_id'] );
+			$rsvp = new WI_Volunteer_Management_RSVP( $user->ID, $form_data['wivm_opportunity_id'] );
 
 			// If the person hadn't already RSVPed then send out the signup emails.
 			if ( $rsvp->rsvped === true ) {
