@@ -58,21 +58,22 @@ class WI_Volunteer_Management_Activator {
 	 *
 	 * @since    1.3.3
 	 */
-	public static function activate_site(){
+	public static function activate_site() {
+
 		WI_Volunteer_Management_Public::register_post_types();
 		flush_rewrite_rules();
 
-		//Add our volunteer role
+		// Add our volunteer role.
 		add_role(
-		    'volunteer',
-		    __( 'Volunteer', 'wired-impact-volunteer-management' ),
-		    array(
-		        'read'                  => true,
-		        'serve_as_volunteer'    => true //Custom capability
-		    )
+			'volunteer',
+			__( 'Volunteer', 'wired-impact-volunteer-management' ),
+			array(
+				'read'               => true,
+				'serve_as_volunteer' => true, // Custom capability.
+			)
 		);
 
-		//Add our default options if they don't already exist.
+		// Add our default options if they don't already exist.
 		$options = new WI_Volunteer_Management_Options();
 		$options->set_defaults();
 	}
