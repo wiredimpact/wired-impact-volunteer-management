@@ -462,11 +462,12 @@ class WI_Volunteer_Management_Public {
 	}
 
 	/**
-	 * Process the AJAX request from the volunteer opportunity sign up form.
+	 * Process the AJAX request when a volunteer signs up for an opportunity
+	 * using the built-in form.
 	 *
-	 * @return int|bool The user ID if everything worked, false otherwise.
+	 * @return void This method echoes the response back to the user, then dies.
 	 */
-	public function process_volunteer_sign_up() {
+	public function process_builtin_form_volunteer_sign_up() {
 
 		$form_fields = array();
 		parse_str( $_POST['data'], $form_fields );
@@ -485,7 +486,27 @@ class WI_Volunteer_Management_Public {
 			die();
 		}
 
+		$result = $this->process_volunteer_sign_up( $form_fields );
+
+		echo $result;
+
+		die(); // Must use die() when using AJAX.
+	}
+
+	/**
+	 * Process a volunteer signup.
+	 *
+	 * This includes updating the volunteer's information and RSVPing
+	 * them for the opportunity.
+	 *
+	 * @param array $form_fields The form fields submitted by the volunteer.
+	 * @return string The coded result of the signup process.
+	 */
+	public function process_volunteer_sign_up( $form_fields ) {
+
 		$opp = new WI_Volunteer_Management_Opportunity( $form_fields['wivm_opportunity_id'] );
+
+		// If the opportunity is allowing RSVPs.
 		if ( $opp->should_allow_rvsps() === true ) {
 
 			// Add or update the new volunteer user.
@@ -507,15 +528,13 @@ class WI_Volunteer_Management_Public {
 
 				$result = 'already_rsvped';
 			}
-		} else { // If RSVPs have been closed.
+		} else { // If RSVPs have been closed, typically if no more spots are available.
 
 			$result = 'rsvp_closed';
 		}
 
-		// Return a message which tells us what messages to show on the frontend.
-		echo $result;
-
-		die(); // Must use die() when using AJAX.
+		// Return a coded result which tells us what messages to show on the frontend.
+		return $result;
 	}
 
 	/**

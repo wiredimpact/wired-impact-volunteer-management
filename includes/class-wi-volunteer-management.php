@@ -250,8 +250,8 @@ class WI_Volunteer_Management {
 		$this->loader->add_filter( 'wp_trim_words', $plugin_public, 'always_show_read_more' );
 		$this->loader->add_filter( 'excerpt_more', $plugin_public, 'hide_default_read_more', 11 );
 		$this->loader->add_filter( 'the_content', $plugin_public, 'show_meta_form_single' );
-		$this->loader->add_action( 'wp_ajax_wivm_sign_up', $plugin_public, 'process_volunteer_sign_up' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wivm_sign_up', $plugin_public, 'process_volunteer_sign_up' );
+		$this->loader->add_action( 'wp_ajax_wivm_sign_up', $plugin_public, 'process_builtin_form_volunteer_sign_up' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wivm_sign_up', $plugin_public, 'process_builtin_form_volunteer_sign_up' );
 		$this->loader->add_action( 'send_auto_email_reminders', $plugin_public, 'send_email_reminder' );
 		$this->loader->add_action( 'widgets_init', $plugin_widget, 'register_widget' );
 
