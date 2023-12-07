@@ -249,15 +249,15 @@ class WI_Volunteer_Management_Volunteer {
 	/**
 	 * Get the admin link to look at this specific volunteer.
 	 *
-	 * This is not a link to the typical user edit screen. This page includes a lot of information on the 
+	 * This is not a link to the typical user edit screen. This page includes a lot of information on the
 	 * volunteer including the contact info, notes on them and which volunteer opportunities they signed up for.
-	 * 
-	 * @param  int $user_id The volunteer's ID
-	 * @return string       The URL needed to view this volunteer's information.
+	 *
+	 * @param int $user_id The volunteer's ID.
+	 * @return string The URL needed to view this volunteer's information.
 	 */
-	public function get_admin_url(){
+	public function get_admin_url() {
 
-		return get_admin_url( null, 'admin.php?page=wi-volunteer-management-volunteer&user_id=' . $this->ID );		
+		return get_admin_url( null, 'admin.php?page=wi-volunteer-management-volunteer&user_id=' . $this->ID );
 	}
 
 	/**
