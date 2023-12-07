@@ -207,7 +207,14 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 
 			echo apply_filters( 'wivm_sign_up_form_heading', '<h3 class="wivm-form-heading">' . $form_heading_text . '</h3>', $volunteer_opp );
 
-			gravity_form( $volunteer_opp->opp_meta['form_id'], false, false, false, false, true );
+			if ( $volunteer_opp->should_allow_rvsps() ) {
+
+				gravity_form( $volunteer_opp->opp_meta['form_id'], false, false, false, false, true );
+
+			} else {
+
+				echo '<p>' . __( 'We\'re sorry, but we\'re no longer accepting new volunteers for this opportunity.', 'wired-impact-volunteer-management' ) . '</p>';
+			}
 		}
 	}
 
