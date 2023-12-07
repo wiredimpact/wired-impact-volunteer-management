@@ -80,6 +80,16 @@ class WI_Volunteer_Management_Gravity_Forms_Feed_AddOn extends GFFeedAddOn {
 	}
 
 	/**
+	 * Register initialization hooks.
+	 */
+	public function init() {
+
+		parent::init();
+
+		add_filter( 'gform_validation', array( $this, 'validate_form_submission' ), 10, 2 );
+	}
+
+	/**
 	 * Define feed settings fields.
 	 *
 	 * @return array Feed settings fields.
@@ -112,28 +122,28 @@ class WI_Volunteer_Management_Gravity_Forms_Feed_AddOn extends GFFeedAddOn {
 					'name'          => 'first_name',
 					'label'         => __( 'First Name', 'wired-impact-volunteer-management' ),
 					'required'      => true,
-					'field_type'    => array( 'name', 'text', 'hidden' ),
+					'field_type'    => array( 'name', 'text' ),
 					'default_value' => $this->get_first_field_by_type( 'name', 3 ),
 				),
 				array(
 					'name'          => 'last_name',
 					'label'         => __( 'Last Name', 'wired-impact-volunteer-management' ),
 					'required'      => true,
-					'field_type'    => array( 'name', 'text', 'hidden' ),
+					'field_type'    => array( 'name', 'text' ),
 					'default_value' => $this->get_first_field_by_type( 'name', 6 ),
 				),
 				array(
 					'name'          => 'phone',
 					'label'         => __( 'Phone Number', 'wired-impact-volunteer-management' ),
 					'required'      => true,
-					'field_type'    => array( 'phone', 'text', 'hidden' ),
+					'field_type'    => array( 'phone', 'text' ),
 					'default_value' => $this->get_first_field_by_type( 'phone' ),
 				),
 				array(
 					'name'          => 'email',
 					'label'         => __( 'Email', 'wired-impact-volunteer-management' ),
 					'required'      => true,
-					'field_type'    => array( 'email', 'hidden' ),
+					'field_type'    => array( 'email' ),
 					'default_value' => $this->get_first_field_by_type( 'email' ),
 				),
 			),
@@ -164,7 +174,122 @@ class WI_Volunteer_Management_Gravity_Forms_Feed_AddOn extends GFFeedAddOn {
 	}
 
 	/**
+	 * Validate the form prior to submission and feed processing.
+	 *
+	 * During validation we complete two checks:
+	 *
+	 * 1. The volunteer opportunity is still accepting new RSVPs.
+	 * 2. The name, phone and email fields aren't empty.
+	 *
+	 * @see https://docs.gravityforms.com/gform_validation/
+	 * @see https://docs.gravityforms.com/using-gform-validation-hook/
+	 *
+	 * @param array  $validation_result Contains the validation result and the current Form Object.
+	 * @param string $context The context for the current submission. Possible values: form-submit, api-submit, or api-validate.
+	 * @return array The potentially modified validation result.
+	 */
+	public function validate_form_submission( $validation_result, $context ) {
+
+		$form             = $validation_result['form'];
+		$entry            = GFFormsModel::get_current_lead();
+		$feeds_processing = $this->get_feeds_processing( $form, $entry );
+
+		// If no feeds will process, bail.
+		if ( empty( $feeds_processing ) ) {
+
+			return $validation_result;
+		}
+
+		// Even though multiple feeds might process, there should really only be one, so we always use the first.
+		$form_data = $this->get_submitted_form_data( $feeds_processing[0], $entry, $form );
+
+		// If the volunteer opportunity is no longer allowing RSVPs.
+		if ( $this->validate_opp_still_allowing_rsvps( $form_data, $form ) === false ) {
+
+			$validation_result['is_valid'] = false;
+
+			return $validation_result;
+		}
+
+		// If the name, phone or email fields are blank.
+		$mapped_field_ids = $this->get_mapped_feed_field_ids( $feeds_processing[0] );
+
+		foreach ( $mapped_field_ids as $field_key => $field_id ) {
+
+			foreach ( $form['fields'] as &$field ) {
+
+				if ( $field->id === $field_id && $form_data[ $field_key ] === '' ) {
+
+					$validation_result['is_valid'] = false;
+					$field->failed_validation      = true;
+					$field->validation_message     = __( 'This field is required.', 'wired-impact-volunteer-management' );
+					$this->log_debug( __METHOD__ . '(): Error Sending Data to the Volunteer Management System: The name, phone number or email address is missing.' );
+
+					break;
+				}
+			}
+		}
+
+		$validation_result['form'] = $form;
+
+		return $validation_result;
+	}
+
+	/**
+	 * Check whether the volunteer opportunity is still allowing RSVPs.
+	 *
+	 * If the volounteer opportunity isn't allowing RSVPs, show a global
+	 * error above the form noting that. Then add a note to the Gravity
+	 * Forms logs as well.
+	 *
+	 * @param array $form_data The name, phone, email and post ID data from the form.
+	 * @param array $form The form object currently being processed.
+	 * @return bool Whether the volunteer opportunity is still allowing RSVPs.
+	 */
+	private function validate_opp_still_allowing_rsvps( $form_data, $form ) {
+
+		$opp = new WI_Volunteer_Management_Opportunity( $form_data['wivm_opportunity_id'] );
+
+		if ( $opp->should_allow_rvsps() === false ) {
+
+			add_filter( 'gform_validation_message_' . $form['id'], array( $this, 'show_rsvp_closed_form_error_message' ), 10, 2 );
+			$this->log_debug( __METHOD__ . '(): Error Sending Data to the Volunteer Management System: There are no more open spots for this opportunity.' );
+
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Show a Gravity Forms error above the form after it's submitted if the
+	 * volunteer opportunity is no longer allowing RSVPs.
+	 *
+	 * @param string $validation_message_markup The default validation markup and message.
+	 * @param array  $form The form object currently being processed.
+	 * @return string The updated validation markup and message.
+	 */
+	public function show_rsvp_closed_form_error_message( $validation_message_markup, $form ) {
+
+		$pattern                   = '/<\/span>.*?<\/h2>/s';
+		$replacement               = '</span>' . __( 'We\'re sorry, but we weren\'t able to sign you up. We have no more open spots.', 'wired-impact-volunteer-management' ) . '</h2>';
+		$validation_message_markup = preg_replace( $pattern, $replacement, $validation_message_markup );
+
+		return $validation_message_markup;
+	}
+
+	/**
 	 * Process the feed when a form is submitted.
+	 *
+	 * This occurs after the submission passes all validation and
+	 * the submitter is about to see the confirmation text or page.
+	 *
+	 * There are two error checks that happen at this stage. If they
+	 * fail either one the submission still goes through, but an error
+	 * note is added to the Gravity Forms entry. The checks are:
+	 *
+	 * 1. The post ID provided is a volunteer opportunity.
+	 * 2. The volunteer hasn't already RSVPed for this opportunity.
 	 *
 	 * @param array $feed The feed object to be processed.
 	 * @param array $entry The form entry object currently being processed.
@@ -172,72 +297,9 @@ class WI_Volunteer_Management_Gravity_Forms_Feed_AddOn extends GFFeedAddOn {
 	 */
 	public function process_feed( $feed, $entry, $form ) {
 
-		$form_data = array(
-			'wivm_first_name'     => $this->get_mapped_field_value( 'field_map_first_name', $form, $entry, $feed['meta'] ),
-			'wivm_last_name'      => $this->get_mapped_field_value( 'field_map_last_name', $form, $entry, $feed['meta'] ),
-			'wivm_phone'          => $this->get_mapped_field_value( 'field_map_phone', $form, $entry, $feed['meta'] ),
-			'wivm_email'          => $this->get_mapped_field_value( 'field_map_email', $form, $entry, $feed['meta'] ),
-			'wivm_opportunity_id' => get_the_ID(),
-		);
+		$form_data = $this->get_submitted_form_data( $feed, $entry, $form );
 
-		if ( $this->is_volunteer_data_valid( $form_data, $entry ) === false ) {
-
-			return false;
-		}
-
-		// Send the data to the volunteer management system.
-		$result = WI_Volunteer_Management_Public::process_volunteer_sign_up( $form_data );
-
-		$this->add_note(
-			$entry['id'],
-			__( 'Data passed successfully to the volunteer management system.', 'wired-impact-volunteer-management' ),
-			'success'
-		);
-
-		return true;
-	}
-
-	/**
-	 * Check whether the volunteer data from the form is valid.
-	 *
-	 * @param array $form_data The name, phone, email and post ID data from the form.
-	 * @param array $entry The form entry object currently being processed.
-	 * @return boolean Whether the volunteer data is valid.
-	 */
-	private function is_volunteer_data_valid( $form_data, $entry ) {
-
-		// If some volunteer data is missing.
-		if (
-			empty( $form_data['wivm_first_name'] ) ||
-			empty( $form_data['wivm_last_name'] ) ||
-			empty( $form_data['wivm_phone'] ) ||
-			empty( $form_data['wivm_email'] )
-		) {
-
-			$this->add_note(
-				$entry['id'],
-				__( 'Error Sending Data to the Volunteer Management System: The name, phone number or email address is missing.', 'wired-impact-volunteer-management' ),
-				'error'
-			);
-			$this->log_debug( __METHOD__ . '(): Error Sending Data to the Volunteer Management System: The name, phone number or email address is missing.' );
-
-			return false;
-		}
-
-		// If the provided email address isn't formatted correctly.
-		if ( ! is_email( $form_data['wivm_email'] ) ) {
-
-			$this->add_note(
-				$entry['id'],
-				__( 'Error Sending Data to the Volunteer Management System: The provided email address is invalid.', 'wired-impact-volunteer-management' ),
-				'error'
-			);
-			$this->log_debug( __METHOD__ . '(): Error Sending Data to the Volunteer Management System: The provided email address is invalid.' );
-
-			return false;
-		}
-
-		// If the post ID isn't a volunteer opportunity.
+		// If the post ID isn't a volunteer opportunity, bail.
 		if ( get_post_type( $form_data['wivm_opportunity_id'] ) !== 'volunteer_opp' ) {
 
 			$this->add_note(
@@ -250,7 +312,132 @@ class WI_Volunteer_Management_Gravity_Forms_Feed_AddOn extends GFFeedAddOn {
 			return false;
 		}
 
+		// Send the data to the volunteer management system to sign up the volunteer.
+		$result = WI_Volunteer_Management_Public::process_volunteer_sign_up( $form_data );
+
+		// If the volunteer already RSVPed for this opportunity.
+		if ( $result === 'already_rsvped' ) {
+
+			$this->add_note(
+				$entry['id'],
+				__( 'Error Sending Data to the Volunteer Management System: The volunteer has already signed up for this opportunity.', 'wired-impact-volunteer-management' ),
+				'error'
+			);
+			$this->log_debug( __METHOD__ . '(): Error Sending Data to the Volunteer Management System: The volunteer has already signed up for this opportunity.' );
+
+			return false;
+		}
+
+		// Add an entry note and log message if the volunteer was successfully signed up.
+		$this->add_note(
+			$entry['id'],
+			__( 'The volunteer successfully signed up for this opportunity.', 'wired-impact-volunteer-management' ),
+			'success'
+		);
+		$this->log_debug( __METHOD__ . '(): The volunteer successfully signed up for this opportunity.' );
+
 		return true;
+	}
+
+	/**
+	 * Get the form field IDs mapped to the needed volunteer management fields.
+	 *
+	 * For fields with more than one input, like name fields, we only need
+	 * the top-level field's ID. For example, if the first name field is
+	 * located at field ID 1.3, we return only 1.
+	 *
+	 * @param array $feed The feed object to get the mapped field IDs from.
+	 * @return array The mapped field IDs.
+	 */
+	private function get_mapped_feed_field_ids( $feed ) {
+
+		$mapped_field_ids = array(
+			'wivm_first_name' => rgars( $feed, 'meta/field_map_first_name' ),
+			'wivm_last_name'  => rgars( $feed, 'meta/field_map_last_name' ),
+			'wivm_phone'      => rgars( $feed, 'meta/field_map_phone' ),
+			'wivm_email'      => rgars( $feed, 'meta/field_map_email' ),
+		);
+
+		$mapped_field_ids = array_map( array( $this, 'get_top_level_field_id_from_subfield_id' ), $mapped_field_ids );
+
+		return $mapped_field_ids;
+	}
+
+	/**
+	 * Ensure the top-level field ID is returned when given a subfield ID.
+	 *
+	 * For example, if the subfield ID 1.3 is provided, this returns 1. If
+	 * a top-level field ID is provided, it's returned as is.
+	 *
+	 * @param string $field_id The field ID to get the top-level field ID from.
+	 * @return int The top-level field ID.
+	 */
+	private function get_top_level_field_id_from_subfield_id( $field_id ) {
+
+		return (int) explode( '.', $field_id )[0];
+	}
+
+	/**
+	 * Get the data submitted in the form to be sent to the volunteer
+	 * management system.
+	 *
+	 * @param array $feed The feed object currently being processed.
+	 * @param array $entry The form entry object currently being processed.
+	 * @param array $form The form object currently being processed.
+	 * @return array The data to be sent to the volunteer management system.
+	 */
+	private function get_submitted_form_data( $feed, $entry, $form ) {
+
+		$form_data = array(
+			'wivm_first_name'     => $this->get_mapped_field_value( 'field_map_first_name', $form, $entry, $feed['meta'] ),
+			'wivm_last_name'      => $this->get_mapped_field_value( 'field_map_last_name', $form, $entry, $feed['meta'] ),
+			'wivm_phone'          => $this->get_mapped_field_value( 'field_map_phone', $form, $entry, $feed['meta'] ),
+			'wivm_email'          => $this->get_mapped_field_value( 'field_map_email', $form, $entry, $feed['meta'] ),
+			'wivm_opportunity_id' => get_the_ID(),
+		);
+
+		return $form_data;
+	}
+
+	/**
+	 * Get the volunteer management feeds that will process for this
+	 * submission. This includes:
+	 *
+	 * 1. Those feeds that are active without conditional logic.
+	 * 2. Those feeds that are active and pass conditional logic.
+	 *
+	 * @param array $form The form object currently being processed.
+	 * @param array $entry The form entry object currently being processed.
+	 * @return array The feeds that will process for this submission.
+	 */
+	private function get_feeds_processing( $form, $entry ) {
+
+		$form_feeds       = GFAPI::get_feeds( null, $form['id'], $this->_slug );
+		$feeds_processing = array();
+
+		// If an active volunteer management form feed doesn't exist, return an empty array.
+		if ( is_wp_error( $form_feeds ) ) {
+
+			return $feeds_processing;
+		}
+
+		// Add feeds that have conditional logic deactivated, or conditional logic that passes.
+		foreach ( $form_feeds as $feed ) {
+
+			$is_conditional_logic_activated = rgars( $feed, 'meta/feed_condition_conditional_logic' );
+			$conditional_logic              = rgars( $feed, 'meta/feed_condition_conditional_logic_object/conditionalLogic' );
+
+			if ( ! $is_conditional_logic_activated ) {
+
+				$feeds_processing[] = $feed;
+
+			} elseif ( $is_conditional_logic_activated && GFCommon::evaluate_conditional_logic( $conditional_logic, $form, $entry ) === true ) {
+
+				$feeds_processing[] = $feed;
+			}
+		}
+
+		return $feeds_processing;
 	}
 
 	/**
