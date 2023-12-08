@@ -125,7 +125,7 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		cy.contains('span strong', 'Contact Phone:').closest('span').should('include.text', '(888) 444-7777');
 	});
 
-	it('Displays the correct form based on the settings', () => {
+	it('Displays the correct form based on the settings', function() {
 
 		// The built-in form should show by default when the plugin is first activated
 		cy.visit('/volunteer-opportunity/clean-up-trash/');
@@ -145,7 +145,7 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		cy.get('.entry-content form').should('not.exist');
 
 		// The built-in form should show when the volunteer opportunity's setting is saved as "Built-In Signup Form"
-		cy.contains('a', 'Edit Volunteer Opportunity').click();
+		cy.visit('/wp-admin/post.php?post=' + this.volunteerOppID + '&action=edit');
 		cy.contains('tr', 'Form Type').find('select').select('built_in_form');
 		cy.contains('button','Update').click();
 		cy.contains('div', 'Post updated').find('a').click();
@@ -157,7 +157,7 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		cy.contains('form label', 'Email:').should('exist');
 
 		// No form should show when the volunteer opportunity's setting is saved as "No Form"
-		cy.contains('a', 'Edit Volunteer Opportunity').click();
+		cy.visit('/wp-admin/post.php?post=' + this.volunteerOppID + '&action=edit');
 		cy.contains('tr', 'Form Type').find('select').select('no_form');
 		cy.contains('button','Update').click();
 		cy.contains('div', 'Post updated').find('a').click();
