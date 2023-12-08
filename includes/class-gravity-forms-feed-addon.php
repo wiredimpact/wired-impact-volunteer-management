@@ -203,22 +203,24 @@ class WI_Volunteer_Management_Gravity_Forms_Feed_AddOn extends GFFeedAddOn {
 		// Even though multiple feeds might process, there should really only be one, so we always use the first.
 		$form_data = $this->get_submitted_form_data( $feeds_processing[0], $entry, $form );
 
-		// If the volunteer opportunity is no longer allowing RSVPs.
-		if ( $this->validate_opp_still_allowing_rsvps( $form_data, $form ) === false ) {
+		// If the form's last page is being submitted and the volunteer opportunity is no longer allowing RSVPs.
+		if ( GFFormDisplay::is_last_page( $form ) === true && $this->validate_opp_still_allowing_rsvps( $form_data, $form ) === false ) {
 
 			$validation_result['is_valid'] = false;
 
 			return $validation_result;
 		}
 
-		// If the name, phone or email fields are blank.
-		$mapped_field_ids = $this->get_mapped_feed_field_ids( $feeds_processing[0] );
+		// If the checked name, phone or email field is on the submitted form page and it's blank.
+		$submitted_form_page = rgpost( 'gform_source_page_number_' . $form['id'] );
+		$submitted_form_page = ( $submitted_form_page !== '' ) ? (int) $submitted_form_page : 1;
+		$mapped_field_ids    = $this->get_mapped_feed_field_ids( $feeds_processing[0] );
 
 		foreach ( $mapped_field_ids as $field_key => $field_id ) {
 
 			foreach ( $form['fields'] as &$field ) {
 
-				if ( $field->id === $field_id && $form_data[ $field_key ] === '' ) {
+				if ( $field->id === $field_id && $field->pageNumber === $submitted_form_page && $form_data[ $field_key ] === '' ) {
 
 					$validation_result['is_valid'] = false;
 					$field->failed_validation      = true;
