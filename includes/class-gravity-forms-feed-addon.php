@@ -107,7 +107,7 @@ class WI_Volunteer_Management_Gravity_Forms_Feed_AddOn extends GFFeedAddOn {
 					'type'     => 'text',
 					'class'    => 'medium',
 					'required' => true,
-					'tooltip'  => sprintf( '<h6>%s</h6>%s', __( 'Name', 'wired-impact-volunteer-management' ), __( 'Enter a feed name to uniquely identify this setup.', 'wired-impact-volunteer-management' ) ),
+					'tooltip'  => sprintf( '<h6>%s</h6>%s', __( 'Name', 'wired-impact-volunteer-management' ), __( 'Enter a name to uniquely identify this feed.', 'wired-impact-volunteer-management' ) ),
 				),
 			),
 		);
