@@ -4,6 +4,7 @@
  * Assumptions:
  * - The Wired Impact Volunteer Management plugin is installed.
  * - The Gravity Forms plugin is installed.
+ * - The Gravity Forms CLI plugin is installed and activated.
  */
 describe('Gravity Forms Integration', () => {
 

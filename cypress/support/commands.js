@@ -73,6 +73,9 @@ Cypress.Commands.add('deleteTestVolunteerUser', () => {
 
 /**
  * Trash all existing Gravity Forms forms using WP-CLI.
+ *
+ * This command requires the Gravity Forms CLI plugin be installed
+ * and activated.
  */
 Cypress.Commands.add('trashAllGravityFormsForms', () => {
 	
@@ -83,6 +86,9 @@ Cypress.Commands.add('trashAllGravityFormsForms', () => {
  * Create a Gravity Forms Volunteer Signup form to use for testing.
  *
  * The JSON for the form was created by exporting the form from a website.
+ *
+ * This command requires the Gravity Forms CLI plugin be installed
+ * and activated.
  */
 Cypress.Commands.add('createVolunteerSignupForm', () => {
 
