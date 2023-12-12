@@ -134,11 +134,23 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Register the stylesheets for the admin area.
+	 *
+	 * @param string $hook The current admin page.
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles( $hook ) {
 
 		wp_enqueue_style( 'wp-pointer' );
-		wp_enqueue_style( 'jquery-ui-smoothness', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css', array(), $this->version );
+
+		// Only enqueue jQuery UI styles if we're creating or editing a Volunteer Management Opportunity.
+		if ( in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
+
+			$screen = get_current_screen();
+			if ( is_object( $screen ) && $screen->post_type === 'volunteer_opp' ) {
+
+				wp_enqueue_style( 'jquery-ui-smoothness', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css', array(), $this->version );
+			}
+		}
+
 		wp_enqueue_style( 'wivm-styles', plugin_dir_url( __FILE__ ) . 'css/admin.css', array(), $this->version );
 	}
 
@@ -150,15 +162,14 @@ class WI_Volunteer_Management_Admin {
 	public function enqueue_scripts( $hook ) {
 
 		wp_enqueue_script( 'wp-pointer' );
-		wp_enqueue_script( 'jquery-ui-slider' );
-		wp_enqueue_script( 'jquery-ui-datepicker' );
 
-		// Only enqueue TimePicker if we are creating or editing a Volunteer Management Opportunity.
-		if ( in_array( $hook, array( 'post.php', 'post-new.php' ) ) ) {
+		// Only enqueue TimePicker if we're creating or editing a Volunteer Management Opportunity.
+		if ( in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
 
 			$screen = get_current_screen();
-			if ( is_object( $screen ) && 'volunteer_opp' == $screen->post_type ) {
-				wp_enqueue_script( 'jquery-timepicker', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-timepicker.js', array( 'jquery-ui-core', 'jquery-ui-slider', 'jquery-ui-datepicker' ) );
+			if ( is_object( $screen ) && $screen->post_type === 'volunteer_opp' ) {
+
+				wp_enqueue_script( 'jquery-timepicker', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-timepicker.js', array( 'jquery-ui-core', 'jquery-ui-slider', 'jquery-ui-datepicker' ), $this->version, false );
 			}
 		}
 
@@ -169,17 +180,18 @@ class WI_Volunteer_Management_Admin {
 	/**
 	 * Get all the JS data we want to display. This allows us to use PHP to include information
 	 * within the JS.
-	 * 
+	 *
 	 * @return array Data to be displayed in the admin page's JS.
 	 */
-	public function get_localized_js_data(){
+	public function get_localized_js_data() {
+
 		$data = array(
-			//translators: date only format for jQuery UI Datepicker, see http://api.jqueryui.com/datepicker/#utility-formatDate
-			'datepicker_date_format'		=> __( 'D, MM dd, yy', 'wired-impact-volunteer-management' ),
-			//translators: time only format for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker/
-			'datepicker_time_format'		=> __( 'h:mm tt', 'wired-impact-volunteer-management' ),
-			//translators: Separator between date and time for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker/
-			'datepicker_separator'			=> __( ' @ ', 'wired-impact-volunteer-management' ),
+			// translators: date only format for jQuery UI Datepicker, see http://api.jqueryui.com/datepicker/#utility-formatDate.
+			'datepicker_date_format'        => __( 'D, MM dd, yy', 'wired-impact-volunteer-management' ),
+			// translators: time only format for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker/.
+			'datepicker_time_format'        => __( 'h:mm tt', 'wired-impact-volunteer-management' ),
+			// translators: Separator between date and time for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker/.
+			'datepicker_separator'          => __( ' @ ', 'wired-impact-volunteer-management' ),
 			'remove_rsvp_pointer_text'      => '<h3>' . __( 'Are You Sure?', 'wired-impact-volunteer-management' ) . '</h3><p>' . __( 'Are you sure you want to remove their RSVP for this opportunity?', 'wired-impact-volunteer-management' ) . '</p>',
 			'remove_rsvp_cancel_text'       => __( 'Cancel', 'wired-impact-volunteer-management' ),
 			'remove_rsvp_confirm_text'      => __( 'Remove RSVP', 'wired-impact-volunteer-management' ),
@@ -190,7 +202,7 @@ class WI_Volunteer_Management_Admin {
 			'volunteer_email_success_text'  => __( 'Your email has been sent to the volunteers!', 'wired-impact-volunteer-management' ),
 			'remove_user_rsvp_nonce'        => wp_create_nonce( 'remove_user_rsvp_nonce' ),
 			'hide_notice_nonce'             => wp_create_nonce( 'hide_notice_nonce' ),
-			'volunteer_email_nonce'         => wp_create_nonce( 'volunteer_email_nonce' )
+			'volunteer_email_nonce'         => wp_create_nonce( 'volunteer_email_nonce' ),
 		);
 
 		return $data;
