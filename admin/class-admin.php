@@ -137,33 +137,33 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function enqueue_styles() {
 
-      	wp_enqueue_style( 'wp-pointer' );
-		wp_enqueue_style( 'jquery-ui-smoothness', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css' );
-		wp_enqueue_style( 'wivm-styles', plugin_dir_url( __FILE__ ) . 'css/admin.css', array(), $this->version, 'all' );
-
+		wp_enqueue_style( 'wp-pointer' );
+		wp_enqueue_style( 'jquery-ui-smoothness', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css', array(), $this->version );
+		wp_enqueue_style( 'wivm-styles', plugin_dir_url( __FILE__ ) . 'css/admin.css', array(), $this->version );
 	}
 
 	/**
 	 * Register the JavaScript for the admin area.
+	 *
+	 * @param string $hook The current admin page.
 	 */
 	public function enqueue_scripts( $hook ) {
 
-		wp_enqueue_script(  'wp-pointer' );
-		wp_enqueue_script(  'jquery-ui-slider' );
-    	wp_enqueue_script(  'jquery-ui-datepicker' );
+		wp_enqueue_script( 'wp-pointer' );
+		wp_enqueue_script( 'jquery-ui-slider' );
+		wp_enqueue_script( 'jquery-ui-datepicker' );
 
-    	// Only enqueue TimePicker if we are creating or editing a Volunteer Management Opportunity
-    	if( in_array( $hook, array( 'post.php', 'post-new.php' ) ) ) {
-    		
-    		$screen = get_current_screen();
-    		if( is_object( $screen ) && 'volunteer_opp' == $screen->post_type ) {
-    			wp_enqueue_script(  'jquery-timepicker', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-timepicker.js', array( 'jquery-ui-core', 'jquery-ui-slider', 'jquery-ui-datepicker' ) );
-    		}
-    	}
+		// Only enqueue TimePicker if we are creating or editing a Volunteer Management Opportunity.
+		if ( in_array( $hook, array( 'post.php', 'post-new.php' ) ) ) {
 
-		wp_enqueue_script(  'wivm-admin', plugin_dir_url( __FILE__ ) . 'js/admin.js', array( 'jquery' ), $this->version, false );
+			$screen = get_current_screen();
+			if ( is_object( $screen ) && 'volunteer_opp' == $screen->post_type ) {
+				wp_enqueue_script( 'jquery-timepicker', plugin_dir_url( __FILE__ ) . 'js/jquery-ui-timepicker.js', array( 'jquery-ui-core', 'jquery-ui-slider', 'jquery-ui-datepicker' ) );
+			}
+		}
+
+		wp_enqueue_script( 'wivm-admin', plugin_dir_url( __FILE__ ) . 'js/admin.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( 'wivm-admin', 'wivm_ajax', $this->get_localized_js_data() );
-
 	}
 
 	/**
