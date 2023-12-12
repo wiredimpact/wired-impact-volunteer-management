@@ -97,12 +97,12 @@ class WI_Volunteer_Management_Opportunity {
 
 	/**
 	 * Display meta information for this opportunity including a heading.
-	 * 
+	 *
 	 * @param  string $meta_value The meta information to display.
 	 * @param  string $heading    The heading to display in front of the meta information is one exists.
-	 * @return mixed 			  Returns an empty string if no meta value, or it will echo the resulting string.
+	 * @return mixed Returns an empty string if no meta value, or it will echo the resulting string.
 	 */
-	public function display_meta( $meta_value, $heading = '' ){
+	public function display_meta( $meta_value, $heading = '' ) {
 
 		if( $meta_value == '' ){
 			return false;
@@ -318,20 +318,23 @@ class WI_Volunteer_Management_Opportunity {
 
 	/**
 	 * Get the number of RSVPs that have taken place for this opportunity.
-	 * 
+	 *
 	 * @return int The number of RSVPs for this opportunity.
 	 */
-	public function get_number_rsvps(){
+	public function get_number_rsvps() {
+
 		global $wpdb;
 
-		$num_rsvps = $wpdb->get_var( $wpdb->prepare(
-		        "
-		         SELECT COUNT(*)
-		         FROM " . $wpdb->prefix  . "volunteer_rsvps
-		         WHERE post_id = %d and rsvp = %d
-		        ",
-		        array( $this->ID, 1 )
-		) );
+		$num_rsvps = $wpdb->get_var(
+			$wpdb->prepare(
+				'
+				SELECT COUNT(*)
+				FROM ' . $wpdb->prefix . 'volunteer_rsvps
+				WHERE post_id = %d and rsvp = %d
+				',
+				array( $this->ID, 1 )
+			)
+		);
 
 		return $num_rsvps;
 	}
@@ -358,17 +361,19 @@ class WI_Volunteer_Management_Opportunity {
 
 	/**
 	 * Return whether we should allow people to sign up for this opportunity.
-	 * 
-	 * @return bool true if we should allow signups, false if not
+	 *
+	 * @return bool true if we should allow signups, false if not.
 	 */
-	public function should_allow_rvsps(){
+	public function should_allow_rvsps() {
+
 		$num_rsvps = $this->get_number_rsvps();
 
-		//If there is a limit and its been reached then return false
-		if( $this->opp_meta['has_volunteer_limit'] == 1 && $num_rsvps >= $this->opp_meta['volunteer_limit'] ){
+		// If there is a limit and its been reached then return false.
+		if ( $this->opp_meta['has_volunteer_limit'] == 1 && $num_rsvps >= $this->opp_meta['volunteer_limit'] ) {
+
 			return false;
 		}
-		
+
 		return true;
 	}
 

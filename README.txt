@@ -4,7 +4,7 @@ Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
 Tested up to: 6.4
 Requires PHP: 5.2.4
-Stable tag: 2.0
+Stable tag: 2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,6 +118,12 @@ You'll find default settings outlining how to handle forms within the Help & Set
 1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 2.1 =
+* Added the ability to pass volunteer data submitted in Gravity Forms to the volunteer management system.
+* Hide the chosen Gravity Forms form if no more volunteer spots are available.
+* Removed bug fix for the 'Visual' tab of the editor used to email volunteers now that the issue is fixed in WordPress Core.
+* Stopped loading jQuery UI styles across the entire admin since it was conflicting with other plugins.
 
 = 2.0 =
 * Included the ability for admins to remove the built-in signup form from volunteer opportunities.

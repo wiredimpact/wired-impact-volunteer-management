@@ -12,7 +12,7 @@ describe('Volunteer Sign Up', () => {
 		cy.createSingleVolunteerOpp();
 	});
 
-	it('Allows volunteers to sign up, be viewed in the admin, and removed from opportunities', () => {
+	it('Allows volunteers to sign up, be viewed in the admin, and removed from opportunities', function() {
 
 		// Submit the form to sign up as a volunteer
 		cy.visit('/volunteer-opportunity/clean-up-trash/');
@@ -26,8 +26,7 @@ describe('Volunteer Sign Up', () => {
 
 		// Save the volunteer opportunity that was created with WP-CLI to ensure all meta is stored
 		cy.login();
-		cy.visit('/volunteer-opportunity/clean-up-trash/');
-		cy.contains('a', 'Edit Volunteer Opportunity').click();
+		cy.visit('/wp-admin/post.php?post=' + this.volunteerOppID + '&action=edit');
 		cy.contains('button','Update').click();
 		cy.contains('div', 'Post updated').should('exist');
 

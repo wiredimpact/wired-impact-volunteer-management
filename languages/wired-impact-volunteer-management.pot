@@ -2,20 +2,20 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Wired Impact Volunteer Management 2.0\n"
+"Project-Id-Version: Wired Impact Volunteer Management 2.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wired-impact-volunteer-management\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-11-30T22:10:44+00:00\n"
+"POT-Creation-Date: 2023-12-12T16:46:07+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wired-impact-volunteer-management\n"
 
 #. Plugin Name of the plugin
-#: admin/class-admin.php:258
+#: admin/class-admin.php:270
 msgid "Wired Impact Volunteer Management"
 msgstr ""
 
@@ -35,350 +35,355 @@ msgstr ""
 msgid "https://wiredimpact.com"
 msgstr ""
 
-#. translators: date only format for jQuery UI Datepicker, see http://api.jqueryui.com/datepicker/#utility-formatDate
-#: admin/class-admin.php:178
+#. translators: date only format for jQuery UI Datepicker, see http://api.jqueryui.com/datepicker/#utility-formatDate.
+#: admin/class-admin.php:190
 msgid "D, MM dd, yy"
 msgstr ""
 
-#. translators: time only format for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker
-#: admin/class-admin.php:180
+#. translators: time only format for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker/.
+#: admin/class-admin.php:192
 msgid "h:mm tt"
 msgstr ""
 
-#. translators: Separator between date and time for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker
-#: admin/class-admin.php:182
+#. translators: Separator between date and time for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker/.
+#: admin/class-admin.php:194
 msgid " @ "
 msgstr ""
 
-#. translators: Separator between date and time for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker
-#: admin/class-admin.php:183
+#. translators: Separator between date and time for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker/.
+#: admin/class-admin.php:195
 msgid "Are You Sure?"
 msgstr ""
 
-#. translators: Separator between date and time for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker
-#: admin/class-admin.php:183
+#. translators: Separator between date and time for jQuery UI Datepicker timepicker, see http://trentrichardson.com/examples/timepicker/.
+#: admin/class-admin.php:195
 msgid "Are you sure you want to remove their RSVP for this opportunity?"
 msgstr ""
 
-#: admin/class-admin.php:184
+#: admin/class-admin.php:196
 msgid "Cancel"
 msgstr ""
 
-#: admin/class-admin.php:185
-#: admin/class-admin.php:677
-#: admin/class-admin.php:687
-#: admin/class-admin.php:703
+#: admin/class-admin.php:197
+#: admin/class-admin.php:689
+#: admin/class-admin.php:699
+#: admin/class-admin.php:715
 #: admin/pages/volunteer.php:92
 #: admin/pages/volunteer.php:111
 msgid "Remove RSVP"
 msgstr ""
 
-#: admin/class-admin.php:186
+#: admin/class-admin.php:198
 msgid "Error, try again later."
 msgstr ""
 
-#: admin/class-admin.php:187
+#: admin/class-admin.php:199
 msgid "Error sending the email. Try again later."
 msgstr ""
 
-#: admin/class-admin.php:188
+#: admin/class-admin.php:200
 msgid "Please fill out the email subject."
 msgstr ""
 
-#: admin/class-admin.php:189
+#: admin/class-admin.php:201
 msgid "Please fill out the email content."
 msgstr ""
 
-#: admin/class-admin.php:190
+#: admin/class-admin.php:202
 msgid "Your email has been sent to the volunteers!"
 msgstr ""
 
-#: admin/class-admin.php:214
+#: admin/class-admin.php:226
 #: admin/class-form.php:65
 #: admin/pages/volunteers.php:34
 msgid "Wired Impact Volunteer Management: "
 msgstr ""
 
-#: admin/class-admin.php:214
-#: admin/class-admin.php:236
+#: admin/class-admin.php:226
+#: admin/class-admin.php:248
 msgid "Help & Settings"
 msgstr ""
 
-#: admin/class-admin.php:215
+#: admin/class-admin.php:227
 #: frontend/class-public.php:127
 msgid "Volunteer Mgmt"
 msgstr ""
 
-#: admin/class-admin.php:228
+#: admin/class-admin.php:240
 msgid "Volunteers"
 msgstr ""
 
-#: admin/class-admin.php:244
-#: includes/class-activator.php:68
+#: admin/class-admin.php:256
+#: includes/class-activator.php:69
 msgid "Volunteer"
 msgstr ""
 
-#: admin/class-admin.php:265
+#: admin/class-admin.php:277
 msgid "Opportunities"
 msgstr ""
 
-#: admin/class-admin.php:332
+#: admin/class-admin.php:344
 msgid "Use the text editor above to include information such as what volunteers will be doing, any requirements or preparation needed from volunteers, how the community will benefit and other details aside from those provided below."
 msgstr ""
 
-#: admin/class-admin.php:343
+#: admin/class-admin.php:355
 msgid "Volunteer Opportunity Details"
 msgstr ""
 
-#: admin/class-admin.php:352
+#: admin/class-admin.php:364
 msgid "Volunteer Opportunity RSVPs"
 msgstr ""
 
-#: admin/class-admin.php:361
+#: admin/class-admin.php:373
 msgid "Email Your Volunteers"
 msgstr ""
 
-#: admin/class-admin.php:370
+#: admin/class-admin.php:382
 msgid "Emails Sent to Volunteers"
 msgstr ""
 
-#: admin/class-admin.php:394
+#: admin/class-admin.php:406
 msgid "Contact Information"
 msgstr ""
 
-#: admin/class-admin.php:398
-#: admin/class-admin.php:674
-#: admin/class-admin.php:684
-#: admin/class-admin.php:700
+#: admin/class-admin.php:410
+#: admin/class-admin.php:686
+#: admin/class-admin.php:696
+#: admin/class-admin.php:712
+#: includes/class-gravity-forms-feed-addon.php:106
+#: includes/class-gravity-forms-feed-addon.php:110
+#: includes/class-gravity-forms-feed-addon.php:172
 #: includes/class-wp-volunteer-list-table.php:161
 msgid "Name"
 msgstr ""
 
-#: admin/class-admin.php:403
-#: admin/class-admin.php:878
+#: admin/class-admin.php:415
+#: admin/class-admin.php:877
+#: includes/class-gravity-forms-feed-addon.php:137
 #: includes/class-wp-volunteer-list-table.php:163
 msgid "Phone Number"
 msgstr ""
 
-#: admin/class-admin.php:408
+#: admin/class-admin.php:420
 #: admin/pages/help-settings.php:34
+#: includes/class-gravity-forms-feed-addon.php:144
 msgid "Email"
 msgstr ""
 
-#: admin/class-admin.php:414
+#: admin/class-admin.php:426
 msgid "Location Information"
 msgstr ""
 
-#: admin/class-admin.php:418
+#: admin/class-admin.php:430
 msgid "Location Name"
 msgstr ""
 
-#: admin/class-admin.php:423
+#: admin/class-admin.php:435
 msgid "Street Address"
 msgstr ""
 
-#: admin/class-admin.php:428
+#: admin/class-admin.php:440
 msgid "City"
 msgstr ""
 
-#: admin/class-admin.php:433
+#: admin/class-admin.php:445
 msgid "State"
 msgstr ""
 
-#: admin/class-admin.php:438
+#: admin/class-admin.php:450
 msgid "Zip"
 msgstr ""
 
-#: admin/class-admin.php:444
+#: admin/class-admin.php:456
 msgid "Date and Time"
 msgstr ""
 
-#: admin/class-admin.php:448
+#: admin/class-admin.php:460
 msgid "One-Time Opportunity?"
 msgstr ""
 
-#: admin/class-admin.php:451
+#: admin/class-admin.php:463
 msgid "This is a one-time opportunity at a fixed date and time."
 msgstr ""
 
-#: admin/class-admin.php:457
+#: admin/class-admin.php:469
 msgid "Start Date & Time"
 msgstr ""
 
-#: admin/class-admin.php:465
+#: admin/class-admin.php:477
 msgid "End Date & Time"
 msgstr ""
 
-#: admin/class-admin.php:469
+#: admin/class-admin.php:481
 msgid "Whoops, it looks like you set your event to end before it started."
 msgstr ""
 
-#: admin/class-admin.php:474
+#: admin/class-admin.php:486
 msgid "When Will This Event Happen?"
 msgstr ""
 
-#: admin/class-admin.php:475
+#: admin/class-admin.php:487
 msgid "On your own time, All summer, etc."
 msgstr ""
 
-#: admin/class-admin.php:479
+#: admin/class-admin.php:491
 msgid "Volunteer Limit"
 msgstr ""
 
-#: admin/class-admin.php:483
+#: admin/class-admin.php:495
 msgid "Is There a Volunteer Limit?"
 msgstr ""
 
-#: admin/class-admin.php:486
+#: admin/class-admin.php:498
 msgid "Only a fixed number of people can participate in this volunteer opportunity."
 msgstr ""
 
-#: admin/class-admin.php:492
+#: admin/class-admin.php:504
 msgid "Max Number of Volunteers"
 msgstr ""
 
-#: admin/class-admin.php:497
+#: admin/class-admin.php:509
 msgid "Volunteer Signup Form"
 msgstr ""
 
-#: admin/class-admin.php:501
+#: admin/class-admin.php:513
 msgid "The built-in signup form includes name, email and phone number fields. It can't be modified."
 msgstr ""
 
-#: admin/class-admin.php:505
+#: admin/class-admin.php:517
 msgid "Form Type"
 msgstr ""
 
-#: admin/class-admin.php:533
+#: admin/class-admin.php:545
 #: admin/pages/help-settings.php:91
 msgid "No Form"
 msgstr ""
 
-#: admin/class-admin.php:534
+#: admin/class-admin.php:546
 #: admin/pages/help-settings.php:92
 msgid "Built-In Signup Form"
 msgstr ""
 
-#: admin/class-admin.php:667
+#: admin/class-admin.php:679
 msgid "Number of Open Spots: %s"
 msgstr ""
 
-#: admin/class-admin.php:668
+#: admin/class-admin.php:680
 msgid "Number RSVPed: %d"
 msgstr ""
 
-#: admin/class-admin.php:675
-#: admin/class-admin.php:685
-#: admin/class-admin.php:701
+#: admin/class-admin.php:687
+#: admin/class-admin.php:697
+#: admin/class-admin.php:713
 #: includes/class-wp-volunteer-list-table.php:162
 msgid "E-mail"
 msgstr ""
 
-#: admin/class-admin.php:676
-#: admin/class-admin.php:686
-#: admin/class-admin.php:702
+#: admin/class-admin.php:688
+#: admin/class-admin.php:698
+#: admin/class-admin.php:714
 msgid "Phone"
 msgstr ""
 
-#: admin/class-admin.php:693
+#: admin/class-admin.php:705
 msgid "No one has signed up for this opportunity yet."
 msgstr ""
 
-#: admin/class-admin.php:722
+#: admin/class-admin.php:734
 msgid "No one has signed up for this opportunity, so you can't send any emails yet."
 msgstr ""
 
-#: admin/class-admin.php:751
+#: admin/class-admin.php:750
 msgid "Below you can send a custom email to all volunteers who signed up for this opportunity. This is sent to the admins with the volunteers BCC'ed, so you know that the email was sent successfully. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent."
 msgstr ""
 
-#: admin/class-admin.php:753
+#: admin/class-admin.php:752
 msgid "Email Subject"
 msgstr ""
 
-#: admin/class-admin.php:760
+#: admin/class-admin.php:759
 msgid "Send Email"
 msgstr ""
 
-#: admin/class-admin.php:788
-#: admin/class-admin.php:1118
-#: admin/class-admin.php:1252
-#: frontend/class-public.php:475
-#: frontend/class-public.php:481
+#: admin/class-admin.php:787
+#: admin/class-admin.php:1117
+#: admin/class-admin.php:1251
+#: frontend/class-public.php:478
+#: frontend/class-public.php:485
 msgid "Security Check."
 msgstr ""
 
-#: admin/class-admin.php:823
+#: admin/class-admin.php:822
 msgctxt "email count"
 msgid "<p>1 email has been sent.</p>"
 msgid_plural "<p>%d emails have been sent.</p>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/class-admin.php:830
-#: admin/class-admin.php:925
+#: admin/class-admin.php:829
+#: admin/class-admin.php:924
 msgid "When"
 msgstr ""
 
-#: admin/class-admin.php:831
+#: admin/class-admin.php:830
 msgid "Sender"
 msgstr ""
 
-#: admin/class-admin.php:840
+#: admin/class-admin.php:839
 msgid "Automated Reminder Email"
 msgstr ""
 
 #. translators: date and time format for mysql2date() function, see http://php.net/manual/en/function.date.php
-#: admin/class-admin.php:847
+#: admin/class-admin.php:846
 msgid "D, M j, Y \\&#64; g:i a"
 msgstr ""
 
-#: admin/class-admin.php:864
+#: admin/class-admin.php:863
 msgid "No emails have been sent yet. We'll list them here when we send automated reminders and when you send custom emails to volunteers."
 msgstr ""
 
-#: admin/class-admin.php:881
+#: admin/class-admin.php:880
 msgid "Please enter your phone number in the format (000) 000-0000."
 msgstr ""
 
-#: admin/class-admin.php:885
+#: admin/class-admin.php:884
 #: admin/pages/volunteer.php:39
 msgid "Notes"
 msgstr ""
 
-#: admin/class-admin.php:888
+#: admin/class-admin.php:887
 msgid "Please enter any notes about this user."
 msgstr ""
 
-#: admin/class-admin.php:923
+#: admin/class-admin.php:922
 msgid "Title"
 msgstr ""
 
-#: admin/class-admin.php:924
+#: admin/class-admin.php:923
 msgid "Location"
 msgstr ""
 
-#: admin/class-admin.php:926
+#: admin/class-admin.php:925
 msgid "Number of RSVPs"
 msgstr ""
 
-#: admin/class-admin.php:927
+#: admin/class-admin.php:926
 msgid "Number of Open Spots"
 msgstr ""
 
-#: admin/class-admin.php:1053
+#: admin/class-admin.php:1052
 msgid "All Opportunities"
 msgstr ""
 
-#: admin/class-admin.php:1058
+#: admin/class-admin.php:1057
 msgid "Upcoming One-time Opportunities"
 msgstr ""
 
-#: admin/class-admin.php:1063
+#: admin/class-admin.php:1062
 msgid "Past One-time Opportunities"
 msgstr ""
 
-#: admin/class-admin.php:1068
+#: admin/class-admin.php:1067
 msgid "Flexible Opportunities"
 msgstr ""
 
@@ -688,6 +693,61 @@ msgstr ""
 msgid "More Opportunities &raquo;"
 msgstr ""
 
+#: includes/class-gravity-forms-feed-addon.php:101
+msgid "Volunteer Management Feed Settings"
+msgstr ""
+
+#: includes/class-gravity-forms-feed-addon.php:110
+msgid "Enter a name to uniquely identify this feed."
+msgstr ""
+
+#: includes/class-gravity-forms-feed-addon.php:118
+#: includes/class-gravity-forms-feed-addon.php:150
+msgid "Map Fields"
+msgstr ""
+
+#: includes/class-gravity-forms-feed-addon.php:123
+msgid "First Name"
+msgstr ""
+
+#: includes/class-gravity-forms-feed-addon.php:130
+msgid "Last Name"
+msgstr ""
+
+#: includes/class-gravity-forms-feed-addon.php:150
+msgid "Match the information needed for the volunteer management system with fields from your form."
+msgstr ""
+
+#: includes/class-gravity-forms-feed-addon.php:156
+#: includes/class-gravity-forms-feed-addon.php:158
+msgid "Conditional Logic"
+msgstr ""
+
+#: includes/class-gravity-forms-feed-addon.php:158
+msgid "When conditional logic is enabled, form submissions will only be sent to the volunteer management system when the conditions are met. When disabled all form submissions will be sent."
+msgstr ""
+
+#: includes/class-gravity-forms-feed-addon.php:227
+msgid "This field is required."
+msgstr ""
+
+#: includes/class-gravity-forms-feed-addon.php:277
+#: templates/opp-single-form.php:24
+msgid "We're sorry, but we weren't able to sign you up. We have no more open spots."
+msgstr ""
+
+#: includes/class-gravity-forms-feed-addon.php:309
+msgid "Error Sending Data to the Volunteer Management System: The volunteer opportunity's ID was not provided correctly."
+msgstr ""
+
+#: includes/class-gravity-forms-feed-addon.php:325
+msgid "Error Sending Data to the Volunteer Management System: The volunteer has already signed up for this opportunity."
+msgstr ""
+
+#: includes/class-gravity-forms-feed-addon.php:336
+msgid "The volunteer successfully signed up for this opportunity."
+msgstr ""
+
 #: includes/class-gravity-forms.php:58
 msgid "Custom Form"
 msgstr ""
@@ -712,6 +772,11 @@ msgstr ""
 #: includes/class-gravity-forms.php:206
 #: templates/opp-single-form.php:15
 msgid "Express Interest in Volunteering"
+msgstr ""
+
+#: includes/class-gravity-forms.php:216
+#: templates/opp-single-form.php:55
+msgid "We're sorry, but we're no longer accepting new volunteers for this opportunity."
 msgstr ""
 
 #. translators: date and time format for date() function, see http://php.net/manual/en/function.date.php
@@ -799,10 +864,6 @@ msgstr ""
 msgid "It looks like you already signed up for this opportunity."
 msgstr ""
 
-#: templates/opp-single-form.php:24
-msgid "We're sorry, but we weren't able to sign you up. We have no more open spots."
-msgstr ""
-
 #: templates/opp-single-form.php:25
 msgid "Please fill in every field and make sure you entered a valid email address."
 msgstr ""
@@ -829,10 +890,6 @@ msgstr ""
 
 #: templates/opp-single-form.php:52
 msgid "Express Interest"
-msgstr ""
-
-#: templates/opp-single-form.php:55
-msgid "We're sorry, but we're no longer accepting new volunteers for this opportunity."
 msgstr ""
 
 #: templates/opp-single-meta.php:12

@@ -68,7 +68,7 @@ class WI_Volunteer_Management {
 	public function __construct() {
 
 		$this->plugin_name = 'wired-impact-volunteer-management';
-		$this->version     = '2.0';
+		$this->version     = '2.1';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -166,6 +166,11 @@ class WI_Volunteer_Management {
 		 */
 		require_once WIVM_DIR . 'includes/class-gravity-forms.php';
 
+		/**
+		 * The class responsible for bootstrapping the Gravity Forms feed add-on to pass data into the volunteer management system.
+		 */
+		require_once WIVM_DIR . 'includes/class-gravity-forms-feed-addon-bootstrap.php';
+
 		$this->loader = new WI_Volunteer_Management_Loader();
 	}
 
@@ -245,8 +250,8 @@ class WI_Volunteer_Management {
 		$this->loader->add_filter( 'wp_trim_words', $plugin_public, 'always_show_read_more' );
 		$this->loader->add_filter( 'excerpt_more', $plugin_public, 'hide_default_read_more', 11 );
 		$this->loader->add_filter( 'the_content', $plugin_public, 'show_meta_form_single' );
-		$this->loader->add_action( 'wp_ajax_wivm_sign_up', $plugin_public, 'process_volunteer_sign_up' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wivm_sign_up', $plugin_public, 'process_volunteer_sign_up' );
+		$this->loader->add_action( 'wp_ajax_wivm_sign_up', $plugin_public, 'process_builtin_form_volunteer_sign_up' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wivm_sign_up', $plugin_public, 'process_builtin_form_volunteer_sign_up' );
 		$this->loader->add_action( 'send_auto_email_reminders', $plugin_public, 'send_email_reminder' );
 		$this->loader->add_action( 'widgets_init', $plugin_widget, 'register_widget' );
 
@@ -262,6 +267,7 @@ class WI_Volunteer_Management {
 			$this->loader->add_filter( 'wivm_volunteer_opp_meta', $gravity_forms, 'get_selected_form_for_opp_meta', 10, 2 );
 			$this->loader->add_action( 'wivm_show_volunteer_sign_up_form', $gravity_forms, 'show_volunteer_sign_up_form' );
 			$this->loader->add_action( 'wp_enqueue_scripts', $gravity_forms, 'enqueue_scripts' );
+			$this->loader->add_action( 'gform_loaded', 'WI_Volunteer_Management_Gravity_Forms_Feed_AddOn_Bootstrap', 'load', 5 );
 		}
 	}
 
