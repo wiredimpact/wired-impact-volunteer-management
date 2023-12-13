@@ -41,7 +41,7 @@ class WI_Volunteer_Management_Email {
 	 * All the options set within the plugin settings.
 	 *
 	 * @since 0.1
-	 * @var array
+	 * @var object
 	 */
 	public $options;
 
@@ -72,11 +72,11 @@ class WI_Volunteer_Management_Email {
 		$this->opp = $opp;
 
 		if ( $user !== null ) {
+
 			$this->user = $user;
 		}
 
-		$wivm_options  = new WI_Volunteer_Management_Options();
-		$this->options = $wivm_options->get_options();
+		$this->options = new WI_Volunteer_Management_Options();
 		$this->set_replace_text();
 	}
 
@@ -90,8 +90,8 @@ class WI_Volunteer_Management_Email {
 	public function send_volunteer_signup_email() {
 
 		$to      = $this->user->meta['email'];
-		$subject = $this->options['volunteer_signup_email_subject'];
-		$message = wpautop( $this->replace_variables( $this->options['volunteer_signup_email'] ) );
+		$subject = $this->options->get_option( 'volunteer_signup_email_subject' );
+		$message = wpautop( $this->replace_variables( $this->options->get_option( 'volunteer_signup_email' ) ) );
 
 		$headers   = array();
 		$headers[] = $this->get_from_header();
@@ -111,8 +111,8 @@ class WI_Volunteer_Management_Email {
 	public function send_admin_signup_email() {
 
 		$to      = $this->get_opp_admin_email_addresses();
-		$subject = $this->options['admin_signup_email_subject'];
-		$message = wpautop( $this->replace_variables( $this->options['admin_signup_email'] ) );
+		$subject = $this->options->get_option( 'admin_signup_email_subject' );
+		$message = wpautop( $this->replace_variables( $this->options->get_option( 'admin_signup_email' ) ) );
 
 		$headers   = array();
 		$headers[] = $this->get_from_header();
@@ -133,8 +133,8 @@ class WI_Volunteer_Management_Email {
 	public function send_volunteer_reminder_email() {
 
 		$to      = $this->get_opp_admin_email_addresses();
-		$subject = $this->options['volunteer_reminder_email_subject'];
-		$message = wpautop( $this->replace_variables( $this->options['volunteer_reminder_email'] ) );
+		$subject = $this->options->get_option( 'volunteer_reminder_email_subject' );
+		$message = wpautop( $this->replace_variables( $this->options->get_option( 'volunteer_reminder_email' ) ) );
 
 		$headers   = array();
 		$headers[] = $this->get_from_header();
@@ -210,8 +210,8 @@ class WI_Volunteer_Management_Email {
 	 */
 	public function get_from_header() {
 
-		$from_email_name    = ( $this->options['from_email_name'] != '' ) ? $this->options['from_email_name'] : get_option( 'blogname' );
-		$from_email_address = ( $this->options['from_email_address'] != '' ) ? $this->options['from_email_address'] : get_option( 'admin_email' );
+		$from_email_name    = ( $this->options->get_option( 'from_email_name' ) != '' ) ? $this->options->get_option( 'from_email_name' ) : get_option( 'blogname' );
+		$from_email_address = ( $this->options->get_option( 'from_email_address' ) != '' ) ? $this->options->get_option( 'from_email_address' ) : get_option( 'admin_email' );
 
 		return 'From: ' . $from_email_name . ' <' . $from_email_address . '>';
 	}
@@ -225,10 +225,13 @@ class WI_Volunteer_Management_Email {
 
 		$email_addresses = array();
 
-		if ( $this->options['admin_email_address'] != '' ) {
-			$email_addresses[] = $this->options['admin_email_address'];
+		if ( $this->options->get_option( 'admin_email_address' ) != '' ) {
+
+			$email_addresses[] = $this->options->get_option( 'admin_email_address' );
 		}
+
 		if ( $this->opp->opp_meta['contact_email'] != '' ) {
+
 			$email_addresses[] = $this->opp->opp_meta['contact_email'];
 		}
 
