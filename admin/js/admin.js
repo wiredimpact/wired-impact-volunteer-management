@@ -67,6 +67,18 @@
                 }
             });
 
+            // Hide fields specifying email settings if that email is disabled
+            $( '#send_signup_email_to_volunteers, #send_signup_email_to_admins, #send_reminder_email_to_volunteers' ).change( function() {
+                var relatedFieldRows = $( this ).closest( 'tr' ).nextUntil( 'tr.section-heading' );
+
+                if ( $( this ).is( ':checked' ) ) {
+                    relatedFieldRows.show();
+                }
+                else {
+                    relatedFieldRows.hide();
+                }
+            });
+
         } //end if
 
         function wivm_set_tab_hash() {
