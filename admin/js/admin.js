@@ -48,14 +48,12 @@
             $('.nav-tab-active').click();
 
             /**
-             * When the hash changes, get the base url from the action and then add the current hash
+             * Both on document.ready() and when the hash changes, update the form action to
+             * include the current tab hash. This ensures the same tab is shown after the form
+             * is saved and the page reloads.
              */
+            wivm_set_tab_hash();
             $(window).on('hashchange', wivm_set_tab_hash);
-
-            /**
-             * When the hash changes, get the base url from the action and then add the current hash
-             */
-            $(document).on('ready', wivm_set_tab_hash);
 
             // Show and hide the default form selection field based on whether the user wants to show a Gravity Forms form
             $( '#default_form_type' ).change( function() {
