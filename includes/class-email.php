@@ -83,11 +83,18 @@ class WI_Volunteer_Management_Email {
 	/**
 	 * Send email to volunteer immediately after they sign up.
 	 *
-	 * We use the options settings to send the email and we also do a replace for the variables in the email.
+	 * We use the options settings to send the email and we also do a replace for
+	 * the variables in the email.
 	 *
 	 * @see https://codex.wordpress.org/Function_Reference/wp_mail
 	 */
-	public function send_volunteer_signup_email() {
+	public function maybe_send_volunteer_signup_email() {
+
+		// Don't send if the setting to send signup emails to volunteers is turned off.
+		if ( (int) $this->options->get_option( 'send_signup_email_to_volunteers' ) !== 1 ) {
+
+			return;
+		}
 
 		$to      = $this->user->meta['email'];
 		$subject = $this->options->get_option( 'volunteer_signup_email_subject' );
@@ -104,11 +111,18 @@ class WI_Volunteer_Management_Email {
 	/**
 	 * Send email to admins and volunteer opportunity contact immediately after someone signs up.
 	 *
-	 * We use the options settings to send the email and we also do a replace for the variables in the email.
+	 * We use the options settings to send the email and we also do a replace for
+	 * the variables in the email.
 	 *
 	 * @see https://codex.wordpress.org/Function_Reference/wp_mail
 	 */
-	public function send_admin_signup_email() {
+	public function maybe_send_admin_signup_email() {
+
+		// Don't send if the setting to send signup emails to admins is turned off.
+		if ( (int) $this->options->get_option( 'send_signup_email_to_admins' ) !== 1 ) {
+
+			return;
+		}
 
 		$to      = $this->get_opp_admin_email_addresses();
 		$subject = $this->options->get_option( 'admin_signup_email_subject' );

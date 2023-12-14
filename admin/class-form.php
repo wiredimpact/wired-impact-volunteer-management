@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Output the form and fields for all settings.
  *
@@ -15,7 +14,7 @@
  *
  * Used to generate the form and fields for settings within the WordPress admin.
  * It is adapted from the WordPress SEO by Yoast plugin (https://wordpress.org/plugins/wordpress-seo/)
- * 
+ *
  * @since      0.1
  * @package    WI_Volunteer_Management
  * @subpackage WI_Volunteer_Management/Admin
@@ -43,9 +42,9 @@ class WI_Volunteer_Management_Form {
 	 * Use WI_Volunteer_Management_Options to retrieve our options
 	 * or the defaults if necessary.
 	 */
-	public function __construct(){
+	public function __construct() {
 		$this->wivm_options = new WI_Volunteer_Management_Options();
-		$this->option_name 	= $this->wivm_options->option_name;
+		$this->option_name  = $this->wivm_options->option_name;
 	}
 
 	/**
@@ -234,17 +233,22 @@ class WI_Volunteer_Management_Form {
 	/**
 	 * Create a Checkbox input field.
 	 *
+	 * A hidden input with the same name attribute is created to ensure that the value is always stored,
+	 * even if the checkbox is unchecked.
+	 *
 	 * @param string $var            The variable within the option to create the checkbox for.
 	 * @param string $main_label     The main label that shows on the left side of the settings page.
 	 * @param string $checkbox_label The label that shows just to the right of the checkbox.
 	 */
 	public function checkbox( $var, $main_label, $checkbox_label ) {
+
 		echo '<tr>';
 
 			$this->label( $main_label, array( 'text_only' => true ) );
 			echo '<td>';
 
-				echo '<input class="checkbox" type="checkbox" id="' . esc_attr( $var ) . '" name="' . esc_attr( $this->option_name ) . '[' . esc_attr( $var ) . ']" value="on"' . checked( $this->wivm_options->get_option( $var ), 'on', false ), '/>';
+				echo '<input type="hidden" id="' . esc_attr( $var ) . '_hidden" name="' . esc_attr( $this->option_name ) . '[' . esc_attr( $var ) . ']" value="0" />';
+				echo '<input class="checkbox" type="checkbox" id="' . esc_attr( $var ) . '" name="' . esc_attr( $this->option_name ) . '[' . esc_attr( $var ) . ']" value="1"' . checked( $this->wivm_options->get_option( $var ), '1', false ), '/>';
 				echo '<label for="' . $var . '">' . $checkbox_label . '</label>';
 
 			echo '</td>';
