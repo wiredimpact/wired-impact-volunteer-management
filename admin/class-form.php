@@ -243,7 +243,7 @@ class WI_Volunteer_Management_Form {
 				wp_editor( $content, $var . '-editor', array(
 					'media_buttons' => false,
 					'textarea_name' => esc_attr( $this->option_name ) . '[' . esc_attr( $var ) . ']',
-					'editor_height' => 425,
+					'editor_height' => 250,
 				));
 				if( $attr['description'] ) echo '<p class="description">' . $attr['description'] . '</p>';
 
