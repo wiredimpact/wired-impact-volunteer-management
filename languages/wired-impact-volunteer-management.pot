@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Wired Impact Volunteer Management 2.1\n"
+"Project-Id-Version: Wired Impact Volunteer Management 2.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wired-impact-volunteer-management\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-12-12T16:46:07+00:00\n"
+"POT-Creation-Date: 2023-12-18T14:19:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wired-impact-volunteer-management\n"
@@ -94,7 +94,7 @@ msgid "Your email has been sent to the volunteers!"
 msgstr ""
 
 #: admin/class-admin.php:226
-#: admin/class-form.php:65
+#: admin/class-form.php:64
 #: admin/pages/volunteers.php:34
 msgid "Wired Impact Volunteer Management: "
 msgstr ""
@@ -165,7 +165,7 @@ msgid "Phone Number"
 msgstr ""
 
 #: admin/class-admin.php:420
-#: admin/pages/help-settings.php:34
+#: admin/pages/help-settings.php:33
 #: includes/class-gravity-forms-feed-addon.php:144
 msgid "Email"
 msgstr ""
@@ -255,12 +255,12 @@ msgid "Form Type"
 msgstr ""
 
 #: admin/class-admin.php:545
-#: admin/pages/help-settings.php:91
+#: admin/pages/help-settings.php:90
 msgid "No Form"
 msgstr ""
 
 #: admin/class-admin.php:546
-#: admin/pages/help-settings.php:92
+#: admin/pages/help-settings.php:91
 msgid "Built-In Signup Form"
 msgstr ""
 
@@ -294,7 +294,7 @@ msgid "No one has signed up for this opportunity, so you can't send any emails y
 msgstr ""
 
 #: admin/class-admin.php:750
-msgid "Below you can send a custom email to all volunteers who signed up for this opportunity. This is sent to the admins with the volunteers BCC'ed, so you know that the email was sent successfully. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent."
+msgid "Send a custom email to all volunteers who signed up for this opportunity. This email is sent to the admin and the contact for this opportunity with the volunteers BCC'ed. That way you know the email was sent successfully. You can use these variables to personalize the email when it's sent: {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone}, {contact_email}"
 msgstr ""
 
 #: admin/class-admin.php:752
@@ -388,113 +388,121 @@ msgid "Flexible Opportunities"
 msgstr ""
 
 #. translators: phone number pattern for preg_replace(), see http://php.net/manual/en/function.preg-replace.php
-#: admin/class-form.php:375
+#: admin/class-form.php:401
 #: includes/class-opportunity.php:216
 #: includes/class-volunteer.php:97
 msgid "/^(\\d{3})(\\d{3})(\\d{4})$/"
 msgstr ""
 
 #. translators: phone number replacement for preg_replace(), see http://php.net/manual/en/function.preg-replace.php
-#: admin/class-form.php:377
+#: admin/class-form.php:403
 #: includes/class-opportunity.php:218
 #: includes/class-volunteer.php:99
 msgid "($1) $2-$3"
 msgstr ""
 
-#: admin/pages/help-settings.php:28
+#: admin/pages/help-settings.php:27
 msgid "Help"
 msgstr ""
 
-#: admin/pages/help-settings.php:32
+#: admin/pages/help-settings.php:31
 msgid "General"
 msgstr ""
 
-#: admin/pages/help-settings.php:33
+#: admin/pages/help-settings.php:32
 msgid "Opportunity Defaults"
 msgstr ""
 
-#: admin/pages/help-settings.php:47
+#: admin/pages/help-settings.php:46
 msgid "FAQs and Get Started"
 msgstr ""
 
-#: admin/pages/help-settings.php:49
+#: admin/pages/help-settings.php:48
 msgid "Need More Help?"
 msgstr ""
 
-#: admin/pages/help-settings.php:61
+#: admin/pages/help-settings.php:60
 msgid "Yes, please provide basic styling."
 msgstr ""
 
-#: admin/pages/help-settings.php:61
+#: admin/pages/help-settings.php:60
 msgid "No, I'll code my own styling."
 msgstr ""
 
-#: admin/pages/help-settings.php:62
+#: admin/pages/help-settings.php:61
 msgid "Yes, please use a honeypot to prevent spam."
 msgstr ""
 
-#: admin/pages/help-settings.php:62
+#: admin/pages/help-settings.php:61
 msgid "No, I'll handle spam in my own way."
 msgstr ""
 
-#: admin/pages/help-settings.php:72
+#: admin/pages/help-settings.php:71
 msgid "Default Contact Information"
 msgstr ""
 
-#: admin/pages/help-settings.php:72
+#: admin/pages/help-settings.php:71
 msgid "These contact settings will be loaded by default for all new volunteer opportunities, but you can customize each opportunity individually."
 msgstr ""
 
-#: admin/pages/help-settings.php:73
+#: admin/pages/help-settings.php:72
 msgid "Default Contact Name"
 msgstr ""
 
-#: admin/pages/help-settings.php:74
+#: admin/pages/help-settings.php:73
 msgid "Default Contact Phone"
 msgstr ""
 
-#: admin/pages/help-settings.php:75
+#: admin/pages/help-settings.php:74
 msgid "Default Contact Email"
 msgstr ""
 
-#: admin/pages/help-settings.php:77
+#: admin/pages/help-settings.php:76
 msgid "Default Location Information"
 msgstr ""
 
-#: admin/pages/help-settings.php:77
+#: admin/pages/help-settings.php:76
 msgid "These location settings will be loaded by default for all new volunteer opportunities, but you can customize each opportunity individually."
 msgstr ""
 
-#: admin/pages/help-settings.php:78
+#: admin/pages/help-settings.php:77
 msgid "Default Location Name"
 msgstr ""
 
-#: admin/pages/help-settings.php:79
+#: admin/pages/help-settings.php:78
 msgid "Default Street"
 msgstr ""
 
-#: admin/pages/help-settings.php:80
+#: admin/pages/help-settings.php:79
 msgid "Default City"
 msgstr ""
 
-#: admin/pages/help-settings.php:81
+#: admin/pages/help-settings.php:80
 msgid "Default State"
 msgstr ""
 
-#: admin/pages/help-settings.php:82
+#: admin/pages/help-settings.php:81
 msgid "Default Zip"
 msgstr ""
 
-#: admin/pages/help-settings.php:84
+#: admin/pages/help-settings.php:83
 msgid "Default Volunteer Signup Form"
 msgstr ""
 
-#: admin/pages/help-settings.php:84
+#: admin/pages/help-settings.php:83
 msgid "This form will be loaded by default for all new volunteer opportunities, but you can customize each opportunity individually."
 msgstr ""
 
-#: admin/pages/help-settings.php:87
+#: admin/pages/help-settings.php:86
 msgid "Default Form Type"
+msgstr ""
+
+#: admin/pages/help-settings.php:103
+msgid "All Emails"
+msgstr ""
+
+#: admin/pages/help-settings.php:103
+msgid "The email address and name below will be used as the sender for every email to volunteers, admins and volunteer opportunity contacts."
 msgstr ""
 
 #: admin/pages/help-settings.php:104
@@ -502,23 +510,15 @@ msgid "From Email Address"
 msgstr ""
 
 #: admin/pages/help-settings.php:104
-msgid "The email address you'd like to send from. If blank \"%s\" will be used from the General Settings."
+msgid "The email address you'd like to send from. If left blank, \"%s\" will be used from your website's General Settings."
 msgstr ""
 
 #: admin/pages/help-settings.php:105
-msgid "From Email Name"
+msgid "From Name"
 msgstr ""
 
 #: admin/pages/help-settings.php:105
-msgid "The name of the person you'd like the emails to be sent from. If blank \"%s\" will be used from the General Settings."
-msgstr ""
-
-#: admin/pages/help-settings.php:106
-msgid "Volunteer Signup Email Subject"
-msgstr ""
-
-#: admin/pages/help-settings.php:106
-msgid "The subject of the email to a volunteer after they sign up."
+msgid "The name of the person you'd like the emails sent from. If left blank, \"%s\" will be used from your website's General Settings."
 msgstr ""
 
 #: admin/pages/help-settings.php:107
@@ -526,55 +526,111 @@ msgid "Volunteer Signup Email"
 msgstr ""
 
 #: admin/pages/help-settings.php:107
-msgid "The email to a volunteer who just RSVPed. You can use the variables {volunteer_first_name}, {volunteer_last_name}, {volunteer_phone}, {volunteer_email}, {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent."
+msgid "This email will be sent to volunteers immediately after they sign up for an opportunity."
 msgstr ""
 
 #: admin/pages/help-settings.php:108
-msgid "Admin Email Address"
+msgid "Send Volunteer Signup Email?"
 msgstr ""
 
 #: admin/pages/help-settings.php:108
-msgid "The person to notify when volunteers sign up. The contact for the volunteer opportunity will also be notified. If this field is blank then only the contact will be notified."
+msgid "Send each volunteer an email immediately after they sign up for an opportunity."
 msgstr ""
 
 #: admin/pages/help-settings.php:109
-msgid "Admin Signup Email Subject"
+msgid "Volunteer Signup Email Subject"
 msgstr ""
 
 #: admin/pages/help-settings.php:109
-msgid "The subject of the email to the admin after someone RSVPs."
+msgid "The subject of the email to a volunteer after they sign up."
 msgstr ""
 
 #: admin/pages/help-settings.php:110
+msgid "Volunteer Signup Email Message"
+msgstr ""
+
+#: admin/pages/help-settings.php:110
+msgid "The email to a volunteer who just signed up. You can use these variables to personalize the email when it's sent: {volunteer_first_name}, {volunteer_last_name}, {volunteer_phone}, {volunteer_email}, {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone}, {contact_email}"
+msgstr ""
+
+#: admin/pages/help-settings.php:112
 msgid "Admin Signup Email"
 msgstr ""
 
-#: admin/pages/help-settings.php:110
-msgid "The email to the admin after someone RSVPs. You can use the variables {volunteer_first_name}, {volunteer_last_name}, {volunteer_phone}, {volunteer_email}, {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent."
-msgstr ""
-
-#: admin/pages/help-settings.php:111
-msgid "Number of Days Prior to Opportunity to Send Reminder"
-msgstr ""
-
-#: admin/pages/help-settings.php:111
-msgid "The number of days prior to a one-time volunteer opportunity to send a reminder. Flexible opportunities do not send a reminder email. Ex: 4"
-msgstr ""
-
 #: admin/pages/help-settings.php:112
-msgid "Volunteer Reminder Email Subject"
-msgstr ""
-
-#: admin/pages/help-settings.php:112
-msgid "The subject of the reminder email sent to volunteers prior to their opportunity."
+msgid "This email will be sent to the admin email address and the contact for the opportunity immediately after someone signs up to volunteer."
 msgstr ""
 
 #: admin/pages/help-settings.php:113
+msgid "Send Admin Signup Email?"
+msgstr ""
+
+#: admin/pages/help-settings.php:113
+msgid "Send the admin and the contact for each opportunity an email immediately after someone signs up to volunteer."
+msgstr ""
+
+#: admin/pages/help-settings.php:114
+msgid "Admin Email Address"
+msgstr ""
+
+#: admin/pages/help-settings.php:114
+msgid "This person is emailed for every volunteer signup across all opportunities. If this field is blank, only the contact for the individual volunteer opportunity will be emailed."
+msgstr ""
+
+#: admin/pages/help-settings.php:115
+msgid "Admin Signup Email Subject"
+msgstr ""
+
+#: admin/pages/help-settings.php:115
+msgid "The subject of the email to the admin and the contact for each opportunity after someone signs up to volunteer."
+msgstr ""
+
+#: admin/pages/help-settings.php:116
+msgid "Admin Signup Email Message"
+msgstr ""
+
+#: admin/pages/help-settings.php:116
+msgid "The email to the admin and the contact for each opportunity after someone signs up to volunteer. You can use these variables to personalize the email when it's sent: {volunteer_first_name}, {volunteer_last_name}, {volunteer_phone}, {volunteer_email}, {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone}, {contact_email}"
+msgstr ""
+
+#: admin/pages/help-settings.php:118
 msgid "Volunteer Reminder Email"
 msgstr ""
 
-#: admin/pages/help-settings.php:113
-msgid "The reminder email to volunteers before their opportunity arrives. This is sent to the admins with the volunteers BCC'ed. That way you know when the email has gone out. You can use the variables {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone} and {contact_email} which will be replaced when the email is sent. Since only one email is sent do not use any of the volunteer specific variables."
+#: admin/pages/help-settings.php:118
+msgid "This reminder email will be sent to volunteers a set number of days before a one-time volunteer opportunity takes place. A reminder email is never sent for flexible volunteer opportunities."
+msgstr ""
+
+#: admin/pages/help-settings.php:119
+msgid "Send Volunteer Reminder Email?"
+msgstr ""
+
+#: admin/pages/help-settings.php:119
+msgid "Send volunteers a reminder email before a one-time opportunity takes place."
+msgstr ""
+
+#: admin/pages/help-settings.php:120
+msgid "Number of Days Before Opportunity to Send Reminder"
+msgstr ""
+
+#: admin/pages/help-settings.php:120
+msgid "The number of days before a one-time volunteer opportunity to send the reminder email. Ex: 4"
+msgstr ""
+
+#: admin/pages/help-settings.php:121
+msgid "Volunteer Reminder Email Subject"
+msgstr ""
+
+#: admin/pages/help-settings.php:121
+msgid "The subject of the reminder email sent to volunteers prior to their opportunity."
+msgstr ""
+
+#: admin/pages/help-settings.php:122
+msgid "Volunteer Reminder Email Message"
+msgstr ""
+
+#: admin/pages/help-settings.php:122
+msgid "The reminder email to volunteers before their opportunity takes place. This email is sent to the admin and the contact for each opportunity with the volunteers BCC'ed. That way you know when the email has gone out. You can use these variables to personalize the email when it's sent: {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone}, {contact_email}"
 msgstr ""
 
 #: admin/pages/volunteer.php:16
