@@ -38,29 +38,30 @@ class WI_Volunteer_Management_Options {
 	 */
 	public $defaults = array(
 		// General.
-		'use_css'                          => 1,
-		'use_honeypot'                     => 1,
-		'show_getting_started_notice'      => 1,
+		'use_css'                           => 1,
+		'use_honeypot'                      => 1,
+		'show_getting_started_notice'       => 1,
 
 		// Defaults.
-		'default_contact_name'             => '',
-		'default_contact_phone'            => '',
-		'default_contact_email'            => '',
+		'default_contact_name'              => '',
+		'default_contact_phone'             => '',
+		'default_contact_email'             => '',
 
-		'default_location'                 => '',
-		'default_street'                   => '',
-		'default_city'                     => '',
-		'default_state'                    => '',
-		'default_zip'                      => '',
+		'default_location'                  => '',
+		'default_street'                    => '',
+		'default_city'                      => '',
+		'default_state'                     => '',
+		'default_zip'                       => '',
 
-		'default_form_type'                => 'built_in_form',
-		'default_form_id'                  => 0,
+		'default_form_type'                 => 'built_in_form',
+		'default_form_id'                   => 0,
 
 		// Email.
-		'from_email_address'               => '',
-		'from_email_name'                  => '',
-		'volunteer_signup_email_subject'   => 'Thanks for Signing Up to Volunteer',
-		'volunteer_signup_email'           => 'Hi {volunteer_first_name},
+		'from_email_address'                => '',
+		'from_email_name'                   => '',
+		'send_signup_email_to_volunteers'   => 1,
+		'volunteer_signup_email_subject'    => 'Thanks for Signing Up to Volunteer',
+		'volunteer_signup_email'            => 'Hi {volunteer_first_name},
 
 Thanks for signing up to volunteer. Here are the details of the opportunity:
 
@@ -70,9 +71,10 @@ Location: {opportunity_location}
 
 If you have any questions please reach out to {contact_name} at {contact_email} or by phone at {contact_phone}.',
 
-		'admin_email_address'              => '',
-		'admin_signup_email_subject'       => 'Volunteer Signup Submission',
-		'admin_signup_email'               => 'Hi, someone just signed up to volunteer! Here are the details:
+		'send_signup_email_to_admins'       => 1,
+		'admin_email_address'               => '',
+		'admin_signup_email_subject'        => 'Volunteer Signup Submission',
+		'admin_signup_email'                => 'Hi, someone just signed up to volunteer! Here are the details:
 
 Volunteer Name: {volunteer_first_name} {volunteer_last_name}
 Email: {volunteer_email}
@@ -81,9 +83,11 @@ Phone: {volunteer_phone}
 Opportunity Name: {opportunity_name}
 When: {opportunity_date_time}
 Location: {opportunity_location}',
-		'days_prior_reminder'              => 4,
-		'volunteer_reminder_email_subject' => 'Your Volunteer Opportunity is Coming Up',
-		'volunteer_reminder_email'         => 'Hi,
+
+		'send_reminder_email_to_volunteers' => 1,
+		'days_prior_reminder'               => 4,
+		'volunteer_reminder_email_subject'  => 'Your Volunteer Opportunity is Coming Up',
+		'volunteer_reminder_email'          => 'Hi,
 
 Thanks again for signing up to volunteer. Your opportunity is coming up soon. Here are the details:
 
@@ -114,7 +118,7 @@ If you have any questions please reach out to {contact_name} at {contact_email} 
 	 *
 	 * @return array All of our options from the database.
 	 */
-	public function get_options() {
+	private function get_options() {
 
 		return get_option( $this->option_name, $this->defaults );
 	}

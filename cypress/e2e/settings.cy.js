@@ -3,6 +3,7 @@
  *
  * Assumptions:
  * - The Wired Impact Volunteer Management plugin is installed and activated.
+ * - MailCatcher is used to catch emails sent by the plugin and is accessible via the web.
  */
 describe('Plugin and Volunteer Opportunity Settings', () => {
 
@@ -38,9 +39,12 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 
 		// Email settings
 		cy.contains('#wivm-tabs a', 'Email').click();
+		cy.contains('tr', 'Send Volunteer Signup Email?').find('input[type="checkbox"]').should('be.checked');
 		cy.contains('tr', 'Volunteer Signup Email Subject').find('input').should('have.value', 'Thanks for Signing Up to Volunteer');
+		cy.contains('tr', 'Send Admin Signup Email?').find('input[type="checkbox"]').should('be.checked');
 		cy.contains('tr', 'Admin Signup Email Subject').find('input').should('have.value', 'Volunteer Signup Submission');
-		cy.contains('tr', 'Number of Days Prior to Opportunity to Send Reminder').find('input').should('have.value', '4');
+		cy.contains('tr', 'Send Volunteer Reminder Email?').find('input[type="checkbox"]').should('be.checked');
+		cy.contains('tr', 'Number of Days Before Opportunity to Send Reminder').find('input').should('have.value', '4');
 		cy.contains('tr', 'Volunteer Reminder Email Subject').find('input').should('have.value', 'Your Volunteer Opportunity is Coming Up');
 	});
 
@@ -67,7 +71,7 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		cy.get('input#wivm_hp').should('not.exist');
 	});
 
-	it('Stores and uses Opportunity Details settings', () => {
+	it('Stores and uses Opportunity Defaults settings', () => {
 
 		cy.visit('/wp-admin/admin.php?page=wi-volunteer-management-help-settings');
 
@@ -163,5 +167,70 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		cy.contains('div', 'Post updated').find('a').click();
 
 		cy.get('.entry-content form').should('not.exist');
+	});
+
+	it('Doesn\'t send volunteer and admin signup emails if the setting is off', function() {
+
+		// Set the built-in form to show
+		cy.visit('/wp-admin/post.php?post=' + this.volunteerOppID + '&action=edit');
+		cy.contains('tr', 'Form Type').find('select').select('built_in_form');
+		cy.contains('button','Update').click();
+		cy.contains('div', 'Post updated').should('be.visible');
+
+		// Set up an admin email address to receive emails about new signups
+		cy.visit('/wp-admin/admin.php?page=wi-volunteer-management-help-settings');
+		cy.contains('#wivm-tabs a', 'Email').click();
+		cy.contains('tr', 'Admin Email Address').find('input').type('volunteer-admin@wiredimpact.com');
+		cy.contains('input', 'Save Changes').click();
+
+		// Sign up a volunteer for an opportunity
+		cy.deleteAllMailCatcherEmails();
+		cy.visit('/volunteer-opportunity/clean-up-trash/');
+		cy.contains('form label', 'First Name:').next('input').type('Abraham');
+		cy.contains('form label', 'Last Name:').next('input').type('Lincoln');
+		cy.contains('form label', 'Phone:').next('input').type('(888) 777-6666');
+		cy.contains('form label', 'Email:').next('input').type('abraham@usa.gov');
+		cy.contains('form#wivm-sign-up-form input[type="submit"]', 'Express Interest').click();
+		cy.contains('div', 'Thanks for signing up. You’ll receive a confirmation email shortly.').should('be.visible');
+
+		cy.request('GET', 'http://127.0.0.1:1080/messages/1.source').then((response) => {
+			// The email to the volunteer should be sent
+			expect(response.status).to.eq(200);
+			expect(response.body).to.include('To: abraham@usa.gov');
+			expect(response.body).to.include('Subject: Thanks for Signing Up to Volunteer');
+		});
+		cy.request('GET', 'http://127.0.0.1:1080/messages/2.source').then((response) => {
+			// The email to the admin should be sent
+			expect(response.status).to.eq(200);
+			expect(response.body).to.include('To: volunteer-admin@wiredimpact.com');
+			expect(response.body).to.include('Subject: Volunteer Signup Submission');
+		});
+
+		// Turn off the volunteer and admin signup emails
+		cy.visit('/wp-admin/admin.php?page=wi-volunteer-management-help-settings');
+		cy.contains('#wivm-tabs a', 'Email').click();
+		cy.contains('tr', 'Send Volunteer Signup Email?').find('input[type="checkbox"]').uncheck();
+		cy.contains('tr', 'Send Admin Signup Email?').find('input[type="checkbox"]').uncheck();
+		cy.contains('tr', 'Send Volunteer Reminder Email?').find('input[type="checkbox"]').uncheck();
+		cy.contains('input', 'Save Changes').click();
+
+		cy.contains('tr', 'Send Volunteer Signup Email?').find('input[type="checkbox"]').should('not.be.checked');
+		cy.contains('tr', 'Send Admin Signup Email?').find('input[type="checkbox"]').should('not.be.checked');
+		cy.contains('tr', 'Send Volunteer Reminder Email?').find('input[type="checkbox"]').should('not.be.checked');
+
+		// Sign up a volunteer for an opportunity
+		cy.deleteAllMailCatcherEmails();
+		cy.visit('/volunteer-opportunity/clean-up-trash/');
+		cy.contains('form label', 'First Name:').next('input').type('George');
+		cy.contains('form label', 'Last Name:').next('input').type('Washington');
+		cy.contains('form label', 'Phone:').next('input').type('(888) 777-6666');
+		cy.contains('form label', 'Email:').next('input').type('george@usa.gov');
+		cy.contains('form#wivm-sign-up-form input[type="submit"]', 'Express Interest').click();
+		cy.contains('div', 'Thanks for signing up. You’ll receive a confirmation email shortly.').should('be.visible');
+		cy.request('GET', 'http://127.0.0.1:1080/messages').then((response) => {
+			// There should have been no emails sent, so no emails at all stored in MailCatcher
+			expect(response.status).to.eq(200);
+			expect(response.body).to.have.length(0);
+		});
 	});
 });

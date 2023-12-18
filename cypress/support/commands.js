@@ -103,3 +103,18 @@ Cypress.Commands.add('createVolunteerSignupForm', () => {
 		cy.wrap(formID).as('volunteerSignupFormID');
 	});
 });
+
+/**
+ * Delete all emails from the MailCatcher inbox.
+ *
+ * MailCatcher is included by default in WP Local Docker.
+ *
+ * @see https://mailcatcher.me/
+ * @see https://github.com/10up/wp-local-docker-v2
+ */
+Cypress.Commands.add('deleteAllMailCatcherEmails', () => {
+	
+	cy.request('DELETE', 'http://127.0.0.1:1080/messages').then((response) => {
+		expect(response.status).to.eq(204);
+	});
+});

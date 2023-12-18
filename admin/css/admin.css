@@ -37,6 +37,10 @@
 	margin-top: 0;
 }
 
+.wivmtab .hide-field {
+	display: none;
+}
+
 /* Volunteer Opportunity Edit Screen and Meta Boxes */
 p.editor-help {
 	margin-top: .5em;

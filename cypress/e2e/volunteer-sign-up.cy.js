@@ -22,7 +22,7 @@ describe('Volunteer Sign Up', () => {
 		cy.contains('form label', 'Email:').next('input').type('abraham@usa.gov');
 
 		cy.contains('form#wivm-sign-up-form input[type="submit"]', 'Express Interest').click();
-		cy.contains('div', 'Thanks for signing up. You’ll receive a confirmation email shortly.').should('exist');
+		cy.contains('div', 'Thanks for signing up. You’ll receive a confirmation email shortly.').should('be.visible');
 
 		// Save the volunteer opportunity that was created with WP-CLI to ensure all meta is stored
 		cy.login();

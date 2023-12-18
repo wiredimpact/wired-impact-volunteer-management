@@ -523,8 +523,8 @@ class WI_Volunteer_Management_Public {
 
 				$email = new WI_Volunteer_Management_Email( $opp, $user );
 
-				$email->send_volunteer_signup_email();
-				$email->send_admin_signup_email();
+				$email->maybe_send_volunteer_signup_email();
+				$email->maybe_send_admin_signup_email();
 				$result = 'rsvped';
 
 			} else {
@@ -549,12 +549,21 @@ class WI_Volunteer_Management_Public {
 	 *
 	 * @param  int $opp_id Volunteer opportunity ID.
 	 */
-	public function send_email_reminder( $opp_id ){
+	public function maybe_send_email_reminder( $opp_id ) {
 
-		$opp = new WI_Volunteer_Management_Opportunity( $opp_id );
+		$options = new WI_Volunteer_Management_Options();
 
+		// Don't send if the setting to send reminder emails to volunteers is turned off.
+		if ( (int) $options->get_option( 'send_reminder_email_to_volunteers' ) !== 1 ) {
+
+			return;
+		}
+
+		$opp                         = new WI_Volunteer_Management_Opportunity( $opp_id );
 		$reminder_email_already_sent = $this->has_reminder_email_already_sent( $opp );
-		if( $reminder_email_already_sent === true ){
+
+		if ( $reminder_email_already_sent === true ) {
+
 			return false;
 		}
 
@@ -563,7 +572,7 @@ class WI_Volunteer_Management_Public {
 			'user_id' => 0,
 		);
 
-		$email 	= new WI_Volunteer_Management_Email( $opp );
+		$email = new WI_Volunteer_Management_Email( $opp );
 		$email->send_volunteer_reminder_email();
 		$email->store_volunteer_email( $data_array );
 	}
@@ -571,7 +580,7 @@ class WI_Volunteer_Management_Public {
 	/**
 	 * Check if a reminder email has already been sent by the system within the last 5 hours.
 	 *
-	 * While send_email_reminder() should only run one time through cron, in certain caching
+	 * While maybe_send_email_reminder() should only run one time through cron, in certain caching
 	 * situations the same cron event was run multiple times, which triggered the automated
 	 * reminder email to send multiple times. Since the get_rsvp_emails() method uses
 	 * $wpdb->get_results() which is not cached, this method should prevent the reminder

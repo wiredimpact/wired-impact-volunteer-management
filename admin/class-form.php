@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Output the form and fields for all settings.
  *
@@ -15,7 +14,7 @@
  *
  * Used to generate the form and fields for settings within the WordPress admin.
  * It is adapted from the WordPress SEO by Yoast plugin (https://wordpress.org/plugins/wordpress-seo/)
- * 
+ *
  * @since      0.1
  * @package    WI_Volunteer_Management
  * @subpackage WI_Volunteer_Management/Admin
@@ -43,9 +42,9 @@ class WI_Volunteer_Management_Form {
 	 * Use WI_Volunteer_Management_Options to retrieve our options
 	 * or the defaults if necessary.
 	 */
-	public function __construct(){
+	public function __construct() {
 		$this->wivm_options = new WI_Volunteer_Management_Options();
-		$this->option_name 	= $this->wivm_options->option_name;
+		$this->option_name  = $this->wivm_options->option_name;
 	}
 
 	/**
@@ -144,28 +143,39 @@ class WI_Volunteer_Management_Form {
 	/**
 	 * Create a Text input field.
 	 *
-	 * @param string $var   		The variable within the option to create the text input field for.
-	 * @param string $label 		The label to show for the variable.
-	 * @param array  $attr  		Extra class to add to the input field, Description for for field, Placeholder for field.
-	 * @param string $val_format 	Method to format the value before it's output into the form field.
+	 * @param string $var The variable within the option to create the text input field for.
+	 * @param string $label The label to show for the variable.
+	 * @param array  $attr Extra class to add to the input field, Description for for field, Placeholder for field.
+	 * @param string $val_format Method to format the value before it's output into the form field.
+	 * @param string $dependency The ID of a variable whose value must be true to show this field.
 	 */
-	public function textinput( $var, $label, $attr = array(), $val_format = null ) {
-		$attr = wp_parse_args( $attr, array(
-			'placeholder' => '',
-			'class'       => '',
-			'description' => '',
-		) );
-		$val = $this->wivm_options->get_option( $var );
+	public function textinput( $var, $label, $attr = array(), $val_format = null, $dependency = null ) {
+		$attr = wp_parse_args(
+			$attr,
+			array(
+				'placeholder' => '',
+				'class'       => '',
+				'description' => '',
+			)
+		);
+		$val  = $this->wivm_options->get_option( $var );
 
-		if( $val_format != null ){
+		if ( $val_format != null ) {
 			$val = $this->{$val_format}( $val );
 		}
 
-		echo '<tr>';
+		$dependency_class = '';
+		if ( $dependency !== null ) {
+
+			$dependency_value = (int) $this->wivm_options->get_option( $dependency );
+			$dependency_class = ( $dependency_value === 1 ) ? '' : 'hide-field ';
+		}
+
+		echo '<tr class="' . esc_attr( $dependency_class ) . esc_attr( $attr['class'] ) . '">';
 			$this->label( $label, array( 'for' => $var ) );
 			echo '<td>';
-				echo '<input class="regular-text ' . esc_attr( $attr['class'] ) . ' " placeholder="' . esc_attr( $attr['placeholder'] ) . '" type="text" id="', esc_attr( $var ), '" name="', esc_attr( $this->option_name ), '[', esc_attr( $var ), ']" value="', esc_attr( $val ), '"/>';
-				if( $attr['description'] ) echo '<p class="description">' . $attr['description'] . '</p>';
+				echo '<input class="regular-text" placeholder="' . esc_attr( $attr['placeholder'] ) . '" type="text" id="', esc_attr( $var ), '" name="', esc_attr( $this->option_name ), '[', esc_attr( $var ), ']" value="', esc_attr( $val ), '"/>';
+				if ( $attr['description'] ) echo '<p class="description">' . $attr['description'] . '</p>';
 			echo '</td>';
 		echo '</tr>';
 	}
@@ -202,18 +212,30 @@ class WI_Volunteer_Management_Form {
 	/**
 	 * Create a WYSIWYG editor.
 	 *
-	 * @param string       $var   The variable within the option to create the text input field for.
-	 * @param string       $label The label to show for the variable.
-	 * @param array $attr  Extra class to add to the input field, Description for the field, Placeholder for field
+	 * @param string $var   The variable within the option to create the text input field for.
+	 * @param string $label The label to show for the variable.
+	 * @param array  $attr  Extra class to add to the input field, Description for the field, Placeholder for field.
+	 * @param string $dependency The ID of a variable whose value must be true to show this field.
 	 */
-	public function wysiwyg_editor( $var, $label, $attr = array() ) {
-		$attr = wp_parse_args( $attr, array(
-			'class'       => '',
-			'description' => '',
-		) );
+	public function wysiwyg_editor( $var, $label, $attr = array(), $dependency = null ) {
+
+		$attr    = wp_parse_args(
+			$attr,
+			array(
+				'class'       => '',
+				'description' => '',
+			)
+		);
 		$content = $this->wivm_options->get_option( $var );
 
-		echo '<tr>';
+		$dependency_class = '';
+		if ( $dependency !== null ) {
+
+			$dependency_value = (int) $this->wivm_options->get_option( $dependency );
+			$dependency_class = ( $dependency_value === 1 ) ? '' : 'hide-field ';
+		}
+
+		echo '<tr class="' . esc_attr( $dependency_class ) . esc_attr( $attr['class'] ) . '">';
 
 			$this->label( $label, array( 'for' => $var . '-editor' ) );
 			echo '<td>';
@@ -221,30 +243,34 @@ class WI_Volunteer_Management_Form {
 				wp_editor( $content, $var . '-editor', array(
 					'media_buttons' => false,
 					'textarea_name' => esc_attr( $this->option_name ) . '[' . esc_attr( $var ) . ']',
-					'editor_height' => 425,
-					'editor_css'    => $attr['class']
+					'editor_height' => 250,
 				));
 				if( $attr['description'] ) echo '<p class="description">' . $attr['description'] . '</p>';
 
 			echo '</td>';
 
-		echo '</tr>';	
+		echo '</tr>';
 	}
 
 	/**
 	 * Create a Checkbox input field.
+	 *
+	 * A hidden input with the same name attribute is created to ensure that the value is always stored,
+	 * even if the checkbox is unchecked.
 	 *
 	 * @param string $var            The variable within the option to create the checkbox for.
 	 * @param string $main_label     The main label that shows on the left side of the settings page.
 	 * @param string $checkbox_label The label that shows just to the right of the checkbox.
 	 */
 	public function checkbox( $var, $main_label, $checkbox_label ) {
+
 		echo '<tr>';
 
 			$this->label( $main_label, array( 'text_only' => true ) );
 			echo '<td>';
 
-				echo '<input class="checkbox" type="checkbox" id="' . esc_attr( $var ) . '" name="' . esc_attr( $this->option_name ) . '[' . esc_attr( $var ) . ']" value="on"' . checked( $this->wivm_options->get_option( $var ), 'on', false ), '/>';
+				echo '<input type="hidden" id="' . esc_attr( $var ) . '_hidden" name="' . esc_attr( $this->option_name ) . '[' . esc_attr( $var ) . ']" value="0" />';
+				echo '<input class="checkbox" type="checkbox" id="' . esc_attr( $var ) . '" name="' . esc_attr( $this->option_name ) . '[' . esc_attr( $var ) . ']" value="1"' . checked( $this->wivm_options->get_option( $var ), '1', false ), '/>';
 				echo '<label for="' . $var . '">' . $checkbox_label . '</label>';
 
 			echo '</td>';
@@ -363,11 +389,11 @@ class WI_Volunteer_Management_Form {
 	 * Format a phone number that's provided only in integers.
 	 *
 	 * @todo   Remove duplicates of this method that exist in other classes
-	 * 
-	 * @param  int $unformmated_number Phone number in only integers
+	 *
+	 * @param int $unformatted_number Phone number in only integers.
 	 * @return string Phone number formatted to look nice.
 	 */
-	public function format_phone_number( $unformatted_number ){
+	public function format_phone_number( $unformatted_number ) {
 		$formatted_number = '';
 
 		if( $unformatted_number != '' ){
