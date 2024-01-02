@@ -268,6 +268,8 @@ class WI_Volunteer_Management {
 			$this->loader->add_action( 'wivm_show_volunteer_sign_up_form', $gravity_forms, 'show_volunteer_sign_up_form' );
 			$this->loader->add_action( 'wp_enqueue_scripts', $gravity_forms, 'enqueue_scripts' );
 			$this->loader->add_action( 'gform_loaded', 'WI_Volunteer_Management_Gravity_Forms_Feed_AddOn_Bootstrap', 'load', 5 );
+			$this->loader->add_filter( 'gform_custom_merge_tags', $gravity_forms, 'add_custom_merge_tags', 10, 4 );
+			$this->loader->add_filter( 'gform_replace_merge_tags', $gravity_forms, 'replace_custom_merge_tags', 10, 7 );
 		}
 	}
 
