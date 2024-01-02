@@ -15,3 +15,11 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+
+// Ignore ResizeObserver errors since they occur when using Gravity Forms merge tag dropdowns
+Cypress.on('uncaught:exception', (err) => {
+
+    if ((err.message.includes("ResizeObserver loop limit exceeded"))) {
+        return false;
+    }
+});
