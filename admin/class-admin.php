@@ -348,41 +348,42 @@ class WI_Volunteer_Management_Admin {
 	/**
 	 * Add meta boxes for volunteer opportunities.
 	 */
-	public function add_meta_boxes(){
-		//Opportunity details such as location and time
+	public function add_meta_boxes() {
+
+		// Opportunity details such as location and time.
 		add_meta_box(
-			'volunteer-opportunity-details',                                            // Unique ID
-			__( 'Volunteer Opportunity Details', 'wired-impact-volunteer-management' ), // Box title
-			array( $this, 'display_opportunity_details_meta_box' ),                     // Content callback
-			'volunteer_opp',                                                            // Post type
-			'normal'                                                                    // Location
+			'volunteer-opportunity-details',
+			__( 'Volunteer Opportunity Details', 'wired-impact-volunteer-management' ),
+			array( $this, 'display_opportunity_details_meta_box' ),
+			'volunteer_opp',
+			'normal'
 		);
 
-		//Opportunity RSVP details such as who signed up
+		// Opportunity RSVP details such as who signed up.
 		add_meta_box(
-			'volunteer-opportunity-rsvps',                                            // Unique ID
-			__( 'Volunteer Opportunity RSVPs', 'wired-impact-volunteer-management' ), // Box title
-			array( $this, 'display_opportunity_rsvps_meta_box' ),                     // Content callback
-			'volunteer_opp',                                                          // Post type
-			'normal'                                                                  // Location
+			'volunteer-opportunity-rsvps',
+			__( 'Volunteer Opportunity RSVPs', 'wired-impact-volunteer-management' ),
+			array( $this, 'display_opportunity_rsvps_meta_box' ),
+			'volunteer_opp',
+			'normal'
 		);
 
-		//Volunteer custom email form
+		// Volunteer custom email form.
 		add_meta_box(
-			'volunteer-opportunity-email-form',                                 // Unique ID
-			__( 'Email Your Volunteers', 'wired-impact-volunteer-management' ), // Box title
-			array( $this, 'display_opportunity_email_form_meta_box' ),          // Content callback
-			'volunteer_opp',                                                    // Post type
-			'normal'                                                            // Location
+			'volunteer-opportunity-email-form',
+			__( 'Email Your Volunteers', 'wired-impact-volunteer-management' ),
+			array( $this, 'display_opportunity_email_form_meta_box' ),
+			'volunteer_opp',
+			'normal'
 		);
 
-		//List of sent custom volunteer emails
+		// List of sent custom volunteer emails.
 		add_meta_box(
-			'volunteer-opportunity-email-list',                                // Unique ID
-			__( 'Emails Sent to Volunteers', 'wired-impact-volunteer-management' ), // Box title
-			array( $this, 'display_opportunity_email_list_meta_box' ),         // Content callback
-			'volunteer_opp',                                                   // Post type
-			'normal'                                                           // Location
+			'volunteer-opportunity-email-list',
+			__( 'Emails Sent to Volunteers', 'wired-impact-volunteer-management' ),
+			array( $this, 'display_opportunity_email_list_meta_box' ),
+			'volunteer_opp',
+			'normal'
 		);
 	}
 
