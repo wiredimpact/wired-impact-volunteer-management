@@ -347,8 +347,15 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Add meta boxes for volunteer opportunities.
+	 *
+	 * The RSVP and email meta boxes are only shown if the opportunity is displaying
+	 * the built-in signup form or already has RSVPs. This avoids showing meta boxes
+	 * focused on volunteers when no volunteers will be stored for the opportunity.
+	 *
+	 * @param string $post_type The post type of the post being edited.
+	 * @param object $post The post object for the volunteer opportunity.
 	 */
-	public function add_meta_boxes() {
+	public function add_meta_boxes( $post_type, $post ) {
 
 		// Opportunity details such as location and time.
 		add_meta_box(
@@ -358,6 +365,19 @@ class WI_Volunteer_Management_Admin {
 			'volunteer_opp',
 			'normal'
 		);
+
+		// Show the volunteer RSVP and email meta boxes only if the opportunity is showing a signup form or already has RSVPs.
+		$volunteer_opp = new WI_Volunteer_Management_Opportunity( $post->ID );
+		$form_type     = $volunteer_opp->opp_meta['form_type'];
+		$num_rsvps     = (int) $volunteer_opp->get_number_rsvps();
+
+		$show_volunteer_opp_meta_boxes = ( $form_type !== 'no_form' || $num_rsvps > 0 ) ? true : false;
+		$show_volunteer_opp_meta_boxes = apply_filters( 'show_volunteer_opp_meta_boxes', $show_volunteer_opp_meta_boxes, $volunteer_opp );
+
+		if ( $show_volunteer_opp_meta_boxes === false ) {
+
+			return;
+		}
 
 		// Opportunity RSVP details such as who signed up.
 		add_meta_box(

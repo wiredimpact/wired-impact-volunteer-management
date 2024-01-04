@@ -354,4 +354,30 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 
 		return $search_and_replace_text;
 	}
+
+	/**
+	 * Hide the volunteer opportunity RSVP and email meta boxes if the
+	 * opportunity uses Gravity Forms and there are no active form feeds.
+	 *
+	 * This avoids showing meta boxes focused on volunteers when no volunteers
+	 * will be stored in the plugin for the opportunity.
+	 *
+	 * @param bool   $show_volunteer_opp_meta_boxes Whether to show the meta boxes.
+	 * @param object $volunteer_opp The volunteer opportunity object.
+	 * @return bool Whether to show the meta boxes.
+	 */
+	public function show_hide_volunteer_opp_meta_boxes( $show_volunteer_opp_meta_boxes, $volunteer_opp ) {
+
+		// If the form type isn't Gravity Forms, don't alter whether the meta boxes are shown.
+		if ( $volunteer_opp->opp_meta['form_type'] !== self::FORM_TYPE_SETTING_GF_VALUE ) {
+
+			return $show_volunteer_opp_meta_boxes;
+		}
+
+		// If there's no active volunteer management form feed for this form, hide the meta boxes. If there is, show them.
+		$form_feeds                    = GFAPI::get_feeds( null, $volunteer_opp->opp_meta['form_id'], 'wired-impact-volunteer-management' );
+		$show_volunteer_opp_meta_boxes = ( is_wp_error( $form_feeds ) ) ? false : true;
+
+		return $show_volunteer_opp_meta_boxes;
+	}
 }

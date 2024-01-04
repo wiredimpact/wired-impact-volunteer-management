@@ -208,7 +208,7 @@ class WI_Volunteer_Management {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'do_menu_changes' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
 		$this->loader->add_action( 'edit_form_after_editor', $plugin_admin, 'show_opp_editor_description' );
-		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'add_meta_boxes' );
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'add_meta_boxes', 10, 2 );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_volunteer_opp_meta', 10, 2 );
 		$this->loader->add_action( 'show_user_profile', $plugin_admin, 'show_extra_profile_fields' );
 		$this->loader->add_action( 'edit_user_profile', $plugin_admin, 'show_extra_profile_fields' );
@@ -270,6 +270,7 @@ class WI_Volunteer_Management {
 			$this->loader->add_action( 'gform_loaded', 'WI_Volunteer_Management_Gravity_Forms_Feed_AddOn_Bootstrap', 'load', 5 );
 			$this->loader->add_filter( 'gform_custom_merge_tags', $gravity_forms, 'add_custom_merge_tags', 10, 4 );
 			$this->loader->add_filter( 'gform_replace_merge_tags', $gravity_forms, 'replace_custom_merge_tags', 10, 7 );
+			$this->loader->add_filter( 'show_volunteer_opp_meta_boxes', $gravity_forms, 'show_hide_volunteer_opp_meta_boxes', 10, 2 );
 		}
 	}
 
