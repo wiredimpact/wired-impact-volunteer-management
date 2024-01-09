@@ -5,6 +5,7 @@
  * - The Wired Impact Volunteer Management plugin is installed.
  * - The Gravity Forms plugin is installed.
  * - The Gravity Forms CLI plugin is installed and activated.
+ * - MailCatcher is used to catch emails sent by the plugin and is accessible via the web.
  */
 describe('Gravity Forms Integration', () => {
 
@@ -14,6 +15,7 @@ describe('Gravity Forms Integration', () => {
 		cy.createSingleVolunteerOpp();
 		cy.trashAllGravityFormsForms();
 	  	cy.createVolunteerSignupForm();
+		cy.deleteAllMailCatcherEmails();
 	});
   
 	beforeEach(() => {
@@ -47,7 +49,7 @@ describe('Gravity Forms Integration', () => {
 		cy.get('form#gform_' + this.volunteerSignupFormID).should('exist');    
 	});
 
-	it('Passes data from Gravity Forms to the volunteer management system and shows necessary errors', function() {
+	it('Passes data from Gravity Forms to the volunteer management system, replaces custom merge tags and shows necessary errors', function() {
 
 		// A Volunteer Management feed can be saved
 		cy.visit('/wp-admin/admin.php?page=gf_edit_forms&view=settings&id=' + this.volunteerSignupFormID);
@@ -60,8 +62,29 @@ describe('Gravity Forms Integration', () => {
 		cy.contains('tr', 'Email').find('select').select('Email').should('have.value', '4');
 		cy.contains('button','Save Settings').click();
 
-		// Select to display the Gravity Forms form
+		// Add custom merge tags to the admin notification
+		cy.visit('/wp-admin/admin.php?page=gf_edit_forms&view=settings&subview=notification&id=' + this.volunteerSignupFormID);
+		cy.contains('a', 'Admin Notification').click();
+		cy.get('.wp-editor-wrap .gform-dropdown--merge-tags > button').click();
+		cy.contains('.wp-editor-wrap button', 'Volunteer Opportunity Name').click({ force: true });
+		cy.contains('.wp-editor-wrap button', 'Volunteer Opportunity Date & Time').click({ force: true });
+		cy.contains('.wp-editor-wrap button', 'Volunteer Opportunity Location').click({ force: true });
+		cy.contains('.wp-editor-wrap button', 'Volunteer Opportunity Contact Name').click({ force: true });
+		cy.contains('.wp-editor-wrap button', 'Volunteer Opportunity Contact Phone').click({ force: true });
+		cy.contains('.wp-editor-wrap button', 'Volunteer Opportunity Contact Email').click({ force: true });
+		cy.contains('button','Update Notification').click();
+
+		// Fill in some opportunity details and select to display the Gravity Forms form
 		cy.visit('/wp-admin/post.php?post=' + this.volunteerOppID + '&action=edit');
+		cy.get('input#contact_name').type('Jamie Taylor');
+		cy.get('input#contact_phone').type('(123) 456-7890');
+		cy.get('input#contact_email').type('jamie@volunteering.org');
+		cy.get('input#location').type('Busch Stadium');
+		cy.get('input#street').type('700 Clark Ave');
+		cy.get('input#city').type('St. Louis');
+		cy.get('input#state').type('MO');
+		cy.get('input#zip').type('63102');
+		cy.get('input#flexible_frequency').type('Every Wednesday');
 		cy.contains('tr', 'Form Type').find('select').select('gravity_forms');
 		cy.contains('tr', 'Select a Form').find('select').select(this.volunteerSignupFormID);
 		cy.contains('button','Update').click();
@@ -88,6 +111,18 @@ describe('Gravity Forms Integration', () => {
 		cy.visit('/wp-admin/admin.php?page=gf_entries');
 		cy.contains('a', 'Abraham').click();
 		cy.contains('.gforms_note_wired-impact-volunteer-management', 'The volunteer successfully signed up for this opportunity.').should('exist');
+
+		// The admin notification custom merge tags have been replaced correctly
+		cy.request('GET', 'http://127.0.0.1:1080/messages/3.source').then((response) => {
+			expect(response.status).to.eq(200);
+			expect(response.body).to.include('Subject: New submission from Volunteer Signup');
+			expect(response.body).to.include('Clean up Trash');
+			expect(response.body).to.include('Every Wednesday');
+			expect(response.body).to.include('Busch Stadium, 700 Clark Ave, St. Louis, MO 63102');
+			expect(response.body).to.include('Jamie Taylor');
+			expect(response.body).to.include('(123) 456-7890');
+			expect(response.body).to.include('jamie@volunteering.org');
+		});
 
 		// An error shows in the Gravity Forms entry when the same volunteer signs up again
 		cy.visit('/volunteer-opportunity/clean-up-trash/');

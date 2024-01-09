@@ -347,42 +347,68 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Add meta boxes for volunteer opportunities.
+	 *
+	 * The RSVP and email meta boxes are only shown if the opportunity is displaying
+	 * the built-in signup form or already has RSVPs. This avoids showing meta boxes
+	 * focused on volunteers when no volunteers will be stored for the opportunity.
+	 *
+	 * @param string $post_type The post type of the post being edited.
+	 * @param object $post The post object for the volunteer opportunity.
 	 */
-	public function add_meta_boxes(){
-		//Opportunity details such as location and time
+	public function add_meta_boxes( $post_type, $post ) {
+
+		if ( $post_type !== 'volunteer_opp' ) {
+
+			return;
+		}
+
+		// Opportunity details such as location and time.
 		add_meta_box(
-			'volunteer-opportunity-details',                                            // Unique ID
-			__( 'Volunteer Opportunity Details', 'wired-impact-volunteer-management' ), // Box title
-			array( $this, 'display_opportunity_details_meta_box' ),                     // Content callback
-			'volunteer_opp',                                                            // Post type
-			'normal'                                                                    // Location
+			'volunteer-opportunity-details',
+			__( 'Volunteer Opportunity Details', 'wired-impact-volunteer-management' ),
+			array( $this, 'display_opportunity_details_meta_box' ),
+			'volunteer_opp',
+			'normal'
 		);
 
-		//Opportunity RSVP details such as who signed up
+		// Show the volunteer RSVP and email meta boxes only if the opportunity is showing a signup form or already has RSVPs.
+		$volunteer_opp = new WI_Volunteer_Management_Opportunity( $post->ID );
+		$form_type     = $volunteer_opp->opp_meta['form_type'];
+		$num_rsvps     = (int) $volunteer_opp->get_number_rsvps();
+
+		$show_volunteer_opp_meta_boxes = ( $form_type !== 'no_form' || $num_rsvps > 0 ) ? true : false;
+		$show_volunteer_opp_meta_boxes = apply_filters( 'wivm_show_volunteer_opp_meta_boxes', $show_volunteer_opp_meta_boxes, $volunteer_opp, $num_rsvps );
+
+		if ( $show_volunteer_opp_meta_boxes === false ) {
+
+			return;
+		}
+
+		// Opportunity RSVP details such as who signed up.
 		add_meta_box(
-			'volunteer-opportunity-rsvps',                                            // Unique ID
-			__( 'Volunteer Opportunity RSVPs', 'wired-impact-volunteer-management' ), // Box title
-			array( $this, 'display_opportunity_rsvps_meta_box' ),                     // Content callback
-			'volunteer_opp',                                                          // Post type
-			'normal'                                                                  // Location
+			'volunteer-opportunity-rsvps',
+			__( 'Volunteer Opportunity RSVPs', 'wired-impact-volunteer-management' ),
+			array( $this, 'display_opportunity_rsvps_meta_box' ),
+			'volunteer_opp',
+			'normal'
 		);
 
-		//Volunteer custom email form
+		// Volunteer custom email form.
 		add_meta_box(
-			'volunteer-opportunity-email-form',                                 // Unique ID
-			__( 'Email Your Volunteers', 'wired-impact-volunteer-management' ), // Box title
-			array( $this, 'display_opportunity_email_form_meta_box' ),          // Content callback
-			'volunteer_opp',                                                    // Post type
-			'normal'                                                            // Location
+			'volunteer-opportunity-email-form',
+			__( 'Email Your Volunteers', 'wired-impact-volunteer-management' ),
+			array( $this, 'display_opportunity_email_form_meta_box' ),
+			'volunteer_opp',
+			'normal'
 		);
 
-		//List of sent custom volunteer emails
+		// List of sent custom volunteer emails.
 		add_meta_box(
-			'volunteer-opportunity-email-list',                                // Unique ID
-			__( 'Emails Sent to Volunteers', 'wired-impact-volunteer-management' ), // Box title
-			array( $this, 'display_opportunity_email_list_meta_box' ),         // Content callback
-			'volunteer_opp',                                                   // Post type
-			'normal'                                                           // Location
+			'volunteer-opportunity-email-list',
+			__( 'Emails Sent to Volunteers', 'wired-impact-volunteer-management' ),
+			array( $this, 'display_opportunity_email_list_meta_box' ),
+			'volunteer_opp',
+			'normal'
 		);
 	}
 

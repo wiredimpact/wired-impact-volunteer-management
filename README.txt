@@ -4,7 +4,7 @@ Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
 Tested up to: 6.4
 Requires PHP: 5.2.4
-Stable tag: 2.2
+Stable tag: 2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,6 +118,10 @@ You'll find default settings outlining how to handle forms within the Help & Set
 1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 2.3 =
+* Added custom Gravity Forms notification merge tags to allow volunteer opportunity details to be included dynamically.
+* For clarity, hid the RSVP and volunteer email admin meta boxes if no volunteer RSVPs will be stored for an opportunity.
 
 = 2.2 =
 * Introduced settings to enable or disable certain email notifications to volunteers, admins and volunteer opportunity contacts.
