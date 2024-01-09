@@ -364,12 +364,13 @@ class WI_Volunteer_Management_Gravity_Forms_Integration {
 	 *
 	 * @param bool   $show_volunteer_opp_meta_boxes Whether to show the meta boxes.
 	 * @param object $volunteer_opp The volunteer opportunity object.
+	 * @param int    $num_rsvps The number of existing RSVPs for the volunteer opportunity.
 	 * @return bool Whether to show the meta boxes.
 	 */
-	public function show_hide_volunteer_opp_meta_boxes( $show_volunteer_opp_meta_boxes, $volunteer_opp ) {
+	public function show_hide_volunteer_opp_meta_boxes( $show_volunteer_opp_meta_boxes, $volunteer_opp, $num_rsvps ) {
 
-		// If the form type isn't Gravity Forms, don't alter whether the meta boxes are shown.
-		if ( $volunteer_opp->opp_meta['form_type'] !== self::FORM_TYPE_SETTING_GF_VALUE ) {
+		// If the form type isn't Gravity Forms or RSVPs already exist, don't alter whether the meta boxes are shown.
+		if ( $volunteer_opp->opp_meta['form_type'] !== self::FORM_TYPE_SETTING_GF_VALUE || $num_rsvps > 0 ) {
 
 			return $show_volunteer_opp_meta_boxes;
 		}
