@@ -270,7 +270,7 @@ class WI_Volunteer_Management {
 			$this->loader->add_action( 'gform_loaded', 'WI_Volunteer_Management_Gravity_Forms_Feed_AddOn_Bootstrap', 'load', 5 );
 			$this->loader->add_filter( 'gform_custom_merge_tags', $gravity_forms, 'add_custom_merge_tags', 10, 4 );
 			$this->loader->add_filter( 'gform_replace_merge_tags', $gravity_forms, 'replace_custom_merge_tags', 10, 7 );
-			$this->loader->add_filter( 'show_volunteer_opp_meta_boxes', $gravity_forms, 'show_hide_volunteer_opp_meta_boxes', 10, 3 );
+			$this->loader->add_filter( 'wivm_show_volunteer_opp_meta_boxes', $gravity_forms, 'show_hide_volunteer_opp_meta_boxes', 10, 3 );
 		}
 	}
 

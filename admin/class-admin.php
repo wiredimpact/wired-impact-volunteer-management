@@ -377,7 +377,7 @@ class WI_Volunteer_Management_Admin {
 		$num_rsvps     = (int) $volunteer_opp->get_number_rsvps();
 
 		$show_volunteer_opp_meta_boxes = ( $form_type !== 'no_form' || $num_rsvps > 0 ) ? true : false;
-		$show_volunteer_opp_meta_boxes = apply_filters( 'show_volunteer_opp_meta_boxes', $show_volunteer_opp_meta_boxes, $volunteer_opp, $num_rsvps );
+		$show_volunteer_opp_meta_boxes = apply_filters( 'wivm_show_volunteer_opp_meta_boxes', $show_volunteer_opp_meta_boxes, $volunteer_opp, $num_rsvps );
 
 		if ( $show_volunteer_opp_meta_boxes === false ) {
 
