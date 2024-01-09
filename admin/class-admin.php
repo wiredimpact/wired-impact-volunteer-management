@@ -357,6 +357,11 @@ class WI_Volunteer_Management_Admin {
 	 */
 	public function add_meta_boxes( $post_type, $post ) {
 
+		if ( $post_type !== 'volunteer_opp' ) {
+
+			return;
+		}
+
 		// Opportunity details such as location and time.
 		add_meta_box(
 			'volunteer-opportunity-details',
