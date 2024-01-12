@@ -443,7 +443,7 @@ class WI_Volunteer_Management_Admin {
 			</tr>
 		  
 			<tr>
-				<td><label for="contact_email"><?php _e( 'Email', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td><label for="contact_email"><?php _e( 'Email Address', 'wired-impact-volunteer-management' ); ?></label></td>
 				<td><input type="text" id="contact_email" name="contact_email" class="regular-text" value="<?php echo $volunteer_opp->opp_meta['contact_email']; ?>" /></td>
 			</tr>
 
@@ -479,7 +479,7 @@ class WI_Volunteer_Management_Admin {
 
 			
 			<tr>
-				<td colspan="2"><h3><?php _e( 'Date and Time', 'wired-impact-volunteer-management' ); ?></h3></td>
+				<td colspan="2"><h3><?php _e( 'Date & Time', 'wired-impact-volunteer-management' ); ?></h3></td>
 			</tr>
 
 			<tr>
@@ -509,8 +509,8 @@ class WI_Volunteer_Management_Admin {
 			</tr>
 
 			<tr class="flexible-field <?php echo $one_time_class; ?>">
-				<td><label for="flexible_frequency"><?php _e( 'When Will This Event Happen?', 'wired-impact-volunteer-management' ); ?></label></td>
-				<td><input type="text" id="flexible_frequency" name="flexible_frequency" class="regular-text" placeholder="<?php _e( 'On your own time, All summer, etc.', 'wired-impact-volunteer-management' ); ?>" value="<?php echo $volunteer_opp->opp_meta['flexible_frequency']; ?>" /></td>
+				<td><label for="flexible_frequency"><?php _e( 'When Will This Happen?', 'wired-impact-volunteer-management' ); ?></label></td>
+				<td><input type="text" id="flexible_frequency" name="flexible_frequency" class="regular-text" placeholder="<?php _e( 'Every weekend, On your own time, All summer, etc.', 'wired-impact-volunteer-management' ); ?>" value="<?php echo $volunteer_opp->opp_meta['flexible_frequency']; ?>" /></td>
 			</tr>
 
 			<tr>
@@ -536,7 +536,7 @@ class WI_Volunteer_Management_Admin {
 			</tr>
 
 			<tr class="signup-form-description">
-				<td colspan="2"><p><?php _e( 'The built-in signup form includes name, email and phone number fields. It can\'t be modified.', 'wired-impact-volunteer-management' ); ?></p></td>
+				<td colspan="2"><p><?php _e( 'The built-in signup form includes name, phone number and email address fields. It can\'t be modified.', 'wired-impact-volunteer-management' ); ?></p></td>
 			</tr>
 
 			<tr>
@@ -688,9 +688,9 @@ class WI_Volunteer_Management_Admin {
 
 	/**
 	 * Display the meta box for each volunteer that's signed up for the specific opportunity being viewed.
-	 * 
+	 *
 	 * @todo   Use WI_Volunteer_Users_List_Table() object to display this information.
-	 * 
+	 *
 	 * @param  object $post The volunteer opportunity object.
 	 */
 	public function display_opportunity_rsvps_meta_box( $post ){
@@ -710,7 +710,7 @@ class WI_Volunteer_Management_Admin {
 				<thead>
 					<tr>
 						<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
-						<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'Email', 'wired-impact-volunteer-management' ); ?></th>
 						<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
 						<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
 					</tr>
@@ -720,7 +720,7 @@ class WI_Volunteer_Management_Admin {
 
 					<tr>
 						<td data-colname="<?php _e( 'Name', 'wired-impact-volunteer-management' ); ?>"><a href="<?php echo $volunteer->get_admin_url(); ?>"><?php echo $volunteer->meta['first_name'] . ' ' . $volunteer->meta['last_name']; ?></a></td>
-						<td data-colname="<?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?>"><?php echo $volunteer->meta['email']; ?></td>
+						<td data-colname="<?php _e( 'Email', 'wired-impact-volunteer-management' ); ?>"><?php echo $volunteer->meta['email']; ?></td>
 						<td data-colname="<?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?>"><?php echo $volunteer->meta['phone']; ?></td>
 						<td data-colname="<?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?>" class="remove-rsvp-column"><a href="#remove-rsvp" class="button remove-rsvp" data-post-id="<?php echo $post->ID; ?>" data-user-id="<?php echo $volunteer->ID; ?>"><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></a></td>
 					</tr>
@@ -736,7 +736,7 @@ class WI_Volunteer_Management_Admin {
 				<tfoot>
 					<tr>
 						<th><?php _e( 'Name', 'wired-impact-volunteer-management' ); ?></th>
-						<th><?php _e( 'E-mail', 'wired-impact-volunteer-management' ); ?></th>
+						<th><?php _e( 'Email', 'wired-impact-volunteer-management' ); ?></th>
 						<th><?php _e( 'Phone', 'wired-impact-volunteer-management' ); ?></th>
 						<th><?php _e( 'Remove RSVP', 'wired-impact-volunteer-management' ); ?></th>
 					</tr>
@@ -886,7 +886,7 @@ class WI_Volunteer_Management_Admin {
 			<?php
 			echo '</table>';
 		} else {
-			printf( '<p>%s</p>', __( 'No emails have been sent yet. We\'ll list them here when we send automated reminders and when you send custom emails to volunteers.', 'wired-impact-volunteer-management' ) );
+			printf( '<p>%s</p>', __( 'No emails have been sent yet. Automated reminders and custom emails to volunteers will be listed here.', 'wired-impact-volunteer-management' ) );
 		}
 	}
 
@@ -898,19 +898,20 @@ class WI_Volunteer_Management_Admin {
 	public function show_extra_profile_fields( $user ){ 
     	$volunteer = new WI_Volunteer_Management_Volunteer( $user->ID );
     	?>
+		<h2><?php _e( 'Volunteer Info', 'wired-impact-volunteer-management' ); ?></h2>
 	    <table class="form-table">
 	    	<tr scope="row">
 			    <th><label for="phone"><?php _e( 'Phone Number', 'wired-impact-volunteer-management' ); ?></label></th>
 			    <td>
-			        <input type="text" name="phone" id="phone" value="<?php echo $volunteer->meta['phone']; ?>" class="regular-text" /><br />
-			        <p class="description"><?php _e( 'Please enter your phone number in the format (000) 000-0000.', 'wired-impact-volunteer-management' ); ?></p>
+			        <input type="text" name="phone" id="phone" value="<?php echo $volunteer->meta['phone']; ?>" class="regular-text" />
+			        <p class="description"><?php _e( 'Please enter the phone number in the format (000) 000-0000.', 'wired-impact-volunteer-management' ); ?></p>
 			    </td>
 			</tr>
 			<tr scope="row">
 			    <th><label for="notes"><?php _e( 'Notes', 'wired-impact-volunteer-management' ); ?></label></th>
 			    <td>
-			        <textarea name="notes" id="notes" rows="5" cols="30"><?php echo $volunteer->meta['notes']; ?></textarea><br />
-			        <p class="description"><?php _e( 'Please enter any notes about this user.', 'wired-impact-volunteer-management' ); ?></p>
+			        <textarea name="notes" id="notes" rows="5" cols="30"><?php echo $volunteer->meta['notes']; ?></textarea>
+			        <p class="description"><?php _e( 'Please enter any notes about this volunteer.', 'wired-impact-volunteer-management' ); ?></p>
 			    </td>
 			</tr>
 		</table>

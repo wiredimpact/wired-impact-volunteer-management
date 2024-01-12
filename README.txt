@@ -16,13 +16,13 @@ A simple, free way to keep track of your nonprofit's volunteers and opportunitie
 
 **How can the Wired Impact Volunteer Management plugin help your nonprofit?**
 
-* **Post one-time and flexible volunteer opportunities on your website –** Promote volunteer opportunities on any page of your website using a simple block or shortcode.
+* **Post one-time and flexible volunteer opportunities on your website –** Promote volunteer opportunities on any page of your website using a simple block.
 * **Volunteers can sign up directly on your website –** Make volunteering even easier for your supporters by giving them the option to sign up for an opportunity directly on your website. A confirmation email will be sent to you and the volunteer once they sign up. 
-* **Control the number of signups available for opportunities –** Only need 10 people to help out at an event? Set a cap on the number of people who can sign up. Want as many volunteers as you can get? No problem. You don’t have to set a cap.
-* **Send reminder emails anytime –** Schedule an automated reminder email three days in advance or send even hours before the opportunity for last-minute details.
-* **Volunteer profiles that track participation and more –** Keep track of all of your volunteers’ involvement. See what they’ve helped out with, how long they’ve been helping and add notes that will help you stay organized.
+* **Control the number of signups available for opportunities –** Only need 10 people to help out at an event? Set a cap on the number of people who can sign up. Want as many volunteers as you can get? No problem. You don’t have to set a limit.
+* **Send reminder emails anytime –** Schedule an automated reminder email a few days in advance or send a one-off email with last-minute details.
+* **Volunteer profiles that track participation and more –** Keep track of all of your volunteers’ involvement. See what they’ve helped out with in the past, future opportunities they're signed up for, how long they’ve been volunteering and notes that will help you stay organized.
 
-*Thanks to [Habitat for Humanity East Bay/Silicon Valley](http://www.habitatebsv.org/) for being an awesome client and letting us use the photo above.*
+*Thanks to [Habitat for Humanity East Bay/Silicon Valley](http://www.habitatebsv.org/) for being an awesome organization and letting us use the photo above.*
 
 == Installation ==
 
@@ -46,32 +46,37 @@ If this doesn’t work, follow these steps:
 
 = How do I get started? =
 
-Once you’ve downloaded the plugin, you’ll want to adjust the settings to fit your specific needs. You can do this by visiting the Volunteer Management menu and clicking “Help & Settings”. Here, you can choose to include our styles, set a default contact and location for volunteer opportunities, pick your default form settings and create a template for your confirmation and reminder emails.
+Once you’ve downloaded the plugin, you’ll want to adjust the settings to fit your specific needs.
+
+You can do this by visiting the Volunteer Management menu and clicking “Help & Settings”. Here, you can do things like:
+
+* Choose to include our styles
+* Set a default contact and location for volunteer opportunities
+* Pick your default form settings
+* Write a template message for your confirmation and reminder emails
 
 = How do I create a new volunteer opportunity? =
 
 1.	In the Volunteer Management menu, click “Opportunities” 
 1.	On the Opportunities page, click “Add Volunteer Opportunity”
-1.	Fill in all of the information fields
+1.	Fill in all of the “Volunteer Opportunity Details” fields
 1.	Click the blue “Publish” button
 
 = How do I display a list of volunteer opportunities on my website? =
 
-If you’re using the classic editor (WordPress 4.9 or earlier), you can display the opportunities by including the following shortcodes in the page content: [one_time_volunteer_opps] (for one-time opportunities), [flexible_volunteer_opps] (for flexible opportunities)
+You can display the opportunities by adding the Volunteer Opportunities block to your page content. Once added, use the block’s toolbar to show one-time or flexible opportunities.
 
-If you’re using the block editor (WordPress 5.0 or later), you can display the opportunities by adding the Volunteer Opportunities block to your page content. Once added, you can use the block’s toolbar to display one-time or flexible opportunities.
-
-It’s important to note, you can’t display a list of both types of opportunities on the same page. Please list either one-time or flexible opportunities on a page.
+It’s not currently possible to display both types of opportunities in a single list. We recommend showing only one type of opportunity per page.
 
 = What is the difference between the two types of opportunities? = 
 
-One-time volunteer opportunities happen at a fixed date and time. One example might be a yearly trivia night fundraiser.
+One-time volunteer opportunities happen at a fixed date and time. One example might be a trivia night fundraiser where you need volunteers to help check in attendees.
 
 Flexible volunteer opportunities can happen on different days and times. One example might be weekly tutoring. Another example could be looking for a volunteer to help with your social media or blog.
 
 = How do I add a volunteer to our database? =
 
-You can’t manually add a volunteer to the database. Volunteers appear in the database after signing up for an opportunity.
+Volunteers appear in the database after signing up for an opportunity. You can’t manually add a volunteer to the database.
 
 = How do I add notes about a volunteer? =
 
@@ -84,7 +89,7 @@ You can’t manually add a volunteer to the database. Volunteers appear in the d
 
 = How do I remove a volunteer from a specific opportunity? =
 
-If a volunteer is no longer able to help out at a specific opportunity, you can remove them from the signup list. 
+If a volunteer is no longer able to help out with a specific opportunity, you can remove them from the signup list. 
 
 1.	Click “Opportunities” from the Volunteer Management menu
 1.	Find the opportunity you need to remove the volunteer from 
@@ -92,21 +97,23 @@ If a volunteer is no longer able to help out at a specific opportunity, you can 
 1.	Scroll down to the RSVP list, find the volunteer’s name and click “Remove RSVP”
 1.	Confirm their removal by clicking the blue “Remove RSVP” button
 
+You can also remove the RSVP through that individual volunteer’s profile.
+
 = How do I create a recurring opportunity? =
 
 If you have a recurring opportunity where different people will sign up each time, we recommend creating a one-time opportunity for each date and time. That will allow you to track the RSVPs separately.
 
-If the recurring opportunity will have the same volunteers each time, we’d recommend you create one flexible volunteer opportunity.
+If the recurring opportunity will have the same volunteers each time, we recommend creating one flexible volunteer opportunity.
 
 = How can I adjust the built-in volunteer signup form? =
 
 There are three options for handling volunteer signups within the plugin:
 
-1. Use the built-in volunteer signup form which includes name, email and phone number fields. This form can be modified, but only through code using the PHP template files included inside the plugin.
+1. Use the built-in volunteer signup form which includes name, phone number and email address fields. This form can be modified, but only through code using the PHP template files included inside the plugin.
 1. Choose the option not to show a form, then manually embed a third-party form within the content of each volunteer opportunity.
-1. If you're utilizing the [Gravity Forms](https://www.gravityforms.com/) plugin, you can show a form you've built within your volunteer opportunities.
+1. If you're utilizing the [Gravity Forms](https://www.gravityforms.com/) plugin, you can show a form you've built within your volunteer opportunities. Information can be passed into the volunteer management system using a form feed.
 
-You'll find default settings outlining how to handle forms within the Help & Settings page. You can also modify how forms are handled when editing each individual volunteer opportunity.
+Within the Help & Settings page, you can set a default form to use when new opportunities are created. You can also modify which form is displayed when editing an individual volunteer opportunity.
 
 == Screenshots ==
 
@@ -128,7 +135,7 @@ You'll find default settings outlining how to handle forms within the Help & Set
 
 = 2.1 =
 * Added the ability to pass volunteer data submitted in Gravity Forms to the volunteer management system.
-* Hide the chosen Gravity Forms form if no more volunteer spots are available.
+* Hides the chosen Gravity Forms form if no more volunteer spots are available.
 * Removed bug fix for the 'Visual' tab of the editor used to email volunteers now that the issue is fixed in WordPress Core.
 * Stopped loading jQuery UI styles across the entire admin since it was conflicting with other plugins.
 
@@ -188,7 +195,7 @@ You'll find default settings outlining how to handle forms within the Help & Set
 * Tested up to WordPress 5.2.
 
 = 1.3.12 =
-* Make the Volunteer Opportunity custom post type available via the REST API so it utilizes the new Gutenberg content editor.
+* Made the Volunteer Opportunity custom post type available via the REST API so it utilizes the new Gutenberg content editor.
 * Tested up to WordPress 5.0.
 
 = 1.3.11 =
@@ -266,10 +273,10 @@ You'll find default settings outlining how to handle forms within the Help & Set
 = 0.5.0 =
 * Added ability to send custom emails to volunteers registered for an opportunity.
 * Added new meta box to display the list of all emails sent to volunteers.
-* Bugfix: Replace deprecated update_usermeta function with update_user_meta.
+* Replaced deprecated update_usermeta function with update_user_meta.
 
 = 0.4.2 =
-* Updated plugin to allow for translation
+* Updated plugin to allow for translation.
 
 = 0.4.1 =
 * Added ability to filter different opportunity types in the WordPress admin.
@@ -281,11 +288,11 @@ You'll find default settings outlining how to handle forms within the Help & Set
 * Adjusted system used to add new settings in the future.
 
 = 0.2.1 =
-* Bugfix: Fix issue where admin notice would show again after the settings were changed.
+* Fixed bug where admin notice would show again after the settings were changed.
 
 = 0.2 =
-* Show admin notice when plugin is activated directing people to tips on how to get started.
-* Adjust how templates are loaded for a single volunteer opportunity to improve theme compatibility.
+* Added admin notice when plugin is activated directing people to tips on how to get started.
+* Adjusted how templates are loaded for a single volunteer opportunity to improve theme compatibility.
 
 = 0.1 =
 * Initial release.

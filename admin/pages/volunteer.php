@@ -29,7 +29,7 @@ $volunteer = new WI_Volunteer_Management_Volunteer( $volunteer_id );
 		<div class="contact-info">
 
 			<?php echo get_avatar( $volunteer->ID, 65 ); ?>
-			<span><?php echo __( 'E-mail:', 'wired-impact-volunteer-management' ) . ' ' . $volunteer->meta['email']; ?></span>
+			<span><?php echo __( 'Email:', 'wired-impact-volunteer-management' ) . ' ' . $volunteer->meta['email']; ?></span>
 			<span><?php echo __( 'Phone:', 'wired-impact-volunteer-management' ) . ' ' . $volunteer->meta['phone']; ?></span>
 			<span><?php echo __( 'Volunteer since', 'wired-impact-volunteer-management' ) . ' ' . mysql2date( 'Y', $volunteer->meta['first_volunteer_opp_time'] ); ?></span>
 		
