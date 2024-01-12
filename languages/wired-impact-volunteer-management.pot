@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Wired Impact Volunteer Management 2.3\n"
+"Project-Id-Version: Wired Impact Volunteer Management 2.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wired-impact-volunteer-management\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-09T17:32:45+00:00\n"
+"POT-Creation-Date: 2024-01-12T17:27:48+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wired-impact-volunteer-management\n"
@@ -158,16 +158,14 @@ msgid "Name"
 msgstr ""
 
 #: admin/class-admin.php:441
-#: admin/class-admin.php:903
+#: admin/class-admin.php:904
 #: includes/class-gravity-forms-feed-addon.php:137
 #: includes/class-wp-volunteer-list-table.php:163
 msgid "Phone Number"
 msgstr ""
 
 #: admin/class-admin.php:446
-#: admin/pages/help-settings.php:33
-#: includes/class-gravity-forms-feed-addon.php:144
-msgid "Email"
+msgid "Email Address"
 msgstr ""
 
 #: admin/class-admin.php:452
@@ -195,7 +193,7 @@ msgid "Zip"
 msgstr ""
 
 #: admin/class-admin.php:482
-msgid "Date and Time"
+msgid "Date & Time"
 msgstr ""
 
 #: admin/class-admin.php:486
@@ -219,11 +217,11 @@ msgid "Whoops, it looks like you set your event to end before it started."
 msgstr ""
 
 #: admin/class-admin.php:512
-msgid "When Will This Event Happen?"
+msgid "When Will This Happen?"
 msgstr ""
 
 #: admin/class-admin.php:513
-msgid "On your own time, All summer, etc."
+msgid "Every weekend, On your own time, All summer, etc."
 msgstr ""
 
 #: admin/class-admin.php:517
@@ -247,7 +245,7 @@ msgid "Volunteer Signup Form"
 msgstr ""
 
 #: admin/class-admin.php:539
-msgid "The built-in signup form includes name, email and phone number fields. It can't be modified."
+msgid "The built-in signup form includes name, phone number and email address fields. It can't be modified."
 msgstr ""
 
 #: admin/class-admin.php:543
@@ -275,8 +273,10 @@ msgstr ""
 #: admin/class-admin.php:713
 #: admin/class-admin.php:723
 #: admin/class-admin.php:739
+#: admin/pages/help-settings.php:33
+#: includes/class-gravity-forms-feed-addon.php:144
 #: includes/class-wp-volunteer-list-table.php:162
-msgid "E-mail"
+msgid "Email"
 msgstr ""
 
 #: admin/class-admin.php:714
@@ -306,8 +306,8 @@ msgid "Send Email"
 msgstr ""
 
 #: admin/class-admin.php:813
-#: admin/class-admin.php:1143
-#: admin/class-admin.php:1277
+#: admin/class-admin.php:1144
+#: admin/class-admin.php:1278
 #: frontend/class-public.php:478
 #: frontend/class-public.php:485
 msgid "Security Check."
@@ -321,7 +321,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: admin/class-admin.php:855
-#: admin/class-admin.php:950
+#: admin/class-admin.php:951
 msgid "When"
 msgstr ""
 
@@ -339,51 +339,55 @@ msgid "D, M j, Y \\&#64; g:i a"
 msgstr ""
 
 #: admin/class-admin.php:889
-msgid "No emails have been sent yet. We'll list them here when we send automated reminders and when you send custom emails to volunteers."
+msgid "No emails have been sent yet. Automated reminders and custom emails to volunteers will be listed here."
 msgstr ""
 
-#: admin/class-admin.php:906
-msgid "Please enter your phone number in the format (000) 000-0000."
+#: admin/class-admin.php:901
+msgid "Volunteer Info"
 msgstr ""
 
-#: admin/class-admin.php:910
+#: admin/class-admin.php:907
+msgid "Please enter the phone number in the format (000) 000-0000."
+msgstr ""
+
+#: admin/class-admin.php:911
 #: admin/pages/volunteer.php:39
 msgid "Notes"
 msgstr ""
 
-#: admin/class-admin.php:913
-msgid "Please enter any notes about this user."
-msgstr ""
-
-#: admin/class-admin.php:948
-msgid "Title"
+#: admin/class-admin.php:914
+msgid "Please enter any notes about this volunteer."
 msgstr ""
 
 #: admin/class-admin.php:949
+msgid "Title"
+msgstr ""
+
+#: admin/class-admin.php:950
 msgid "Location"
 msgstr ""
 
-#: admin/class-admin.php:951
+#: admin/class-admin.php:952
 msgid "Number of RSVPs"
 msgstr ""
 
-#: admin/class-admin.php:952
+#: admin/class-admin.php:953
 msgid "Number of Open Spots"
 msgstr ""
 
-#: admin/class-admin.php:1078
+#: admin/class-admin.php:1079
 msgid "All Opportunities"
 msgstr ""
 
-#: admin/class-admin.php:1083
+#: admin/class-admin.php:1084
 msgid "Upcoming One-time Opportunities"
 msgstr ""
 
-#: admin/class-admin.php:1088
+#: admin/class-admin.php:1089
 msgid "Past One-time Opportunities"
 msgstr ""
 
-#: admin/class-admin.php:1093
+#: admin/class-admin.php:1094
 msgid "Flexible Opportunities"
 msgstr ""
 
@@ -414,7 +418,7 @@ msgid "Opportunity Defaults"
 msgstr ""
 
 #: admin/pages/help-settings.php:46
-msgid "FAQs and Get Started"
+msgid "Getting Started"
 msgstr ""
 
 #: admin/pages/help-settings.php:48
@@ -442,7 +446,7 @@ msgid "Default Contact Information"
 msgstr ""
 
 #: admin/pages/help-settings.php:71
-msgid "These contact settings will be loaded by default for all new volunteer opportunities, but you can customize each opportunity individually."
+msgid "The contact information below will be used as the default for all new volunteer opportunities. You can customize the contact information for an individual opportunity as needed."
 msgstr ""
 
 #: admin/pages/help-settings.php:72
@@ -450,11 +454,11 @@ msgid "Default Contact Name"
 msgstr ""
 
 #: admin/pages/help-settings.php:73
-msgid "Default Contact Phone"
+msgid "Default Contact Phone Number"
 msgstr ""
 
 #: admin/pages/help-settings.php:74
-msgid "Default Contact Email"
+msgid "Default Contact Email Address"
 msgstr ""
 
 #: admin/pages/help-settings.php:76
@@ -462,7 +466,7 @@ msgid "Default Location Information"
 msgstr ""
 
 #: admin/pages/help-settings.php:76
-msgid "These location settings will be loaded by default for all new volunteer opportunities, but you can customize each opportunity individually."
+msgid "The location information below will be used as the default for all new volunteer opportunities. You can customize the location for an individual opportunity as needed."
 msgstr ""
 
 #: admin/pages/help-settings.php:77
@@ -490,7 +494,7 @@ msgid "Default Volunteer Signup Form"
 msgstr ""
 
 #: admin/pages/help-settings.php:83
-msgid "This form will be loaded by default for all new volunteer opportunities, but you can customize each opportunity individually."
+msgid "The signup form below will be used as the default for all new volunteer opportunities. You can customize an individual opportunity to use a different form as needed."
 msgstr ""
 
 #: admin/pages/help-settings.php:86
@@ -550,7 +554,7 @@ msgid "Volunteer Signup Email Message"
 msgstr ""
 
 #: admin/pages/help-settings.php:110
-msgid "The email to a volunteer who just signed up. You can use these variables to personalize the email when it's sent: {volunteer_first_name}, {volunteer_last_name}, {volunteer_phone}, {volunteer_email}, {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone}, {contact_email}"
+msgid "The email to a volunteer after they sign up. You can use these variables to personalize the email when it's sent: {volunteer_first_name}, {volunteer_last_name}, {volunteer_phone}, {volunteer_email}, {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone}, {contact_email}"
 msgstr ""
 
 #: admin/pages/help-settings.php:112
@@ -622,7 +626,7 @@ msgid "Volunteer Reminder Email Subject"
 msgstr ""
 
 #: admin/pages/help-settings.php:121
-msgid "The subject of the reminder email sent to volunteers prior to their opportunity."
+msgid "The subject of the reminder email sent to volunteers before their opportunity takes place."
 msgstr ""
 
 #: admin/pages/help-settings.php:122
@@ -639,7 +643,8 @@ msgid "Cheatin&#8217; uh?"
 msgstr ""
 
 #: admin/pages/volunteer.php:32
-msgid "E-mail:"
+#: templates/opp-single-form.php:41
+msgid "Email:"
 msgstr ""
 
 #: admin/pages/volunteer.php:33
@@ -954,10 +959,6 @@ msgstr ""
 
 #: templates/opp-single-form.php:35
 msgid "Last Name:"
-msgstr ""
-
-#: templates/opp-single-form.php:41
-msgid "Email:"
 msgstr ""
 
 #: templates/opp-single-form.php:45

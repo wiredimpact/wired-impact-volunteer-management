@@ -42,7 +42,7 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		cy.contains('tr', 'Send Volunteer Signup Email?').find('input[type="checkbox"]').should('be.checked');
 		cy.contains('tr', 'Volunteer Signup Email Subject').find('input').should('have.value', 'Thanks for Signing Up to Volunteer');
 		cy.contains('tr', 'Send Admin Signup Email?').find('input[type="checkbox"]').should('be.checked');
-		cy.contains('tr', 'Admin Signup Email Subject').find('input').should('have.value', 'Volunteer Signup Submission');
+		cy.contains('tr', 'Admin Signup Email Subject').find('input').should('have.value', 'New Volunteer Signup');
 		cy.contains('tr', 'Send Volunteer Reminder Email?').find('input[type="checkbox"]').should('be.checked');
 		cy.contains('tr', 'Number of Days Before Opportunity to Send Reminder').find('input').should('have.value', '4');
 		cy.contains('tr', 'Volunteer Reminder Email Subject').find('input').should('have.value', 'Your Volunteer Opportunity is Coming Up');
@@ -82,8 +82,8 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		// Add default contact information and a location
 		cy.contains('#wivm-tabs a', 'Opportunity Defaults').click();
 		cy.contains('tr', 'Default Contact Name').find('input').type('FirstName LastName');
-		cy.contains('tr', 'Default Contact Phone').find('input').type('(888) 444-7777');
-		cy.contains('tr', 'Default Contact Email').find('input').type('testing@example.org');
+		cy.contains('tr', 'Default Contact Phone Number').find('input').type('(888) 444-7777');
+		cy.contains('tr', 'Default Contact Email Address').find('input').type('testing@example.org');
 
 		cy.contains('tr', 'Default Location Name').find('input').type('Busch Stadium');
 		cy.contains('tr', 'Default Street').find('input').type('700 Clark Ave');
@@ -95,8 +95,8 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 
 		// Check that the settings were saved
 		cy.contains('tr', 'Default Contact Name').find('input').should('have.value', 'FirstName LastName');
-		cy.contains('tr', 'Default Contact Phone').find('input').should('have.value', '(888) 444-7777');
-		cy.contains('tr', 'Default Contact Email').find('input').should('have.value', 'testing@example.org');
+		cy.contains('tr', 'Default Contact Phone Number').find('input').should('have.value', '(888) 444-7777');
+		cy.contains('tr', 'Default Contact Email Address').find('input').should('have.value', 'testing@example.org');
 
 		cy.contains('tr', 'Default Location Name').find('input').should('have.value', 'Busch Stadium');
 		cy.contains('tr', 'Default Street').find('input').should('have.value', '700 Clark Ave');
@@ -109,7 +109,7 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		cy.contains('a', 'Add Volunteer Opportunity').click();
 		cy.contains('#volunteer-opportunity-details tr', 'Name').find('input').should('have.value', 'FirstName LastName');
 		cy.contains('#volunteer-opportunity-details tr', 'Phone Number').find('input').should('have.value', '(888) 444-7777');
-		cy.contains('#volunteer-opportunity-details tr', 'Email').find('input').should('have.value', 'testing@example.org');
+		cy.contains('#volunteer-opportunity-details tr', 'Email Address').find('input').should('have.value', 'testing@example.org');
 
 		cy.contains('#volunteer-opportunity-details tr', 'Location Name').find('input').should('have.value', 'Busch Stadium');
 		cy.contains('#volunteer-opportunity-details tr', 'Street Address').find('input').should('have.value', '700 Clark Ave');
@@ -203,7 +203,7 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 			// The email to the admin should be sent
 			expect(response.status).to.eq(200);
 			expect(response.body).to.include('To: volunteer-admin@wiredimpact.com');
-			expect(response.body).to.include('Subject: Volunteer Signup Submission');
+			expect(response.body).to.include('Subject: New Volunteer Signup');
 		});
 
 		// Turn off the volunteer and admin signup emails

@@ -69,12 +69,12 @@ Thanks for signing up to volunteer. Here are the details of the opportunity:
 When: {opportunity_date_time}
 Location: {opportunity_location}
 
-If you have any questions please reach out to {contact_name} at {contact_email} or by phone at {contact_phone}.',
+If you have any questions please reach out to {contact_name} at {contact_email} or by phone at {contact_phone}.',
 
 		'send_signup_email_to_admins'       => 1,
 		'admin_email_address'               => '',
-		'admin_signup_email_subject'        => 'Volunteer Signup Submission',
-		'admin_signup_email'                => 'Hi, someone just signed up to volunteer! Here are the details:
+		'admin_signup_email_subject'        => 'New Volunteer Signup',
+		'admin_signup_email'                => 'Someone just signed up to volunteer! Here are the details:
 
 Volunteer Name: {volunteer_first_name} {volunteer_last_name}
 Email: {volunteer_email}

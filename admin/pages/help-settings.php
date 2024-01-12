@@ -43,9 +43,9 @@ $wivm_show_help_tab = apply_filters( 'wivm_show_help_tab', true );
 
 		$wi_form->form_table_start( 'help' );
 
-			$wi_form->section_heading( __( 'FAQs and Get Started', 'wired-impact-volunteer-management' ), sprintf( __( 'Check out the <a target="_blank" href="%s">FAQs on the WordPress plugin repository</a> to get help and learn how to get started.' ), 'https://wordpress.org/plugins/wired-impact-volunteer-management/faq/' ), 1 );
+			$wi_form->section_heading( __( 'Getting Started', 'wired-impact-volunteer-management' ), sprintf( __( 'Check out the <a target="_blank" href="%s">WordPress plugin repository</a> for FAQs and tips for getting started with the Wired Impact Volunteer Management plugin.' ), 'https://wordpress.org/plugins/wired-impact-volunteer-management/faq/' ), 1 );
 
-			$wi_form->section_heading( __( 'Need More Help?', 'wired-impact-volunteer-management' ), sprintf( __( 'If the FAQs aren\'t cutting it and you need more help reach out to us on the <a target="_blank" href="%s">WordPress support forums</a>.' ), 'https://wordpress.org/support/plugin/wired-impact-volunteer-management' ), 1 );
+			$wi_form->section_heading( __( 'Need More Help?', 'wired-impact-volunteer-management' ), sprintf( __( 'If our FAQs don\'t cover your questions, reach out to us on the <a target="_blank" href="%s">WordPress support forums</a>.' ), 'https://wordpress.org/support/plugin/wired-impact-volunteer-management' ), 1 );
 
 			do_action( 'wivm_display_help_settings', $wi_form );
 
@@ -68,19 +68,19 @@ $wivm_show_help_tab = apply_filters( 'wivm_show_help_tab', true );
 		// Display Defaults settings tab.
 		$wi_form->form_table_start( 'defaults' );
 
-			$wi_form->section_heading( __( 'Default Contact Information', 'wired-impact-volunteer-management' ), __( 'These contact settings will be loaded by default for all new volunteer opportunities, but you can customize each opportunity individually.', 'wired-impact-volunteer-management' ) );
+			$wi_form->section_heading( __( 'Default Contact Information', 'wired-impact-volunteer-management' ), __( 'The contact information below will be used as the default for all new volunteer opportunities. You can customize the contact information for an individual opportunity as needed.', 'wired-impact-volunteer-management' ) );
 			$wi_form->textinput( 'default_contact_name', __( 'Default Contact Name', 'wired-impact-volunteer-management' ) );
-			$wi_form->textinput( 'default_contact_phone', __( 'Default Contact Phone', 'wired-impact-volunteer-management' ), array(), 'format_phone_number' );
-			$wi_form->textinput( 'default_contact_email', __( 'Default Contact Email', 'wired-impact-volunteer-management' ) );
+			$wi_form->textinput( 'default_contact_phone', __( 'Default Contact Phone Number', 'wired-impact-volunteer-management' ), array(), 'format_phone_number' );
+			$wi_form->textinput( 'default_contact_email', __( 'Default Contact Email Address', 'wired-impact-volunteer-management' ) );
 
-			$wi_form->section_heading( __( 'Default Location Information', 'wired-impact-volunteer-management' ), __( 'These location settings will be loaded by default for all new volunteer opportunities, but you can customize each opportunity individually.', 'wired-impact-volunteer-management' ) );
+			$wi_form->section_heading( __( 'Default Location Information', 'wired-impact-volunteer-management' ), __( 'The location information below will be used as the default for all new volunteer opportunities. You can customize the location for an individual opportunity as needed.', 'wired-impact-volunteer-management' ) );
 			$wi_form->textinput( 'default_location', __( 'Default Location Name', 'wired-impact-volunteer-management' ) );
 			$wi_form->textinput( 'default_street', __( 'Default Street', 'wired-impact-volunteer-management' ) );
 			$wi_form->textinput( 'default_city', __( 'Default City', 'wired-impact-volunteer-management' ) );
 			$wi_form->textinput( 'default_state', __( 'Default State', 'wired-impact-volunteer-management' ) );
 			$wi_form->textinput( 'default_zip', __( 'Default Zip', 'wired-impact-volunteer-management' ) );
 
-			$wi_form->section_heading( __( 'Default Volunteer Signup Form', 'wired-impact-volunteer-management' ), __( 'This form will be loaded by default for all new volunteer opportunities, but you can customize each opportunity individually.', 'wired-impact-volunteer-management' ) );
+			$wi_form->section_heading( __( 'Default Volunteer Signup Form', 'wired-impact-volunteer-management' ), __( 'The signup form below will be used as the default for all new volunteer opportunities. You can customize an individual opportunity to use a different form as needed.', 'wired-impact-volunteer-management' ) );
 			$wi_form->select(
 				'default_form_type',
 				__( 'Default Form Type', 'wired-impact-volunteer-management' ),
@@ -107,7 +107,7 @@ $wivm_show_help_tab = apply_filters( 'wivm_show_help_tab', true );
 			$wi_form->section_heading( __( 'Volunteer Signup Email', 'wired-impact-volunteer-management' ), __( 'This email will be sent to volunteers immediately after they sign up for an opportunity.', 'wired-impact-volunteer-management' ) );
 			$wi_form->checkbox( 'send_signup_email_to_volunteers', __( 'Send Volunteer Signup Email?', 'wired-impact-volunteer-management' ), __( 'Send each volunteer an email immediately after they sign up for an opportunity.', 'wired-impact-volunteer-management' ) );
 			$wi_form->textinput( 'volunteer_signup_email_subject', __( 'Volunteer Signup Email Subject', 'wired-impact-volunteer-management' ), array( 'description' => __( 'The subject of the email to a volunteer after they sign up.', 'wired-impact-volunteer-management' ) ), null, 'send_signup_email_to_volunteers' );
-			$wi_form->wysiwyg_editor( 'volunteer_signup_email', __( 'Volunteer Signup Email Message', 'wired-impact-volunteer-management' ), array( 'description' => __( 'The email to a volunteer who just signed up. You can use these variables to personalize the email when it\'s sent: {volunteer_first_name}, {volunteer_last_name}, {volunteer_phone}, {volunteer_email}, {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone}, {contact_email}', 'wired-impact-volunteer-management' ) ), 'send_signup_email_to_volunteers' );
+			$wi_form->wysiwyg_editor( 'volunteer_signup_email', __( 'Volunteer Signup Email Message', 'wired-impact-volunteer-management' ), array( 'description' => __( 'The email to a volunteer after they sign up. You can use these variables to personalize the email when it\'s sent: {volunteer_first_name}, {volunteer_last_name}, {volunteer_phone}, {volunteer_email}, {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone}, {contact_email}', 'wired-impact-volunteer-management' ) ), 'send_signup_email_to_volunteers' );
 
 			$wi_form->section_heading( __( 'Admin Signup Email', 'wired-impact-volunteer-management' ), __( 'This email will be sent to the admin email address and the contact for the opportunity immediately after someone signs up to volunteer.', 'wired-impact-volunteer-management' ) );
 			$wi_form->checkbox( 'send_signup_email_to_admins', __( 'Send Admin Signup Email?', 'wired-impact-volunteer-management' ), __( 'Send the admin and the contact for each opportunity an email immediately after someone signs up to volunteer.', 'wired-impact-volunteer-management' ) );
@@ -118,7 +118,7 @@ $wivm_show_help_tab = apply_filters( 'wivm_show_help_tab', true );
 			$wi_form->section_heading( __( 'Volunteer Reminder Email', 'wired-impact-volunteer-management' ), __( 'This reminder email will be sent to volunteers a set number of days before a one-time volunteer opportunity takes place. A reminder email is never sent for flexible volunteer opportunities.', 'wired-impact-volunteer-management' ) );
 			$wi_form->checkbox( 'send_reminder_email_to_volunteers', __( 'Send Volunteer Reminder Email?', 'wired-impact-volunteer-management' ), __( 'Send volunteers a reminder email before a one-time opportunity takes place.', 'wired-impact-volunteer-management' ) );
 			$wi_form->textinput( 'days_prior_reminder', __( 'Number of Days Before Opportunity to Send Reminder', 'wired-impact-volunteer-management' ), array( 'description' => __( 'The number of days before a one-time volunteer opportunity to send the reminder email. Ex: 4', 'wired-impact-volunteer-management' ) ), null, 'send_reminder_email_to_volunteers' );
-			$wi_form->textinput( 'volunteer_reminder_email_subject', __( 'Volunteer Reminder Email Subject', 'wired-impact-volunteer-management' ), array( 'description' => __( 'The subject of the reminder email sent to volunteers prior to their opportunity.', 'wired-impact-volunteer-management' ) ), null, 'send_reminder_email_to_volunteers' );
+			$wi_form->textinput( 'volunteer_reminder_email_subject', __( 'Volunteer Reminder Email Subject', 'wired-impact-volunteer-management' ), array( 'description' => __( 'The subject of the reminder email sent to volunteers before their opportunity takes place.', 'wired-impact-volunteer-management' ) ), null, 'send_reminder_email_to_volunteers' );
 			$wi_form->wysiwyg_editor( 'volunteer_reminder_email', __( 'Volunteer Reminder Email Message', 'wired-impact-volunteer-management' ), array( 'description' => __( 'The reminder email to volunteers before their opportunity takes place. This email is sent to the admin and the contact for each opportunity with the volunteers BCC\'ed. That way you know when the email has gone out. You can use these variables to personalize the email when it\'s sent: {opportunity_name}, {opportunity_date_time}, {opportunity_location}, {contact_name}, {contact_phone}, {contact_email}', 'wired-impact-volunteer-management' ) ), 'send_reminder_email_to_volunteers' );
 
 			do_action( 'wivm_display_email_settings', $wi_form );

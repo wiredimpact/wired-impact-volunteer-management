@@ -104,7 +104,7 @@ describe('Gravity Forms Integration', () => {
 		cy.contains('input[type="submit"]', 'Submit').click();
 		cy.visit('/wp-admin/post.php?post=' + this.volunteerOppID + '&action=edit');
 		cy.get('.rsvp-list-table table').contains('td[data-colname="Name"]', 'Abraham Lincoln').should('exist');
-		cy.get('.rsvp-list-table table').contains('td[data-colname="E-mail"]', 'abraham@usa.gov').should('exist');
+		cy.get('.rsvp-list-table table').contains('td[data-colname="Email"]', 'abraham@usa.gov').should('exist');
 		cy.get('.rsvp-list-table table').contains('td[data-colname="Phone"]', '(888) 777-6666').should('exist');
 		
 		// A note is added to the Gravity Forms entry when a volunteer signs up successfully

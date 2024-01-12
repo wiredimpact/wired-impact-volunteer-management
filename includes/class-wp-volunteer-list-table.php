@@ -158,10 +158,10 @@ class WI_Volunteer_Users_List_Table extends WP_Users_List_Table {
 	 */
 	public function get_columns() {
 		$c = array(
-			'name'     					=> __( 'Name', 'wired-impact-volunteer-management' ),
-			'email'    					=> __( 'E-mail', 'wired-impact-volunteer-management' ),
-			'phone'    					=> __( 'Phone Number', 'wired-impact-volunteer-management' ),
-			'num_volunteer_opps'  		=> __( '# of Volunteer Opportunities', 'wired-impact-volunteer-management' ),
+			'name'               => __( 'Name', 'wired-impact-volunteer-management' ),
+			'email'              => __( 'Email', 'wired-impact-volunteer-management' ),
+			'phone'              => __( 'Phone Number', 'wired-impact-volunteer-management' ),
+			'num_volunteer_opps' => __( '# of Volunteer Opportunities', 'wired-impact-volunteer-management' ),
 		);
 
 		return apply_filters( 'wivm_volunteer_columns', $c );

@@ -47,7 +47,7 @@ describe('Volunteer Sign Up', () => {
 		// Check that the volunteer profile page shows the right information
 		cy.contains('a', 'Abraham Lincoln').click();
 		cy.contains('h1', 'Volunteer: Abraham Lincoln').should('exist');
-		cy.contains('.contact-info span', 'E-mail: abraham@usa.gov').should('exist');
+		cy.contains('.contact-info span', 'Email: abraham@usa.gov').should('exist');
 		cy.contains('.contact-info span', 'Phone: (888) 777-6666').should('exist');
 		cy.get('.opps a').contains('Clean up Trash').should('exist');
 
