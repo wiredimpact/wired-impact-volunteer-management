@@ -4,7 +4,7 @@ Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
 Tested up to: 6.4
 Requires PHP: 5.2.4
-Stable tag: 2.3
+Stable tag: 2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -125,6 +125,9 @@ Within the Help & Settings page, you can set a default form to use when new oppo
 1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 2.4 =
+* Updated microcopy throughout the plugin to improve clarity.
 
 = 2.3 =
 * Added custom Gravity Forms notification merge tags to allow volunteer opportunity details to be included dynamically.
