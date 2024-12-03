@@ -162,7 +162,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
    public function form( $instance ) {
 
       // The default title used if empty is 'Volunteer Opportunities'
-      $title = ! empty( $instance['title'] ) ? $instance['title'] : __( '', 'wired-impact-volunteer-management' );
+      $title = ! empty( $instance['title'] ) ? $instance['title'] : '';
 
       // Default radio button to 'one-time' opportunities or set to selection
       if ( isset( $instance[ 'list_type_radio_btn' ] ) ) {
@@ -182,7 +182,7 @@ class WI_Volunteer_Management_Widget extends WP_Widget {
 
       <!-- Markup for widget options in admin -->
       <p>
-         <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( esc_attr( 'Title:' ) ); ?></label>
+         <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'wired-impact-volunteer-management' ); ?></label>
          <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
       </p>
       <p>

@@ -1256,7 +1256,7 @@ class WI_Volunteer_Management_Admin {
 
 			$id = 'show_getting_started_notice';
 			$classes = 'updated notice is-dismissible wivm-notice';
-			$message = sprintf( __( 'We\'re excited for you to try Wired Impact Volunteer Management. <a href="%s">Learn how to get started.</a>' ), admin_url( 'admin.php?page=wi-volunteer-management-help-settings' ) );
+			$message = sprintf( __( 'We\'re excited for you to try Wired Impact Volunteer Management. <a href="%s">Learn how to get started.</a>', 'wired-impact-volunteer-management' ), admin_url( 'admin.php?page=wi-volunteer-management-help-settings' ) );
 
 			echo '<div id="' . $id . '" class="' . $classes . ' "><p>' .  $message . '</p></div>';
 			
