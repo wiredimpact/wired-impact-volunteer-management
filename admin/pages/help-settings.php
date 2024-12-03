@@ -43,9 +43,9 @@ $wivm_show_help_tab = apply_filters( 'wivm_show_help_tab', true );
 
 		$wi_form->form_table_start( 'help' );
 
-			$wi_form->section_heading( __( 'Getting Started', 'wired-impact-volunteer-management' ), sprintf( __( 'Check out the <a target="_blank" href="%s">WordPress plugin repository</a> for FAQs and tips for getting started with the Wired Impact Volunteer Management plugin.' ), 'https://wordpress.org/plugins/wired-impact-volunteer-management/faq/' ), 1 );
+			$wi_form->section_heading( __( 'Getting Started', 'wired-impact-volunteer-management' ), sprintf( __( 'Check out the <a target="_blank" href="%s">WordPress plugin repository</a> for FAQs and tips for getting started with the Wired Impact Volunteer Management plugin.', 'wired-impact-volunteer-management' ), 'https://wordpress.org/plugins/wired-impact-volunteer-management/faq/' ), 1 );
 
-			$wi_form->section_heading( __( 'Need More Help?', 'wired-impact-volunteer-management' ), sprintf( __( 'If our FAQs don\'t cover your questions, reach out to us on the <a target="_blank" href="%s">WordPress support forums</a>.' ), 'https://wordpress.org/support/plugin/wired-impact-volunteer-management' ), 1 );
+			$wi_form->section_heading( __( 'Need More Help?', 'wired-impact-volunteer-management' ), sprintf( __( 'If our FAQs don\'t cover your questions, reach out to us on the <a target="_blank" href="%s">WordPress support forums</a>.', 'wired-impact-volunteer-management' ), 'https://wordpress.org/support/plugin/wired-impact-volunteer-management' ), 1 );
 
 			do_action( 'wivm_display_help_settings', $wi_form );
 

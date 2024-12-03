@@ -27,7 +27,7 @@ describe('Volunteer Sign Up', () => {
 		// Save the volunteer opportunity that was created with WP-CLI to ensure all meta is stored
 		cy.login();
 		cy.visit('/wp-admin/post.php?post=' + this.volunteerOppID + '&action=edit');
-		cy.contains('button','Update').click();
+		cy.contains('button', 'Save').click();
 		cy.contains('div', 'Post updated').should('exist');
 
 		// Check that the volunteer user was created and given the right role

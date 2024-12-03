@@ -43,7 +43,7 @@ describe('Gravity Forms Integration', () => {
 		cy.visit('/wp-admin/post.php?post=' + this.volunteerOppID + '&action=edit');
 		cy.contains('tr', 'Form Type').find('select').select('gravity_forms');
 		cy.contains('tr', 'Select a Form').find('select').select(this.volunteerSignupFormID);
-		cy.contains('button','Update').click();
+		cy.contains('button', 'Save').click();
 		cy.contains('div', 'Post updated').find('a').click();
 	
 		cy.get('form#gform_' + this.volunteerSignupFormID).should('exist');    
@@ -87,7 +87,7 @@ describe('Gravity Forms Integration', () => {
 		cy.get('input#flexible_frequency').type('Every Wednesday');
 		cy.contains('tr', 'Form Type').find('select').select('gravity_forms');
 		cy.contains('tr', 'Select a Form').find('select').select(this.volunteerSignupFormID);
-		cy.contains('button','Update').click();
+		cy.contains('button', 'Save').click();
 		cy.contains('div', 'Post updated').find('a').click();
 		
 		// Errors display when the form is submitted with the name, phone and email fields blank, even though they aren't required
@@ -139,7 +139,7 @@ describe('Gravity Forms Integration', () => {
 		cy.visit('/wp-admin/post.php?post=' + this.volunteerOppID + '&action=edit');
 		cy.get('#has-volunteer-limit').check();
 		cy.get('#volunteer-limit').type('1');
-		cy.contains('button','Update').click();
+		cy.contains('button', 'Save').click();
 		cy.contains('div', 'Post updated').find('a').click();
 		cy.visit('/volunteer-opportunity/clean-up-trash/');
 		cy.get('form#gform_' + this.volunteerSignupFormID).should('not.exist');

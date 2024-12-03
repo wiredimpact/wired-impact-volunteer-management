@@ -118,7 +118,7 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		cy.contains('#volunteer-opportunity-details tr', 'Zip').find('input').should('have.value', '63102');
 
 		// The default contact information and location should save and show on the frontend when the opportunity is published
-		cy.get('h1.wp-block-post-title').click().type('Serve Food to Our Community');
+		cy.getBlockEditorIFrameBody().find('h1.wp-block-post-title').click().type('Serve Food to Our Community');
 		cy.contains('button', 'Publish').click();
 		cy.contains('.editor-post-publish-panel button', 'Publish').click();
 		cy.contains('a', 'View Volunteer Opportunity').click();
@@ -151,7 +151,7 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		// The built-in form should show when the volunteer opportunity's setting is saved as "Built-In Signup Form"
 		cy.visit('/wp-admin/post.php?post=' + this.volunteerOppID + '&action=edit');
 		cy.contains('tr', 'Form Type').find('select').select('built_in_form');
-		cy.contains('button','Update').click();
+		cy.contains('button', 'Save').click();
 		cy.contains('div', 'Post updated').find('a').click();
 
 		cy.get('form#wivm-sign-up-form').should('exist');
@@ -163,7 +163,7 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		// No form should show when the volunteer opportunity's setting is saved as "No Form"
 		cy.visit('/wp-admin/post.php?post=' + this.volunteerOppID + '&action=edit');
 		cy.contains('tr', 'Form Type').find('select').select('no_form');
-		cy.contains('button','Update').click();
+		cy.contains('button', 'Save').click();
 		cy.contains('div', 'Post updated').find('a').click();
 
 		cy.get('.entry-content form').should('not.exist');
@@ -174,7 +174,7 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		// Set the built-in form to show
 		cy.visit('/wp-admin/post.php?post=' + this.volunteerOppID + '&action=edit');
 		cy.contains('tr', 'Form Type').find('select').select('built_in_form');
-		cy.contains('button','Update').click();
+		cy.contains('button', 'Save').click();
 		cy.contains('div', 'Post updated').should('be.visible');
 
 		// Set up an admin email address to receive emails about new signups
