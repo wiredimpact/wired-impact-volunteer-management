@@ -118,7 +118,7 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		cy.contains('#volunteer-opportunity-details tr', 'Zip').find('input').should('have.value', '63102');
 
 		// The default contact information and location should save and show on the frontend when the opportunity is published
-		cy.get('h1.wp-block-post-title').click().type('Serve Food to Our Community');
+		cy.getBlockEditorIFrameBody().find('h1.wp-block-post-title').click().type('Serve Food to Our Community');
 		cy.contains('button', 'Publish').click();
 		cy.contains('.editor-post-publish-panel button', 'Publish').click();
 		cy.contains('a', 'View Volunteer Opportunity').click();
