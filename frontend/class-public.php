@@ -227,26 +227,27 @@ class WI_Volunteer_Management_Public {
 	 * @param array $attributes  Attributes saved from the block editor or passed as shortcode parameters.
 	 */
 	public function display_one_time_volunteer_opps( $attributes ) {
-		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+
+		$paged = $this->get_current_page_number();
 		$args  = array(
-			'post_type' => 'volunteer_opp',
-			'meta_key' => '_start_date_time',
-          	'orderby' => 'meta_value_num',
-          	'order'   => 'ASC',
-          	'meta_query' => array(
-				array( //Only if one-time opp is true
+			'paged'      => $paged,
+			'post_type'  => 'volunteer_opp',
+			'orderby'    => 'meta_value_num',
+			'order'      => 'ASC',
+			'meta_key'   => '_start_date_time',
+			'meta_query' => array(
+				array( // Only if one-time opp is true.
 					'key'     => '_one_time_opp',
-					'value'   => 1, 
+					'value'   => 1,
 					'compare' => '==',
 				),
-				array( //Only if event is in the future
+				array( // Only if event is in the future.
 					'key'     => '_start_date_time',
-					'value'   => current_time( 'timestamp' ), 
+					'value'   => current_time( 'timestamp' ),
 					'compare' => '>=',
 				),
-				'relation' => 'AND'
+				'relation' => 'AND',
 			),
-			'paged' => $paged
 		);
 
 		return $this->display_volunteer_opp_list( 'one-time', apply_filters( $this->plugin_name . '_one_time_opp_shortcode_query', $args ), $attributes );
@@ -258,22 +259,49 @@ class WI_Volunteer_Management_Public {
 	 * @param array $attributes  Attributes saved from the block editor or passed as shortcode parameters.
 	 */
 	public function display_flexible_volunteer_opps( $attributes ) {
-		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-		$args = array(
-			'post_type' => 'volunteer_opp',
-          	'meta_query' => array(
-				array( //Only if one-time opp is not true
+
+		$paged = $this->get_current_page_number();
+		$args  = array(
+			'paged'      => $paged,
+			'post_type'  => 'volunteer_opp',
+			'meta_query' => array(
+				array( // Only if one-time opp is not true.
 					'key'     => '_one_time_opp',
-					'value'   => 1, 
+					'value'   => 1,
 					'compare' => '!=',
 				),
 			),
-			'paged' => $paged
 		);
 
 		return $this->display_volunteer_opp_list( 'flexible', apply_filters( $this->plugin_name . '_flexible_opp_shortcode_query', $args ), $attributes );
 	}
 
+	/**
+	 * Get the current page number when listing volunteer opportunities.
+	 *
+	 * The query var is almost always "paged", but for static front pages
+	 * it's "page". If neither of those are set, then default to 1.
+	 *
+	 * @return int The current page number.
+	 */
+	private function get_current_page_number() {
+
+		$paged = absint( get_query_var( 'paged' ) );
+
+		if ( $paged > 0 ) {
+
+			return $paged;
+		}
+
+		$paged = absint( get_query_var( 'page' ) );
+
+		if ( $paged > 0 ) {
+
+			return $paged;
+		}
+
+		return 1;
+	}
 
 	/**
 	 * Always show read more text on the list of opportunities even if there isn't enough content.
@@ -343,16 +371,16 @@ class WI_Volunteer_Management_Public {
 		 * If the Additonal CSS class(es) field on the block is used, or className is passed
 		 * as a shortcode parameter, include it in the container class name.
 		 */
-		$class_name = ( empty( $attributes['className'] ) ) ? $list_type : $list_type . ' ' . sanitize_text_field( $attributes['className'] );
+		$class_name = ( empty( $attributes['className'] ) ) ? $list_type : $list_type . ' ' . $attributes['className'];
 
 		/**
 		 * If the HTML anchor field on the block is used, or anchor is passed
 		 * as a shortcode parameter, use it for the list's container ID.
 		 */
-		$anchor = ( empty( $attributes['anchor'] ) ) ? '' : 'id="' . sanitize_html_class( $attributes['anchor'] ) . '"';
+		$anchor = ( empty( $attributes['anchor'] ) ) ? '' : ' id="' . esc_attr( $attributes['anchor'] ) . '"';
 		?>
 
-		<div class="volunteer-opps <?php echo $class_name; ?>"<?php echo $anchor; ?>>
+		<div class="volunteer-opps <?php echo esc_attr( $class_name ); ?>"<?php echo $anchor; ?>>
 
 			<?php 
 			$template_loader = new WI_Volunteer_Management_Template_Loader();
@@ -385,22 +413,34 @@ class WI_Volunteer_Management_Public {
 
 	/**
 	 * Get the page navigation when displaying a list of volunteer opportunities.
-	 * 
-	 * We provide a filter so custom navigation can be utilized in place of the 
+	 *
+	 * We overwrite the global $paged variable to set the page number since
+	 * previous_posts_link() and next_posts_link() don't work correctly
+	 * on static front pages. See our get_current_page_number() method
+	 * for more information.
+	 *
+	 * We provide a filter so custom navigation can be utilized in place of the
 	 * default WordPress functionality.
 	 *
 	 * @return string The HTML for the page navigation.
 	 */
-	public function get_page_navigation(){
+	public function get_page_navigation() {
 
-		ob_start(); ?>
+		global $paged;
+		$original_paged = $paged;
+		$paged          = $this->get_current_page_number();
+
+		ob_start();
+		?>
 
 		<div class="navigation volunteer-opps-navigation">
 			<div class="alignleft"><?php previous_posts_link( __( '&laquo; Previous Opportunities', 'wired-impact-volunteer-management' ) ); ?></div>
 			<div class="alignright"><?php next_posts_link( __( 'More Opportunities &raquo;', 'wired-impact-volunteer-management' ) ); ?></div>
 		</div>
 
-		<?php 
+		<?php
+		$paged = $original_paged;
+
 		return apply_filters( 'wivm_page_navigation', ob_get_clean() );
 	}
 
