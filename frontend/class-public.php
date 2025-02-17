@@ -371,16 +371,16 @@ class WI_Volunteer_Management_Public {
 		 * If the Additonal CSS class(es) field on the block is used, or className is passed
 		 * as a shortcode parameter, include it in the container class name.
 		 */
-		$class_name = ( empty( $attributes['className'] ) ) ? $list_type : $list_type . ' ' . sanitize_text_field( $attributes['className'] );
+		$class_name = ( empty( $attributes['className'] ) ) ? $list_type : $list_type . ' ' . $attributes['className'];
 
 		/**
 		 * If the HTML anchor field on the block is used, or anchor is passed
 		 * as a shortcode parameter, use it for the list's container ID.
 		 */
-		$anchor = ( empty( $attributes['anchor'] ) ) ? '' : 'id="' . sanitize_html_class( $attributes['anchor'] ) . '"';
+		$anchor = ( empty( $attributes['anchor'] ) ) ? '' : ' id="' . esc_attr( $attributes['anchor'] ) . '"';
 		?>
 
-		<div class="volunteer-opps <?php echo $class_name; ?>"<?php echo $anchor; ?>>
+		<div class="volunteer-opps <?php echo esc_attr( $class_name ); ?>"<?php echo $anchor; ?>>
 
 			<?php 
 			$template_loader = new WI_Volunteer_Management_Template_Loader();
