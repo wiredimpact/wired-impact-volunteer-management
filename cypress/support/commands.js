@@ -129,7 +129,7 @@ Cypress.Commands.add('deleteAllMailCatcherEmails', () => {
  * @see https://on.cypress.io/wrap
  */
 Cypress.Commands.add('getBlockEditorIFrameBody', () => {
-	
+
 	cy.log('getBlockEditorIFrameBody');
 
 	return cy
