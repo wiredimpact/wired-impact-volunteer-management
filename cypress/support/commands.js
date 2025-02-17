@@ -132,8 +132,8 @@ Cypress.Commands.add('getBlockEditorIFrameBody', () => {
 	
 	cy.log('getBlockEditorIFrameBody');
 
-  return cy
-	  .get('iframe[name="editor-canvas"]', { log: false })
-	  .its('0.contentDocument.body', { log: false }).should('not.be.empty')
-	  .then((body) => cy.wrap(body, { log: false }))
+	return cy
+		.get('iframe[name="editor-canvas"]', { log: false })
+		.its('0.contentDocument.body', { log: false }).should('not.be.empty')
+		.then((body) => cy.wrap(body, { log: false }))
 });
