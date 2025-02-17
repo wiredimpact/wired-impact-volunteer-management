@@ -118,22 +118,3 @@ Cypress.Commands.add('deleteAllMailCatcherEmails', () => {
 		expect(response.status).to.eq(204);
 	});
 });
-
-/**
- * Get the WordPress iframe content editor so we can test inside of it.
- *
- * You must also set chromeWebSecurity to false in cypress.config.js
- * to work with iframes.
- * 
- * @see https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__iframes
- * @see https://on.cypress.io/wrap
- */
-Cypress.Commands.add('getBlockEditorIFrameBody', () => {
-	
-  	cy.log('getBlockEditorIFrameBody');
-
-	return cy
-		.get('iframe[name="editor-canvas"]', { log: false })
-		.its('0.contentDocument.body', { log: false }).should('not.be.empty')
-		.then((body) => cy.wrap(body, { log: false }))
-});
