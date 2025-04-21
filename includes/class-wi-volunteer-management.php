@@ -68,7 +68,7 @@ class WI_Volunteer_Management {
 	public function __construct() {
 
 		$this->plugin_name = 'wired-impact-volunteer-management';
-		$this->version     = '2.5.1';
+		$this->version     = '2.6';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -188,7 +188,7 @@ class WI_Volunteer_Management {
 		$plugin_i18n = new WI_Volunteer_Management_i18n();
 		$plugin_i18n->set_domain( $this->get_plugin_name() );
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		$this->loader->add_action( 'init', $plugin_i18n, 'load_plugin_textdomain' );
 	}
 
 	/**
@@ -238,7 +238,6 @@ class WI_Volunteer_Management {
 	private function define_public_hooks() {
 
 		$plugin_public = new WI_Volunteer_Management_Public( $this->get_plugin_name(), $this->get_version() );
-		$plugin_widget = new WI_Volunteer_Management_Widget( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_head', $plugin_public, 'enqueue_honeypot_styles' );
@@ -253,7 +252,7 @@ class WI_Volunteer_Management {
 		$this->loader->add_action( 'wp_ajax_wivm_sign_up', $plugin_public, 'process_builtin_form_volunteer_sign_up' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wivm_sign_up', $plugin_public, 'process_builtin_form_volunteer_sign_up' );
 		$this->loader->add_action( 'send_auto_email_reminders', $plugin_public, 'maybe_send_email_reminder' );
-		$this->loader->add_action( 'widgets_init', $plugin_widget, 'register_widget' );
+		$this->loader->add_action( 'widgets_init', 'WI_Volunteer_Management_Widget', 'register_widget' );
 
 		// Only load the Gravity Forms integration if Gravity Forms is active.
 		if ( class_exists( 'GFForms' ) ) {
