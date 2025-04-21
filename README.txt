@@ -2,9 +2,9 @@
 Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 4.0
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 5.2.4
-Stable tag: 2.5.1
+Stable tag: 2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -125,6 +125,10 @@ Within the Help & Settings page, you can set a default form to use when new oppo
 1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 2.6 =
+* Fixed issues where some strings were translated too early.
+* Tested up to WordPress 6.8.
 
 = 2.5.1 =
 * Fixed bug where pagination doesn't work when listing volunteer opportunities on a static front page.
