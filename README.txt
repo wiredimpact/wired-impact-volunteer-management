@@ -1,7 +1,7 @@
 === Wired Impact Volunteer Management ===
 Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
-Requires at least: 4.0
+Requires at least: 6.3
 Tested up to: 6.8
 Requires PHP: 5.2.4
 Stable tag: 2.6
@@ -17,7 +17,7 @@ A simple, free way to keep track of your nonprofit's volunteers and opportunitie
 **How can the Wired Impact Volunteer Management plugin help your nonprofit?**
 
 * **Post one-time and flexible volunteer opportunities on your website –** Promote volunteer opportunities on any page of your website using a simple block.
-* **Volunteers can sign up directly on your website –** Make volunteering even easier for your supporters by giving them the option to sign up for an opportunity directly on your website. A confirmation email will be sent to you and the volunteer once they sign up. 
+* **Volunteers can sign up directly on your website –** Make volunteering even easier for your supporters by giving them the option to sign up for an opportunity directly on your website. A confirmation email will be sent to you and the volunteer once they sign up.
 * **Control the number of signups available for opportunities –** Only need 10 people to help out at an event? Set a cap on the number of people who can sign up. Want as many volunteers as you can get? No problem. You don’t have to set a limit.
 * **Send reminder emails anytime –** Schedule an automated reminder email a few days in advance or send a one-off email with last-minute details.
 * **Volunteer profiles that track participation and more –** Keep track of all of your volunteers’ involvement. See what they’ve helped out with in the past, future opportunities they're signed up for, how long they’ve been volunteering and notes that will help you stay organized.
@@ -57,7 +57,7 @@ You can do this by visiting the Volunteer Management menu and clicking “Help &
 
 = How do I create a new volunteer opportunity? =
 
-1.	In the Volunteer Management menu, click “Opportunities” 
+1.	In the Volunteer Management menu, click “Opportunities”
 1.	On the Opportunities page, click “Add Volunteer Opportunity”
 1.	Fill in all of the “Volunteer Opportunity Details” fields
 1.	Click the blue “Publish” button
@@ -68,7 +68,7 @@ You can display the opportunities by adding the Volunteer Opportunities block to
 
 It’s not currently possible to display both types of opportunities in a single list. We recommend showing only one type of opportunity per page.
 
-= What is the difference between the two types of opportunities? = 
+= What is the difference between the two types of opportunities? =
 
 One-time volunteer opportunities happen at a fixed date and time. One example might be a trivia night fundraiser where you need volunteers to help check in attendees.
 
@@ -80,20 +80,20 @@ Volunteers appear in the database after signing up for an opportunity. You can�
 
 = How do I add notes about a volunteer? =
 
-1.	In the Volunteer Management menu, click “Volunteers” 
-1.	Click the name of the volunteer you’d like to add a note about 
+1.	In the Volunteer Management menu, click “Volunteers”
+1.	Click the name of the volunteer you’d like to add a note about
 1.	Click “Edit Volunteer Info”
-1.	Scroll to the bottom of the page to the Notes section 
+1.	Scroll to the bottom of the page to the Notes section
 1.	Add or edit any notes
 1.	Click “Update User” to save any changes
 
 = How do I remove a volunteer from a specific opportunity? =
 
-If a volunteer is no longer able to help out with a specific opportunity, you can remove them from the signup list. 
+If a volunteer is no longer able to help out with a specific opportunity, you can remove them from the signup list.
 
 1.	Click “Opportunities” from the Volunteer Management menu
-1.	Find the opportunity you need to remove the volunteer from 
-1.	Click the opportunity to edit 
+1.	Find the opportunity you need to remove the volunteer from
+1.	Click the opportunity to edit
 1.	Scroll down to the RSVP list, find the volunteer’s name and click “Remove RSVP”
 1.	Confirm their removal by clicking the blue “Remove RSVP” button
 
@@ -125,6 +125,11 @@ Within the Help & Settings page, you can set a default form to use when new oppo
 1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 2.7 =
+* Modernized the block to use block.json for registration and a more standard file structure.
+* Stopped support for the shortcode to block transform.
+* Updated the required WordPress version now that the block uses the API version 3.
 
 = 2.6 =
 * Fixed issues where some strings were translated too early.
@@ -205,7 +210,7 @@ Within the Help & Settings page, you can set a default form to use when new oppo
 = 1.4 =
 * Added a block to use in WordPress 5.0+ to display volunteer opportunities.
 * Added the ability to change the 'Help & Settings', 'Volunteers', and 'Volunteer' subpage names using the 'wivm_submenu_page_name' filter.
-* Added the ability to hide the 'Help' tab using the 'wivm_show_help_tab' filter. 
+* Added the ability to hide the 'Help' tab using the 'wivm_show_help_tab' filter.
 * Modified the CSS styling used for the datepicker to minimize conflicts with other plugins and themes.
 * Tested up to WordPress 5.2.
 
@@ -245,7 +250,7 @@ Within the Help & Settings page, you can set a default form to use when new oppo
 * Fixed multisite bug where volunteer opportunity URLs were broken if the plugin had been network-activated.
 
 = 1.3.2 =
-* Tested up to WordPress 4.8 and adjusted admin headings for improved accessibility. 
+* Tested up to WordPress 4.8 and adjusted admin headings for improved accessibility.
 
 = 1.3.1 =
 * Fixed bug where sidebar widget wasn't linking correctly to pages with opportunities on WordPress multisite installations.
