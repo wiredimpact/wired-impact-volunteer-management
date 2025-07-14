@@ -78,10 +78,10 @@ class WI_Volunteer_Management_Public {
 	public function enqueue_honeypot_styles(){
 
 		if ( is_singular( 'volunteer_opp' ) ) : ?>
-		
+
 			<style>
 				/* Hide the Wired Impact Volunteer Management honeypot field under all circumstances */
-				.wivm_hp { 
+				.wivm_hp {
 					display: none !important;
 					position: absolute !important;
 					left: -9000px;
@@ -122,7 +122,7 @@ class WI_Volunteer_Management_Public {
 	      'view_item' 			=> __( 'View Volunteer Opportunity', 'wired-impact-volunteer-management' ),
 	      'search_items' 		=> __( 'Search Volunteer Opportunities', 'wired-impact-volunteer-management' ),
 	      'not_found' 			=> __( 'No volunteer opportunities found', 'wired-impact-volunteer-management' ),
-	      'not_found_in_trash' 	=> __( 'No volunteer opportunities found in trash', 'wired-impact-volunteer-management' ), 
+	      'not_found_in_trash' 	=> __( 'No volunteer opportunities found in trash', 'wired-impact-volunteer-management' ),
 	      'parent_item_colon' 	=> '',
 	      'menu_name' 			=> __( 'Volunteer Mgmt', 'wired-impact-volunteer-management' )
 	    );
@@ -137,8 +137,8 @@ class WI_Volunteer_Management_Public {
 	      'supports'          => array( 'title', 'editor', 'thumbnail', 'revisions'  ),
 	      'rewrite'           => array( 'slug' => apply_filters( 'wivm_opp_rewrite', 'volunteer-opportunity' ), 'with_front' => false ),
 	      'show_in_rest'      => true,
-	    ); 
-	    
+	    );
+
 	    register_post_type( 'volunteer_opp', $args );
 	}
 
@@ -151,54 +151,29 @@ class WI_Volunteer_Management_Public {
 
 		// Skip block registration if Gutenberg is not enabled or the user is on the Widgets.php admin page.
 		if ( ! function_exists( 'register_block_type' ) || $pagenow === 'widgets.php' ) {
+
 			return;
 		}
 
 		wp_register_script(
-			$this->plugin_name . '-block',
-			plugin_dir_url( dirname( __FILE__ ) ) . 'admin/js/wi_volunteer_management_block.bundle.js',
+			'wired-impact-volunteer-management-block',
+			plugin_dir_url( __DIR__ ) . 'admin/js/wi_volunteer_management_block.bundle.js',
 			array(
 				'wp-blocks',
 				'wp-element',
 				'wp-block-editor',
 				'wp-components',
 				'wp-dom-ready',
-				'wp-edit-post'
+				'wp-edit-post',
 			),
-			$this->version
-		);
-
-		// This is the same CSS we load on the frontend
-		wp_register_style( 
-			$this->plugin_name,
-			plugin_dir_url( __FILE__ ) . 'css/wi-volunteer-management-public.css',
-			array(),
 			$this->version,
-			'all'
+			false
 		);
 
 		register_block_type(
-			'wired-impact-volunteer-management/volunteer-opps',
+			plugin_dir_path( __DIR__ ) . 'admin/block/',
 			array(
-				'editor_script'   => $this->plugin_name . '-block',
-				'editor_style'    => $this->plugin_name,
 				'render_callback' => array( $this, 'display_volunteer_opps_block' ),
-				'attributes'      => array(
-					'showOneTime' => array(
-						'type'    => 'boolean',
-						'default' => true,
-					),
-					'className'   => array(
-						'type'    => 'string',
-						'default' => '',
-					),
-					'anchor'      => array(
-						'type'      => 'string',
-						'default'   => '',
-						'attribute' => 'id',
-						'selector'  => '.volunteer-opps',
-					),
-				),
 			)
 		);
 	}
@@ -325,7 +300,7 @@ class WI_Volunteer_Management_Public {
 
 			return $text . '&hellip;' . $link;
 		}
-		
+
 		return $text;
 	}
 
@@ -382,7 +357,7 @@ class WI_Volunteer_Management_Public {
 
 		<div class="volunteer-opps <?php echo esc_attr( $class_name ); ?>"<?php echo $anchor; ?>>
 
-			<?php 
+			<?php
 			$template_loader = new WI_Volunteer_Management_Template_Loader();
 			if( $wp_query->have_posts() ){
 
@@ -391,7 +366,7 @@ class WI_Volunteer_Management_Public {
 					$template_loader->get_template_part( 'opps-list', $list_type );
 				}
 
-			} 
+			}
 			else { ?>
 
 				<p class="no-opps"><?php _e( 'Sorry, there are no volunteer opportunities available right now.', 'wired-impact-volunteer-management' ); ?></p>
@@ -403,10 +378,10 @@ class WI_Volunteer_Management_Public {
 		</div><!-- .volunteer-opps -->
 
 		<?php
-		//Reset to default query 
-		$wp_query = null; 
+		//Reset to default query
+		$wp_query = null;
   		$wp_query = $temp;
-  		wp_reset_postdata(); 
+  		wp_reset_postdata();
 
 		return ob_get_clean();
 	}

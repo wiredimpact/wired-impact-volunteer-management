@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Wired Impact Volunteer Management 2.6\n"
+"Project-Id-Version: Wired Impact Volunteer Management 2.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wired-impact-volunteer-management\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-21T20:01:12+00:00\n"
+"POT-Creation-Date: 2025-07-14T18:10:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wired-impact-volunteer-management\n"
@@ -313,8 +313,8 @@ msgstr ""
 #: admin/class-admin.php:813
 #: admin/class-admin.php:1144
 #: admin/class-admin.php:1278
-#: frontend/class-public.php:518
-#: frontend/class-public.php:525
+#: frontend/class-public.php:493
+#: frontend/class-public.php:500
 msgid "Security Check."
 msgstr ""
 
@@ -755,19 +755,19 @@ msgstr ""
 msgid "No volunteer opportunities found in trash"
 msgstr ""
 
-#: frontend/class-public.php:320
+#: frontend/class-public.php:295
 msgid "Find Out More"
 msgstr ""
 
-#: frontend/class-public.php:397
+#: frontend/class-public.php:372
 msgid "Sorry, there are no volunteer opportunities available right now."
 msgstr ""
 
-#: frontend/class-public.php:437
+#: frontend/class-public.php:412
 msgid "&laquo; Previous Opportunities"
 msgstr ""
 
-#: frontend/class-public.php:438
+#: frontend/class-public.php:413
 msgid "More Opportunities &raquo;"
 msgstr ""
 
@@ -1060,4 +1060,32 @@ msgstr ""
 
 #: widget/class-widget.php:203
 msgid "Show when the opportunity occurs"
+msgstr ""
+
+#: admin/block/edit.js:25
+msgid "Show One-Time Opportunities"
+msgstr ""
+
+#: admin/block/edit.js:31
+msgid "Show Flexible Opportunities"
+msgstr ""
+
+#: admin/block/block.json
+msgctxt "block title"
+msgid "Volunteer Opportunities"
+msgstr ""
+
+#: admin/block/block.json
+msgctxt "block description"
+msgid "Display a list of volunteer opportunities available with your organization."
+msgstr ""
+
+#: admin/block/block.json
+msgctxt "block keyword"
+msgid "nonprofit"
+msgstr ""
+
+#: admin/block/block.json
+msgctxt "block keyword"
+msgid "not for profit"
 msgstr ""

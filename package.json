@@ -16,7 +16,7 @@
     "@wordpress/babel-preset-default": "^6.17.0",
     "babel-loader": "^8.3.0",
     "css-loader": "^6.8.1",
-    "cypress": "^13.16.0",
+    "cypress": "^14.5.1",
     "mini-css-extract-plugin": "^2.7.6",
     "node-sass": "^7.0.3",
     "npm": "^8.19.4",

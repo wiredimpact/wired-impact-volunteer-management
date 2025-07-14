@@ -13,7 +13,7 @@ const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 
 module.exports = {
   	entry: {
-		wi_volunteer_management_block: './admin/js/wi-volunteer-management-block.js',
+		wi_volunteer_management_block: './admin/block/index.js',
 	},
 	output: {
     	filename: '[name].bundle.js'.replace( '_', '-' ),
