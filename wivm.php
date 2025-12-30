@@ -92,6 +92,5 @@ function run_wivm() {
 
 	$wivm = new WI_Volunteer_Management();
 	$wivm->run();
-
 }
 run_wivm();
