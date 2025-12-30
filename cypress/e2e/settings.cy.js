@@ -121,7 +121,9 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		cy.getBlockEditorIFrameBody().find('h1.wp-block-post-title').click().type('Serve Food to Our Community');
 		cy.contains('button', 'Publish').click();
 		cy.contains('.editor-post-publish-panel button', 'Publish').click();
-		cy.contains('a', 'View Volunteer Opportunity').click();
+
+		// Remove target="_blank" so Cypress can follow the link instead of opening a new tab
+		cy.contains('a', 'View Volunteer Opportunity').invoke('removeAttr', 'target').click();
 
 		cy.contains('span strong', 'Where:').siblings('a').should('have.text', 'Busch Stadium, 700 Clark Ave, St. Louis, MO 63102');
 		cy.contains('span strong', 'Contact:').closest('span').should('include.text', 'FirstName LastName');
@@ -152,7 +154,7 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		cy.visit('/wp-admin/post.php?post=' + this.volunteerOppID + '&action=edit');
 		cy.contains('tr', 'Form Type').find('select').select('built_in_form');
 		cy.contains('button', 'Save').click();
-		cy.contains('div', 'Post updated').find('a').click();
+		cy.contains('div', 'Post updated').find('a').invoke('removeAttr', 'target').click();
 
 		cy.get('form#wivm-sign-up-form').should('exist');
 		cy.contains('form label', 'First Name:').should('exist');
@@ -164,7 +166,7 @@ describe('Plugin and Volunteer Opportunity Settings', () => {
 		cy.visit('/wp-admin/post.php?post=' + this.volunteerOppID + '&action=edit');
 		cy.contains('tr', 'Form Type').find('select').select('no_form');
 		cy.contains('button', 'Save').click();
-		cy.contains('div', 'Post updated').find('a').click();
+		cy.contains('div', 'Post updated').find('a').invoke('removeAttr', 'target').click();
 
 		cy.get('.entry-content form').should('not.exist');
 	});

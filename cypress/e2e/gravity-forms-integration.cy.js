@@ -44,7 +44,7 @@ describe('Gravity Forms Integration', () => {
 		cy.contains('tr', 'Form Type').find('select').select('gravity_forms');
 		cy.contains('tr', 'Select a Form').find('select').select(this.volunteerSignupFormID);
 		cy.contains('button', 'Save').click();
-		cy.contains('div', 'Post updated').find('a').click();
+		cy.contains('div', 'Post updated').find('a').invoke('removeAttr', 'target').click();
 	
 		cy.get('form#gform_' + this.volunteerSignupFormID).should('exist');    
 	});
@@ -88,7 +88,7 @@ describe('Gravity Forms Integration', () => {
 		cy.contains('tr', 'Form Type').find('select').select('gravity_forms');
 		cy.contains('tr', 'Select a Form').find('select').select(this.volunteerSignupFormID);
 		cy.contains('button', 'Save').click();
-		cy.contains('div', 'Post updated').find('a').click();
+		cy.contains('div', 'Post updated').find('a').invoke('removeAttr', 'target').click();
 		
 		// Errors display when the form is submitted with the name, phone and email fields blank, even though they aren't required
 		cy.contains('input[type="submit"]', 'Submit').click();
@@ -140,7 +140,7 @@ describe('Gravity Forms Integration', () => {
 		cy.get('#has-volunteer-limit').check();
 		cy.get('#volunteer-limit').type('1');
 		cy.contains('button', 'Save').click();
-		cy.contains('div', 'Post updated').find('a').click();
+		cy.contains('div', 'Post updated').find('a').invoke('removeAttr', 'target').click();
 		cy.visit('/volunteer-opportunity/clean-up-trash/');
 		cy.get('form#gform_' + this.volunteerSignupFormID).should('not.exist');
 		cy.contains('p', 'We’re sorry, but we’re no longer accepting new volunteers for this opportunity.').should('exist');
