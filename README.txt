@@ -126,6 +126,9 @@ Within the Help & Settings page, you can set a default form to use when new oppo
 
 == Changelog ==
 
+= 2.8.1 =
+* Fixed vulnerability where unauthenticated volunteer form submissions could overwrite first name, last name and phone number data for non-volunteer roles.
+
 = 2.8 =
 * Updated Cypress tests to work with WordPress 6.9.
 * Tested up to WordPress 6.9.
