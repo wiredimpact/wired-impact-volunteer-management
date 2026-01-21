@@ -69,15 +69,15 @@ class WI_Volunteer_Management_Volunteer {
 	 * @link https://codex.wordpress.org/Function_Reference/get_userdata
 	 */
 	public function set_meta(){
-		$user_data = get_userdata( $this->ID );
+		$user_data  = get_userdata( $this->ID );
 		$this->meta = array(
-			'first_name'				=> $user_data->first_name,
-			'last_name'					=> $user_data->last_name,
-			'email'						=> $user_data->user_email,
-			'phone' 					=> $this->format_phone_number( get_user_option( 'phone', $this->ID ) ),
-			'notes'						=> esc_textarea( get_user_option( 'notes', $this->ID ) ),
-			'num_volunteer_opps' 		=> $this->get_num_volunteer_opps(),
-			'first_volunteer_opp_time'	=> $this->get_first_volunteer_opp_time()
+			'first_name'               => $user_data->first_name,
+			'last_name'                => $user_data->last_name,
+			'email'                    => $user_data->user_email,
+			'phone'                    => $this->format_phone_number( get_user_option( 'phone', $this->ID ) ),
+			'notes'                    => esc_textarea( get_user_option( 'notes', $this->ID ) ),
+			'num_volunteer_opps'       => $this->get_num_volunteer_opps(),
+			'first_volunteer_opp_time' => $this->get_first_volunteer_opp_time()
 		);
 	}
 
@@ -85,11 +85,11 @@ class WI_Volunteer_Management_Volunteer {
 	 * Format a phone number that's provided only in integers.
 	 *
 	 * @todo   Remove duplicates of this method that exist in other classes
-	 * 
-	 * @param  int $unformmated_number Phone number in only integers
+	 *
+	 * @param  int $unformatted_number Phone number in only integers.
 	 * @return string Phone number formatted to look nice.
 	 */
-	public function format_phone_number( $unformatted_number ){
+	public function format_phone_number( $unformatted_number ) {
 		$formatted_number = '';
 
 		if( $unformatted_number != '' ){
@@ -106,7 +106,7 @@ class WI_Volunteer_Management_Volunteer {
 
 	/**
 	 * Get the number of volunteer opportunities this volunteer has signed up for.
-	 * 
+	 *
 	 * @return int Number of volunteer opportunities signed up for
 	 */
 	public function get_num_volunteer_opps(){
@@ -129,7 +129,7 @@ class WI_Volunteer_Management_Volunteer {
 	 *
 	 * This is used to display the year the person started volunteering within the admin. It's worth
 	 * noting that this isn't the time of the opportunity, but rather when they RSVPed.
-	 * 
+	 *
 	 * @return string The date and time of the first volunteer RSVP.
 	 */
 	public function get_first_volunteer_opp_time(){
@@ -150,7 +150,7 @@ class WI_Volunteer_Management_Volunteer {
 	/**
 	 * Get an array with all of the volunteer opportunities this person has signed up for.
 	 *
-	 * First we pull only the IDs of the posts that have been signed up for with the most recent one they signed 
+	 * First we pull only the IDs of the posts that have been signed up for with the most recent one they signed
 	 * up for first. Then we create a new WI_Volunteer_Management_Opportunity object for each and return it.
 	 *
 	 * @todo  Fix order so it pulls them by volunteer opp date, not the date they signed up.
@@ -162,9 +162,8 @@ class WI_Volunteer_Management_Volunteer {
 		global $wpdb;
 
 		switch( $type ){
-			//All Volunteer Opportunities
+			// All Volunteer Opportunities.
 			case 'all':
-
 				$query = "
 				         SELECT post_id
 				         FROM " . $wpdb->prefix  . "volunteer_rsvps
@@ -173,13 +172,12 @@ class WI_Volunteer_Management_Volunteer {
 				        ";
 
 				$query_values = array( $this->ID, 1 );
-				        
+
 				break;
 
-			//One-Time Volunteer Opportunities
-			//For this query we joined the postmeta table on itself in order to use two meta values.
+			// One-Time Volunteer Opportunities.
+			// For this query we joined the postmeta table on itself in order to use two meta values.
 			case 'one-time':
-
 				$query = "
 				         SELECT rsvps.post_id
 				         FROM " . $wpdb->prefix  . "volunteer_rsvps AS rsvps
@@ -195,9 +193,8 @@ class WI_Volunteer_Management_Volunteer {
 
 				break;
 
-			//Flexible Volunteer Opportunities
+			// Flexible Volunteer Opportunities.
 			case 'flexible':
-
 				$query = "
 				         SELECT rsvps.post_id
 				         FROM " . $wpdb->prefix  . "volunteer_rsvps AS rsvps
@@ -213,8 +210,8 @@ class WI_Volunteer_Management_Volunteer {
 
 		$volunteer_opps = $wpdb->get_results( $wpdb->prepare( $query, $query_values ) );
 
-		//Use post id to grab a bunch info on each opportunity and store in the same variable using &.
-		foreach( $volunteer_opps as &$opp ){
+		// Use post id to grab a bunch info on each opportunity and store in the same variable using &.
+		foreach ( $volunteer_opps as &$opp ) {
 			$opp = new WI_Volunteer_Management_Opportunity( $opp->post_id );
 		}
 
@@ -223,22 +220,22 @@ class WI_Volunteer_Management_Volunteer {
 
 	/**
 	 * Remove an RSVP for a user for a specific volunteer opportunity. This is usually done through AJAX.
-	 * 
-	 * @param  int $post_id ID of the volunteer opportunity to have its RSVP removed
+	 *
+	 * @param  int $post_id ID of the volunteer opportunity to have its RSVP removed.
 	 * @return int|bool The number of rows updated or false if error
 	 */
 	public function remove_rsvp_user_opp( $post_id ){
 		global $wpdb;
 
-		$status = $wpdb->update( 
-			$wpdb->prefix  . 'volunteer_rsvps', 
+		$status = $wpdb->update(
+			$wpdb->prefix  . 'volunteer_rsvps',
 			array( //Data to update
 				'rsvp' => 0
-			), 
+			),
 			array( //Where
 				'user_id' => $this->ID,
 			 	'post_id' => $post_id
-			), 
+			),
 			array( '%d'	), //Data formats
 			array( '%d', '%d' ) //Where formats
 		);
@@ -252,7 +249,6 @@ class WI_Volunteer_Management_Volunteer {
 	 * This is not a link to the typical user edit screen. This page includes a lot of information on the
 	 * volunteer including the contact info, notes on them and which volunteer opportunities they signed up for.
 	 *
-	 * @param int $user_id The volunteer's ID.
 	 * @return string The URL needed to view this volunteer's information.
 	 */
 	public function get_admin_url() {
@@ -286,22 +282,30 @@ class WI_Volunteer_Management_Volunteer {
 
 			$user_id = wp_insert_user( $userdata );
 
-		} else { // If the user already exists, update the user based on their email address.
+			// Update phone for new users.
+			update_user_option( $user_id, 'phone', preg_replace( '/[^0-9]/', '', $form_fields['wivm_phone'] ) );
 
-			$userdata['ID'] = $existing_user;
+		} else {
 
-			$user_id = wp_update_user( $userdata );
+			// User already exists: only update their data if they have the volunteer role.
+			// This prevents unauthenticated users from overwriting data for admins or other roles.
+			$user_id       = $existing_user;
+			$should_update = $this->should_update_existing_user( $existing_user );
+
+			if ( $should_update ) {
+
+				$userdata['ID'] = $existing_user;
+				wp_update_user( $userdata );
+				update_user_option( $user_id, 'phone', preg_replace( '/[^0-9]/', '', $form_fields['wivm_phone'] ) );
+			}
 
 			// On multisite we need to add the user to this site if they don't have access.
-			if ( is_multisite() && ! is_user_member_of_blog( $userdata['ID'] ) ) {
+			if ( is_multisite() && ! is_user_member_of_blog( $existing_user ) ) {
 
-				add_user_to_blog( get_current_blog_id(), $userdata['ID'], 'volunteer' );
-				update_user_option( $userdata['ID'], 'notes', '' );
+				add_user_to_blog( get_current_blog_id(), $existing_user, 'volunteer' );
+				update_user_option( $existing_user, 'notes', '' );
 			}
 		}
-
-		// Update custom user meta for new and existing volunteers.
-		update_user_option( $user_id, 'phone', preg_replace( '/[^0-9]/', '', $form_fields['wivm_phone'] ) );
 
 		$this->ID = $user_id;
 
@@ -309,22 +313,53 @@ class WI_Volunteer_Management_Volunteer {
 	}
 
 	/**
+	 * Check if an existing user's data should be updated after volunteer form submission.
+	 *
+	 * Only users with the "volunteer" role should have their data updated.
+	 * This protects admin accounts and other user types from having their
+	 * data overwritten by unauthenticated form submissions.
+	 *
+	 * @param int $user_id The ID of the existing user.
+	 * @return bool True if the user's data should be updated, false otherwise.
+	 */
+	private function should_update_existing_user( $user_id ) {
+
+		$user = get_userdata( $user_id );
+
+		if ( ! $user ) {
+
+			return false;
+		}
+
+		// Only allow updates for users with the volunteer role.
+		$should_update = in_array( 'volunteer', (array) $user->roles, true );
+
+		/**
+		 * Filter whether an existing user's data should be updated after volunteer form submission.
+		 *
+		 * @param bool    $should_update Whether the user's data should be updated.
+		 * @param int     $user_id       The ID of the existing user.
+		 * @param WP_User $user          The user object.
+		 */
+		return apply_filters( 'wivm_should_update_existing_volunteer', $should_update, $user_id, $user );
+	}
+
+	/**
 	 * Delete RSVPs for this user.
 	 *
 	 * This is typically done right before the user is deleted from WordPress entirely.
-	 * 
+	 *
 	 * @return int|bool Int for number of rows updated of false on error
 	 */
-	public function delete_rsvps(){
+	public function delete_rsvps() {
 		global $wpdb;
 
 		$delete_info = $wpdb->delete(
-				$wpdb->prefix  . "volunteer_rsvps",
-				array( 'user_id' => $this->ID ),
-				array( '%d' )
+			$wpdb->prefix . 'volunteer_rsvps',
+			array( 'user_id' => $this->ID ),
+			array( '%d' )
 		);
 
 		return $delete_info;
 	}
-
 } //class WI_Volunteer_Management_Volunteer

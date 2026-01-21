@@ -4,7 +4,7 @@ Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 6.3
 Tested up to: 6.9
 Requires PHP: 5.2.4
-Stable tag: 2.8
+Stable tag: 2.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -125,6 +125,9 @@ Within the Help & Settings page, you can set a default form to use when new oppo
 1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 2.8.1 =
+* Fixed vulnerability where unauthenticated volunteer form submissions could overwrite first name, last name and phone number data for non-volunteer roles.
 
 = 2.8 =
 * Updated Cypress tests to work with WordPress 6.9.
