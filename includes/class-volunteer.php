@@ -335,7 +335,7 @@ class WI_Volunteer_Management_Volunteer {
 		$should_update = in_array( 'volunteer', (array) $user->roles, true );
 
 		/**
-		 * Filter whether an existing user's data should be updated after volunteer form submission
+		 * Filter whether an existing user's data should be updated after volunteer form submission.
 		 *
 		 * @param bool    $should_update Whether the user's data should be updated.
 		 * @param int     $user_id       The ID of the existing user.
