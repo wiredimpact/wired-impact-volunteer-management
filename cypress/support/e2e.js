@@ -25,10 +25,10 @@ Cypress.on('uncaught:exception', (err) => {
         return false;
     }
 
-    // WordPress core's Interactivity API (loaded on the frontend by the block
-    // theme) runs a View Transition on navigation and rejects a skipped one with
-    // "AbortError: Transition was skipped". Benign core rejection, not a plugin
-    // error (still occurs with the plugin deactivated).
+    // "AbortError: Transition was skipped" is a browser-native View Transitions
+    // API rejection, surfaced by WordPress core on the block-theme frontend when
+    // a navigation's view transition is skipped. It is not thrown by this plugin
+    // (it still fires with the plugin deactivated), so ignore it here.
     if ((err.message.includes("Transition was skipped"))) {
         return false;
     }
