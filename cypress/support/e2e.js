@@ -16,10 +16,20 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
-// Ignore ResizeObserver errors since they occur when using Gravity Forms merge tag dropdowns
+// Ignore benign uncaught exceptions that come from application code (WordPress
+// core or the theme) rather than the plugin, so they don't fail our tests.
 Cypress.on('uncaught:exception', (err) => {
 
+    // Occurs when using Gravity Forms merge tag dropdowns.
     if ((err.message.includes("ResizeObserver loop limit exceeded"))) {
+        return false;
+    }
+
+    // "AbortError: Transition was skipped" is a browser-native View Transitions
+    // API rejection, surfaced by WordPress core on the block-theme frontend when
+    // a navigation's view transition is skipped. It is not thrown by this plugin
+    // (it still fires with the plugin deactivated), so ignore it here.
+    if ((err.message.includes("Transition was skipped"))) {
         return false;
     }
 });
