@@ -814,6 +814,12 @@ class WI_Volunteer_Management_Admin {
 			die();
 		}
 
+		// Verify the current user is allowed to edit this opportunity
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			_e( 'Security Check.', 'wired-impact-volunteer-management' );
+			die();
+		}
+
 		// Get the opportunity data
 		$opp    = new WI_Volunteer_Management_Opportunity( $post_id );
 		$email  = new WI_Volunteer_Management_Email( $opp );
@@ -1145,6 +1151,12 @@ class WI_Volunteer_Management_Admin {
 			die();
 		}
 
+		//Verify the current user is allowed to edit this opportunity.
+		if( !current_user_can( 'edit_post', $post_id ) ) {
+			_e( 'Security Check.', 'wired-impact-volunteer-management' );
+			die();
+		}
+
 		//Remove the user's RSVP from this opportunity.
 		$user   = new WI_Volunteer_Management_Volunteer( $user_id );
 		$status = $user->remove_rsvp_user_opp( $post_id );
@@ -1275,6 +1287,12 @@ class WI_Volunteer_Management_Admin {
 
 		//Verify our nonce
 		if( !wp_verify_nonce( $nonce, 'hide_notice_nonce' ) ) {
+			_e( 'Security Check.', 'wired-impact-volunteer-management' );
+			die();
+		}
+
+		//Verify the current user is allowed to manage the plugin.
+		if( !current_user_can( 'edit_others_posts' ) ) {
 			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
