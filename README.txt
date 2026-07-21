@@ -127,8 +127,8 @@ Within the Help & Settings page, you can set a default form to use when new oppo
 == Changelog ==
 
 = 2.8.2 =
-* Fixed vulnerability where a logged-in user could remove another volunteer's RSVP, send volunteer emails or dismiss admin notices without the proper capability.
-* Updated the Cypress end-to-end tests for compatibility with WordPress 7.0.
+* Fixed vulnerability where any logged-in user could remove any volunteer's RSVP, send volunteer emails or dismiss admin notices without the proper capability.
+* Updated the Cypress end-to-end tests for better compatibility with newer WordPress versions.
 * Tested up to WordPress 7.0.
 
 = 2.8.1 =
