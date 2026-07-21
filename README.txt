@@ -2,9 +2,9 @@
 Contributors: wiredimpact
 Tags: nonprofits, non profits, not-for-profit, volunteers, volunteer
 Requires at least: 6.3
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 5.2.4
-Stable tag: 2.8.1
+Stable tag: 2.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -125,6 +125,11 @@ Within the Help & Settings page, you can set a default form to use when new oppo
 1. Easily Preview the Opportunities List in the Admin Using the Volunteer Opportunities Block
 
 == Changelog ==
+
+= 2.8.2 =
+* Fixed vulnerability where a logged-in user could remove another volunteer's RSVP, send volunteer emails or dismiss admin notices without the proper capability. Thanks to Shikhali Jamalzade for the responsible disclosure.
+* Updated the Cypress tests to work with the iframed block editor in WordPress 7.0.
+* Tested up to WordPress 7.0.
 
 = 2.8.1 =
 * Fixed vulnerability where unauthenticated volunteer form submissions could overwrite first name, last name and phone number data for non-volunteer roles.

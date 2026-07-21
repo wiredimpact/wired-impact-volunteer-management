@@ -123,30 +123,35 @@ Cypress.Commands.add('deleteAllMailCatcherEmails', () => {
  * Get the WordPress block editor content area.
  *
  * In WordPress 6.3+, the post editor may or may not use an iframe depending
- * on theme type and other conditions. This command handles both cases.
+ * on theme type and other conditions. As of WordPress 7.0 the iframe is
+ * enforced whenever a block using Block API version 3+ is present, and the
+ * canvas iframe is inserted asynchronously after the page loads. This command
+ * waits for either the iframed canvas or the non-iframed wrapper to appear
+ * before resolving, so it can't race the iframe into the wrong branch.
  *
  * You must also set chromeWebSecurity to false in cypress.config.js
  * to work with iframes.
  *
  * @see https://make.wordpress.org/core/2023/07/18/miscellaneous-editor-changes-in-wordpress-6-3/
+ * @see https://make.wordpress.org/core/2026/05/14/wordpress-7-0-field-guide/
  * @see https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__iframes
  */
 Cypress.Commands.add('getBlockEditorIFrameBody', () => {
 
 	cy.log('getBlockEditorIFrameBody');
 
-	return cy.get('body').then(($body) => {
-		const $iframe = $body.find('iframe[name="editor-canvas"]');
+	// Retry until whichever editor markup this WordPress version renders exists.
+	return cy.get('iframe[name="editor-canvas"], .editor-styles-wrapper', { log: false }).then(($el) => {
 
-		if ($iframe.length) {
+		if ($el.is('iframe')) {
 			// Editor is iframed
 			return cy
-				.get('iframe[name="editor-canvas"]', { log: false })
+				.wrap($el, { log: false })
 				.its('0.contentDocument.body', { log: false }).should('not.be.empty')
 				.then((body) => cy.wrap(body, { log: false }));
 		} else {
 			// Editor is not iframed
-			return cy.get('.editor-styles-wrapper', { log: false });
+			return cy.wrap($el, { log: false });
 		}
 	});
 });
