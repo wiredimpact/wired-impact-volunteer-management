@@ -814,8 +814,8 @@ class WI_Volunteer_Management_Admin {
 			die();
 		}
 
-		// Verify the current user is allowed to edit this opportunity
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		// Verify the current user is allowed to manage volunteer opportunities
+		if ( ! current_user_can( 'edit_others_posts' ) ) {
 			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
@@ -1151,8 +1151,8 @@ class WI_Volunteer_Management_Admin {
 			die();
 		}
 
-		//Verify the current user is allowed to edit this opportunity.
-		if( !current_user_can( 'edit_post', $post_id ) ) {
+		//Verify the current user is allowed to manage volunteer opportunities.
+		if( !current_user_can( 'edit_others_posts' ) ) {
 			_e( 'Security Check.', 'wired-impact-volunteer-management' );
 			die();
 		}
